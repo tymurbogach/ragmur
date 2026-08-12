@@ -9,19 +9,26 @@ dependencies = [
     "uvicorn[standard]>=0.32",
     "pydantic>=2.9",
     "pydantic-settings>=2.6",
-    "sqlalchemy[asyncio]>=2.0",
+    # 2.0.16 introduce `postgresql_nulls_not_distinct`, sin el cual la restricción
+    # de unicidad de `documents` no detecta duplicados con `owner_id` nulo.
+    "sqlalchemy[asyncio]>=2.0.16",
     "asyncpg>=0.30",
     "alembic>=1.14",
-    "qdrant-client>=1.12",
+    # 1.19 introduce `SearchParams.idf`, que acota las estadísticas de IDF al
+    # tenant. En versiones anteriores el parámetro no existe y el IDF vuelve a ser
+    # global sin dar ningún error.
+    "qdrant-client>=1.19",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=8.3",
-    "pytest-asyncio>=0.24",
+    # 1.0 eliminó el fixture `event_loop`; con la cota anterior una resolución
+    # limpia podía instalar una versión con otra API.
+    "pytest-asyncio>=1.0",
     "httpx>=0.28",
     "ruff>=0.8",
-    "mypy>=1.13",
+    "mypy>=2.0",
 ]
 
 [build-system]
@@ -60,7 +67,9 @@ select = [
 [tool.mypy]
 python_version = "3.12"
 strict = true
-files = ["src", "tests", "eval"]
+# `eval` se añade en la tarea 1.7, cuando exista `eval/run.py`: mypy falla si se le
+# apunta a un directorio sin ficheros Python.
+files = ["src", "tests"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]

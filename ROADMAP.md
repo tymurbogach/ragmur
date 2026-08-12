@@ -242,6 +242,7 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 - [ ] `expected` es una **lista** de fuentes, no una sola: una consulta puede tener varios fragmentos válidos, y tratarla como única convierte recall@k en un simple hit-rate
 - [ ] Incluir **consultas negativas** (`expected: []`), sin respuesta en el corpus
 - [ ] `eval/run.py` calculando recall@k, MRR, nDCG@10 y latencia p95
+- [ ] Añadir `eval` a `files` en la configuración de `mypy` (se excluyó mientras el directorio estuvo vacío)
 - [ ] Ejecución sobre cuatro configuraciones: densa, BM25, híbrida, híbrida + reranking
 - [ ] Desglose de victorias, derrotas y empates por consulta entre configuraciones
 - [ ] Resúmenes versionados en `eval/results/` con fecha, configuración y hardware

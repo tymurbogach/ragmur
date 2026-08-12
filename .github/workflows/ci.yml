@@ -50,8 +50,10 @@ jobs:
           uv run ruff check .
           uv run ruff format --check .
 
+      # Sin argumento: mypy usa los directorios de `pyproject.toml`, de modo que los
+      # tests se comprueban igual que el código del servicio.
       - name: Tipos
-        run: uv run mypy src/
+        run: uv run mypy
 
       - name: Esperar a Qdrant
         run: |

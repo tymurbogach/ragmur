@@ -167,9 +167,8 @@ El `modifier=IDF` no es opcional. FastEmbed emite frecuencias de término; el co
 **El corpus del IDF se acota al tenant.** Con una colección única, las estadísticas de IDF son por defecto globales, así que el vocabulario de un tenant distorsionaría la rareza de los términos de otro. Qdrant 1.19 —la versión fijada en `docker-compose.yml`— permite acotar la población sobre la que se calculan mediante un filtro de payload, de modo que el IDF refleje la rareza dentro del espacio del solicitante. El parámetro vive en `SearchParams`:
 
 ```python
-models.SearchParams(
-    idf=models.IdfCorpusParams(corpus=tenant_filter),  # el mismo filtro que ya se aplica a la consulta
-)
+# `tenant_filter` es el mismo filtro que ya lleva la consulta.
+models.SearchParams(idf=models.IdfCorpusParams(corpus=tenant_filter))
 ```
 
 Se aplica desde `retrieval/store.py` junto al filtro por `tenant_id`, y es el motivo de que el suelo de `qdrant-client` sea `>=1.19`: en versiones anteriores el parámetro no existe y las estadísticas serían silenciosamente globales.

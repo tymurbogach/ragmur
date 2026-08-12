@@ -49,7 +49,7 @@ docker compose up -d
 uv run uvicorn ragmur.main:app --reload
 uv run pytest
 uv run ruff check --fix . && uv run ruff format .
-uv run mypy src/
+uv run mypy
 uv run python -m eval.run
 uv run alembic upgrade head
 ```
