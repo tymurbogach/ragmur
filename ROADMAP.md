@@ -103,14 +103,14 @@ Solo se aborda si aparece un corpus real que lo exija.
 
 ## Fase 0 — Esqueleto
 
-- [ ] `pyproject.toml` con `uv`, Python 3.12
-- [ ] Estructura de paquetes según `ARCHITECTURE.md`
+- [x] `pyproject.toml` con `uv`, Python 3.12
+- [x] Estructura de paquetes según `ARCHITECTURE.md`
 - [ ] `docker-compose.yml` con Qdrant y PostgreSQL
 - [ ] Configuración con `pydantic-settings` y `.env.example`
 - [ ] SQLAlchemy 2.0 + `asyncpg`, y Alembic configurado con la primera migración
 - [ ] App FastAPI con `GET /health` que reporta estado de Qdrant y PostgreSQL
 - [ ] Logging estructurado en JSON
-- [ ] `ruff` y `mypy` configurados
+- [x] `ruff` y `mypy` configurados
 - [ ] `pytest` con test de humo sobre `/health`
 - [ ] GitHub Actions: lint y tests en cada push
 
