@@ -37,7 +37,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v9
+      # Versión exacta: setup-uv no publica etiqueta móvil por encima de v7.
+      - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
 
