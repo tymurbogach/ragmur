@@ -4,8 +4,11 @@ from dataclasses import dataclass
 from typing import Annotated, cast
 
 from fastapi import Depends, Request
-from qdrant_client import AsyncQdrantClient
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
+
+# Importado de `store` y no de `qdrant_client`: la regla es que solo `store.py` toca
+# la biblioteca de Qdrant, y una anotación de tipo no es motivo para romperla.
+from ragmur.retrieval.store import AsyncQdrantClient
 
 
 @dataclass(frozen=True, slots=True)
