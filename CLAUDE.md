@@ -30,7 +30,7 @@ No se modifican sin acordarlo previamente:
 - Pydantic v2 para toda entrada y salida de la API
 - SQLAlchemy 2.0 declarativo tipado sobre `asyncpg`; migraciones con Alembic
 - Configuración vía `pydantic-settings`; ningún valor hardcodeado que deba ser configuración
-- Modelos de ML con carga perezosa y reutilizados entre peticiones, nunca instanciados por petición
+- Modelos de ML cargados una vez al arrancar (en el `lifespan`) y reutilizados entre peticiones, nunca instanciados por petición
 - Logging estructurado; sin `print`
 - Commits semánticos: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`
 
@@ -49,7 +49,7 @@ docker compose up -d
 uv run uvicorn ragmur.main:app --reload
 uv run pytest
 uv run ruff check --fix . && uv run ruff format .
-uv run mypy src/
+uv run mypy
 uv run python -m eval.run
 uv run alembic upgrade head
 ```

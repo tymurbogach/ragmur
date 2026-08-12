@@ -1,6 +1,6 @@
 """Utilidades compartidas por todos los tests."""
 
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -10,7 +10,7 @@ from ragmur.main import create_app
 
 
 @pytest.fixture(autouse=True)
-def configuracion_limpia() -> AsyncIterator[None]:
+def configuracion_limpia() -> Iterator[None]:
     """Descarta la configuración cacheada antes y después de cada test.
 
     `get_settings` guarda el resultado de la primera llamada, así que sin esto un test

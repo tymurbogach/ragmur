@@ -132,9 +132,15 @@ Sin LLM en ninguna tarea de esta fase.
 - [ ] Tabla `api_keys` (tenant_id, key_id, key_hash, nombre, revoked_at, last_used_at)
 - [ ] Formato de clave `rgm_<key_id>_<secret>`: búsqueda por `key_id` indexado, comparación del secreto en tiempo constante
 - [ ] Hash con HMAC-SHA256 y clave de servidor, **no bcrypt ni argon2** (se pagaría ~100 ms en cada petición, y una API key no es una contraseña humana)
+- [ ] `api_key_hmac_secret` en `Settings` y en `.env.example`, sin valor por defecto: sin él el servicio no debe arrancar
 - [ ] Dependencia FastAPI que resuelve el tenant desde `X-API-Key` y rechaza claves revocadas
-- [ ] CLI para crear tenant, emitir API key y revocarla
+- [ ] `last_used_at` amortiguado: se actualiza como mucho una vez por minuto y clave, no en cada petición
+- [ ] CLI para crear tenant, emitir API key y revocarla, con `argparse` de la biblioteca estándar
 - [ ] Test: sin clave → 401; clave revocada → 401; con clave de otro tenant → no accede a datos ajenos
+
+**Nota sobre `last_used_at`.** Escribirlo en cada petición añade un `UPDATE` por petición a un servicio cuyo camino de lectura es, por lo demás, una consulta indexada y una búsqueda vectorial. El dato sirve para saber si una clave sigue en uso, y para eso basta una resolución de minutos.
+
+**Nota sobre la CLI.** Tres comandos sobre una sesión de base de datos no justifican `typer` ni `click` bajo la regla 9. `argparse` está en la biblioteca estándar y cubre el caso; si la CLI creciera hasta hacerlo incómodo, se reabre.
 
 El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo el corpus.
 
@@ -142,10 +148,12 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 
 ### 1.2 Ingesta
 
-- [ ] Tabla `documents` (id, tenant_id, owner_id, filename, mime, content_sha256, status, page_count, chunk_count, error, timestamps)
+- [ ] Tabla `documents` (id, tenant_id, owner_id, filename, mime, content_sha256, storage_path, status, page_count, chunk_count, error, created_at, updated_at)
+- [ ] Unicidad `(tenant_id, owner_id, content_sha256)` declarada con **`nulls not distinct`** (`postgresql_nulls_not_distinct=True`)
+- [ ] Almacenamiento del fichero original en disco bajo `STORAGE_DIR`, con `storage_path` en la fila y borrado en cascada al eliminar el documento
 - [ ] `POST /v1/documents` — multipart con `file` y `owner_id` opcional, responde 202 con `document_id`
 - [ ] Deduplicación por `content_sha256`: subida repetida en el mismo espacio devuelve 200 con el documento existente, sin reindexar
-- [ ] Extractor PDF (PyMuPDF) con localizador de tipo `page`, con `start` y `end` porque un chunk puede cruzar la frontera de página
+- [ ] Extractor PDF (`pypdfium2`) con localizador de tipo `page`, con `start` y `end` porque un chunk puede cruzar la frontera de página
 - [ ] Extractor DOCX (python-docx) con localizador de tipo `section` u `offset`
 - [ ] Extractor TXT y Markdown con localizador `offset` y `section` respectivamente
 - [ ] PDF sin capa de texto → estado `unsupported` con mensaje explícito. Definir el umbral de detección (caracteres extraídos por página)
@@ -157,7 +165,13 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 
 **Nota.** `python-docx` no puede dar número de página: la paginación la calcula el renderizador al maquetar y no existe en el fichero. TXT y Markdown tampoco tienen páginas. Por eso el localizador tiene tipo y cada extractor rellena el que su formato sostiene.
 
-**Cierre:** un PDF se ingiere conservando la página de origen; un DOCX se ingiere conservando sección o desplazamiento; subir dos veces el mismo fichero no duplica chunks.
+**Nota sobre `nulls not distinct`.** PostgreSQL no considera iguales dos `NULL` dentro de una restricción de unicidad. Sin la cláusula, dos subidas del mismo fichero **sin `owner_id`** —el caso del corpus del tenant, que es el del portfolio— no colisionan y el documento se duplica, contaminando el `top_k` y las cifras de evaluación. Requiere PostgreSQL 15 o superior; el proyecto usa 17.
+
+**Nota sobre el fichero original.** La tarea 1.4 incluye un comando de reindexado que reaplica troceado e indexado desde el fichero original, y la tarea 1.7 termina reajustando los parámetros de troceado. Si el fichero no se conserva, ese reajuste obliga a volver a subir todo el corpus a mano.
+
+**Nota sobre el extractor de PDF.** PyMuPDF queda descartado por licencia: es AGPL-3.0, cuya cláusula de red alcanza a un servicio expuesto por HTTP, y el proyecto se publica bajo MIT. `pypdfium2` (Apache-2.0 / BSD-3-Clause) extrae texto por página con calidad comparable. Ver `DECISIONS.md` §3.13.
+
+**Cierre:** un PDF se ingiere conservando la página de origen; un DOCX se ingiere conservando sección o desplazamiento; subir dos veces el mismo fichero no duplica chunks, ni con `owner_id` ni sin él.
 
 ### 1.3 Troceado
 
@@ -172,19 +186,24 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 
 ### 1.4 Indexado
 
-- [ ] Servicio de embeddings bge-m3 con carga perezosa del modelo
-- [ ] Generación de vectores dispersos BM25 con FastEmbed
+- [ ] Instalación de PyTorch con ruedas **cu128** para la RTX 5080 (Blackwell, `sm_120`), con índice declarado en `pyproject.toml` y variante de CPU para CI
+- [ ] Servicio de embeddings bge-m3, cargado en el `lifespan` y reutilizado entre peticiones
+- [ ] Generación de vectores dispersos BM25 con FastEmbed, con `language` **declarado explícitamente**
 - [ ] Colección `ragmur_chunks` con vectores nombrados `dense` y `sparse`
 - [ ] **El vector `sparse` se declara con `modifier=IDF`** — ver nota, es el fallo silencioso más probable de toda la fase
+- [ ] Corpus del IDF acotado al tenant mediante `SearchParams(idf=IdfCorpusParams(corpus=...))`
 - [ ] Índice de payload sobre `tenant_id` con `is_tenant=True`
 - [ ] Índice de payload sobre `owner_id`
+- [ ] Índice de payload sobre `document_id` (borrado por documento y filtro `document_ids` de `/v1/search`)
 - [ ] Escritura por lotes
 - [ ] Transición del documento a estado `indexed`
 - [ ] Comando de reindexado (un documento, un tenant o todo el corpus) que reaplica troceado e indexado desde el fichero original
 
 **Nota sobre `modifier=IDF`.** FastEmbed emite frecuencias de término; el componente IDF —el que da más peso a los términos raros del corpus— lo aplica Qdrant en el servidor, y solo si el vector disperso se declaró con ese modificador. Sin él, la rama léxica puntúa por pura repetición y pierde exactamente aquello que justifica tenerla junto a la búsqueda densa. No lanza ningún error: el sistema funciona y recupera peor. Solo se detecta con evaluación.
 
-Consecuencia de la colección única: el IDF es global sobre todos los tenants, así que el corpus de uno influye en la puntuación léxica de otro. Asunción aceptada, documentada en `DECISIONS.md`.
+**Nota sobre el corpus del IDF.** Con colección única las estadísticas son globales por defecto, así que el vocabulario de un tenant distorsiona la rareza de los términos de otro. Qdrant 1.19 permite acotarlas con un filtro de payload, de modo que ya no hay que asumir esa interferencia: se pasa el mismo filtro de tenant que la consulta. Es el motivo de que el suelo de `qdrant-client` sea `>=1.19`. Ver `DECISIONS.md` §3.14.
+
+**Nota sobre el idioma del BM25.** El `language` de FastEmbed vale `english` si no se indica: sobre corpus en español, el stemming y las palabras vacías son los del idioma equivocado. **No lanza ningún error**, exactamente igual que el modificador IDF. Con corpus mixto hay que comparar en 1.7 `language="spanish"` contra `disable_stemmer=True`, porque un stemmer del idioma equivocado puede ser peor que ninguno.
 
 **Cierre:** los chunks de un documento ingerido existen en Qdrant con ambos vectores, su `tenant_id` y su `owner_id`.
 
@@ -223,6 +242,7 @@ Consecuencia de la colección única: el IDF es global sobre todos los tenants, 
 - [ ] `expected` es una **lista** de fuentes, no una sola: una consulta puede tener varios fragmentos válidos, y tratarla como única convierte recall@k en un simple hit-rate
 - [ ] Incluir **consultas negativas** (`expected: []`), sin respuesta en el corpus
 - [ ] `eval/run.py` calculando recall@k, MRR, nDCG@10 y latencia p95
+- [ ] Añadir `eval` a `files` en la configuración de `mypy` (se excluyó mientras el directorio estuvo vacío)
 - [ ] Ejecución sobre cuatro configuraciones: densa, BM25, híbrida, híbrida + reranking
 - [ ] Desglose de victorias, derrotas y empates por consulta entre configuraciones
 - [ ] Resúmenes versionados en `eval/results/` con fecha, configuración y hardware
@@ -240,7 +260,7 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 ### 1.8 Verificación de citas
 
 - [ ] Segmentador de respuesta en frases, sin LLM
-- [ ] Servicio NLI con mDeBERTa-v3-base-xnli
+- [ ] Servicio NLI con `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` (identificador completo: «mDeBERTa-v3-base-xnli» a secas no existe como repositorio)
 - [ ] Los pares (premisa, hipótesis) se puntúan en lote, no en bucle
 - [ ] Ventaneo para fragmentos que exceden el contexto del modelo, conservando puntuación máxima
 - [ ] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
@@ -263,10 +283,13 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [ ] Tests sobre ingesta, búsqueda, aislamiento entre tenants y aislamiento por `owner_id`
 - [ ] `/health` (proceso vivo) separado de `/ready` (modelos cargados y dependencias conectadas)
 - [ ] Rate limiting por API key
-- [ ] Borrado completo de un tenant, incluidos sus puntos en Qdrant
+- [ ] Borrado completo de un tenant, incluidos sus puntos en Qdrant y sus ficheros en `STORAGE_DIR`
+- [ ] `Dockerfile` con base CUDA, volumen para la caché de modelos y volumen para `STORAGE_DIR`
 - [ ] README con arquitectura, arranque y cifras de evaluación
 - [ ] Desplegado en el homelab con un corpus real como primer tenant
 - [ ] Demo accesible públicamente
+
+**Nota sobre el `Dockerfile`.** Figura en el árbol de `ARCHITECTURE.md` desde el principio y no tenía tarea propia. Necesita imagen base con CUDA 12.8 para que las ruedas `cu128` de PyTorch funcionen, y dos volúmenes persistentes: la caché de modelos —que si no se descarga entera en cada arranque— y `STORAGE_DIR`, cuyo contenido es la única copia de los ficheros originales.
 
 **Nota sobre `/ready`.** Los modelos tardan decenas de segundos en cargar. Si el health check devuelve 200 antes de que estén listos, el orquestador manda tráfico y las primeras peticiones expiran.
 
