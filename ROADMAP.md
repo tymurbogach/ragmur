@@ -105,14 +105,14 @@ Solo se aborda si aparece un corpus real que lo exija.
 
 - [x] `pyproject.toml` con `uv`, Python 3.12
 - [x] Estructura de paquetes según `ARCHITECTURE.md`
-- [ ] `docker-compose.yml` con Qdrant y PostgreSQL
-- [ ] Configuración con `pydantic-settings` y `.env.example`
-- [ ] SQLAlchemy 2.0 + `asyncpg`, y Alembic configurado con la primera migración
-- [ ] App FastAPI con `GET /health` que reporta estado de Qdrant y PostgreSQL
-- [ ] Logging estructurado en JSON
+- [x] `docker-compose.yml` con Qdrant y PostgreSQL
+- [x] Configuración con `pydantic-settings` y `.env.example`
+- [x] SQLAlchemy 2.0 + `asyncpg`, y Alembic configurado con la primera migración
+- [x] App FastAPI con `GET /health` que reporta estado de Qdrant y PostgreSQL
+- [x] Logging estructurado en JSON
 - [x] `ruff` y `mypy` configurados
-- [ ] `pytest` con test de humo sobre `/health`
-- [ ] GitHub Actions: lint y tests en cada push
+- [x] `pytest` con test de humo sobre `/health`
+- [x] GitHub Actions: lint y tests en cada push
 
 **Cierre:** `docker compose up` levanta el conjunto, `alembic upgrade head` aplica la migración inicial y `/health` devuelve 200 con ambas dependencias conectadas.
 
