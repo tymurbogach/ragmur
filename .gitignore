@@ -1,0 +1,24 @@
+# Entorno y dependencias
+.venv/
+__pycache__/
+*.py[cod]
+
+# Cachés de herramientas
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Secretos y configuración local
+.env
+.env.*
+!.env.example
+
+# Modelos de ML descargados
+models/
+.cache/huggingface/
+
+# Evaluación: se versionan los resúmenes por ejecución, no los volcados por consulta
+eval/results/**/per_query/
+
+# Ajustes locales de Claude Code (la skill del proyecto sí se versiona)
+.claude/settings.local.json

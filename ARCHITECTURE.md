@@ -41,6 +41,8 @@ ragmur/
 │   │   └── generator.py
 │   └── db/
 │       ├── models.py
+│       ├── session.py           # motor y fábrica de sesiones
+│       ├── health.py            # comprobación de conectividad
 │       └── migrations/
 ├── eval/
 │   ├── golden_set.yaml
@@ -58,6 +60,8 @@ Dos puntos de estrangulamiento obligatorios, ambos verificables con un test de i
 
 - **Qdrant** solo se toca desde `retrieval/store.py`. Ningún otro módulo importa `qdrant_client`.
 - **LLM** solo se invoca desde `llm/provider.py`. Ningún módulo importa un SDK de proveedor.
+
+Toda función pública de `store.py` recibe `tenant_id` como primer argumento obligatorio, con dos excepciones: `create_client()` y `ping()`. Abrir la conexión y comprobar que el servidor responde no leen ni escriben puntos de ninguna colección, así que no hay espacio de tenant que aislar. La regla existe para que ninguna consulta a datos olvide el filtro; una excepción que no consulta datos no la debilita, pero cualquier función nueva que sí los toque la cumple.
 
 ## Flujo
 
