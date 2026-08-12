@@ -59,10 +59,11 @@ El desarrollo es estrictamente secuencial. Detalle y criterios de cierre en [`RO
 | API | FastAPI, Pydantic v2, Uvicorn |
 | Base vectorial | Qdrant (vectores densos + dispersos, fusión RRF, multi-tenancy) |
 | Metadatos | PostgreSQL, SQLAlchemy 2.0 sobre `asyncpg`, migraciones con Alembic |
+| Ingesta | `pypdfium2` (PDF), `python-docx`, texto plano y Markdown |
 | Embeddings | bge-m3 (multilingüe, 1024 dim) |
-| Léxica | BM25 vía FastEmbed (vectores dispersos, IDF calculado por Qdrant) |
+| Léxica | BM25 vía FastEmbed (vectores dispersos, IDF calculado por Qdrant y acotado al tenant) |
 | Reranking | bge-reranker-v2-m3 (cross-encoder) |
-| Verificación | mDeBERTa-v3-base-xnli (NLI) |
+| Verificación | mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 (NLI) |
 | Capa LLM | LiteLLM sobre Ollama, OpenAI, Anthropic, Gemini |
 | Evaluación | Golden set propio; RAGAS a partir de la fase 2 |
 | Despliegue | Docker Compose |

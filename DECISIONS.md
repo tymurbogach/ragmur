@@ -47,7 +47,7 @@ Motivo del orden: construir lógica agéntica sobre una recuperación deficiente
 
 La verificación de citas requiere una afirmación redactada que contrastar. Al no generar texto en fase 1, se resolvió exponiendo `POST /v1/verify`: el cliente envía un texto redactado más los `chunk_ids` citados, y Ragmur devuelve un veredicto por frase.
 
-**Decidido:** verificador basado en un modelo NLI (mDeBERTa-v3-base-xnli), que clasifica pares (premisa, hipótesis) como entailment / neutral / contradiction.
+**Decidido:** verificador basado en un modelo NLI (`MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`, ver §7), que clasifica pares (premisa, hipótesis) como entailment / neutral / contradiction.
 
 **Descartado:** usar un LLM como verificador por defecto. Un LLM verificando a otro LLM introduce el mismo riesgo de alucinación que se pretende eliminar, además de coste y dependencia externa.
 
@@ -149,6 +149,67 @@ El consumidor siempre recibe algo con lo que señalar la fuente; qué precisión
 
 **Descartado:** `asyncpg` en crudo con SQL a mano. Menos dependencias, pero pierde las migraciones versionadas, que son un requisito del proyecto.
 
+---
+
+Las decisiones siguientes se incorporaron tras una revisión completa del plan contra el estado real de las bibliotecas, antes de abrir la tarea 1.1.
+
+### 3.13 Extractor de PDF: `pypdfium2`, no PyMuPDF
+
+**Problema detectado.** El plan fijaba PyMuPDF como extractor de PDF y el README declara licencia MIT. PyMuPDF se distribuye bajo AGPL-3.0, cuya cláusula de red alcanza a cualquier obra combinada ofrecida como servicio por la red aunque no se distribuya el binario. Ragmur es un servicio HTTP con demo pública prevista en la fase 1: publicar el proyecto como MIT usando PyMuPDF no es posible.
+
+**Decidido:** `pypdfium2`, enlaces a PDFium bajo Apache-2.0 o BSD-3-Clause a elección. Extrae texto por página con calidad comparable y velocidad cercana, que es cuanto necesita el localizador de tipo `page`.
+
+**Descartado:**
+- *Comprar licencia comercial de PyMuPDF a Artifex.* Desproporcionado para un proyecto de portfolio.
+- *Cambiar la licencia del proyecto a AGPL.* Resolvería el conflicto legal, pero un proyecto de portfolio bajo AGPL es notablemente menos reutilizable por quien lo lea, que es justo el objetivo profesional del punto 1.
+- *`pypdf`.* Licencia permisiva (BSD), pero sensiblemente más lento y con peor extracción en PDFs con maquetación a columnas.
+
+**Reversible con datos.** Si la calidad de extracción de `pypdfium2` resultara insuficiente, se vería en las cifras de 1.7: un fragmento mal extraído no se recupera. En ese caso la salida es cambiar la licencia del proyecto, no el extractor a escondidas.
+
+### 3.14 El corpus del IDF se acota al tenant
+
+**Decisión anterior, ahora obsoleta.** El diseño aceptaba como asunción que, con colección única, el IDF sería global sobre todos los tenants y el corpus de uno influiría en la puntuación léxica de otro.
+
+**Ya no hace falta asumirlo.** Qdrant 1.19 —la versión fijada en `docker-compose.yml`— añade un parámetro `idf` en `SearchParams` que acepta un filtro de payload para acotar la población sobre la que se calculan las estadísticas. Se pasa el mismo filtro de tenant que ya lleva la consulta:
+
+```python
+models.SearchParams(idf=models.IdfCorpusParams(corpus=tenant_filter))
+```
+
+**Consecuencia:** el suelo de `qdrant-client` sube a `>=1.19`. En versiones anteriores el parámetro no existe y las estadísticas vuelven a ser globales **sin dar error**, que es el mismo modo de fallo silencioso que `modifier=IDF`.
+
+### 3.15 El fichero original se conserva en disco
+
+**Problema detectado.** Dos tareas del plan dependían de poder releer el fichero tal como llegó —la deduplicación por `content_sha256` y el comando de reindexado de 1.4, que reaplica troceado e indexado *desde el fichero original*— y el modelo de datos no tenía dónde guardarlo: ni columna, ni directorio, ni valor de configuración.
+
+**Decidido:** los bytes se guardan bajo un `STORAGE_DIR` configurable y la fila de `documents` lleva `storage_path`. El borrado de un documento —y el de un tenant completo— elimina también sus ficheros.
+
+**Descartado:** guardar los bytes en la propia tabla. Simplifica el borrado en cascada, pero infla la base de datos y sus copias de seguridad con contenido que nunca se consulta por SQL.
+
+**Por qué importa ahora:** la tarea 1.7 termina reajustando los parámetros de troceado con los datos de evaluación, lo que regenera todos los chunks. Sin el fichero original, ese reajuste —que está previsto y es el objetivo de la fase— obligaría a volver a subir el corpus entero a mano.
+
+### 3.16 Unicidad de la deduplicación con `owner_id` nulo
+
+**Problema detectado.** La restricción `unique (tenant_id, owner_id, content_sha256)` no detecta duplicados cuando `owner_id` es nulo, porque PostgreSQL no considera iguales dos `NULL` dentro de una restricción de unicidad. `owner_id` es nulo precisamente en los documentos del propio tenant, que es el caso del portfolio: la deduplicación habría fallado en su escenario principal, en silencio, y contaminando las cifras de 1.7 tal como advierte §3.10.
+
+**Decidido:** declarar la restricción con `NULLS NOT DISTINCT` (`postgresql_nulls_not_distinct=True` en SQLAlchemy). Requiere PostgreSQL 15 o superior; el proyecto usa 17.
+
+**Descartado:** una columna generada que sustituya el nulo por una cadena centinela, o dos índices parciales. Ambas funcionan y las dos añaden un artefacto que hay que recordar al leer el esquema, cuando el motor ya ofrece la cláusula exacta.
+
+**Consecuencia asumida.** La unicidad incluye `owner_id`, así que el mismo fichero subido por N usuarios de un tenant produce N copias de sus chunks. Es el precio del aislamiento por usuario final; implica que una consulta a nivel de tenant puede recibir fragmentos idénticos repetidos en el `top_k`.
+
+### 3.17 El idioma de la rama léxica es una decisión, no un valor por omisión
+
+**Problema detectado.** El BM25 de FastEmbed aplica stemming y eliminación de palabras vacías antes de emitir el vector disperso, y su parámetro `language` vale `english` si no se indica. Sobre corpus en español, eso trocea mal las palabras y filtra las vacías del idioma equivocado. Como con `modifier=IDF`, **no lanza ningún error**: recupera peor y solo se detecta midiendo.
+
+**Decidido:** el idioma se declara explícitamente y la elección entra en el alcance de la evaluación de 1.7, comparando `language="spanish"` contra `disable_stemmer=True` sobre el corpus real. Con corpus mixto español/inglés no hay respuesta evidente: un stemmer del idioma equivocado puede ser peor que ninguno.
+
+### 3.18 Los modelos se cargan al arrancar
+
+**Ambigüedad detectada.** «Carga perezosa» aparecía en las convenciones y en la tarea 1.4, mientras 1.9 define `/ready` como «modelos cargados». Son incompatibles: si la carga se difiere a la primera petición, `/ready` no puede decir la verdad, y el orquestador manda tráfico a un proceso cuyas primeras peticiones expirarán esperando decenas de segundos.
+
+**Fijado:** «carga perezosa» significa *una sola vez por proceso y reutilizada entre peticiones*, no *diferida hasta que alguien la pida*. Los modelos se instancian en el `lifespan` y viven en `Resources`. La contrapartida —arranque lento— es exactamente lo que `/ready` existe para comunicar.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:
@@ -184,7 +245,11 @@ Puntos que se aclararon durante el diseño y que conviene no volver a confundir:
 
 Las mediciones del proyecto se toman sobre el homelab propio: **RTX 5080**, que aloja además Ollama para la fase 2.
 
-Los modelos de la fase 1 (bge-m3, bge-reranker-v2-m3, mDeBERTa-v3-base-xnli) funcionan también en CPU, y ese modo se mantiene soportado para que el proyecto sea reproducible sin GPU. Pero es el **modo degradado, no el objetivo**: el cross-encoder de reranking sobre 30 candidatos es el coste dominante de una consulta, y la diferencia entre CPU y GPU es de más de un orden de magnitud. Cualquier cifra de `timings_ms` que aparezca en documentación debe indicar sobre cuál de los dos se midió.
+Los modelos de la fase 1 (`BAAI/bge-m3`, `BAAI/bge-reranker-v2-m3`, `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`) funcionan también en CPU, y ese modo se mantiene soportado para que el proyecto sea reproducible sin GPU. Pero es el **modo degradado, no el objetivo**: el cross-encoder de reranking sobre 30 candidatos es el coste dominante de una consulta, y la diferencia entre CPU y GPU es de más de un orden de magnitud. Cualquier cifra de `timings_ms` que aparezca en documentación debe indicar sobre cuál de los dos se midió.
+
+**Restricción de la RTX 5080.** Es arquitectura Blackwell (`sm_120`), soportada por PyTorch a partir de la versión 2.7 y únicamente en las ruedas compiladas contra CUDA 12.8. Las que `uv` resuelve por defecto desde PyPI no sirven, y la instalación equivocada no falla al instalar sino al enviar el primer tensor a la GPU. El índice se declara explícitamente en `pyproject.toml`, con variante `cu128` para el homelab y variante de CPU para CI.
+
+**Sobre el nombre del modelo NLI.** El plan lo llamaba «mDeBERTa-v3-base-xnli», que no corresponde a ningún repositorio publicado. Los reales son `MoritzLaurer/mDeBERTa-v3-base-mnli-xnli` y `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`; se elige el segundo, afinado sobre 2,7 millones de pares en 27 idiomas en lugar de sobre XNLI solo, por su mejor rendimiento en español.
 
 ## 8. Trabajo posterior contemplado
 
