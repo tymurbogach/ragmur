@@ -12,6 +12,12 @@ hay espacio de tenant que aislar. Cualquier función que sí toque datos la cump
 
 from qdrant_client import AsyncQdrantClient
 
+# El tipo se reexporta a propósito: quien necesite anotar un cliente de Qdrant lo
+# importa de aquí y no de `qdrant_client`, de modo que la regla «solo este módulo
+# importa la biblioteca» siga siendo cierta sin excepciones y comprobable con un
+# simple test de imports.
+__all__ = ["AsyncQdrantClient", "create_client", "ping"]
+
 
 def create_client(url: str, timeout_seconds: float) -> AsyncQdrantClient:
     """Abre el cliente asíncrono contra el Qdrant configurado."""
