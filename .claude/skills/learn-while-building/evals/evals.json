@@ -1,0 +1,80 @@
+{
+  "skill_name": "learn-while-building",
+  "evals": [
+    {
+      "id": 0,
+      "name": "fase0-esqueleto-python",
+      "prompt": "Arrancamos la fase 0. Móntame el pyproject.toml con uv, la configuración con pydantic-settings y el GET /health que reporta si Qdrant y PostgreSQL están vivos.",
+      "expected_output": "Código de fase 0 escrito, seguido de notas breves sobre pydantic-settings, lifespan y tipado, con analogías Laravel/Angular, alternativa descartada, línea de concepto clave y LEARNING.md creado.",
+      "files": [],
+      "assertions": [
+        "Las notas explicativas aparecen después del código, no antes de escribirlo",
+        "Ninguna nota supera ~80 palabras",
+        "Al menos una analogía con PHP/Laravel, Angular o JavaScript, y es técnicamente correcta",
+        "Se menciona al menos una alternativa idiomática descartada con su motivo",
+        "La respuesta cierra con una única línea 'Concepto clave de esta tarea: <X>'",
+        "LEARNING.md existe y todas sus entradas siguen el formato '- <concepto> — <frase> — <fichero>'",
+        "LEARNING.md no contiene conceptos duplicados",
+        "No se explican desde cero Docker, SQL, git ni HTTP; solo se anotan si el caso destapa algo no evidente",
+        "No hay preguntas de comprensión, cuestionarios, ejercicios ni seguimiento de progreso",
+        "Las notas están en español y no contienen relleno motivacional"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "alembic-si-docker-no",
+      "prompt": "Fase 0, siguiente paso: el docker-compose.yml con Qdrant y PostgreSQL, y la primera migración de Alembic con las tablas tenants y api_keys tal como están definidas en ARCHITECTURE.md.",
+      "expected_output": "Docker y SQL descritos en el resumen pero sin explicación de lo básico; Alembic y SQLAlchemy 2.0 tipado sí explicados, con la analogía de migraciones de Laravel y el límite de que no es Active Record.",
+      "files": [],
+      "assertions": [
+        "No hay notas explicando lo básico de Docker o SQL (volúmenes, puertos, índices); sí se admite una nota si el caso destapa una arista no evidente",
+        "Sí hay nota sobre Alembic y/o SQLAlchemy 2.0 tipado",
+        "Ninguna nota supera ~80 palabras",
+        "Al menos una analogía con PHP/Laravel, Angular o JavaScript, y es técnicamente correcta",
+        "La respuesta cierra con una única línea 'Concepto clave de esta tarea: <X>'",
+        "LEARNING.md existe y todas sus entradas siguen el formato '- <concepto> — <frase> — <fichero>'",
+        "LEARNING.md no contiene conceptos duplicados",
+        "No hay preguntas de comprensión, cuestionarios, ejercicios ni seguimiento de progreso",
+        "Las notas están en español y no contienen relleno motivacional"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "concepto-ya-conocido",
+      "prompt": "La 1.1 ya está cerrada. Vamos con la ingesta de la 1.2: POST /v1/documents que recibe el multipart con file y owner_id opcional, calcula el sha256 del contenido, deduplica, guarda el documento y lanza la extracción en segundo plano con el límite de concurrencia que pide el roadmap. Reutiliza la dependencia de tenant que ya está en deps.py.",
+      "expected_output": "Notas completas solo para los conceptos nuevos (BackgroundTasks, semáforo de concurrencia, UploadFile); los ya presentes en LEARNING.md se citan como mucho en una línea. LEARNING.md conserva sus 4 entradas y suma las nuevas.",
+      "files": [
+        "LEARNING.md sembrado con async/await, Depends(), pydantic-settings y lifespan; src/ con config.py, deps.py y models.py"
+      ],
+      "assertions": [
+        "Los conceptos ya presentes en LEARNING.md (async/await, Depends, pydantic-settings, lifespan) no se vuelven a explicar; como mucho una referencia de una línea",
+        "Sí hay nota para al menos un concepto nuevo (BackgroundTasks, límite de concurrencia o UploadFile)",
+        "LEARNING.md conserva las 4 entradas originales y solo añade conceptos nuevos",
+        "LEARNING.md no contiene conceptos duplicados, ni siquiera con otro nombre",
+        "Ninguna nota supera ~80 palabras",
+        "La respuesta cierra con una única línea 'Concepto clave de esta tarea: <X>'",
+        "No se explican desde cero Docker, SQL, git ni HTTP; solo se anotan si el caso destapa algo no evidente",
+        "No hay preguntas de comprensión, cuestionarios, ejercicios ni seguimiento de progreso",
+        "Las notas están en español y no contienen relleno motivacional"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "ml-sin-analogia-forzada",
+      "prompt": "Fase 0 cerrada y las tareas 1.1 a 1.3 también. Toca la 1.4: implementa el servicio de embeddings con bge-m3, con carga perezosa del modelo y reutilizable entre peticiones.",
+      "expected_output": "Explicación directa de embedding y carga perezosa, sin inventar una analogía con Laravel o Angular donde no existe. Sí cabe la analogía en lo que la tiene (bloqueo del bucle de eventos frente a PHP-FPM).",
+      "files": [],
+      "assertions": [
+        "No se fuerza ninguna analogía con Laravel, Angular o PHP para embeddings, bge-m3 o vectores densos",
+        "Explica directamente al menos un concepto de ML del alcance (embedding, vector denso, carga perezosa de modelo)",
+        "Si aparece el riesgo de bloquear el bucle de eventos con un modelo síncrono, se señala",
+        "Ninguna nota supera ~80 palabras",
+        "La respuesta cierra con una única línea 'Concepto clave de esta tarea: <X>'",
+        "LEARNING.md existe y todas sus entradas siguen el formato '- <concepto> — <frase> — <fichero>'",
+        "LEARNING.md no contiene conceptos duplicados",
+        "No hay preguntas de comprensión, cuestionarios, ejercicios ni seguimiento de progreso",
+        "Las notas están en español y no contienen relleno motivacional"
+      ]
+    }
+  ]
+}
