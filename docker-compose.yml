@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ragmur}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ragmur}
+      POSTGRES_DB: ${POSTGRES_DB:-ragmur}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ragmur} -d ${POSTGRES_DB:-ragmur}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.0
+    ports:
+      - "${QDRANT_HTTP_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    # Sin healthcheck a propósito: la imagen no trae curl, wget ni nc, y su shell es
+    # dash, que no puede abrir un socket. Cualquier comprobación desde dentro del
+    # contenedor sería falsa —diría «sano» sin haber hablado con el servidor—. Quien
+    # necesite esperar a Qdrant lo hace desde fuera; para eso está GET /health.
+
+volumes:
+  postgres_data:
+  qdrant_data:
