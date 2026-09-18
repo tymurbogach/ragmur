@@ -1,33 +1,32 @@
 # Ragmur
 
-Ragmur is an architecture and prototype for a multi-tenant retrieval service.
-It is not a production-ready RAG API and it does not yet provide document
-ingestion, retrieval, generated answers, or public endpoints.
+Ragmur es una arquitectura y un prototipo para un servicio de recuperación
+multi-tenant. No es una API RAG lista para producción. Todavía no ofrece
+ingesta de documentos, recuperación, respuestas generadas ni endpoints públicos.
 
-## Current status
+## Estado actual
 
-Phase 0 provides the project foundation: a FastAPI skeleton, Docker services,
-database migrations, health checks, linting, type checks, and CI. The project
-does not claim a usable retrieval workflow until Phase 1 is complete and
-evaluated.
+La fase 0 proporciona la base del proyecto: un esqueleto FastAPI, servicios
+Docker, migraciones, comprobaciones de salud, linting, tipos y CI. El proyecto
+no afirma tener un flujo de recuperación utilizable hasta que la fase 1 esté
+completa y evaluada.
 
-The source of truth for delivered work is the [roadmap](ROADMAP.md). The
-[architecture](ARCHITECTURE.md) and [decisions](DECISIONS.md) describe the
-target design. They are not a list of available features.
+La fuente de verdad del trabajo entregado es el [roadmap](ROADMAP.md). La
+[arquitectura](ARCHITECTURE.md) y las [decisiones](DECISIONS.md) describen el
+diseño objetivo. No son una lista de funcionalidades disponibles.
 
-## Target architecture
+## Arquitectura objetivo
 
-The intended system receives documents, stores tenant-scoped chunks in Qdrant,
-and returns source-grounded retrieval results. A later phase adds generated
-answers and citation verification. The design keeps `tenant_id` as a required
-filter for every vector-store operation. API keys derive the tenant. Clients
-may provide `owner_id` to separate their own users.
+El sistema objetivo recibe documentos, guarda fragmentos por tenant en Qdrant
+y devuelve resultados de recuperación con fuente. Una fase posterior añade
+respuestas generadas y verificación de citas. El diseño exige `tenant_id` como
+filtro en toda operación del almacén vectorial. Las API keys derivan el tenant.
+Los clientes pueden proporcionar `owner_id` para separar a sus usuarios.
 
-The project deliberately builds retrieval before LLM generation. This order
-makes the retrieval quality measurable before a language model can hide its
-failures.
+El proyecto construye la recuperación antes de la generación con LLM. Este
+orden permite medir su calidad antes de que un modelo de lenguaje oculte fallos.
 
-## Development
+## Desarrollo
 
 ```bash
 uv sync
@@ -38,8 +37,8 @@ uv run ruff check .
 uv run mypy
 ```
 
-Read [ROADMAP.md](ROADMAP.md) before implementation. Do not build a later
-phase before the current phase meets its closure criteria.
+Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
+posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 ## Stack
 
