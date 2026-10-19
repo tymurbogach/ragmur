@@ -6,6 +6,15 @@
 2. Dentro de cada fase las tareas siguen orden de dependencia. Cada una debe ejecutarse y verificarse antes de pasar a la siguiente.
 3. Al completar una tarea, se marca su casilla en este documento.
 
+## Estado y siguiente paso
+
+- [x] Revisar contratos, dependencias y criterios de evaluación antes de continuar. Ver [REVIEW.md](REVIEW.md).
+- [ ] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
+- [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
+
+La siguiente tarea funcional es **1.1**. Esta revisión no implementa ninguna tarea de fase 1.
+Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
+
 ## Estado final del sistema
 
 Para evitar malentendidos durante la construcción: **el destino del proyecto es un servicio que recibe una pregunta y devuelve una respuesta redactada, citada y verificada, con el LLM ejecutándose dentro de Ragmur.**
@@ -122,20 +131,23 @@ Solo se aborda si aparece un corpus real que lo exija.
 
 Sin LLM en ninguna tarea de esta fase.
 
-> **Nota de método.** Las tareas 1.2 a 1.6 conviene recorrerlas dos veces: una primera pasada mínima que atraviese el camino completo —un fichero TXT, troceado fijo, solo búsqueda densa, sin reranking— hasta tener `POST /v1/documents` y `POST /v1/search` respondiendo de punta a punta, y una segunda pasada añadiendo cada capa sobre algo que ya funciona y ya se puede medir.
->
-> No altera el contenido ni el orden de las tareas, solo su granularidad. La ventaja es tocar embeddings y Qdrant desde el principio, y añadir BM25, RRF y reranking sobre un sistema observable en lugar de sobre teoría.
+Cada tarea se valida mediante su interfaz disponible antes de iniciar la siguiente.
+La ingesta de 1.2 valida persistencia y extracción; 1.3 añade troceado; 1.4 completa el indexado.
+No se adelantan endpoints de búsqueda para cerrar tareas anteriores ni se marca `indexed` antes de implementar 1.4.
 
 ### 1.1 Multi-tenancy y autenticación
 
 - [ ] Tabla `tenants` (id, nombre, timestamps)
 - [ ] Tabla `api_keys` (tenant_id, key_id, key_hash, nombre, revoked_at, last_used_at)
 - [ ] Formato de clave `rgm_<key_id>_<secret>`: búsqueda por `key_id` indexado, comparación del secreto en tiempo constante
-- [ ] Hash con HMAC-SHA256 y clave de servidor, **no bcrypt ni argon2** (se pagaría ~100 ms en cada petición, y una API key no es una contraseña humana)
+- [ ] Hash con HMAC-SHA256 y clave de servidor; secreto aleatorio, sin hash lento de contraseñas humanas
+- [ ] Secretos de API key con al menos 256 bits aleatorios; parser con dos separaciones máximas y comparación constante
 - [ ] `api_key_hmac_secret` en `Settings` y en `.env.example`, sin valor por defecto: sin él el servicio no debe arrancar
 - [ ] Dependencia FastAPI que resuelve el tenant desde `X-API-Key` y rechaza claves revocadas
 - [ ] `last_used_at` amortiguado: se actualiza como mucho una vez por minuto y clave, no en cada petición
 - [ ] CLI para crear tenant, emitir API key y revocarla, con `argparse` de la biblioteca estándar
+- [ ] Clave completa solo en la salida de emisión; secretos ausentes de logs, errores y representaciones de configuración
+- [ ] Documentar que rotar la clave HMAC exige reemitir las API keys; actualizar también las variables de CI
 - [ ] Test: sin clave → 401; clave revocada → 401; con clave de otro tenant → no accede a datos ajenos
 
 **Nota sobre `last_used_at`.** Escribirlo en cada petición añade un `UPDATE` por petición a un servicio cuyo camino de lectura es, por lo demás, una consulta indexada y una búsqueda vectorial. El dato sirve para saber si una clave sigue en uso, y para eso basta una resolución de minutos.
@@ -144,24 +156,31 @@ Sin LLM en ninguna tarea de esta fase.
 
 El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo el corpus.
 
-**Cierre:** dos tenants creados desde la CLI, y la clave de uno no permite ver nada del otro.
+**Cierre:** la CLI crea dos tenants, emite claves y revoca una sin afectar a la otra.
+Una ruta protegida de prueba recibe el tenant correcto y rechaza claves inválidas, ausentes o revocadas.
+El aislamiento sobre documentos y puntos se verifica cuando existan esas interfaces, en 1.2 y 1.5.
 
 ### 1.2 Ingesta
 
-- [ ] Tabla `documents` (id, tenant_id, owner_id, filename, mime, content_sha256, storage_path, status, page_count, chunk_count, error, created_at, updated_at)
+- [ ] Tabla `documents` según arquitectura, con `mime_type`, estados restringidos y migración Alembic
 - [ ] Unicidad `(tenant_id, owner_id, content_sha256)` declarada con **`nulls not distinct`** (`postgresql_nulls_not_distinct=True`)
 - [ ] Almacenamiento del fichero original en disco bajo `STORAGE_DIR`, con `storage_path` en la fila y borrado en cascada al eliminar el documento
 - [ ] `POST /v1/documents` — multipart con `file` y `owner_id` opcional, responde 202 con `document_id`
 - [ ] Deduplicación por `content_sha256`: subida repetida en el mismo espacio devuelve 200 con el documento existente, sin reindexar
+- [ ] Subidas concurrentes resueltas mediante la unicidad SQL; duplicados devuelven el estado real y limpian sus temporales
+- [ ] `202` solo después de persistir fichero y fila; `Location` permite consultar el estado
 - [ ] Extractor PDF (`pypdfium2`) con localizador de tipo `page`, con `start` y `end` porque un chunk puede cruzar la frontera de página
 - [ ] Extractor DOCX (python-docx) con localizador de tipo `section` u `offset`
 - [ ] Extractor TXT y Markdown con localizador `offset` y `section` respectivamente
 - [ ] PDF sin capa de texto → estado `unsupported` con mensaje explícito. Definir el umbral de detección (caracteres extraídos por página)
 - [ ] Límites de subida: tamaño máximo en bytes, número máximo de páginas y timeout de extracción
-- [ ] Validación del MIME por contenido real, no por la cabecera del multipart
-- [ ] Límite de concurrencia en las `BackgroundTasks` (semáforo de 1–2): sin él, N subidas simultáneas compiten por la GPU y se degradan entre sí
-- [ ] Al arrancar el proceso, marcar como `failed` los documentos que lleven demasiado tiempo en `processing`. Sin esto, un reinicio los deja colgados para siempre
-- [ ] `GET /v1/documents` (con filtro por `owner_id`), `GET /v1/documents/{id}`, `DELETE /v1/documents/{id}` con borrado en cascada de vectores
+- [ ] Validación por firma, estructura y decodificación; límite de expansión de DOCX y texto extraído
+- [ ] PDF en proceso aislado y terminable; timeout comprobado y ninguna llamada concurrente a PDFium desde hilos
+- [ ] Límite de trabajos aceptados y activos; instancia única; trabajo con sesión propia e identificadores persistidos
+- [ ] Recuperación al arrancar de `pending`, `processing` y `deleting`, según el contrato de arquitectura
+- [ ] Listado con cursor y límite; detalle y borrado con filtro por tenant y `owner_id` opcional
+- [ ] Borrado reintentable: `deleting`, limpieza externa y eliminación final de fila; `409` si hay una ingesta activa
+- [ ] Tests de `404` indistinguible, aislamiento en PostgreSQL, fallo de disco y limpieza de temporales
 
 **Nota.** `python-docx` no puede dar número de página: la paginación la calcula el renderizador al maquetar y no existe en el fichero. TXT y Markdown tampoco tienen páginas. Por eso el localizador tiene tipo y cada extractor rellena el que su formato sostiene.
 
@@ -169,9 +188,12 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 
 **Nota sobre el fichero original.** La tarea 1.4 incluye un comando de reindexado que reaplica troceado e indexado desde el fichero original, y la tarea 1.7 termina reajustando los parámetros de troceado. Si el fichero no se conserva, ese reajuste obliga a volver a subir todo el corpus a mano.
 
-**Nota sobre el extractor de PDF.** PyMuPDF queda descartado por licencia: es AGPL-3.0, cuya cláusula de red alcanza a un servicio expuesto por HTTP, y el proyecto se publica bajo MIT. `pypdfium2` (Apache-2.0 / BSD-3-Clause) extrae texto por página con calidad comparable. Ver `DECISIONS.md` §3.13.
+**Nota sobre el extractor de PDF.** Se mantiene `pypdfium2` por su licencia permisiva y extracción por página.
+La calidad se comprueba con documentos reales, incluidos PDF mixtos, vacíos y con columnas. Ver `DECISIONS.md` §3.13.
 
-**Cierre:** un PDF se ingiere conservando la página de origen; un DOCX se ingiere conservando sección o desplazamiento; subir dos veces el mismo fichero no duplica chunks, ni con `owner_id` ni sin él.
+**Cierre:** los extractores conservan el localizador y los límites de entrada funcionan.
+Dos subidas iguales, incluso concurrentes, generan una sola fila y un solo original por espacio.
+El borrado de puntos y la transición completa a `indexed` se verifican en 1.4, cuando exista el índice.
 
 ### 1.3 Troceado
 
@@ -179,29 +201,36 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 - [ ] Cada chunk conserva `document_id`, `tenant_id`, `owner_id`, localizador, posición ordinal y texto
 - [ ] Valores iniciales 800 / 120, ajustados posteriormente con resultados de 1.7
 - [ ] Tests: sin pérdida de texto, sin chunks vacíos, localizador coherente con el texto del chunk
+- [ ] Spans sobre texto normalizado; páginas desde 1; offsets Unicode desde 0 con extremo final excluido
+- [ ] Markdown sin encabezados usa offsets; las secciones repetidas se distinguen por ruta y ordinal
 
 **Nota.** Cambiar los parámetros de troceado tras 1.7 regenera todos los chunks con `chunk_id` nuevos y obliga a reindexar el corpus. Está previsto, y por eso 1.4 incluye un comando de reindexado.
 
-**Cierre:** un documento troceado y vuelto a unir reproduce el texto original, y cada chunk apunta a un localizador correcto.
+**Cierre:** reconstruir por spans, sin duplicar solapes, reproduce el texto normalizado y conserva sus localizadores.
 
 ### 1.4 Indexado
 
-- [ ] Instalación de PyTorch con ruedas **cu128** para la RTX 5080 (Blackwell, `sm_120`), con índice declarado en `pyproject.toml` y variante de CPU para CI
+- [ ] Fijar PyTorch, rueda CUDA y controlador compatibles con `sm_120`; variante CPU para CI y prueba real de inferencia
 - [ ] Servicio de embeddings bge-m3, cargado en el `lifespan` y reutilizado entre peticiones
 - [ ] Generación de vectores dispersos BM25 con FastEmbed, con `language` **declarado explícitamente**
+- [ ] Separar `embed` documental de `query_embed`; registrar versión, idioma, stopwords, stemmer, `k`, `b` y `avg_len`
 - [ ] Colección `ragmur_chunks` con vectores nombrados `dense` y `sparse`
 - [ ] **El vector `sparse` se declara con `modifier=IDF`** — ver nota, es el fallo silencioso más probable de toda la fase
-- [ ] Corpus del IDF acotado al tenant mediante `SearchParams(idf=IdfCorpusParams(corpus=...))`
+- [ ] Corpus IDF por tenant y por `owner_id` si existe; comprobar la capacidad del servidor y aplicarla en prefetch disperso
 - [ ] Índice de payload sobre `tenant_id` con `is_tenant=True`
 - [ ] Índice de payload sobre `owner_id`
 - [ ] Índice de payload sobre `document_id` (borrado por documento y filtro `document_ids` de `/v1/search`)
 - [ ] Escritura por lotes
 - [ ] Transición del documento a estado `indexed`
-- [ ] Comando de reindexado (un documento, un tenant o todo el corpus) que reaplica troceado e indexado desde el fichero original
+- [ ] Confirmación de todos los lotes antes de `indexed`; compensación de fallos parciales y exclusión de documentos incompletos
+- [ ] Completar pruebas de borrado de puntos, reintentos y recuperación tras reinicios con Qdrant real
+- [ ] Reindexado desde originales, con la API detenida: documento, tenant o corpus; limpieza previa y nuevas identidades de chunks
 
 **Nota sobre `modifier=IDF`.** FastEmbed emite frecuencias de término; el componente IDF —el que da más peso a los términos raros del corpus— lo aplica Qdrant en el servidor, y solo si el vector disperso se declaró con ese modificador. Sin él, la rama léxica puntúa por pura repetición y pierde exactamente aquello que justifica tenerla junto a la búsqueda densa. No lanza ningún error: el sistema funciona y recupera peor. Solo se detecta con evaluación.
 
-**Nota sobre el corpus del IDF.** Con colección única las estadísticas son globales por defecto, así que el vocabulario de un tenant distorsiona la rareza de los términos de otro. Qdrant 1.19 permite acotarlas con un filtro de payload, de modo que ya no hay que asumir esa interferencia: se pasa el mismo filtro de tenant que la consulta. Es el motivo de que el suelo de `qdrant-client` sea `>=1.19`. Ver `DECISIONS.md` §3.14.
+**Nota sobre el corpus del IDF.** Las estadísticas por defecto abarcan cada shard, no cada tenant.
+Se acotan al espacio autorizado, incluido `owner_id` cuando existe; `document_ids` no cambia ese corpus.
+La falta de esta capacidad impide el arranque, no autoriza omitirla. Ver `DECISIONS.md` §3.14.
 
 **Nota sobre el idioma del BM25.** El `language` de FastEmbed vale `english` si no se indica: sobre corpus en español, el stemming y las palabras vacías son los del idioma equivocado. **No lanza ningún error**, exactamente igual que el modificador IDF. Con corpus mixto hay que comparar en 1.7 `language="spanish"` contra `disable_stemmer=True`, porque un stemmer del idioma equivocado puede ser peor que ninguno.
 
@@ -213,11 +242,17 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 - [ ] Rama densa: embedding de consulta + búsqueda vectorial
 - [ ] Rama léxica: vector disperso BM25
 - [ ] Fusión RRF mediante la Query API de Qdrant
+- [ ] Registrar constante RRF y límites por rama; conservar la misma configuración durante cada comparación
 - [ ] `candidates` definido como el tamaño de la lista **tras la fusión** y antes del reranking; cada rama recupera internamente lo necesario para alimentarla
 - [ ] Filtro por `tenant_id` obligatorio en toda consulta, con test que lo garantice
 - [ ] Filtro adicional por `owner_id` cuando la petición lo incluye, con test de aislamiento entre dos `owner_id` del mismo tenant
-- [ ] Ningún módulo importa `qdrant_client` salvo `retrieval/store.py`, y toda función pública de `store.py` recibe `tenant_id` como primer argumento obligatorio. Test de imports que lo verifique
+- [ ] Test de arquitectura: solo `retrieval/store.py` importa `qdrant_client`; sus funciones públicas reciben `tenant_id` primero, excepto `create_client()` y `ping()`
 - [ ] Respuesta con `chunk_id`, `document_id`, filename, localizador, texto, score y rango por rama
+- [ ] `1 <= top_k <= candidates`; límites de consulta y listas; `document_ids=[]` devuelve `422`
+- [ ] Filtro completo en ambas ramas y fusión; resolución por IDs con el mismo alcance
+- [ ] Validación de documentos `indexed` en PostgreSQL antes de devolver fragmentos o citas
+- [ ] `score_type` explícito; rangos desde listas de rama y coste de consultas adicionales incluido en `timings_ms`
+- [ ] Tests con corpus vacío, términos sin coincidencias, IDs ajenos, owner omitido y documentos compartidos
 
 **Nota.** El filtro por tenant se aplica en la capa de aplicación: una consulta que lo olvide devuelve datos ajenos sin dar ningún error. De ahí el punto de estrangulamiento en `store.py`, que es la misma idea que la regla del `llm/provider.py` aplicada a Qdrant.
 
@@ -227,31 +262,40 @@ El aislamiento se implementa aquí. Añadirlo después obliga a reindexar todo e
 
 - [ ] Cross-encoder bge-reranker-v2-m3 sobre los candidatos de la fusión
 - [ ] `candidates` por defecto 30 → `top_k` por defecto 5
-- [ ] Los candidatos se puntúan en un único lote, no en bucle
+- [ ] Candidatos puntuados por lotes acotados, sin una llamada por candidato; registrar memoria y latencia
 - [ ] Activable y desactivable por petición
 - [ ] Latencia añadida registrada en `timings_ms`
 - [ ] Objetivo de latencia p95 de `/search` con reranking activo, fijado y medido, indicando el hardware
 
 **Nota.** El reranking es el coste dominante de una consulta. Sin un objetivo de latencia declarado, la capa entra en el sistema sin presupuesto y no hay forma de decidir si compensa.
 
-**Cierre:** la misma consulta con `rerank: true` y `rerank: false` devuelve los mismos fragmentos en distinto orden, y la diferencia de latencia queda registrada.
+**Cierre:** el reranker conserva el conjunto completo de candidatos antes del corte y puede cambiar el `top_k` final.
+La diferencia de latencia queda registrada; no se exige una mejora de calidad antes de evaluarla.
 
 ### 1.7 Evaluación
 
 - [ ] `eval/golden_set.yaml` con 25–30 consultas reales y sus fuentes esperadas
 - [ ] `expected` es una **lista** de fuentes, no una sola: una consulta puede tener varios fragmentos válidos, y tratarla como única convierte recall@k en un simple hit-rate
 - [ ] Incluir **consultas negativas** (`expected: []`), sin respuesta en el corpus
-- [ ] `eval/run.py` calculando recall@k, MRR, nDCG@10 y latencia p95
+- [ ] Manifiesto del corpus con claves estables y hashes; evidencias por localizador y cita, independientes de `chunk_id`
+- [ ] Separar desarrollo y prueba reservada antes de ajustar; documentar límites de la muestra
+- [ ] `eval/run.py` con recall@candidates, recall@10, hit-rate@10, MRR@10, nDCG@10 y latencias p50/p95
+- [ ] Negativas fuera del denominador de métricas positivas; evidencia repetida sin ganancia adicional
 - [ ] Añadir `eval` a `files` en la configuración de `mypy` (se excluyó mientras el directorio estuvo vacío)
 - [ ] Ejecución sobre cuatro configuraciones: densa, BM25, híbrida, híbrida + reranking
 - [ ] Desglose de victorias, derrotas y empates por consulta entre configuraciones
-- [ ] Resúmenes versionados en `eval/results/` con fecha, configuración y hardware
+- [ ] Resúmenes con fecha, commit, corpus, partición, revisiones de modelos, configuración, hardware y concurrencia
+- [ ] Inferencia real en evaluación; modelos simulados solo en unitarios
+- [ ] Fijar objetivos tras la línea base de desarrollo, antes de ejecutar la prueba reservada
 - [ ] Reajuste de troceado, `top_k` y umbrales con los resultados obtenidos, reindexado y segunda medición
 - [ ] Tabla del README rellenada con cifras reales
 
-**Qué métrica mide qué etapa.** recall@k mide la **recuperación**: si el fragmento correcto entra en la lista. El reranking no añade documentos, reordena los que ya están, así que recall@k apenas se mueve al activarlo y la fila "híbrida + reranking" parecería una capa inútil. El orden lo miden **nDCG@10 y MRR**. Publicar una cifra sin decir sobre qué etapa se calcula no vale.
+**Qué métrica mide qué etapa.** El reranking conserva recall sobre todos los candidatos, pero puede cambiar recall@10 tras el corte.
+MRR@10 y nDCG@10 miden además el orden. Las cuatro configuraciones usan `top_k=10` y el mismo presupuesto de candidatos.
+Las consultas negativas no prueban abstención mientras no exista una política calibrada de rechazo.
 
-**Sobre el tamaño de la muestra.** Con 25–30 consultas, cada una vale unos 4 puntos porcentuales y el intervalo de confianza es más ancho que la diferencia que se busca entre configuraciones. Por eso el desglose por consulta no es un extra: con muestra pequeña, "híbrida gana en 9, pierde en 2, empata en 14" es más honesto y más informativo que "62 % frente a 58 %".
+**Sobre el tamaño de la muestra.** Reportar el número efectivo de consultas positivas, negativas y reservadas junto con los resultados.
+Con pocas consultas, una diferencia agregada no demuestra una mejora general; el informe incluye victorias, derrotas y empates por consulta.
 
 Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `top_k` y umbrales con datos en lugar de intuición.
 
@@ -261,20 +305,24 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 
 - [ ] Segmentador de respuesta en frases, sin LLM
 - [ ] Servicio NLI con `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` (identificador completo: «mDeBERTa-v3-base-xnli» a secas no existe como repositorio)
-- [ ] Los pares (premisa, hipótesis) se puntúan en lote, no en bucle
-- [ ] Ventaneo para fragmentos que exceden el contexto del modelo, conservando puntuación máxima
+- [ ] Pares puntuados por lotes acotados; límites de frases, chunks y ventanas por petición
+- [ ] Ventanas con presupuesto para hipótesis y tokens especiales; etiquetas leídas desde la configuración del modelo
+- [ ] Máximos separados de entailment y contradiction; precedencia y significado de score según arquitectura
 - [ ] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
 - [ ] `POST /v1/verify` — entrada: texto redactado + `chunk_ids` + `owner_id` opcional; salida: veredicto por frase con score
 - [ ] Los `chunk_ids` se resuelven filtrando por `tenant_id` y, si se envía, por `owner_id`. Un `chunk_id` fuera del espacio del solicitante se ignora, no se puntúa
-- [ ] Umbrales configurables, **calibrados sobre el set de prueba propio**
-- [ ] Mitigación de correferencia: concatenar la frase anterior a la hipótesis
+- [ ] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
+- [ ] Evaluar correferencia con y sin frase anterior antes de activar la mitigación
 - [ ] Set de prueba con afirmaciones deliberadamente falsas y afirmaciones deliberadamente contradichas
+- [ ] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
+- [ ] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
 
 **Por qué `contradicted` va separado.** El modelo NLI ya distingue tres clases. Que la fuente no diga nada sobre una afirmación (`unsupported`) y que la fuente afirme lo contrario (`contradicted`) son fallos de gravedad muy distinta, y el segundo es la mejor demostración de lo que hace el verificador. Colapsarlos tira la señal más valiosa.
 
 **Por qué los umbrales se calibran y no se copian.** Los modelos XNLI se entrenaron con premisas de una sola frase. Un chunk de 800 caracteres como premisa es un régimen distinto al de entrenamiento, y los umbrales publicados en la literatura no se transfieren.
 
-**Falsos positivos esperados.** Una frase que empieza por "este plazo" o "dicha cláusula" es inverificable aislada y se clasificará como `unsupported` sin que haya nada mal en ella. De ahí la mitigación por correferencia.
+**Errores esperados.** Una referencia como "este plazo" puede causar un falso `unsupported`.
+Añadir contexto anterior también puede cambiar la afirmación evaluada; su beneficio debe medirse.
 
 **Cierre:** una afirmación inventada sobre un documento real se clasifica como `unsupported`, y una afirmación que contradice al documento se clasifica como `contradicted`.
 
@@ -283,13 +331,19 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [ ] Tests sobre ingesta, búsqueda, aislamiento entre tenants y aislamiento por `owner_id`
 - [ ] `/health` (proceso vivo) separado de `/ready` (modelos cargados y dependencias conectadas)
 - [ ] Rate limiting por API key
+- [ ] Límites de capacidad global para inferencia e ingesta; `429` y `503` diferenciados
 - [ ] Borrado completo de un tenant, incluidos sus puntos en Qdrant y sus ficheros en `STORAGE_DIR`
-- [ ] `Dockerfile` con base CUDA, volumen para la caché de modelos y volumen para `STORAGE_DIR`
+- [ ] Contenedor compatible con la rueda PyTorch elegida; GPU expuesta; volúmenes para caché de modelos y `STORAGE_DIR`
 - [ ] README con arquitectura, arranque y cifras de evaluación
 - [ ] Desplegado en el homelab con un corpus real como primer tenant
 - [ ] Demo accesible públicamente
+- [ ] Demo con clave solo en servidor, tenant de corpus público y rutas permitidas; sin subida ni borrado públicos
+- [ ] PostgreSQL y Qdrant sin exposición pública; secretos propios del despliegue; logs sin contenido privado
+- [ ] Copia y restauración comprobadas de PostgreSQL y originales; reconstrucción de Qdrant documentada
+- [ ] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
 
-**Nota sobre el `Dockerfile`.** Figura en el árbol de `ARCHITECTURE.md` desde el principio y no tenía tarea propia. Necesita imagen base con CUDA 12.8 para que las ruedas `cu128` de PyTorch funcionen, y dos volúmenes persistentes: la caché de modelos —que si no se descarga entera en cada arranque— y `STORAGE_DIR`, cuyo contenido es la única copia de los ficheros originales.
+**Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
+Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.
 
 **Nota sobre `/ready`.** Los modelos tardan decenas de segundos en cargar. Si el health check devuelve 200 antes de que estén listos, el orquestador manda tráfico y las primeras peticiones expiran.
 
@@ -307,16 +361,19 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [ ] Tabla `llm_configs`: proveedor y modelo por tenant
 - [ ] Lista permitida de `provider/model`: llegan desde la API y determinan a quién se factura
 - [ ] Tabla de uso: tokens y coste por petición y por tenant
+- [ ] Definir esquema y migración de uso y presupuestos al abrir la fase; reservar presupuesto antes de llamadas concurrentes
 - [ ] Presupuesto por tenant con corte al superarlo
 - [ ] `PUT /v1/config/llm` — cambio de proveedor y modelo sin reiniciar el servicio
 - [ ] Fallback configurable ante fallo del proveedor primario
+- [ ] Fallback remoto solo si la política del tenant autoriza enviar documentos fuera del servicio
+- [ ] Timeout total, cancelación y límites de tokens aplicados también a reintentos y fallback
 - [ ] Test con Ollama local y con un proveedor remoto
 
 **Nota.** `llm_configs` no guarda credenciales del proveedor. Si un tenant configura `provider: openai`, se gasta la cuenta del operador. De ahí la lista permitida y el presupuesto; si en algún momento hacen falta credenciales por tenant, se cifran en reposo.
 
 ### 2.2 Router de recuperación
 
-- [ ] Detección de recuperación pobre: número de resultados o score máximo bajo umbral
+- [ ] Detección de recuperación pobre calibrada con datos; ni el número de resultados ni RRF garantizan relevancia
 - [ ] Reescritura de la consulta en 2–4 sub-consultas mediante el LLM
 - [ ] Reintento contra la búsqueda híbrida y fusión RRF de los resultados de todas las sub-consultas
 - [ ] Límites de reintentos y de latencia total
@@ -330,6 +387,7 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [ ] Modo `verifier=nli|llm`
 - [ ] Métrica de acuerdo entre verificador NLI y verificador LLM sobre el golden set
 - [ ] Delimitación explícita del contexto recuperado en el prompt
+- [ ] Validar que cada cita referencia evidencia autorizada del contexto enviado; declarar conflicto y ausencia de evidencia
 
 **Nota sobre inyección de prompt.** El contenido ingerido llega al LLM, así que un documento con instrucciones incrustadas puede manipular la redacción. **La verificación NLI no protege de esto:** una respuesta manipulada puede ser enteramente `supported` por los chunks citados. Se documenta como riesgo asumido y se mitiga parcialmente delimitando el contexto en el prompt.
 
@@ -348,7 +406,9 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [ ] Cifra de acuerdo NLI vs LLM documentada
 - [ ] README actualizado con ambas mejoras medidas
 
-**Nota.** El router solo actúa cuando la recuperación es pobre. Medido sobre el golden set completo —construido en 1.7 con consultas que la búsqueda directa ya resuelve— la comparación `/search` frente a `/query` saldrá plana por construcción, igual que recall@10 salía plano para el reranking. De ahí el subconjunto difícil: es donde la capa agéntica puede demostrar algo.
+**Nota.** El conjunto de 1.7 incluye aciertos, fallos y negativas.
+El subconjunto difícil se fija antes de ajustar el router; se reportan también sus regresiones y coste adicional.
+El acuerdo entre verificadores no sustituye la comparación con etiquetas humanas: ambos pueden coincidir en un error.
 
 **Cierre de la fase 2.** `/answer` devuelve respuesta redactada, citas y veredicto de verificación; el proveedor de LLM se cambia sin reiniciar y el fallback funciona; y están publicadas las dos cifras: mejora del router sobre el subconjunto difícil, y grado de acuerdo entre verificador NLI y verificador LLM.
 

@@ -19,7 +19,8 @@ diseño objetivo. No son una lista de funcionalidades disponibles.
 
 El sistema objetivo recibe documentos, guarda fragmentos por tenant en Qdrant
 y devuelve resultados de recuperación con fuente. Una fase posterior añade
-respuestas generadas y verificación de citas. El diseño exige `tenant_id` como
+respuestas generadas. La fase 1 ya contempla verificación de texto enviado por el cliente.
+El diseño exige `tenant_id` como
 filtro en toda operación del almacén vectorial. Las API keys derivan el tenant.
 Los clientes pueden proporcionar `owner_id` para separar a sus usuarios.
 
@@ -28,17 +29,27 @@ orden permite medir su calidad antes de que un modelo de lenguaje oculte fallos.
 
 ## Desarrollo
 
+Si no existe `.env`, copia `.env.example` y ajusta sus valores antes de ejecutar estos comandos.
+El Compose actual es para desarrollo local; sus credenciales y puertos publicados no constituyen una configuración de despliegue.
+
 ```bash
-uv sync
+uv sync --locked
 docker compose up -d
 uv run alembic upgrade head
 uv run pytest
 uv run ruff check .
 uv run mypy
+uv run uvicorn ragmur.main:app --reload
 ```
 
 Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
+
+La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
+La siguiente tarea funcional es 1.1, autenticación y tenants.
+
+Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
+En fase 0, `/health` comprueba PostgreSQL y Qdrant. `/ready`, la ingesta y la búsqueda todavía no están implementados.
 
 ## Stack
 
@@ -57,15 +68,17 @@ posterior antes de que la fase actual cumpla sus criterios de cierre.
 | Evaluación | Golden set propio; RAGAS a partir de la fase 2 |
 | Despliegue | Docker Compose |
 
-Sin frameworks RAG de alto nivel: el pipeline está escrito a mano. Única excepción, `langchain-text-splitters` como utilidad aislada de troceado.
+El pipeline previsto usa componentes explícitos, sin frameworks RAG de alto nivel.
+Se admite `langchain-text-splitters` como utilidad aislada; las dependencias pendientes se aprueban al abrir su tarea.
 
 ## Documentación
 
 - [`ROADMAP.md`](ROADMAP.md) — fases, tareas y criterios de cierre
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — contratos, modelo de datos y decisiones técnicas
 - [`DECISIONS.md`](DECISIONS.md) — por qué el sistema es así, con las alternativas descartadas
-- [`CLAUDE.md`](CLAUDE.md) — reglas para agentes de codificación
+- [`AGENTS.md`](AGENTS.md): reglas para agentes de codificación
+- [`REVIEW.md`](REVIEW.md): revisión previa, pruebas y puntos pendientes
 
 ## Licencia
 
-MIT
+MIT es la licencia prevista. Falta incorporar el fichero `LICENSE` con su titular antes de publicar una versión.

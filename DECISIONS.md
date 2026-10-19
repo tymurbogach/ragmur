@@ -54,8 +54,8 @@ La verificación de citas requiere una afirmación redactada que contrastar. Al 
 **Limitaciones asumidas y documentadas:**
 - La segmentación en frases aproxima la descomposición en afirmaciones atómicas, que un LLM haría mejor.
 - El contexto del modelo NLI es limitado (~512 tokens); los fragmentos largos se recorren por ventanas conservando la puntuación máxima.
-- Los modelos XNLI se entrenaron con premisas de una sola frase. Un chunk de 800 caracteres como premisa es un régimen distinto al de entrenamiento, y la calibración de los umbrales no se transfiere: hay que calibrarlos sobre el set de prueba propio.
-- Una frase que empieza con una referencia anafórica ("este plazo", "dicha cláusula") es inverificable aislada, y producirá falsos `unsupported`. Mitigación prevista: concatenar la frase anterior a la hipótesis.
+- Los chunks difieren de las premisas de entrenamiento NLI; los umbrales se calibran en desarrollo y se evalúan con datos reservados.
+- Una referencia anafórica puede causar falsos `unsupported`. Añadir la frase anterior es una hipótesis que debe evaluarse antes de activarla.
 
 La fase 2 añade `verifier=llm` como modo alternativo y **mide el grado de acuerdo entre ambos verificadores**. Esa comparación es un resultado del proyecto, no un detalle de implementación.
 
@@ -121,7 +121,7 @@ Las decisiones siguientes se incorporaron tras una revisión del diseño, antes 
 
 ```json
 { "locator": { "type": "page",    "start": 4, "end": 5 } }
-{ "locator": { "type": "section", "value": "3.2 Plazos" } }
+{ "locator": { "type": "section", "value": "3.2 Plazos", "path": ["3.2 Plazos"], "ordinal": 3 } }
 { "locator": { "type": "offset",  "start": 12040, "end": 12840 } }
 ```
 
@@ -147,7 +147,7 @@ El consumidor siempre recibe algo con lo que señalar la fuente; qué precisión
 
 **Motivo:** SQLAlchemy 2.0 tiene soporte de tipos real, que es lo que permite que `mypy` cubra también la capa de datos. Alembic es el equivalente directo a las migraciones de Laravel. La decisión estaba implícita en el árbol de directorios (`db/models.py`, `db/migrations/`) y en los comandos documentados, pero sin fijar; se fija aquí.
 
-**Descartado:** `asyncpg` en crudo con SQL a mano. Menos dependencias, pero pierde las migraciones versionadas, que son un requisito del proyecto.
+**Descartado:** `asyncpg` en crudo con SQL manual. Permite migraciones, pero exige mantener más mapeo y contratos de tipos por cuenta propia.
 
 ---
 
@@ -155,16 +155,20 @@ Las decisiones siguientes se incorporaron tras una revisión completa del plan c
 
 ### 3.13 Extractor de PDF: `pypdfium2`, no PyMuPDF
 
-**Problema detectado.** El plan fijaba PyMuPDF como extractor de PDF y el README declara licencia MIT. PyMuPDF se distribuye bajo AGPL-3.0, cuya cláusula de red alcanza a cualquier obra combinada ofrecida como servicio por la red aunque no se distribuya el binario. Ragmur es un servicio HTTP con demo pública prevista en la fase 1: publicar el proyecto como MIT usando PyMuPDF no es posible.
+**Problema detectado.** PyMuPDF ofrece AGPL o licencia comercial; el proyecto busca dependencias permisivas y mantiene MIT como licencia prevista.
+La [documentación de PyMuPDF](https://pymupdf.readthedocs.io/en/latest/about.html#license-and-copyright) describe ambas opciones.
+La redacción anterior confundía esta preferencia con una incompatibilidad absoluta entre cualquier uso de AGPL y código propio bajo MIT.
 
-**Decidido:** `pypdfium2`, enlaces a PDFium bajo Apache-2.0 o BSD-3-Clause a elección. Extrae texto por página con calidad comparable y velocidad cercana, que es cuanto necesita el localizador de tipo `page`.
+**Decidido:** mantener `pypdfium2`, con licencia permisiva y extracción por página.
+La calidad y velocidad sobre el corpus propio se verifican; no se presupone equivalencia con otro extractor.
 
 **Descartado:**
 - *Comprar licencia comercial de PyMuPDF a Artifex.* Desproporcionado para un proyecto de portfolio.
 - *Cambiar la licencia del proyecto a AGPL.* Resolvería el conflicto legal, pero un proyecto de portfolio bajo AGPL es notablemente menos reutilizable por quien lo lea, que es justo el objetivo profesional del punto 1.
-- *`pypdf`.* Licencia permisiva (BSD), pero sensiblemente más lento y con peor extracción en PDFs con maquetación a columnas.
+- *`pypdf`.* Alternativa permisiva disponible; no se sustituye el extractor elegido sin evidencia sobre el corpus.
 
-**Reversible con datos.** Si la calidad de extracción de `pypdfium2` resultara insuficiente, se vería en las cifras de 1.7: un fragmento mal extraído no se recupera. En ese caso la salida es cambiar la licencia del proyecto, no el extractor a escondidas.
+**Reversible con datos.** Si la extracción falla, se comparan alternativas y sus licencias antes de acordar un cambio.
+Cambiar la licencia del proyecto no es la única opción posible.
 
 ### 3.14 El corpus del IDF se acota al tenant
 
@@ -176,11 +180,18 @@ Las decisiones siguientes se incorporaron tras una revisión completa del plan c
 models.SearchParams(idf=models.IdfCorpusParams(corpus=tenant_filter))
 ```
 
-**Consecuencia:** el suelo de `qdrant-client` sube a `>=1.19`. En versiones anteriores el parámetro no existe y las estadísticas vuelven a ser globales **sin dar error**, que es el mismo modo de fallo silencioso que `modifier=IDF`.
+**Consecuencia:** el suelo de `qdrant-client` es `>=1.19` y se comprueba también la capacidad del servidor.
+Omitir el parámetro mantiene estadísticas globales; un cliente antiguo no garantiza aceptar un parámetro desconocido sin error.
+La implementación debe fallar si no puede aplicar el corpus requerido, no retirar el parámetro para continuar.
+
+**Precisión de alcance:** el corpus incluye también `owner_id` cuando existe, para evitar influencia léxica de otros usuarios del tenant.
+El filtro `document_ids` restringe los resultados, pero mantiene las estadísticas del espacio autorizado.
+[Referencia de Qdrant 1.19](https://qdrant.tech/blog/qdrant-1.19.x/#per-tenant-idf-statistics).
 
 ### 3.15 El fichero original se conserva en disco
 
-**Problema detectado.** Dos tareas del plan dependían de poder releer el fichero tal como llegó —la deduplicación por `content_sha256` y el comando de reindexado de 1.4, que reaplica troceado e indexado *desde el fichero original*— y el modelo de datos no tenía dónde guardarlo: ni columna, ni directorio, ni valor de configuración.
+**Problema detectado.** El reindexado de 1.4 necesita releer el original y el modelo de datos no indicaba dónde conservarlo.
+La deduplicación, por sí sola, requiere el hash y la fila existente; no necesita releer el original.
 
 **Decidido:** los bytes se guardan bajo un `STORAGE_DIR` configurable y la fila de `documents` lleva `storage_path`. El borrado de un documento —y el de un tenant completo— elimina también sus ficheros.
 
@@ -210,6 +221,64 @@ models.SearchParams(idf=models.IdfCorpusParams(corpus=tenant_filter))
 
 **Fijado:** «carga perezosa» significa *una sola vez por proceso y reutilizada entre peticiones*, no *diferida hasta que alguien la pida*. Los modelos se instancian en el `lifespan` y viven en `Resources`. La contrapartida —arranque lento— es exactamente lo que `/ready` existe para comunicar.
 
+### 3.19 Consistencia de la ingesta en una instancia
+
+**Refinamiento:** se mantienen `BackgroundTasks`, PostgreSQL, Qdrant y disco, con una sola instancia escritora en fase 1.
+No existe una transacción entre esos tres almacenes; la recuperación tras fallos debe ser explícita.
+
+PostgreSQL determina la disponibilidad mediante `indexed`. Búsqueda y verificación comprueban ese estado antes de exponer texto.
+El borrado usa `deleting` y conserva la fila hasta confirmar la limpieza externa; la tarea 1.2 incorpora el estado mediante migración.
+Los trabajos interrumpidos, incluidos `pending`, se reconcilian al arrancar; los reintentos son explícitos.
+
+**Alternativas:** una cola durable facilita reintentos automáticos, pero añade infraestructura y una dependencia aún no aprobada.
+Versionar generaciones activas permite reindexar sin interrupción, pero esa capacidad sigue fuera de la fase 1.
+El reindexado y el borrado de tenant usan mantenimiento con la API detenida.
+
+### 3.20 Métricas sobre evidencias y datos reservados
+
+**Corrección:** recall mide la fracción de evidencias relevantes recuperadas; hit-rate mide si aparece al menos una.
+Reordenar conserva recall sobre todos los candidatos, pero puede cambiar recall@10 tras el corte final.
+
+El corpus usa identificadores estables, hashes y evidencias localizadas; los chunks repetidos no generan ganancia adicional.
+Las negativas se reportan por separado. Los parámetros se ajustan en desarrollo y se evalúan sobre una partición reservada.
+El mismo principio se aplica a los umbrales NLI; el acuerdo de dos modelos no demuestra que sus respuestas sean correctas.
+
+### 3.21 Coste de los rangos por rama
+
+Se conserva RRF nativo y el contrato que expone rangos de las ramas.
+`store.py` consulta también cada rama para obtener esos rangos y contabiliza ese coste en la latencia.
+Durante escrituras concurrentes, esos diagnósticos no representan una instantánea transaccional; la evaluación usa un corpus inmóvil.
+
+Fusionar en la aplicación evitaría repetir búsquedas, pero cambiaría la decisión de usar RRF nativo.
+Eliminar los rangos reduciría el coste y también la observabilidad prevista; ninguna alternativa se introduce de forma implícita.
+
+### 3.22 Veredictos NLI definidos y acotados
+
+Los máximos de entailment y contradiction se conservan por separado; una contradicción sobre umbral tiene precedencia.
+Esta política evita declarar respaldo sin advertencia cuando dos fuentes discrepan, aunque puede aumentar falsos negativos.
+La evaluación mide ese compromiso y la tasa de respaldo falso.
+
+La entrada tiene límites de tamaño y pares; las ventanas reservan espacio para la hipótesis y los tokens especiales.
+Una hipótesis demasiado larga se rechaza, en lugar de comprobar solo una parte sin indicarlo.
+
+### 3.23 Dependencias por tarea
+
+La lista de tecnologías del diseño no autoriza instalar paquetes nuevos. Cada tarea justifica y solicita sus dependencias antes de incorporarlas.
+La tarea 1.1 usa la biblioteca estándar y las dependencias actuales; `argparse`, `secrets`, `hmac` y `hashlib` cubren su necesidad.
+
+La tarea 1.2 debe proponer `python-multipart`, `pypdfium2` y `python-docx`, con versiones y licencias verificadas.
+Las tareas 1.4, 1.6 y 1.8 proponen su runtime ML y fijan revisiones de modelos; no se instalan en esta revisión.
+El troceado y la lectura del conjunto YAML también deben resolver su dependencia concreta antes de implementarse.
+
+### 3.24 Excepciones de conexión y salud en `store.py`
+
+La regla 8 exceptúa únicamente `create_client()` y `ping()` del argumento obligatorio `tenant_id`.
+Estas funciones preparan una conexión compartida y comprueban el servidor, sin leer ni escribir documentos o fragmentos.
+Exigirles un tenant introduciría un identificador sin función de aislamiento.
+
+Las operaciones de datos mantienen `tenant_id` como primer argumento obligatorio y sus filtros de autorización.
+La tarea 1.5 verifica los imports y las firmas; las excepciones no permiten acceso a datos sin tenant.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:
@@ -223,7 +292,7 @@ Puntos que se aclararon durante el diseño y que conviene no volver a confundir:
 | "Cliente" en la documentación | Significa **aplicación cliente** (la que consume la API), no cliente de pago. |
 | "La redacción la hace el cliente" | Cierto **solo en fase 1**. En el estado final, `/answer` redacta dentro de Ragmur. |
 | "El tenant aísla a cada usuario" | El tenant aísla a cada **aplicación cliente**. El aislamiento entre usuarios finales de una misma aplicación lo da `owner_id` (ver 3.8). |
-| "recall@10 mide todo el pipeline" | recall@10 mide la **recuperación**. El reranking no añade documentos, reordena los ya recuperados, y se mide con nDCG@10 y MRR (ver 6.5). |
+| "El reranking no cambia recall@10" | Conserva los candidatos, pero puede cambiar los diez primeros. Se comparan cobertura antes del corte y métricas de salida. |
 
 ## 5. Requisitos explícitos
 
@@ -238,18 +307,22 @@ Puntos que se aclararon durante el diseño y que conviene no volver a confundir:
 2. Parámetros de troceado, `top_k` y umbrales ajustados con datos de evaluación, nunca por intuición.
 3. Todo test de recuperación comprueba el aislamiento entre tenants, y entre `owner_id` dentro de un mismo tenant.
 4. Las limitaciones conocidas se documentan en lugar de ocultarse; son parte del resultado del proyecto.
-5. Cada métrica se aplica a la etapa que realmente mide: recall@k a la recuperación, nDCG@10 y MRR al reranking. Una cifra publicada sin indicar sobre qué etapa se calcula no vale.
+5. Cada cifra identifica su etapa: recall@candidates antes del reranking; recall@10, MRR@10 y nDCG@10 sobre la salida final.
 6. Toda cifra de latencia se publica indicando el hardware sobre el que se midió.
 
 ## 7. Hardware de referencia
 
 Las mediciones del proyecto se toman sobre el homelab propio: **RTX 5080**, que aloja además Ollama para la fase 2.
 
-Los modelos de la fase 1 (`BAAI/bge-m3`, `BAAI/bge-reranker-v2-m3`, `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`) funcionan también en CPU, y ese modo se mantiene soportado para que el proyecto sea reproducible sin GPU. Pero es el **modo degradado, no el objetivo**: el cross-encoder de reranking sobre 30 candidatos es el coste dominante de una consulta, y la diferencia entre CPU y GPU es de más de un orden de magnitud. Cualquier cifra de `timings_ms` que aparezca en documentación debe indicar sobre cuál de los dos se midió.
+Los modelos previstos conservan un modo CPU para reproducibilidad. No hay mediciones propias que demuestren una relación concreta entre latencias CPU y GPU.
+El informe registra hardware, precisión, lote y concurrencia, además de versiones.
 
-**Restricción de la RTX 5080.** Es arquitectura Blackwell (`sm_120`), soportada por PyTorch a partir de la versión 2.7 y únicamente en las ruedas compiladas contra CUDA 12.8. Las que `uv` resuelve por defecto desde PyPI no sirven, y la instalación equivocada no falla al instalar sino al enviar el primer tensor a la GPU. El índice se declara explícitamente en `pyproject.toml`, con variante `cu128` para el homelab y variante de CPU para CI.
+**Corrección de compatibilidad.** CUDA 12.8 fue una opción inicial para Blackwell, no una restricción permanente.
+[PyTorch 2.12](https://pytorch.org/blog/pytorch-2-12-release-blog/) retira esa rueda y recomienda CUDA 13 para Blackwell, con controlador compatible.
+La tarea 1.4 fija la combinación validada y una variante CPU para CI; no cambia el controlador del equipo como efecto secundario.
 
-**Sobre el nombre del modelo NLI.** El plan lo llamaba «mDeBERTa-v3-base-xnli», que no corresponde a ningún repositorio publicado. Los reales son `MoritzLaurer/mDeBERTa-v3-base-mnli-xnli` y `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`; se elige el segundo, afinado sobre 2,7 millones de pares en 27 idiomas en lugar de sobre XNLI solo, por su mejor rendimiento en español.
+**Modelo NLI.** Se mantiene `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` como candidato inicial.
+Su [ficha](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7) no demuestra superioridad sobre otras variantes en el corpus de Ragmur.
 
 ## 8. Trabajo posterior contemplado
 
@@ -272,7 +345,8 @@ Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental 
 - **Tenant** — Espacio aislado dentro del servicio, correspondiente a una aplicación cliente: sus documentos, su índice y su configuración.
 - **`owner_id`** — Subdivisión opcional del espacio de un tenant, correspondiente a un usuario final de la aplicación cliente.
 - **Localizador** — Referencia a la posición de un chunk dentro de su documento de origen: página, sección o desplazamiento, según lo que el formato permita.
-- **recall@k** — Proporción de consultas cuyo fragmento correcto aparece entre los k primeros resultados. Métrica principal de la etapa de recuperación.
+- **recall@k**: fracción de evidencias relevantes distintas recuperadas entre las esperadas, promediada sobre consultas positivas.
+- **hit-rate@k**: proporción de consultas positivas con al menos una evidencia relevante entre los primeros k resultados.
 - **MRR** — Mean Reciprocal Rank. Media del inverso de la posición del primer resultado correcto. Sensible al orden, no solo a la presencia.
 - **nDCG@k** — Normalized Discounted Cumulative Gain. Mide la calidad del orden de los k primeros resultados. Es la métrica adecuada para el reranking, que reordena sin añadir.
 - **Golden set** — Conjunto versionado de consultas con su fuente esperada, usado para medir la recuperación de forma reproducible.
