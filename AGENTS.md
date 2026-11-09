@@ -57,6 +57,7 @@ uv run alembic upgrade head
 ## Método de trabajo
 
 - Una tarea del roadmap por vez; marcar su casilla al completarla
+- Crear un commit semántico por cada tarea completada y verificada
 - Si hay más de un enfoque razonable, exponer brevemente las opciones y su compromiso antes de implementar. Si solo hay uno sensato, proceder
 - Cuando un cambio invalide algo de `ARCHITECTURE.md`, actualizar el documento en el mismo commit
 - Si una decisión previa resulta equivocada al implementarla, señalarlo en lugar de rodearla
