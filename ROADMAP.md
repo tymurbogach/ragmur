@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 y 1.2 están completadas. La siguiente tarea funcional es **1.3**.
+Las tareas 1.1 a 1.3 están completadas. La siguiente tarea funcional es **1.4**.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -198,12 +198,12 @@ El borrado de puntos y la transición completa a `indexed` se verifican en 1.4, 
 
 ### 1.3 Troceado
 
-- [ ] Troceador recursivo por caracteres, tamaño y solape configurables
-- [ ] Cada chunk conserva `document_id`, `tenant_id`, `owner_id`, localizador, posición ordinal y texto
-- [ ] Valores iniciales 800 / 120, ajustados posteriormente con resultados de 1.7
-- [ ] Tests: sin pérdida de texto, sin chunks vacíos, localizador coherente con el texto del chunk
-- [ ] Spans sobre texto normalizado; páginas desde 1; offsets Unicode desde 0 con extremo final excluido
-- [ ] Markdown sin encabezados usa offsets; las secciones repetidas se distinguen por ruta y ordinal
+- [x] Troceador recursivo por caracteres, tamaño y solape configurables
+- [x] Cada chunk conserva `document_id`, `tenant_id`, `owner_id`, localizador, posición ordinal y texto
+- [x] Valores iniciales 800 / 120, ajustados posteriormente con resultados de 1.7
+- [x] Tests: sin pérdida de texto, sin chunks vacíos, localizador coherente con el texto del chunk
+- [x] Spans sobre texto normalizado; páginas desde 1; offsets Unicode desde 0 con extremo final excluido
+- [x] Markdown sin encabezados usa offsets; las secciones repetidas se distinguen por ruta y ordinal
 
 **Nota.** Cambiar los parámetros de troceado tras 1.7 regenera todos los chunks con `chunk_id` nuevos y obliga a reindexar el corpus. Está previsto, y por eso 1.4 incluye un comando de reindexado.
 

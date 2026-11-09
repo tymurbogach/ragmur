@@ -3,7 +3,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field, SecretStr
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -41,8 +41,17 @@ class Settings(BaseSettings):
     ingestion_max_active: int = Field(default=2, gt=0)
     orphan_min_age_seconds: int = Field(default=3600, gt=0)
     document_list_max_limit: int = Field(default=100, gt=0)
+    chunk_size: int = Field(default=800, gt=0)
+    chunk_overlap: int = Field(default=120, ge=0)
 
     log_level: str = "INFO"
+
+    @model_validator(mode="after")
+    def validate_chunk_overlap(self) -> "Settings":
+        """Comprueba que el solape permita avanzar."""
+        if self.chunk_overlap >= self.chunk_size:
+            raise ValueError("chunk_overlap must be smaller than chunk_size")
+        return self
 
 
 @lru_cache

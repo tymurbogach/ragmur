@@ -2,7 +2,7 @@
 
 Qué se construye y con qué contratos. El porqué de cada decisión está en [`DECISIONS.md`](DECISIONS.md); el orden en [`ROADMAP.md`](ROADMAP.md).
 
-Este documento describe el objetivo, no solo las funciones disponibles. La siguiente tarea funcional es 1.3.
+Este documento describe el objetivo, no solo las funciones disponibles. La siguiente tarea funcional es 1.4.
 La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendientes antes de continuar.
 
 ## Estructura del repositorio
@@ -237,6 +237,7 @@ El consumidor siempre recibe algo con lo que señalar la fuente; la precisión d
 Las páginas empiezan en 1 y su intervalo es inclusivo. Los offsets cuentan caracteres Unicode desde 0 y usan `[start, end)`.
 Los offsets se refieren al texto extraído normalizado, no a bytes del PDF o DOCX.
 La extracción fija saltos de línea y separadores de página antes del troceado y conserva un mapa hacia los localizadores.
+La normalización convierte CRLF y CR a LF e inserta un LF entre páginas de PDF.
 Los chunks de tipo `section` no cruzan secciones; el localizador incluye la ruta de encabezados y su ordinal para resolver títulos repetidos.
 
 El troceador conserva spans del texto normalizado. La prueba de reconstrucción elimina el solape mediante esos spans.

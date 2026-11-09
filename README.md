@@ -48,7 +48,7 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La siguiente tarea funcional es 1.3, troceado.
+La siguiente tarea funcional es 1.4, indexado.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
 `/health` comprueba PostgreSQL y Qdrant. `/ready` y la búsqueda todavía no están implementados.
@@ -57,6 +57,7 @@ La ingesta acepta PDF con texto, DOCX, TXT y Markdown en `POST /v1/documents`.
 La petición usa `multipart/form-data`, el campo `file` y un `owner_id` opcional.
 Consulta el estado con `GET /v1/documents/{id}` o lista con `GET /v1/documents`.
 El estado `extracted` indica extracción completa; el indexado llegará en la tarea 1.4.
+El troceador conserva spans y localizadores; todavía no se ejecuta durante la ingesta.
 Elimina un original con `DELETE /v1/documents/{id}`. Todas estas rutas requieren `X-API-Key`.
 La aplicación usa una sola instancia escritora para cada base de datos y directorio de almacenamiento.
 
