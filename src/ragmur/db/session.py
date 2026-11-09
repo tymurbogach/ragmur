@@ -6,7 +6,9 @@ al arrancar. Abrir una conexión por petición costaría más que la propia cons
 
 from collections.abc import AsyncIterator
 
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import (
+    AsyncConnection,
     AsyncEngine,
     AsyncSession,
     async_sessionmaker,
@@ -27,6 +29,20 @@ def create_session_factory(engine: AsyncEngine) -> async_sessionmaker[AsyncSessi
     del `await` y reventaría.
     """
     return async_sessionmaker(engine, expire_on_commit=False)
+
+
+async def acquire_database_lock(engine: AsyncEngine) -> AsyncConnection:
+    """Reserva la instancia escritora hasta cerrar la conexión."""
+    connection = await engine.connect()
+    try:
+        acquired = await connection.scalar(text("SELECT pg_try_advisory_lock(726146177329)"))
+        if not acquired:
+            raise RuntimeError("Otra instancia de Ragmur ya usa esta base de datos")
+        await connection.commit()
+        return connection
+    except BaseException:
+        await connection.close()
+        raise
 
 
 async def session_scope(

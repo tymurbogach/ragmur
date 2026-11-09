@@ -1,12 +1,11 @@
 # Ragmur
 
-Ragmur es una arquitectura y un prototipo para un servicio de recuperación
-multi-tenant. No es una API RAG lista para producción. Todavía no ofrece
-ingesta de documentos, recuperación, respuestas generadas ni endpoints públicos.
+Ragmur es un prototipo para un servicio de recuperación multi-tenant.
+No es una API RAG lista para producción. Todavía no ofrece recuperación ni respuestas generadas.
 
 ## Estado actual
 
-La fase 0 proporciona la base del proyecto. La fase 1 añade tenants y claves de API.
+La fase 0 proporciona la base del proyecto. La fase 1 incorpora tenants, claves e ingesta.
 El proyecto incluye FastAPI, servicios Docker, migraciones, comprobaciones de salud,
 linting, tipos y CI. El proyecto
 no afirma tener un flujo de recuperación utilizable hasta que la fase 1 esté
@@ -49,10 +48,17 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La siguiente tarea funcional es 1.2, ingesta de documentos.
+La siguiente tarea funcional es 1.3, troceado.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
-En fase 0, `/health` comprueba PostgreSQL y Qdrant. `/ready`, la ingesta y la búsqueda todavía no están implementados.
+`/health` comprueba PostgreSQL y Qdrant. `/ready` y la búsqueda todavía no están implementados.
+
+La ingesta acepta PDF con texto, DOCX, TXT y Markdown en `POST /v1/documents`.
+La petición usa `multipart/form-data`, el campo `file` y un `owner_id` opcional.
+Consulta el estado con `GET /v1/documents/{id}` o lista con `GET /v1/documents`.
+El estado `extracted` indica extracción completa; el indexado llegará en la tarea 1.4.
+Elimina un original con `DELETE /v1/documents/{id}`. Todas estas rutas requieren `X-API-Key`.
+La aplicación usa una sola instancia escritora para cada base de datos y directorio de almacenamiento.
 
 Para administrar el acceso desde la máquina del servicio:
 

@@ -16,6 +16,7 @@ __pycache__/
 # Modelos de ML descargados
 models/
 .cache/huggingface/
+storage/
 
 # Evaluación: se versionan los resúmenes por ejecución, no los volcados por consulta
 eval/results/**/per_query/

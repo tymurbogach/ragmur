@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-La tarea 1.1 está completada. La siguiente tarea funcional es **1.2**.
+Las tareas 1.1 y 1.2 están completadas. La siguiente tarea funcional es **1.3**.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -134,6 +134,7 @@ Sin LLM en ninguna tarea de esta fase.
 Cada tarea se valida mediante su interfaz disponible antes de iniciar la siguiente.
 La ingesta de 1.2 valida persistencia y extracción; 1.3 añade troceado; 1.4 completa el indexado.
 No se adelantan endpoints de búsqueda para cerrar tareas anteriores ni se marca `indexed` antes de implementar 1.4.
+La extracción completada usa `extracted`; el indexado vuelve a leer el original y publica `indexed`.
 
 ### 1.1 Multi-tenancy y autenticación
 
@@ -162,25 +163,25 @@ El aislamiento sobre documentos y puntos se verifica cuando existan esas interfa
 
 ### 1.2 Ingesta
 
-- [ ] Tabla `documents` según arquitectura, con `mime_type`, estados restringidos y migración Alembic
-- [ ] Unicidad `(tenant_id, owner_id, content_sha256)` declarada con **`nulls not distinct`** (`postgresql_nulls_not_distinct=True`)
-- [ ] Almacenamiento del fichero original en disco bajo `STORAGE_DIR`, con `storage_path` en la fila y borrado en cascada al eliminar el documento
-- [ ] `POST /v1/documents` — multipart con `file` y `owner_id` opcional, responde 202 con `document_id`
-- [ ] Deduplicación por `content_sha256`: subida repetida en el mismo espacio devuelve 200 con el documento existente, sin reindexar
-- [ ] Subidas concurrentes resueltas mediante la unicidad SQL; duplicados devuelven el estado real y limpian sus temporales
-- [ ] `202` solo después de persistir fichero y fila; `Location` permite consultar el estado
-- [ ] Extractor PDF (`pypdfium2`) con localizador de tipo `page`, con `start` y `end` porque un chunk puede cruzar la frontera de página
-- [ ] Extractor DOCX (python-docx) con localizador de tipo `section` u `offset`
-- [ ] Extractor TXT y Markdown con localizador `offset` y `section` respectivamente
-- [ ] PDF sin capa de texto → estado `unsupported` con mensaje explícito. Definir el umbral de detección (caracteres extraídos por página)
-- [ ] Límites de subida: tamaño máximo en bytes, número máximo de páginas y timeout de extracción
-- [ ] Validación por firma, estructura y decodificación; límite de expansión de DOCX y texto extraído
-- [ ] PDF en proceso aislado y terminable; timeout comprobado y ninguna llamada concurrente a PDFium desde hilos
-- [ ] Límite de trabajos aceptados y activos; instancia única; trabajo con sesión propia e identificadores persistidos
-- [ ] Recuperación al arrancar de `pending`, `processing` y `deleting`, según el contrato de arquitectura
-- [ ] Listado con cursor y límite; detalle y borrado con filtro por tenant y `owner_id` opcional
-- [ ] Borrado reintentable: `deleting`, limpieza externa y eliminación final de fila; `409` si hay una ingesta activa
-- [ ] Tests de `404` indistinguible, aislamiento en PostgreSQL, fallo de disco y limpieza de temporales
+- [x] Tabla `documents` según arquitectura, con `mime_type`, estados restringidos y migración Alembic
+- [x] Unicidad `(tenant_id, owner_id, content_sha256)` declarada con **`nulls not distinct`** (`postgresql_nulls_not_distinct=True`)
+- [x] Almacenamiento del fichero original en disco bajo `STORAGE_DIR`, con `storage_path` en la fila y borrado en cascada al eliminar el documento
+- [x] `POST /v1/documents` — multipart con `file` y `owner_id` opcional, responde 202 con `document_id`
+- [x] Deduplicación por `content_sha256`: subida repetida en el mismo espacio devuelve 200 con el documento existente, sin reindexar
+- [x] Subidas concurrentes resueltas mediante la unicidad SQL; duplicados devuelven el estado real y limpian sus temporales
+- [x] `202` solo después de persistir fichero y fila; `Location` permite consultar el estado
+- [x] Extractor PDF (`pypdfium2`) con localizador de tipo `page`, con `start` y `end` porque un chunk puede cruzar la frontera de página
+- [x] Extractor DOCX (python-docx) con localizador de tipo `section` u `offset`
+- [x] Extractor TXT y Markdown con localizador `offset` y `section` respectivamente
+- [x] PDF sin capa de texto → estado `unsupported` con mensaje explícito. Definir el umbral de detección (caracteres extraídos por página)
+- [x] Límites de subida: tamaño máximo en bytes, número máximo de páginas y timeout de extracción
+- [x] Validación por firma, estructura y decodificación; límite de expansión de DOCX y texto extraído
+- [x] PDF en proceso aislado y terminable; timeout comprobado y ninguna llamada concurrente a PDFium desde hilos
+- [x] Límite de trabajos aceptados y activos; instancia única; trabajo con sesión propia e identificadores persistidos
+- [x] Recuperación al arrancar de `pending`, `processing` y `deleting`, según el contrato de arquitectura
+- [x] Listado con cursor y límite; detalle y borrado con filtro por tenant y `owner_id` opcional
+- [x] Borrado reintentable: `deleting`, limpieza externa y eliminación final de fila; `409` si hay una ingesta activa
+- [x] Tests de `404` indistinguible, aislamiento en PostgreSQL, fallo de disco y limpieza de temporales
 
 **Nota.** `python-docx` no puede dar número de página: la paginación la calcula el renderizador al maquetar y no existe en el fichero. TXT y Markdown tampoco tienen páginas. Por eso el localizador tiene tipo y cada extractor rellena el que su formato sostiene.
 

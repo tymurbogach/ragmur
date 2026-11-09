@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from ragmur.auth.service import authenticate
 from ragmur.core.config import get_settings
+from ragmur.ingestion.pipeline import IngestionCoordinator
 
 # Importado de `store` y no de `qdrant_client`: la regla es que solo `store.py` toca
 # la biblioteca de Qdrant, y una anotación de tipo no es motivo para romperla.
@@ -30,6 +31,7 @@ class Resources:
     engine: AsyncEngine
     sessions: async_sessionmaker[AsyncSession]
     qdrant: AsyncQdrantClient
+    ingestion: IngestionCoordinator
 
 
 def get_resources(request: Request) -> Resources:

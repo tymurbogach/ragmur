@@ -1,6 +1,7 @@
 """Configuración del servicio, leída del entorno al arrancar."""
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -27,6 +28,19 @@ class Settings(BaseSettings):
     # Un chequeo de salud que tarda más que esto es un fallo a efectos prácticos:
     # quien lo consulta (un balanceador, un orquestador) no va a esperar más.
     health_timeout_seconds: float = Field(default=5.0, gt=0, allow_inf_nan=False)
+
+    storage_dir: Path = Path("./storage")
+    max_upload_bytes: int = Field(default=20 * 1024 * 1024, gt=0)
+    multipart_overhead_bytes: int = Field(default=65536, gt=0)
+    max_extracted_chars: int = Field(default=5_000_000, gt=0)
+    max_docx_expanded_bytes: int = Field(default=50 * 1024 * 1024, gt=0)
+    max_pdf_pages: int = Field(default=500, gt=0)
+    pdf_min_chars_per_page: int = Field(default=10, gt=0)
+    extraction_timeout_seconds: float = Field(default=120, gt=0, allow_inf_nan=False)
+    ingestion_max_jobs: int = Field(default=8, gt=0)
+    ingestion_max_active: int = Field(default=2, gt=0)
+    orphan_min_age_seconds: int = Field(default=3600, gt=0)
+    document_list_max_limit: int = Field(default=100, gt=0)
 
     log_level: str = "INFO"
 

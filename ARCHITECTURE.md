@@ -2,7 +2,7 @@
 
 Qué se construye y con qué contratos. El porqué de cada decisión está en [`DECISIONS.md`](DECISIONS.md); el orden en [`ROADMAP.md`](ROADMAP.md).
 
-Este documento describe el objetivo, no las funciones disponibles. La fase 0 está implementada; la siguiente tarea funcional es 1.1.
+Este documento describe el objetivo, no solo las funciones disponibles. La siguiente tarea funcional es 1.3.
 La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendientes antes de continuar.
 
 ## Estructura del repositorio
@@ -138,10 +138,11 @@ documents
   mime_type       text not null
   content_sha256  text not null
   storage_path    text not null   -- fichero original conservado en disco
-  status          text not null   -- pending | processing | indexed | failed | unsupported | deleting
+  status          text not null   -- pending | processing | extracted | indexed | failed | unsupported | deleting
   page_count      int             -- null en formatos sin paginación
   chunk_count     int
   error           text
+  diagnostic      text            -- advertencias de extracción, sin contenido privado
   created_at      timestamptz not null default now()
   updated_at      timestamptz not null default now()
 
@@ -551,6 +552,7 @@ Un timeout sobre una espera asíncrona no detiene por sí solo una función nati
 |---|---|
 | `pending` | Fichero persistido y fila confirmada; trabajo aceptado |
 | `processing` | Extracción, troceado o indexado en curso |
+| `extracted` | Extracción completada; el original se conserva para el indexado posterior |
 | `indexed` | Todos los lotes confirmados por Qdrant y estado confirmado en PostgreSQL |
 | `failed` | Error recuperable; original conservado para reintento explícito |
 | `unsupported` | Contenido que esta fase no puede procesar, con motivo explícito |

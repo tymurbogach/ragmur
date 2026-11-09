@@ -279,6 +279,16 @@ Exigirles un tenant introduciría un identificador sin función de aislamiento.
 Las operaciones de datos mantienen `tenant_id` como primer argumento obligatorio y sus filtros de autorización.
 La tarea 1.5 verifica los imports y las firmas; las excepciones no permiten acceso a datos sin tenant.
 
+### 3.25 Estado tras la extracción
+
+La fase 1.2 añade `extracted` para una extracción completada sin índice.
+La fase 1.4 vuelve a leer el original y publica `indexed` después de indexar.
+Mantener `processing` indicaría un trabajo activo que ya terminó.
+
+La ingesta usa `python-multipart` 0.0.33 para formularios y `pypdfium2` 5.15.1 para PDF.
+Usa `python-docx` 1.2.0 para DOCX. Sus licencias son Apache 2.0, BSD-3-Clause y Apache 2.0,
+y MIT, respectivamente. `pypdfium2` incluye también las licencias de sus componentes.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

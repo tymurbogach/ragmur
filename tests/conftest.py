@@ -2,6 +2,7 @@
 
 import os
 from collections.abc import AsyncIterator, Iterator
+from unittest.mock import AsyncMock
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -43,8 +44,9 @@ async def _cliente() -> AsyncIterator[AsyncClient]:
 
 
 @pytest.fixture
-async def client() -> AsyncIterator[AsyncClient]:
+async def client(monkeypatch: pytest.MonkeyPatch) -> AsyncIterator[AsyncClient]:
     """Cliente contra PostgreSQL y Qdrant reales, levantados con Docker."""
+    monkeypatch.setattr("ragmur.ingestion.pipeline.IngestionCoordinator.reconcile", AsyncMock())
     async for c in _cliente():
         yield c
 
@@ -62,6 +64,9 @@ async def client_sin_dependencias(
     monkeypatch.setenv("DATABASE_URL", "postgresql+asyncpg://nadie:nadie@127.0.0.1:59999/nada")
     monkeypatch.setenv("QDRANT_URL", "http://127.0.0.1:59998")
     monkeypatch.setenv("HEALTH_TIMEOUT_SECONDS", "2")
+    lock = AsyncMock()
+    monkeypatch.setattr("ragmur.main.acquire_database_lock", AsyncMock(return_value=lock))
+    monkeypatch.setattr("ragmur.ingestion.pipeline.IngestionCoordinator.reconcile", AsyncMock())
     get_settings.cache_clear()
 
     async for c in _cliente():

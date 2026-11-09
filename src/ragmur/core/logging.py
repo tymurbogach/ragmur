@@ -22,6 +22,22 @@ _ATRIBUTOS_ESTANDAR = frozenset(logging.LogRecord("", 0, "", 0, "", None, None).
 }
 
 
+class AccessQueryFilter(logging.Filter):
+    """Retira las consultas HTTP de los registros de acceso."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        if (
+            record.name == "uvicorn.access"
+            and isinstance(record.args, tuple)
+            and len(record.args) == 5
+        ):
+            args = list(record.args)
+            if isinstance(args[2], str):
+                args[2] = args[2].split("?", 1)[0]
+                record.args = tuple(args)
+        return True
+
+
 class JsonFormatter(logging.Formatter):
     """Convierte un registro de log en una línea de JSON."""
 
@@ -48,6 +64,7 @@ def configure_logging(level: str = "INFO") -> None:
     """
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(JsonFormatter())
+    handler.addFilter(AccessQueryFilter())
 
     root = logging.getLogger()
     root.handlers = [handler]

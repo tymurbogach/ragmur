@@ -18,6 +18,9 @@ dependencies = [
     # tenant. En versiones anteriores el parámetro no existe y el IDF vuelve a ser
     # global sin dar ningún error.
     "qdrant-client>=1.19",
+    "python-multipart>=0.0.33",
+    "pypdfium2>=5.15.1",
+    "python-docx>=1.2.0",
 ]
 
 [dependency-groups]
