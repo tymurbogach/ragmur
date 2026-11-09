@@ -2,7 +2,7 @@
 
 import logging
 from collections.abc import AsyncIterator
-from contextlib import asynccontextmanager
+from contextlib import AsyncExitStack, asynccontextmanager
 
 from fastapi import FastAPI
 
@@ -25,23 +25,19 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     correcto para cargar los modelos de ML de la fase 1.
     """
     settings = get_settings()
-    engine = create_engine(settings.database_url)
-    qdrant = create_client(settings.qdrant_url, settings.health_timeout_seconds)
-    app.state.resources = Resources(
-        engine=engine,
-        sessions=create_session_factory(engine),
-        qdrant=qdrant,
-    )
-    logger.info("servicio arrancado", extra={"qdrant_url": settings.qdrant_url})
-
-    try:
+    async with AsyncExitStack() as stack:
+        engine = create_engine(settings.database_url)
+        stack.push_async_callback(engine.dispose)
+        qdrant = create_client(settings.qdrant_url, settings.health_timeout_seconds)
+        stack.push_async_callback(qdrant.close)
+        app.state.resources = Resources(
+            engine=engine,
+            sessions=create_session_factory(engine),
+            qdrant=qdrant,
+        )
+        logger.info("servicio arrancado", extra={"qdrant_url": settings.qdrant_url})
         yield
-    finally:
-        # En un `finally` para que las conexiones se cierren también si el arranque
-        # falla a mitad; si no, quedan sockets abiertos hasta que el proceso muere.
-        await qdrant.close()
-        await engine.dispose()
-        logger.info("servicio detenido")
+    logger.info("servicio detenido")
 
 
 def create_app() -> FastAPI:

@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,7 +25,7 @@ class Settings(BaseSettings):
 
     # Un chequeo de salud que tarda más que esto es un fallo a efectos prácticos:
     # quien lo consulta (un balanceador, un orquestador) no va a esperar más.
-    health_timeout_seconds: float = 5.0
+    health_timeout_seconds: float = Field(default=5.0, gt=0, allow_inf_nan=False)
 
     log_level: str = "INFO"
 

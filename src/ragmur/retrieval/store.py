@@ -10,6 +10,8 @@ que el servidor responde no leen ni escriben puntos de ninguna colección, así 
 hay espacio de tenant que aislar. Cualquier función que sí toque datos la cumple.
 """
 
+import math
+
 from qdrant_client import AsyncQdrantClient
 
 # El tipo se reexporta a propósito: quien necesite anotar un cliente de Qdrant lo
@@ -21,7 +23,7 @@ __all__ = ["AsyncQdrantClient", "create_client", "ping"]
 
 def create_client(url: str, timeout_seconds: float) -> AsyncQdrantClient:
     """Abre el cliente asíncrono contra el Qdrant configurado."""
-    return AsyncQdrantClient(url=url, timeout=int(timeout_seconds))
+    return AsyncQdrantClient(url=url, timeout=math.ceil(timeout_seconds))
 
 
 async def ping(client: AsyncQdrantClient) -> str:

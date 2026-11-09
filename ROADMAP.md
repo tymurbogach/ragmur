@@ -9,7 +9,7 @@
 ## Estado y siguiente paso
 
 - [x] Revisar contratos, dependencias y criterios de evaluación antes de continuar. Ver [REVIEW.md](REVIEW.md).
-- [ ] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
+- [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
 La siguiente tarea funcional es **1.1**. Esta revisión no implementa ninguna tarea de fase 1.

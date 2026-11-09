@@ -6,7 +6,7 @@ Fecha: 2026-10-19. Base revisada: `58cd7ee`, con cambios locales previos en `AGE
 
 El diseño mantiene las fases, los proveedores elegidos y los dos niveles de aislamiento.
 La documentación concreta los contratos necesarios para implementar la fase 1 y corrige afirmaciones que carecían de evidencia.
-La siguiente tarea funcional sigue siendo 1.1; antes hay correcciones acotadas del esqueleto.
+La siguiente tarea funcional sigue siendo 1.1; las correcciones previas del esqueleto están completadas.
 La regla 8 queda unificada con la arquitectura y el comportamiento actual del código.
 
 Esta revisión modifica documentación. No incorpora dependencias, endpoints, modelos ni migraciones.
@@ -35,11 +35,11 @@ El estado `deleting` pertenece al esquema objetivo de 1.2; todavía no existe un
 Estas dos funciones solo gestionan la conexión y comprueban el servidor; no pueden leer ni escribir documentos o fragmentos.
 El roadmap incluye ambas excepciones en el test de arquitectura previsto para 1.5.
 
-## Pendientes antes de continuar
+## Seguimiento posterior
 
 ### Corregir el esqueleto
 
-Estos puntos proceden de lectura del código; los tres tests actuales no cubren sus condiciones de fallo.
+Estos puntos proceden de lectura del código. Las correcciones y sus tests están implementados.
 
 1. **Liberación de recursos.** En [`main.py`](src/ragmur/main.py), la creación de recursos ocurre antes del `try/finally`.
    Si falla la preparación posterior al motor, la limpieza no se ejecuta; si falla `qdrant.close()`, no se alcanza `engine.dispose()`.
@@ -53,9 +53,7 @@ Cada corrección requiere un test que reproduzca el fallo y mantenga la suite de
 
 ### Preparación local
 
-Los ejecutables `pytest` y `mypy` de `.venv` conservan el intérprete de `/home/cyberdyne/dev/ragmur`, que ya no existe.
-La verificación usa `.venv/bin/python -m pytest` y `.venv/bin/python -m mypy`.
-Antes de retomar el flujo habitual de comandos, crea un entorno virtual nuevo e instala con `uv sync --locked`.
+Se reinstalaron las dependencias fijadas en `.venv`. Los ejecutables apuntan a la ruta actual del proyecto.
 
 El repositorio anuncia MIT, pero no contiene `LICENSE`. El roadmap exige añadirlo con titular confirmado antes de publicar.
 El Compose actual publica puertos y usa credenciales de desarrollo; el cierre de fase exige una configuración de despliegue privada.
