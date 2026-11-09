@@ -6,8 +6,9 @@ ingesta de documentos, recuperación, respuestas generadas ni endpoints público
 
 ## Estado actual
 
-La fase 0 proporciona la base del proyecto: un esqueleto FastAPI, servicios
-Docker, migraciones, comprobaciones de salud, linting, tipos y CI. El proyecto
+La fase 0 proporciona la base del proyecto. La fase 1 añade tenants y claves de API.
+El proyecto incluye FastAPI, servicios Docker, migraciones, comprobaciones de salud,
+linting, tipos y CI. El proyecto
 no afirma tener un flujo de recuperación utilizable hasta que la fase 1 esté
 completa y evaluada.
 
@@ -30,6 +31,8 @@ orden permite medir su calidad antes de que un modelo de lenguaje oculte fallos.
 ## Desarrollo
 
 Si no existe `.env`, copia `.env.example` y ajusta sus valores antes de ejecutar estos comandos.
+Configura `API_KEY_HMAC_SECRET` con un secreto aleatorio propio antes de arrancar.
+Puedes generarlo con `python -c 'import secrets; print(secrets.token_urlsafe(32))'`.
 El Compose actual es para desarrollo local; sus credenciales y puertos publicados no constituyen una configuración de despliegue.
 
 ```bash
@@ -46,10 +49,23 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La siguiente tarea funcional es 1.1, autenticación y tenants.
+La siguiente tarea funcional es 1.2, ingesta de documentos.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
 En fase 0, `/health` comprueba PostgreSQL y Qdrant. `/ready`, la ingesta y la búsqueda todavía no están implementados.
+
+Para administrar el acceso desde la máquina del servicio:
+
+```bash
+uv run python -m ragmur.cli create-tenant "Mi aplicación"
+uv run python -m ragmur.cli issue-key <tenant-uuid> --name desarrollo
+uv run python -m ragmur.cli revoke-key <key-id>
+```
+
+La emisión muestra la clave completa una sola vez. El `key-id` es el segundo
+componente de `rgm_<key-id>_<secret>`. Protege la clave como una contraseña.
+Cambiar `API_KEY_HMAC_SECRET` invalida todas las claves existentes; emite otras nuevas.
+Las rutas protegidas futuras recibirán la clave mediante `X-API-Key`.
 
 ## Stack
 

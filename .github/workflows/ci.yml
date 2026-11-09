@@ -33,6 +33,7 @@ jobs:
     env:
       DATABASE_URL: postgresql+asyncpg://ragmur:ragmur@localhost:5432/ragmur
       QDRANT_URL: http://localhost:6333
+      API_KEY_HMAC_SECRET: test-only-hmac-secret
 
     steps:
       - uses: actions/checkout@v7

@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     )
 
     database_url: str
+    api_key_hmac_secret: SecretStr = Field(min_length=1)
     qdrant_url: str = "http://localhost:6333"
 
     # Un chequeo de salud que tarda más que esto es un fallo a efectos prácticos:

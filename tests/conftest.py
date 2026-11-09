@@ -1,12 +1,16 @@
 """Utilidades compartidas por todos los tests."""
 
+import os
 from collections.abc import AsyncIterator, Iterator
 
 import pytest
 from httpx import ASGITransport, AsyncClient
 
 from ragmur.core.config import get_settings
-from ragmur.main import create_app
+
+
+def pytest_configure() -> None:
+    os.environ.setdefault("API_KEY_HMAC_SECRET", "test-only-hmac-secret")
 
 
 @pytest.fixture(autouse=True)
@@ -29,6 +33,8 @@ async def _cliente() -> AsyncIterator[AsyncClient]:
     httpx no lo hace por su cuenta, y sin él `app.state.resources` no existiría: el
     endpoint fallaría por un motivo que no es el que se está probando.
     """
+    from ragmur.main import create_app
+
     app = create_app()
     async with app.router.lifespan_context(app):
         transport = ASGITransport(app=app)

@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-La siguiente tarea funcional es **1.1**. Esta revisión no implementa ninguna tarea de fase 1.
+La tarea 1.1 está completada. La siguiente tarea funcional es **1.2**.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -137,18 +137,18 @@ No se adelantan endpoints de búsqueda para cerrar tareas anteriores ni se marca
 
 ### 1.1 Multi-tenancy y autenticación
 
-- [ ] Tabla `tenants` (id, nombre, timestamps)
-- [ ] Tabla `api_keys` (tenant_id, key_id, key_hash, nombre, revoked_at, last_used_at)
-- [ ] Formato de clave `rgm_<key_id>_<secret>`: búsqueda por `key_id` indexado, comparación del secreto en tiempo constante
-- [ ] Hash con HMAC-SHA256 y clave de servidor; secreto aleatorio, sin hash lento de contraseñas humanas
-- [ ] Secretos de API key con al menos 256 bits aleatorios; parser con dos separaciones máximas y comparación constante
-- [ ] `api_key_hmac_secret` en `Settings` y en `.env.example`, sin valor por defecto: sin él el servicio no debe arrancar
-- [ ] Dependencia FastAPI que resuelve el tenant desde `X-API-Key` y rechaza claves revocadas
-- [ ] `last_used_at` amortiguado: se actualiza como mucho una vez por minuto y clave, no en cada petición
-- [ ] CLI para crear tenant, emitir API key y revocarla, con `argparse` de la biblioteca estándar
-- [ ] Clave completa solo en la salida de emisión; secretos ausentes de logs, errores y representaciones de configuración
-- [ ] Documentar que rotar la clave HMAC exige reemitir las API keys; actualizar también las variables de CI
-- [ ] Test: sin clave → 401; clave revocada → 401; con clave de otro tenant → no accede a datos ajenos
+- [x] Tabla `tenants` (id, nombre, timestamps)
+- [x] Tabla `api_keys` (tenant_id, key_id, key_hash, nombre, revoked_at, last_used_at)
+- [x] Formato de clave `rgm_<key_id>_<secret>`: búsqueda por `key_id` indexado, comparación del secreto en tiempo constante
+- [x] Hash con HMAC-SHA256 y clave de servidor; secreto aleatorio, sin hash lento de contraseñas humanas
+- [x] Secretos de API key con al menos 256 bits aleatorios; parser con dos separaciones máximas y comparación constante
+- [x] `api_key_hmac_secret` en `Settings` y en `.env.example`, sin valor por defecto: sin él el servicio no debe arrancar
+- [x] Dependencia FastAPI que resuelve el tenant desde `X-API-Key` y rechaza claves revocadas
+- [x] `last_used_at` amortiguado: se actualiza como mucho una vez por minuto y clave, no en cada petición
+- [x] CLI para crear tenant, emitir API key y revocarla, con `argparse` de la biblioteca estándar
+- [x] Clave completa solo en la salida de emisión; secretos ausentes de logs, errores y representaciones de configuración
+- [x] Documentar que rotar la clave HMAC exige reemitir las API keys; actualizar también las variables de CI
+- [x] Test: sin clave → 401; clave revocada → 401; cada clave resuelve su tenant. El acceso a datos se prueba en 1.2 y 1.5
 
 **Nota sobre `last_used_at`.** Escribirlo en cada petición añade un `UPDATE` por petición a un servicio cuyo camino de lectura es, por lo demás, una consulta indexada y una búsqueda vectorial. El dato sirve para saber si una clave sigue en uso, y para eso basta una resolución de minutos.
 
