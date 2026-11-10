@@ -299,7 +299,7 @@ La diferencia de latencia queda registrada; no se exige una mejora de calidad an
 - [x] Reajuste de troceado, `top_k` y umbrales con los resultados obtenidos, reindexado y segunda medición
 - [x] Tabla del README rellenada con cifras reales
 
-Línea base 2026-11-10 en CPU (16 núcleos, sin GPU, `top_k=10`, `candidates=30`, 35 documentos, 20 positivas y 7 negativas): recall@10 1.0 en las cuatro configuraciones; MRR densa 0.975, híbrida 0.925, BM25 0.858; nDCG densa 0.982, híbrida 0.945, BM25 0.895; híbrida + reranking MRR y nDCG 1.0 con p50 5.7 s frente a 0.13 s sin reranking. Comparación BM25 en desarrollo: `spanish` MRR 0.833 contra `disable_stemmer=True` MRR 0.85; diferencia mínima en muestra pequeña, se mantiene `spanish`. Se conservan 800/120 y `top_k` 5 en API (10 en evaluación); la segunda medición es la partición reservada con parámetros congelados.
+Línea base 2026-11-10 en CPU (16 núcleos, sin GPU, `top_k=10`, `candidates=30`, 35 documentos, 20 positivas y 7 negativas; `OMP/MKL_NUM_THREADS=2`): recall@10 1.0 en las cuatro configuraciones; MRR densa 0.975, híbrida 0.925, BM25 0.858; nDCG densa 0.982, híbrida 0.945, BM25 0.895; híbrida + reranking MRR y nDCG 1.0 con p50 15.9 s frente a ~0.1 s sin reranking. Comparación BM25 en desarrollo: `spanish` MRR 0.833 contra `disable_stemmer=True` MRR 0.85; diferencia mínima en muestra pequeña, se mantiene `spanish`. Se conservan 800/120 y `top_k` 5 en API (10 en evaluación); la segunda medición es la partición reservada con parámetros congelados.
 
 **Qué métrica mide qué etapa.** El reranking conserva recall sobre todos los candidatos, pero puede cambiar recall@10 tras el corte.
 MRR@10 y nDCG@10 miden además el orden. Las cuatro configuraciones usan `top_k=10` y el mismo presupuesto de candidatos.

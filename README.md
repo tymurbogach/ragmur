@@ -90,10 +90,10 @@ Medido el 2026-11-10 en CPU sin GPU, con `candidates=30` y `top_k=10`, concurren
 
 | Configuración | recall@10 | MRR@10 | nDCG@10 | p50 | p95 |
 |---|---|---|---|---|---|
-| Densa | 1.0 | 0.975 | 0.982 | 133 ms | 219 ms |
-| BM25 | 1.0 | 0.858 | 0.895 | 132 ms | 206 ms |
-| Híbrida | 1.0 | 0.925 | 0.945 | 129 ms | 211 ms |
-| Híbrida + reranking | 1.0 | 1.0 | 1.0 | 5710 ms | 6306 ms |
+| Densa | 1.0 | 0.975 | 0.982 | 93 ms | 112 ms |
+| BM25 | 1.0 | 0.858 | 0.895 | 91 ms | 117 ms |
+| Híbrida | 1.0 | 0.925 | 0.945 | 97 ms | 134 ms |
+| Híbrida + reranking | 1.0 | 1.0 | 1.0 | 15856 ms | 17404 ms |
 
 Victorias/derrotas/empates en recall@10: 0/0/20 entre híbrida y densa, híbrida y BM25, y reranking frente a híbrida.
 La muestra es pequeña y no demuestra significación; documenta cobertura y orden, no una mejora general.
