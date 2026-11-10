@@ -136,7 +136,7 @@ uv run --no-group cpu --extra cuda uvicorn ragmur.main:app
 
 Configura `EMBEDDING_DEVICE=cuda` y comprueba el controlador antes de usarla.
 CUDA 13.0 requiere un controlador Linux 580.65.06 o posterior para la versión GA.
-Inferencia validada en RTX 5080 (`sm_120`, torch cu130, revisiones fijadas): 30 pares de reranking en 0.20 s frente a 6–16 s en CPU. Detalle y límites en [gpu-rtx5080-2026-11-10](benchmarks/gpu-rtx5080-2026-11-10.md).
+Inferencia validada en RTX 5080 (`sm_120`, torch cu130, revisiones fijadas): 30 pares de reranking en 0.20 s frente a 6–16 s en CPU. Evaluación completa en GPU (WSL2, mismo corpus y consultas): calidad idéntica a CPU y reranking en p50 163 ms frente a 15856 ms en CPU. Detalle y límites en [gpu-rtx5080-2026-11-10](benchmarks/gpu-rtx5080-2026-11-10.md).
 El límite por clave devuelve `429` con `Retry-After`; la ingesta llena y las dependencias caídas devuelven `503`.
 
 Para construir el contenedor de CPU:
