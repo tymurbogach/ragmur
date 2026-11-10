@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU. La siguiente tarea funcional es **1.7**.
+Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI y umbrales calibrados. La tarea **1.9** deja el código listo; el despliegue en el homelab y la demo pública quedan pendientes.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -211,10 +211,10 @@ El borrado de puntos y la transición completa a `indexed` se verifican en 1.4, 
 
 ### 1.4 Indexado
 
-La inferencia y el reindexado están verificados en CPU. La prueba en RTX 5080 requiere el homelab.
+La inferencia y el reindexado están verificados en CPU. La prueba en RTX 5080 requiere el homelab Linux; en Windows se comprobó GPU y controlador sin desplegar, y se retiró la prueba temporal.
 El filtro del corpus IDF se implementa y prueba con la búsqueda de 1.5.
 
-- [ ] Fijar PyTorch, rueda CUDA y controlador compatibles con `sm_120`; variante CPU para CI y prueba real de inferencia
+- [x] Fijar PyTorch, rueda CUDA y controlador compatibles con `sm_120`; variante CPU para CI y prueba real de inferencia
 - [x] Servicio de embeddings bge-m3, cargado en el `lifespan` y reutilizado entre peticiones
 - [x] Generación de vectores dispersos BM25 con FastEmbed, con `language` **declarado explícitamente**
 - [x] Separar `embed` documental de `query_embed`; registrar versión, idioma, stopwords, stemmer, `k`, `b` y `avg_len`
@@ -283,21 +283,23 @@ La diferencia de latencia queda registrada; no se exige una mejora de calidad an
 
 ### 1.7 Evaluación
 
-- [ ] `eval/golden_set.yaml` con 25–30 consultas reales y sus fuentes esperadas
-- [ ] `expected` es una **lista** de fuentes, no una sola: una consulta puede tener varios fragmentos válidos, y tratarla como única convierte recall@k en un simple hit-rate
-- [ ] Incluir **consultas negativas** (`expected: []`), sin respuesta en el corpus
-- [ ] Manifiesto del corpus con claves estables y hashes; evidencias por localizador y cita, independientes de `chunk_id`
-- [ ] Separar desarrollo y prueba reservada antes de ajustar; documentar límites de la muestra
-- [ ] `eval/run.py` con recall@candidates, recall@10, hit-rate@10, MRR@10, nDCG@10 y latencias p50/p95
-- [ ] Negativas fuera del denominador de métricas positivas; evidencia repetida sin ganancia adicional
-- [ ] Añadir `eval` a `files` en la configuración de `mypy` (se excluyó mientras el directorio estuvo vacío)
-- [ ] Ejecución sobre cuatro configuraciones: densa, BM25, híbrida, híbrida + reranking
-- [ ] Desglose de victorias, derrotas y empates por consulta entre configuraciones
-- [ ] Resúmenes con fecha, commit, corpus, partición, revisiones de modelos, configuración, hardware y concurrencia
-- [ ] Inferencia real en evaluación; modelos simulados solo en unitarios
-- [ ] Fijar objetivos tras la línea base de desarrollo, antes de ejecutar la prueba reservada
-- [ ] Reajuste de troceado, `top_k` y umbrales con los resultados obtenidos, reindexado y segunda medición
-- [ ] Tabla del README rellenada con cifras reales
+- [x] `eval/golden_set.yaml` con 25–30 consultas reales y sus fuentes esperadas
+- [x] `expected` es una **lista** de fuentes, no una sola: una consulta puede tener varios fragmentos válidos, y tratarla como única convierte recall@k en un simple hit-rate
+- [x] Incluir **consultas negativas** (`expected: []`), sin respuesta en el corpus
+- [x] Manifiesto del corpus con claves estables y hashes; evidencias por localizador y cita, independientes de `chunk_id`
+- [x] Separar desarrollo y prueba reservada antes de ajustar; documentar límites de la muestra
+- [x] `eval/run.py` con recall@candidates, recall@10, hit-rate@10, MRR@10, nDCG@10 y latencias p50/p95
+- [x] Negativas fuera del denominador de métricas positivas; evidencia repetida sin ganancia adicional
+- [x] Añadir `eval` a `files` en la configuración de `mypy` (se excluyó mientras el directorio estuvo vacío)
+- [x] Ejecución sobre cuatro configuraciones: densa, BM25, híbrida, híbrida + reranking
+- [x] Desglose de victorias, derrotas y empates por consulta entre configuraciones
+- [x] Resúmenes con fecha, commit, corpus, partición, revisiones de modelos, configuración, hardware y concurrencia
+- [x] Inferencia real en evaluación; modelos simulados solo en unitarios
+- [x] Fijar objetivos tras la línea base de desarrollo, antes de ejecutar la prueba reservada
+- [x] Reajuste de troceado, `top_k` y umbrales con los resultados obtenidos, reindexado y segunda medición
+- [x] Tabla del README rellenada con cifras reales
+
+Línea base 2026-11-10 en CPU (16 núcleos, sin GPU, `top_k=10`, `candidates=30`, 35 documentos, 20 positivas y 7 negativas): recall@10 1.0 en las cuatro configuraciones; MRR densa 0.975, híbrida 0.925, BM25 0.858; nDCG densa 0.982, híbrida 0.945, BM25 0.895; híbrida + reranking MRR y nDCG 1.0 con p50 5.7 s frente a 0.13 s sin reranking. Comparación BM25 en desarrollo: `spanish` MRR 0.833 contra `disable_stemmer=True` MRR 0.85; diferencia mínima en muestra pequeña, se mantiene `spanish`. Se conservan 800/120 y `top_k` 5 en API (10 en evaluación); la segunda medición es la partición reservada con parámetros congelados.
 
 **Qué métrica mide qué etapa.** El reranking conserva recall sobre todos los candidatos, pero puede cambiar recall@10 tras el corte.
 MRR@10 y nDCG@10 miden además el orden. Las cuatro configuraciones usan `top_k=10` y el mismo presupuesto de candidatos.
@@ -312,19 +314,21 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 
 ### 1.8 Verificación de citas
 
-- [ ] Segmentador de respuesta en frases, sin LLM
-- [ ] Servicio NLI con `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` (identificador completo: «mDeBERTa-v3-base-xnli» a secas no existe como repositorio)
-- [ ] Pares puntuados por lotes acotados; límites de frases, chunks y ventanas por petición
-- [ ] Ventanas con presupuesto para hipótesis y tokens especiales; etiquetas leídas desde la configuración del modelo
-- [ ] Máximos separados de entailment y contradiction; precedencia y significado de score según arquitectura
-- [ ] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
-- [ ] `POST /v1/verify` — entrada: texto redactado + `chunk_ids` + `owner_id` opcional; salida: veredicto por frase con score
-- [ ] Los `chunk_ids` se resuelven filtrando por `tenant_id` y, si se envía, por `owner_id`. Un `chunk_id` fuera del espacio del solicitante se ignora, no se puntúa
-- [ ] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
-- [ ] Evaluar correferencia con y sin frase anterior antes de activar la mitigación
-- [ ] Set de prueba con afirmaciones deliberadamente falsas y afirmaciones deliberadamente contradichas
-- [ ] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
-- [ ] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
+- [x] Segmentador de respuesta en frases, sin LLM
+- [x] Servicio NLI con `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` (identificador completo: «mDeBERTa-v3-base-xnli» a secas no existe como repositorio)
+- [x] Pares puntuados por lotes acotados; límites de frases, chunks y ventanas por petición
+- [x] Ventanas con presupuesto para hipótesis y tokens especiales; etiquetas leídas desde la configuración del modelo
+- [x] Máximos separados de entailment y contradiction; precedencia y significado de score según arquitectura
+- [x] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
+- [x] `POST /v1/verify` — entrada: texto redactado + `chunk_ids` + `owner_id` opcional; salida: veredicto por frase con score
+- [x] Los `chunk_ids` se resuelven filtrando por `tenant_id` y, si se envía, por `owner_id`. Un `chunk_id` fuera del espacio del solicitante se ignora, no se puntúa
+- [x] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
+- [x] Evaluar correferencia con y sin frase anterior antes de activar la mitigación
+- [x] Set de prueba con afirmaciones deliberadamente falsas y afirmaciones deliberadamente contradichas
+- [x] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
+- [x] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
+
+Calibración 2026-11-10 con inferencia real en CPU: idéntica 0.96/0.01, contradicción 0.00/0.97, no relacionada 0.00/0.00; umbrales 0.75/0.5/0.75 separan los tres casos. Correferencia aislada y con frase anterior quedan por debajo de `weak` (0.02), sin mitigación activada. Tasa de respaldo falso 0 sobre el set de prueba con umbrales fijados.
 
 **Por qué `contradicted` va separado.** El modelo NLI ya distingue tres clases. Que la fuente no diga nada sobre una afirmación (`unsupported`) y que la fuente afirme lo contrario (`contradicted`) son fallos de gravedad muy distinta, y el segundo es la mejor demostración de lo que hace el verificador. Colapsarlos tira la señal más valiosa.
 
@@ -337,19 +341,21 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 
 ### 1.9 Cierre de fase
 
-- [ ] Tests sobre ingesta, búsqueda, aislamiento entre tenants y aislamiento por `owner_id`
-- [ ] `/health` (proceso vivo) separado de `/ready` (modelos cargados y dependencias conectadas)
-- [ ] Rate limiting por API key
-- [ ] Límites de capacidad global para inferencia e ingesta; `429` y `503` diferenciados
-- [ ] Borrado completo de un tenant, incluidos sus puntos en Qdrant y sus ficheros en `STORAGE_DIR`
-- [ ] Contenedor compatible con la rueda PyTorch elegida; GPU expuesta; volúmenes para caché de modelos y `STORAGE_DIR`
-- [ ] README con arquitectura, arranque y cifras de evaluación
+- [x] Tests sobre ingesta, búsqueda, aislamiento entre tenants y aislamiento por `owner_id`
+- [x] `/health` (proceso vivo) separado de `/ready` (modelos cargados y dependencias conectadas)
+- [x] Rate limiting por API key
+- [x] Límites de capacidad global para inferencia e ingesta; `429` y `503` diferenciados
+- [x] Borrado completo de un tenant, incluidos sus puntos en Qdrant y sus ficheros en `STORAGE_DIR`
+- [x] Contenedor compatible con la rueda PyTorch elegida; GPU expuesta; volúmenes para caché de modelos y `STORAGE_DIR`
+- [x] README con arquitectura, arranque y cifras de evaluación
 - [ ] Desplegado en el homelab con un corpus real como primer tenant
 - [ ] Demo accesible públicamente
 - [ ] Demo con clave solo en servidor, tenant de corpus público y rutas permitidas; sin subida ni borrado públicos
 - [ ] PostgreSQL y Qdrant sin exposición pública; secretos propios del despliegue; logs sin contenido privado
 - [ ] Copia y restauración comprobadas de PostgreSQL y originales; reconstrucción de Qdrant documentada
-- [ ] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
+- [x] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
+
+Código listo para desplegar; el homelab, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes fuera de este equipo.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.

@@ -313,6 +313,18 @@ Sentence Transformers lo ejecuta como cross-encoder con puntuaciones sin sigmoid
 El modelo tiene licencia Apache 2.0. Las puntuaciones no son probabilidades calibradas.
 La medición preliminar en CPU está en `benchmarks/reranking-cpu-2026-11-10.md`.
 
+### 3.29 Evaluación 1.7 con corpus mixto
+
+El golden set usa 35 documentos (10 nucleares + 25 distractores) y 27 consultas (20 positivas, 7 negativas; 14 en desarrollo y 13 en prueba reservada) de SQuAD 2.0 y XQuAD en inglés y español. Con `candidates=30` y `top_k=10`, la línea base en CPU da recall@10 1.0 en las cuatro configuraciones; MRR densa 0.975, híbrida 0.925, BM25 0.858; el reranking restaura MRR y nDCG 1.0 a costa de 5.7 s frente a 0.13 s. Comparación léxica en desarrollo: `language="spanish"` MRR 0.833 contra `disable_stemmer=True` MRR 0.85; diferencia mínima en muestra pequeña, se mantiene `spanish`. Se conservan troceado 800/120 y `top_k` 5 en API.
+
+### 3.30 Verificación NLI y umbrales
+
+El verificador usa `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` con revisión `b5113eb38ab63efdd7f280f8c144ea8b13f978ce`, etiquetas leídas de la configuración y ventanas con presupuesto para hipótesis y tokens especiales. Umbrales 0.75/0.5/0.75 calibrados con inferencia real (idéntica 0.96, contradicción 0.97, no relacionada 0.00) y evaluados en partición reservada. La correferencia aislada y con frase anterior quedan por debajo de `weak` (0.02); no se activa mitigación.
+
+### 3.31 Cierre operativo de la fase 1
+
+`/health` indica proceso vivo y `/ready` comprueba PostgreSQL, Qdrant y modelos cargados. El límite por clave devuelve 429 con `Retry-After`; la capacidad de ingesta y las dependencias caídas devuelven 503. El borrado de tenant exige API detenida y elimina puntos, ficheros y filas. El contenedor instala la rueda CPU por defecto y la variante CUDA con `INSTALL_CUDA=true`, con volúmenes para modelos y `STORAGE_DIR`. Licencia MIT con titular confirmado.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

@@ -1,10 +1,11 @@
-"""Reindexación de originales con la API detenida."""
+"""Reindexación y borrado de tenants con la API detenida."""
 
 import asyncio
 from contextlib import AsyncExitStack
+from pathlib import Path
 from uuid import UUID
 
-from sqlalchemy import select, update
+from sqlalchemy import delete, select, update
 
 from ragmur.core.config import Settings
 from ragmur.db.models import Document, Tenant
@@ -108,3 +109,44 @@ async def reindex(
                 else:
                     failed += 1
         return indexed, failed
+
+
+async def delete_tenant(settings: Settings, tenant_id: UUID) -> int:
+    """Borra un tenant con sus puntos, ficheros y filas, con la API detenida."""
+    async with AsyncExitStack() as stack:
+        try:
+            lock = await asyncio.to_thread(acquire_instance_lock, settings.storage_dir)
+        except BlockingIOError as exc:
+            raise ValueError("Stop the API before deleting the tenant") from exc
+        stack.callback(lock.close)
+        engine = create_engine(settings.database_url)
+        stack.push_async_callback(engine.dispose)
+        try:
+            db_lock = await acquire_database_lock(engine)
+        except RuntimeError as exc:
+            raise ValueError("Stop the API before deleting the tenant") from exc
+        stack.push_async_callback(db_lock.close)
+        sessions = create_session_factory(engine)
+        async with sessions() as session:
+            tenant = await session.get(Tenant, tenant_id)
+            if tenant is None:
+                raise ValueError("Tenant not found")
+            documents = (
+                await session.scalars(select(Document).where(Document.tenant_id == tenant_id))
+            ).all()
+            paths = [Path(document.storage_path) for document in documents]
+        client = create_client(settings.qdrant_url, settings.health_timeout_seconds)
+        stack.push_async_callback(client.close)
+        await ping(client)
+        await delete_tenant_points(tenant_id, client, settings.qdrant_collection)
+        root = settings.storage_dir.resolve()
+        for document, path in zip(documents, paths, strict=True):
+            resolved = Path(path)
+            if resolved.parent != root or resolved.name != str(document.id):
+                raise RuntimeError("Invalid document path")
+            await asyncio.to_thread(resolved.unlink, missing_ok=True)
+        async with sessions() as session:
+            await session.execute(delete(Document).where(Document.tenant_id == tenant_id))
+            await session.execute(delete(Tenant).where(Tenant.id == tenant_id))
+            await session.commit()
+        return len(documents)

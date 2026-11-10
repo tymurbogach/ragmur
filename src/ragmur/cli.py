@@ -20,6 +20,11 @@ async def run(args: argparse.Namespace) -> str:
         if failed:
             raise ValueError(f"Reindexed {indexed} documents; {failed} failed")
         return f"Reindexed {indexed} documents"
+    if args.command == "delete-tenant":
+        from ragmur.ingestion.maintenance import delete_tenant
+
+        count = await delete_tenant(settings, args.tenant_id)
+        return f"Deleted tenant with {count} documents"
     engine = create_engine(settings.database_url)
     try:
         async with create_session_factory(engine)() as session:
@@ -56,6 +61,8 @@ def main() -> None:
     scope.add_argument("--document", type=uuid.UUID)
     scope.add_argument("--tenant", type=uuid.UUID)
     scope.add_argument("--all", action="store_true")
+    delete_command = commands.add_parser("delete-tenant")
+    delete_command.add_argument("tenant_id", type=uuid.UUID)
     try:
         result = asyncio.run(run(parser.parse_args()))
     except ValueError as exc:

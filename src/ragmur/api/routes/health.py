@@ -1,4 +1,4 @@
-"""`GET /health`: dice si el servicio puede hablar con sus dependencias."""
+"""Estado del proceso y preparación de recursos."""
 
 import asyncio
 import logging
@@ -40,26 +40,44 @@ async def _comprobar(
     return DependencyHealth(status="ok", detail=str(version))
 
 
+@router.get("/health", summary="Proceso vivo")
+async def health() -> dict[str, str]:
+    """Indica que el proceso responde, sin comprobar dependencias.
+
+    El orquestador usa `/ready` para decidir si envía tráfico; `/health` solo
+    dice que el proceso sigue vivo.
+    """
+    return {"status": "ok"}
+
+
 @router.get(
-    "/health",
+    "/ready",
     response_model=HealthResponse,
-    summary="Estado del servicio y de sus dependencias",
+    summary="Recursos preparados para tráfico",
     responses={503: {"description": "Alguna dependencia no responde"}},
 )
-async def health(response: Response, resources: ResourcesDep) -> HealthResponse:
-    """Comprueba PostgreSQL y Qdrant a la vez.
+async def ready(response: Response, resources: ResourcesDep) -> HealthResponse:
+    """Comprueba PostgreSQL, Qdrant y modelos cargados.
 
-    Van en paralelo con `gather` y no una detrás de otra: dos dependencias caídas con
-    cinco segundos de espera cada una tardarían diez en secuencia y cinco así.
+    Los modelos tardan decenas de segundos en cargar; si el chequeo respondiera
+    200 antes de tenerlos, el orquestador mandaría tráfico y las primeras
+    peticiones expirarían. Van en paralelo para no sumar esperas.
     """
     timeout = get_settings().health_timeout_seconds
 
-    postgres, qdrant = await asyncio.gather(
+    async def _modelos() -> str:
+        dimension = resources.models.dense.dimension
+        if dimension != 1024 or resources.verifier is None:
+            raise RuntimeError("Models not loaded")
+        return f"dense-{dimension}+nli"
+
+    postgres, qdrant, modelos = await asyncio.gather(
         _comprobar("postgres", db_health.ping(resources.engine), timeout),
         _comprobar("qdrant", store.ping(resources.qdrant), timeout),
+        _comprobar("models", _modelos(), timeout),
     )
 
-    dependencies = {"postgres": postgres, "qdrant": qdrant}
+    dependencies = {"postgres": postgres, "qdrant": qdrant, "models": modelos}
     todo_ok = all(d.status == "ok" for d in dependencies.values())
 
     if not todo_ok:

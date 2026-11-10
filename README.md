@@ -1,15 +1,13 @@
 # Ragmur
 
-Ragmur es un prototipo para un servicio de recuperación multi-tenant.
-No es una API RAG lista para producción. Ofrece búsqueda de fragmentos, pero todavía no genera respuestas.
+Ragmur es un servicio de recuperación multi-tenant con búsqueda híbrida, reranking y verificación de citas.
+La fase 1 no genera respuestas: devuelve fragmentos con fuente y verifica texto enviado por el cliente.
 
 ## Estado actual
 
-La fase 0 proporciona la base del proyecto. La fase 1 incorpora tenants, claves e ingesta.
-El proyecto incluye FastAPI, servicios Docker, migraciones, comprobaciones de salud,
-linting, tipos y CI. El proyecto
-no afirma tener un flujo de recuperación utilizable hasta que la fase 1 esté
-completa y evaluada.
+La fase 1 deja el código listo con evaluación reproducible. El despliegue en el homelab y la demo pública quedan pendientes.
+El proyecto incluye FastAPI, servicios Docker, migraciones, `/health` y `/ready`,
+linting, tipos y CI. Las cifras de recuperación están medidas con `eval/` sobre 35 documentos y 27 consultas.
 
 La fuente de verdad del trabajo entregado es el [roadmap](ROADMAP.md). La
 [arquitectura](ARCHITECTURE.md) y las [decisiones](DECISIONS.md) describen el
@@ -48,10 +46,10 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La búsqueda híbrida funciona en CPU. La prueba CUDA y la evaluación de recuperación están pendientes.
+La búsqueda híbrida y la verificación funcionan en CPU. La prueba GPU en Linux y el despliegue quedan pendientes.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
-`/health` comprueba PostgreSQL y Qdrant. `/ready` todavía no está implementado.
+`/health` indica proceso vivo sin comprobar dependencias. `/ready` comprueba PostgreSQL, Qdrant y modelos cargados.
 
 La ingesta acepta PDF con texto, DOCX, TXT y Markdown en `POST /v1/documents`.
 La petición usa `multipart/form-data`, el campo `file` y un `owner_id` opcional.
@@ -80,8 +78,30 @@ Las rutas protegidas reciben la clave mediante `X-API-Key`.
 Usa `query` y, opcionalmente, `owner_id`, `document_ids`, `top_k` y `candidates`.
 `rerank` está activado por defecto y puede desactivarse por petición.
 La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son probabilidades.
-La calidad de recuperación sigue pendiente de medición con `eval/`.
-La [medición preliminar de latencia en CPU](benchmarks/reranking-cpu-2026-11-10.md) usa datos sintéticos.
+
+`POST /v1/verify` puntúa cada frase contra `chunk_ids` autorizados con NLI local.
+Devuelve `supported`, `weak`, `unsupported` o `contradicted` con score y mejor evidencia.
+Los identificadores ajenos se ignoran; sin evidencia válida todo queda `unsupported`.
+
+## Evaluación de recuperación
+
+Corpus mixto inglés/español de 35 documentos (SQuAD 2.0 y XQuAD) y 27 consultas (20 positivas, 7 negativas; 14 en desarrollo y 13 en prueba).
+Medido el 2026-11-10 en CPU sin GPU, con `candidates=30` y `top_k=10`, concurrencia 1.
+
+| Configuración | recall@10 | MRR@10 | nDCG@10 | p50 | p95 |
+|---|---|---|---|---|---|
+| Densa | 1.0 | 0.975 | 0.982 | 133 ms | 219 ms |
+| BM25 | 1.0 | 0.858 | 0.895 | 132 ms | 206 ms |
+| Híbrida | 1.0 | 0.925 | 0.945 | 129 ms | 211 ms |
+| Híbrida + reranking | 1.0 | 1.0 | 1.0 | 5710 ms | 6306 ms |
+
+Victorias/derrotas/empates en recall@10: 0/0/20 entre híbrida y densa, híbrida y BM25, y reranking frente a híbrida.
+La muestra es pequeña y no demuestra significación; documenta cobertura y orden, no una mejora general.
+Los resúmenes versionados están en `eval/results/`; los volcados por consulta se ignoran.
+
+```bash
+API_KEY_HMAC_SECRET=... uv run python -m eval.run --split all --candidates 30 --top-k 10
+```
 
 Para ejecutar la prueba funcional opcional con modelos reales en CPU y Qdrant temporal:
 
@@ -99,7 +119,13 @@ uv run python -m ragmur.cli reindex --all
 
 Si cambias los modelos o el troceado, usa `--all`. Los comandos parciales rechazan configuraciones distintas.
 El reindexado completo elimina primero los puntos de cada tenant y conserva los originales.
-Las métricas de recuperación y la compatibilidad con CUDA aún no se han verificado.
+Para borrar un tenant con sus puntos y ficheros, detén la API y ejecuta:
+
+```bash
+uv run python -m ragmur.cli delete-tenant <tenant-uuid>
+```
+
+Las copias de PostgreSQL y `STORAGE_DIR` se hacen con `pg_dump` y copia de ficheros; Qdrant se reconstruye con `reindex --all`.
 
 Para preparar la variante CUDA en una máquina compatible, usa:
 
@@ -110,6 +136,21 @@ uv run --no-group cpu --extra cuda uvicorn ragmur.main:app
 
 Configura `EMBEDDING_DEVICE=cuda` y comprueba el controlador antes de usarla.
 CUDA 13.0 requiere un controlador Linux 580.65.06 o posterior para la versión GA.
+El límite por clave devuelve `429` con `Retry-After`; la ingesta llena y las dependencias caídas devuelven `503`.
+
+Para construir el contenedor de CPU:
+
+```bash
+docker build -t ragmur:cpu .
+docker run --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cpu
+```
+
+Para CUDA en máquina compatible con NVIDIA Container Toolkit:
+
+```bash
+docker build --build-arg INSTALL_CUDA=true -t ragmur:cuda .
+docker run --gpus all --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cuda
+```
 
 ## Stack
 
@@ -141,4 +182,4 @@ Se admite `langchain-text-splitters` como utilidad aislada; las dependencias pen
 
 ## Licencia
 
-MIT es la licencia prevista. Falta incorporar el fichero `LICENSE` con su titular antes de publicar una versión.
+MIT. Ver `LICENSE` con titular Tymur Bogach.
