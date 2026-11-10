@@ -119,6 +119,7 @@ uv run python -m ragmur.cli reindex --all
 
 Si cambias los modelos o el troceado, usa `--all`. Los comandos parciales rechazan configuraciones distintas.
 El reindexado completo elimina primero los puntos de cada tenant y conserva los originales.
+Antes del borrado marca los documentos como fallidos. Si se interrumpe, repite `reindex --all`.
 Para borrar un tenant con sus puntos y ficheros, detén la API y ejecuta:
 
 ```bash

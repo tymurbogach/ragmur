@@ -579,6 +579,8 @@ Los temporales y originales sin fila se reconcilian al arrancar, solo dentro de 
 
 El reindexado y el borrado completo de un tenant son comandos de mantenimiento con la API detenida en fase 1.
 El reindexado limpia puntos anteriores y parciales antes de escribir; cada lote conserva sus IDs durante los reintentos de la misma ejecución.
+El reindexado completo marca primero todos los documentos como `failed` en una transacción.
+Si se interrumpe, conserva los originales y se puede repetir el comando completo.
 El borrado de tenant elimina puntos y ficheros antes de eliminar sus filas; una cascada SQL no limpia almacenes externos.
 
 Las subidas tienen límites de bytes, páginas, texto extraído y expansión de DOCX comprimidos.

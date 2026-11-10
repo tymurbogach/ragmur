@@ -120,6 +120,21 @@ async def test_reindex_scopes_and_new_configuration(
             )
             == after_a
         )
+        from ragmur.ingestion import maintenance
+
+        original_delete = store.delete_tenant_points
+
+        async def interrupted(*args: object, **kwargs: object) -> None:
+            raise RuntimeError("interrupted")
+
+        monkeypatch.setattr(maintenance, "delete_tenant_points", interrupted)
+        with pytest.raises(RuntimeError, match="interrupted"):
+            await reindex(settings, document_id=None, tenant_id=None)
+        async with factory() as session:
+            for document_id in docs:
+                document = await session.get(Document, document_id)
+                assert document is not None and document.status == "failed"
+        monkeypatch.setattr(maintenance, "delete_tenant_points", original_delete)
         assert await reindex(settings, document_id=None, tenant_id=None) == (2, 0, 0)
         assert (
             await store.count_document_points(

@@ -5,7 +5,7 @@ from contextlib import AsyncExitStack
 from pathlib import Path
 from uuid import UUID
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, update
 
 from ragmur.core.config import Settings
 from ragmur.db.models import Document, Tenant
@@ -75,6 +75,15 @@ async def reindex(
                 tenant_ids = (await session.scalars(select(Tenant.id))).all()
             if not tenant_ids:
                 return (0, 0, 0)
+            async with sessions() as session:
+                await session.execute(
+                    update(Document).values(
+                        status="failed",
+                        error="Reindexado completo pendiente",
+                        chunk_count=None,
+                    )
+                )
+                await session.commit()
             for space in tenant_ids:
                 await delete_tenant_points(space, client, settings.qdrant_collection)
             await set_reindex_metadata(
@@ -101,8 +110,7 @@ async def reindex(
                 if document is None or document.status == "deleting":
                     failed += 1
                     continue
-                # El reseteo es por documento, justo antes de procesarlo: un aborto
-                # nunca deja al resto del corpus en `pending` con el índice vaciado.
+                # Solo el documento activo pasa a pending antes de procesarse.
                 document.status = "pending"
                 document.error = None
                 document.chunk_count = None
