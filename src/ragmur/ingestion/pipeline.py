@@ -11,7 +11,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from ragmur.core.config import Settings
 from ragmur.db.models import Document
+from ragmur.ingestion.extractors.core import ExtractionResult, Fragment
 from ragmur.ingestion.extractors.runner import extract_in_process
+from ragmur.ingestion.indexer import IncompleteCleanupError, Indexer
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +21,15 @@ logger = logging.getLogger(__name__)
 class IngestionCoordinator:
     """Limita trabajos aceptados y activos en una instancia."""
 
-    def __init__(self, sessions: async_sessionmaker[AsyncSession], settings: Settings) -> None:
+    def __init__(
+        self,
+        sessions: async_sessionmaker[AsyncSession],
+        settings: Settings,
+        indexer: Indexer | None = None,
+    ) -> None:
         self.sessions = sessions
         self.settings = settings
+        self.indexer = indexer
         self.accepted: set[UUID] = set()
         self.semaphore = asyncio.Semaphore(settings.ingestion_max_active)
 
@@ -60,16 +68,37 @@ class IngestionCoordinator:
                         deadline_seconds=self.settings.extraction_timeout_seconds,
                     )
                     if result.get("status") == "ok":
-                        doc.status = "extracted"
-                        doc.page_count = result["result"]["page_count"]
-                        doc.diagnostic = "; ".join(result["result"]["warnings"]) or None
+                        extracted = result["result"]
+                        doc.page_count = extracted["page_count"]
+                        doc.diagnostic = "; ".join(extracted["warnings"]) or None
                         doc.error = None
+                        if self.indexer is None:
+                            doc.status = "extracted"
+                        else:
+                            extraction = ExtractionResult(
+                                fragments=[
+                                    Fragment(text=part["text"], locator=part["locator"])
+                                    for part in extracted["fragments"]
+                                ],
+                                page_count=extracted["page_count"],
+                                warnings=extracted["warnings"],
+                            )
+                            doc.chunk_count = await self.indexer.index(
+                                tenant_id, document_id, doc.owner_id, doc.filename, extraction
+                            )
+                            doc.status = "indexed"
                     elif result.get("status") == "unsupported":
                         doc.status = "unsupported"
                         doc.error = result.get("error", "Contenido no admitido")
                     else:
                         doc.status = "failed"
                         doc.error = result.get("error", "Error de extracción")
+                except IncompleteCleanupError:
+                    logger.warning(
+                        "limpieza de puntos pendiente", extra={"document_id": str(document_id)}
+                    )
+                    doc.status = "processing"
+                    doc.error = "No se pudo completar la limpieza del índice"
                 except Exception:
                     logger.warning("fallo de extracción", extra={"document_id": str(document_id)})
                     doc.status = "failed"
@@ -79,6 +108,12 @@ class IngestionCoordinator:
             logger.warning(
                 "trabajo de ingesta interrumpido", extra={"document_id": str(document_id)}
             )
+            if self.indexer is not None:
+                try:
+                    await self.indexer.cleanup(tenant_id, document_id)
+                except Exception:
+                    logger.warning("limpieza de puntos pendiente")
+                    return
             try:
                 async with self.sessions() as session:
                     await session.execute(
@@ -101,15 +136,22 @@ class IngestionCoordinator:
         root = self.settings.storage_dir.resolve()
         await asyncio.to_thread(root.mkdir, parents=True, exist_ok=True)
         async with self.sessions() as session:
-            await session.execute(
-                update(Document)
-                .where(Document.status.in_(("pending", "processing")))
-                .values(status="failed", error="La ingesta se interrumpió durante el reinicio")
-            )
+            interrupted = (
+                await session.scalars(
+                    select(Document).where(Document.status.in_(("pending", "processing")))
+                )
+            ).all()
+            for document in interrupted:
+                if self.indexer is not None:
+                    await self.indexer.cleanup(document.tenant_id, document.id)
+                document.status = "failed"
+                document.error = "La ingesta se interrumpió durante el reinicio"
             deleting = (
                 await session.scalars(select(Document).where(Document.status == "deleting"))
             ).all()
             for document in deleting:
+                if self.indexer is not None:
+                    await self.indexer.cleanup(document.tenant_id, document.id)
                 path = Path(document.storage_path)
                 if path.parent != root or path.name != str(document.id):
                     raise RuntimeError("Ruta de documento inválida")

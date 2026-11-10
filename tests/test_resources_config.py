@@ -44,6 +44,7 @@ async def test_engine_disposed_when_client_close_fails(monkeypatch: pytest.Monke
     lock = Mock()
     lock.close = AsyncMock()
     monkeypatch.setattr("ragmur.main.acquire_database_lock", AsyncMock(return_value=lock))
+    monkeypatch.setattr("ragmur.main.ping", AsyncMock(return_value="1.19.0"))
     monkeypatch.setattr("ragmur.main.IngestionCoordinator.reconcile", AsyncMock())
     with pytest.raises(RuntimeError, match="failure"):
         async with lifespan(FastAPI()):

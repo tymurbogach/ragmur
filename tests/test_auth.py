@@ -1,6 +1,7 @@
 """Pruebas de autenticación con PostgreSQL real."""
 
 from collections.abc import AsyncIterator
+from unittest.mock import AsyncMock
 from uuid import UUID
 
 import pytest
@@ -17,7 +18,8 @@ from ragmur.main import create_app
 
 
 @pytest.fixture
-async def auth_setup() -> AsyncIterator[tuple[FastAPI, str, str]]:
+async def auth_setup(monkeypatch: pytest.MonkeyPatch) -> AsyncIterator[tuple[FastAPI, str, str]]:
+    monkeypatch.setattr("ragmur.ingestion.pipeline.IngestionCoordinator.reconcile", AsyncMock())
     settings = get_settings()
     engine = create_engine(settings.database_url)
     factory = create_session_factory(engine)

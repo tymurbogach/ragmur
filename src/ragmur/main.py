@@ -17,10 +17,17 @@ from ragmur.api.routes import documents, health
 from ragmur.api.upload_limit import UploadLimitMiddleware
 from ragmur.core.config import get_settings
 from ragmur.core.logging import configure_logging
-from ragmur.db.session import acquire_database_lock, create_engine, create_session_factory
+from ragmur.db.session import (
+    acquire_database_lock,
+    create_engine,
+    create_session_factory,
+    first_tenant,
+)
+from ragmur.ingestion.indexer import Indexer
 from ragmur.ingestion.pipeline import IngestionCoordinator
 from ragmur.ingestion.storage import acquire_instance_lock
-from ragmur.retrieval.store import create_client
+from ragmur.retrieval.models import load_models
+from ragmur.retrieval.store import create_client, ensure_collection, ping
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +51,20 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         database_lock = await acquire_database_lock(engine)
         stack.push_async_callback(database_lock.close)
         sessions = create_session_factory(engine)
-        ingestion = IngestionCoordinator(sessions, settings)
+        await ping(qdrant)
+        models = await asyncio.to_thread(load_models, settings)
+        indexer = Indexer(qdrant, models, settings)
+        ingestion = IngestionCoordinator(sessions, settings, indexer)
         await ingestion.reconcile()
+        tenant_id = await first_tenant(sessions)
+        if tenant_id is not None:
+            await ensure_collection(
+                tenant_id,
+                qdrant,
+                settings.qdrant_collection,
+                models.dense.dimension,
+                indexer.metadata(),
+            )
         app.state.resources = Resources(
             engine=engine,
             sessions=sessions,

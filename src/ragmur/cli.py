@@ -13,6 +13,13 @@ from ragmur.db.session import create_engine, create_session_factory
 async def run(args: argparse.Namespace) -> str:
     """Ejecuta un comando y devuelve su resultado."""
     settings = get_settings()
+    if args.command == "reindex":
+        from ragmur.ingestion.maintenance import reindex
+
+        indexed, failed = await reindex(settings, document_id=args.document, tenant_id=args.tenant)
+        if failed:
+            raise ValueError(f"Reindexed {indexed} documents; {failed} failed")
+        return f"Reindexed {indexed} documents"
     engine = create_engine(settings.database_url)
     try:
         async with create_session_factory(engine)() as session:
@@ -44,10 +51,17 @@ def main() -> None:
     issue.add_argument("--name")
     revoke = commands.add_parser("revoke-key")
     revoke.add_argument("key_id")
+    reindex_command = commands.add_parser("reindex")
+    scope = reindex_command.add_mutually_exclusive_group(required=True)
+    scope.add_argument("--document", type=uuid.UUID)
+    scope.add_argument("--tenant", type=uuid.UUID)
+    scope.add_argument("--all", action="store_true")
     try:
         result = asyncio.run(run(parser.parse_args()))
     except ValueError as exc:
         parser.exit(1, f"{exc}\n")
+    except Exception:
+        parser.exit(1, "Command failed; check the configuration and service dependencies\n")
     sys.stdout.write(result + "\n")
 
 

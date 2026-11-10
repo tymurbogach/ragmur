@@ -5,8 +5,10 @@ al arrancar. Abrir una conexión por petición costaría más que la propia cons
 """
 
 from collections.abc import AsyncIterator
+from typing import cast
+from uuid import UUID
 
-from sqlalchemy import text
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import (
     AsyncConnection,
     AsyncEngine,
@@ -14,6 +16,8 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
+
+from ragmur.db.models import Tenant
 
 
 def create_engine(database_url: str) -> AsyncEngine:
@@ -43,6 +47,12 @@ async def acquire_database_lock(engine: AsyncEngine) -> AsyncConnection:
     except BaseException:
         await connection.close()
         raise
+
+
+async def first_tenant(factory: async_sessionmaker[AsyncSession]) -> UUID | None:
+    """Devuelve un tenant para validar la colección compartida, si existe."""
+    async with factory() as session:
+        return cast(UUID | None, await session.scalar(select(Tenant.id).limit(1)))
 
 
 async def session_scope(

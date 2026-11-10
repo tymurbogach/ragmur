@@ -23,6 +23,8 @@ async def document_client(
 ) -> AsyncIterator[tuple[AsyncClient, str, str]]:
     monkeypatch.setenv("STORAGE_DIR", str(tmp_path))
     monkeypatch.setattr("ragmur.ingestion.pipeline.IngestionCoordinator.reconcile", AsyncMock())
+    monkeypatch.setattr("ragmur.ingestion.indexer.Indexer.index", AsyncMock(return_value=1))
+    monkeypatch.setattr("ragmur.ingestion.indexer.Indexer.cleanup", AsyncMock())
     get_settings.cache_clear()
     settings = get_settings()
     engine = create_engine(settings.database_url)
@@ -66,7 +68,7 @@ async def test_upload_deduplicate_and_isolate(
     detail = await client.get(
         f"/v1/documents/{document_id}", headers=headers, params={"owner_id": "alice"}
     )
-    assert detail.status_code == 200 and detail.json()["status"] == "extracted"
+    assert detail.status_code == 200 and detail.json()["status"] == "indexed"
     assert (
         await client.get(
             f"/v1/documents/{document_id}", headers=headers, params={"owner_id": "bob"}
@@ -82,7 +84,7 @@ async def test_upload_deduplicate_and_isolate(
         data={"owner_id": "alice"},
     )
     assert duplicate.status_code == 200 and duplicate.json()["document_id"] == document_id
-    assert duplicate.json()["status"] == "extracted"
+    assert duplicate.json()["status"] == "indexed"
     assert (
         await client.delete(
             f"/v1/documents/{document_id}", headers=headers, params={"owner_id": "alice"}

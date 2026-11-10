@@ -238,8 +238,10 @@ async def delete_document(
         doc.status = "deleting"
         await session.commit()
         try:
+            if resources.ingestion.indexer is not None:
+                await resources.ingestion.indexer.cleanup(tenant_id, document_id)
             await asyncio.to_thread(path.unlink, missing_ok=True)
-        except OSError as exc:
+        except Exception as exc:
             raise HTTPException(503, detail="Storage unavailable") from exc
         await session.execute(
             delete(Document).where(Document.id == doc.id, Document.tenant_id == tenant_id)

@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.3 están completadas. La siguiente tarea funcional es **1.4**.
+Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -211,21 +211,24 @@ El borrado de puntos y la transición completa a `indexed` se verifican en 1.4, 
 
 ### 1.4 Indexado
 
+La inferencia y el reindexado están verificados en CPU. La prueba en RTX 5080 requiere el homelab.
+El filtro del corpus IDF se implementa y prueba con la búsqueda de 1.5.
+
 - [ ] Fijar PyTorch, rueda CUDA y controlador compatibles con `sm_120`; variante CPU para CI y prueba real de inferencia
-- [ ] Servicio de embeddings bge-m3, cargado en el `lifespan` y reutilizado entre peticiones
-- [ ] Generación de vectores dispersos BM25 con FastEmbed, con `language` **declarado explícitamente**
-- [ ] Separar `embed` documental de `query_embed`; registrar versión, idioma, stopwords, stemmer, `k`, `b` y `avg_len`
-- [ ] Colección `ragmur_chunks` con vectores nombrados `dense` y `sparse`
-- [ ] **El vector `sparse` se declara con `modifier=IDF`** — ver nota, es el fallo silencioso más probable de toda la fase
-- [ ] Corpus IDF por tenant y por `owner_id` si existe; comprobar la capacidad del servidor y aplicarla en prefetch disperso
-- [ ] Índice de payload sobre `tenant_id` con `is_tenant=True`
-- [ ] Índice de payload sobre `owner_id`
-- [ ] Índice de payload sobre `document_id` (borrado por documento y filtro `document_ids` de `/v1/search`)
-- [ ] Escritura por lotes
-- [ ] Transición del documento a estado `indexed`
-- [ ] Confirmación de todos los lotes antes de `indexed`; compensación de fallos parciales y exclusión de documentos incompletos
-- [ ] Completar pruebas de borrado de puntos, reintentos y recuperación tras reinicios con Qdrant real
-- [ ] Reindexado desde originales, con la API detenida: documento, tenant o corpus; limpieza previa y nuevas identidades de chunks
+- [x] Servicio de embeddings bge-m3, cargado en el `lifespan` y reutilizado entre peticiones
+- [x] Generación de vectores dispersos BM25 con FastEmbed, con `language` **declarado explícitamente**
+- [x] Separar `embed` documental de `query_embed`; registrar versión, idioma, stopwords, stemmer, `k`, `b` y `avg_len`
+- [x] Colección `ragmur_chunks` con vectores nombrados `dense` y `sparse`
+- [x] **El vector `sparse` se declara con `modifier=IDF`** — ver nota, es el fallo silencioso más probable de toda la fase
+- [x] Comprobar que el cliente y el servidor admiten el corpus IDF acotado
+- [x] Índice de payload sobre `tenant_id` con `is_tenant=True`
+- [x] Índice de payload sobre `owner_id`
+- [x] Índice de payload sobre `document_id` (borrado por documento y filtro `document_ids` de `/v1/search`)
+- [x] Escritura por lotes
+- [x] Transición del documento a estado `indexed`
+- [x] Confirmación de todos los lotes antes de `indexed`; compensación de fallos parciales y exclusión de documentos incompletos
+- [x] Completar pruebas de borrado de puntos, reintentos y recuperación tras reinicios con Qdrant real
+- [x] Reindexado desde originales, con la API detenida: documento, tenant o corpus; limpieza previa y nuevas identidades de chunks
 
 **Nota sobre `modifier=IDF`.** FastEmbed emite frecuencias de término; el componente IDF —el que da más peso a los términos raros del corpus— lo aplica Qdrant en el servidor, y solo si el vector disperso se declaró con ese modificador. Sin él, la rama léxica puntúa por pura repetición y pierde exactamente aquello que justifica tenerla junto a la búsqueda densa. No lanza ningún error: el sistema funciona y recupera peor. Solo se detecta con evaluación.
 
@@ -242,6 +245,7 @@ La falta de esta capacidad impide el arranque, no autoriza omitirla. Ver `DECISI
 - [ ] `POST /v1/search` con `query`, `top_k`, `candidates`, `rerank`, `owner_id` y filtro por documento
 - [ ] Rama densa: embedding de consulta + búsqueda vectorial
 - [ ] Rama léxica: vector disperso BM25
+- [ ] Aplicar el corpus IDF por tenant y `owner_id` en el prefetch disperso
 - [ ] Fusión RRF mediante la Query API de Qdrant
 - [ ] Registrar constante RRF y límites por rama; conservar la misma configuración durante cada comparación
 - [ ] `candidates` definido como el tamaño de la lista **tras la fusión** y antes del reranking; cada rama recupera internamente lo necesario para alimentarla

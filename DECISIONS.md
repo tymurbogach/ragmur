@@ -285,9 +285,20 @@ La fase 1.2 añade `extracted` para una extracción completada sin índice.
 La fase 1.4 vuelve a leer el original y publica `indexed` después de indexar.
 Mantener `processing` indicaría un trabajo activo que ya terminó.
 
-La ingesta usa `python-multipart` 0.0.33 para formularios y `pypdfium2` 5.15.1 para PDF.
+La ingesta usa `python-multipart` 0.0.33 para formularios y `pypdfium2` 5.15.2 para PDF.
 Usa `python-docx` 1.2.0 para DOCX. Sus licencias son Apache 2.0, BSD-3-Clause y Apache 2.0,
 y MIT, respectivamente. `pypdfium2` incluye también las licencias de sus componentes.
+
+### 3.26 Runtime de embeddings
+
+El modo predeterminado usa PyTorch 2.12.0 para CPU, Sentence Transformers 6.2.0 y FastEmbed 0.9.1.
+PyTorch ejecuta BGE-M3; Sentence Transformers aplica el modelo denso y su tokenizador.
+FastEmbed implementa BM25 y distingue los pesos de documentos y consultas.
+Hugging Face Hub descarga revisiones concretas; las dependencias anteriores no ofrecen estas funciones.
+La instalación opcional prepara PyTorch 2.12.0 con CUDA 13.0 sin cambiar el controlador del equipo.
+La resolución de dependencias se comprobó para ambos modos. La inferencia real solo se ha probado en CPU.
+CUDA 13.0 GA requiere el [controlador Linux 580.65.06 o posterior](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-toolkit-release-notes/index.html).
+La prueba en RTX 5080 y la combinación efectiva de controlador quedan pendientes.
 
 ## 4. Aclaraciones conceptuales fijadas
 

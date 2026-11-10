@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -24,6 +25,7 @@ class Settings(BaseSettings):
     database_url: str
     api_key_hmac_secret: SecretStr = Field(min_length=1)
     qdrant_url: str = "http://localhost:6333"
+    qdrant_collection: str = Field(default="ragmur_chunks", min_length=1)
 
     # Un chequeo de salud que tarda más que esto es un fallo a efectos prácticos:
     # quien lo consulta (un balanceador, un orquestador) no va a esperar más.
@@ -43,6 +45,19 @@ class Settings(BaseSettings):
     document_list_max_limit: int = Field(default=100, gt=0)
     chunk_size: int = Field(default=800, gt=0)
     chunk_overlap: int = Field(default=120, ge=0)
+    embedding_model: str = "BAAI/bge-m3"
+    embedding_revision: str = "5617a9f61b028005a4858fdac845db406aefb181"
+    embedding_device: Literal["cpu", "cuda"] = "cpu"
+    model_cache_dir: Path = Path("./models/huggingface")
+    embedding_batch_size: int = Field(default=16, gt=0)
+    index_batch_size: int = Field(default=64, gt=0)
+    bm25_model: str = "Qdrant/bm25"
+    bm25_revision: str = "22b8d2af71a76161e18dd432d2cee0eefa66e412"
+    bm25_language: str = "spanish"
+    bm25_disable_stemmer: bool = False
+    bm25_k: float = Field(default=1.2, gt=0, allow_inf_nan=False)
+    bm25_b: float = Field(default=0.75, ge=0, le=1, allow_inf_nan=False)
+    bm25_avg_len: float = Field(default=256, gt=0, allow_inf_nan=False)
 
     log_level: str = "INFO"
 

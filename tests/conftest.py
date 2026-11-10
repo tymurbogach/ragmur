@@ -2,7 +2,7 @@
 
 import os
 from collections.abc import AsyncIterator, Iterator
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -25,6 +25,16 @@ def configuracion_limpia() -> Iterator[None]:
     get_settings.cache_clear()
     yield
     get_settings.cache_clear()
+
+
+@pytest.fixture(autouse=True)
+def modelos_simulados(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Evita descargar modelos en la suite; la inferencia real se verifica aparte."""
+    model = Mock()
+    model.dense.dimension = 1024
+    model.sparse.metadata = {"model": "test"}
+    monkeypatch.setattr("ragmur.main.load_models", Mock(return_value=model))
+    monkeypatch.setattr("ragmur.main.first_tenant", AsyncMock(return_value=None))
 
 
 async def _cliente() -> AsyncIterator[AsyncClient]:
@@ -66,6 +76,7 @@ async def client_sin_dependencias(
     monkeypatch.setenv("HEALTH_TIMEOUT_SECONDS", "2")
     lock = AsyncMock()
     monkeypatch.setattr("ragmur.main.acquire_database_lock", AsyncMock(return_value=lock))
+    monkeypatch.setattr("ragmur.main.ping", AsyncMock(return_value="1.19.0"))
     monkeypatch.setattr("ragmur.ingestion.pipeline.IngestionCoordinator.reconcile", AsyncMock())
     get_settings.cache_clear()
 
