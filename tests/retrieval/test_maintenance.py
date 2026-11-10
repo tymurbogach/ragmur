@@ -135,6 +135,19 @@ async def test_reindex_scopes_and_new_configuration(
                 document = await session.get(Document, document_id)
                 assert document is not None and document.status == "failed"
         monkeypatch.setattr(maintenance, "delete_tenant_points", original_delete)
+        original_metadata = store.set_reindex_metadata
+        monkeypatch.setattr(maintenance, "set_reindex_metadata", interrupted)
+        with pytest.raises(RuntimeError, match="interrupted"):
+            await reindex(settings, document_id=None, tenant_id=None)
+        async with factory() as session:
+            for document_id in docs:
+                document = await session.get(Document, document_id)
+                assert document is not None and document.status == "failed"
+        for tenant, document_id in zip(tenants, docs, strict=True):
+            assert await store.count_document_points(
+                tenant, client, settings.qdrant_collection, document_id
+            ) == 0
+        monkeypatch.setattr(maintenance, "set_reindex_metadata", original_metadata)
         assert await reindex(settings, document_id=None, tenant_id=None) == (2, 0, 0)
         assert (
             await store.count_document_points(
