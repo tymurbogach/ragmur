@@ -16,9 +16,13 @@ async def run(args: argparse.Namespace) -> str:
     if args.command == "reindex":
         from ragmur.ingestion.maintenance import reindex
 
-        indexed, failed = await reindex(settings, document_id=args.document, tenant_id=args.tenant)
+        indexed, failed, unsupported = await reindex(
+            settings, document_id=args.document, tenant_id=args.tenant
+        )
         if failed:
             raise ValueError(f"Reindexed {indexed} documents; {failed} failed")
+        if unsupported:
+            return f"Reindexed {indexed} documents; {unsupported} unsupported"
         return f"Reindexed {indexed} documents"
     if args.command == "delete-tenant":
         from ragmur.ingestion.maintenance import delete_tenant

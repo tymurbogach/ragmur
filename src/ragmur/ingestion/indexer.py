@@ -65,6 +65,7 @@ class Indexer:
             overlap=settings.chunk_overlap,
         ).chunks
         if not chunks:
+            await self.cleanup(tenant_id, document_id)
             raise ValueError("The document has no extractable chunks")
         collection = settings.qdrant_collection
         async with self.initialization_lock:
@@ -103,7 +104,11 @@ class Indexer:
                     for chunk, dense_vector, sparse_vector in zip(batch, dense, sparse, strict=True)
                 ]
                 await store.upsert_points(tenant_id, self.client, collection, points)
-        except BaseException:
+        except asyncio.CancelledError:
+            raise
+        except KeyboardInterrupt:
+            raise
+        except Exception:
             try:
                 await self.cleanup(tenant_id, document_id)
             except Exception as exc:

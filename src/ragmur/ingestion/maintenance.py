@@ -5,14 +5,18 @@ from contextlib import AsyncExitStack
 from pathlib import Path
 from uuid import UUID
 
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, select
 
 from ragmur.core.config import Settings
 from ragmur.db.models import Document, Tenant
 from ragmur.db.session import acquire_database_lock, create_engine, create_session_factory
 from ragmur.ingestion.indexer import Indexer
 from ragmur.ingestion.pipeline import IngestionCoordinator
-from ragmur.ingestion.storage import acquire_instance_lock
+from ragmur.ingestion.storage import (
+    InvalidDocumentPathError,
+    acquire_instance_lock,
+    resolve_document_path,
+)
 from ragmur.retrieval.models import load_models
 from ragmur.retrieval.store import (
     create_client,
@@ -25,8 +29,12 @@ from ragmur.retrieval.store import (
 
 async def reindex(
     settings: Settings, *, document_id: UUID | None, tenant_id: UUID | None
-) -> tuple[int, int]:
-    """Reindexa un documento, un tenant o todo el corpus con la API detenida."""
+) -> tuple[int, int, int]:
+    """Reindexa un documento, un tenant o todo el corpus con la API detenida.
+
+    Devuelve `(indexed, failed, unsupported)`: los `unsupported` son contenido
+    no recuperable (p. ej. escaneados) y no cuentan como fallos.
+    """
     async with AsyncExitStack() as stack:
         try:
             lock = await asyncio.to_thread(acquire_instance_lock, settings.storage_dir)
@@ -53,7 +61,7 @@ async def reindex(
         if not documents and (document_id is not None or tenant_id is not None):
             raise ValueError("No documents found for the requested scope")
         if not documents:
-            return (0, 0)
+            return (0, 0, 0)
         client = create_client(settings.qdrant_url, settings.health_timeout_seconds)
         stack.push_async_callback(client.close)
         await ping(client)
@@ -65,10 +73,8 @@ async def reindex(
                 raise ValueError("Complete pending deletions before reindexing the corpus")
             async with sessions() as session:
                 tenant_ids = (await session.scalars(select(Tenant.id))).all()
-                await session.execute(
-                    update(Document).values(status="pending", error=None, chunk_count=None)
-                )
-                await session.commit()
+            if not tenant_ids:
+                return (0, 0, 0)
             for space in tenant_ids:
                 await delete_tenant_points(space, client, settings.qdrant_collection)
             await set_reindex_metadata(
@@ -88,12 +94,15 @@ async def reindex(
             )
         indexed = 0
         failed = 0
+        unsupported = 0
         for doc_id, doc_tenant, _ in documents:
             async with sessions() as session:
                 document = await session.get(Document, doc_id)
                 if document is None or document.status == "deleting":
                     failed += 1
                     continue
+                # El reseteo es por documento, justo antes de procesarlo: un aborto
+                # nunca deja al resto del corpus en `pending` con el índice vaciado.
                 document.status = "pending"
                 document.error = None
                 document.chunk_count = None
@@ -106,9 +115,11 @@ async def reindex(
                 document = await session.get(Document, doc_id)
                 if document is not None and document.status == "indexed":
                     indexed += 1
+                elif document is not None and document.status == "unsupported":
+                    unsupported += 1
                 else:
                     failed += 1
-        return indexed, failed
+        return indexed, failed, unsupported
 
 
 async def delete_tenant(settings: Settings, tenant_id: UUID) -> int:
@@ -141,9 +152,10 @@ async def delete_tenant(settings: Settings, tenant_id: UUID) -> int:
         await delete_tenant_points(tenant_id, client, settings.qdrant_collection)
         root = settings.storage_dir.resolve()
         for document, path in zip(documents, paths, strict=True):
-            resolved = Path(path)
-            if resolved.parent != root or resolved.name != str(document.id):
-                raise RuntimeError("Invalid document path")
+            try:
+                resolved = resolve_document_path(root, document.id, str(path))
+            except InvalidDocumentPathError as exc:
+                raise RuntimeError("Invalid document path") from exc
             await asyncio.to_thread(resolved.unlink, missing_ok=True)
         async with sessions() as session:
             await session.execute(delete(Document).where(Document.tenant_id == tenant_id))

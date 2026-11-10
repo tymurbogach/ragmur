@@ -14,6 +14,19 @@ class UploadTooLargeError(Exception):
     """El original excede el límite de bytes."""
 
 
+class InvalidDocumentPathError(Exception):
+    """La ruta conservada no corresponde al documento."""
+
+
+def resolve_document_path(root: Path, document_id: UUID, storage_path: str) -> Path:
+    """Comprueba que la ruta conservada viva bajo `root` con el nombre del documento."""
+    resolved_root = root.resolve()
+    path = Path(storage_path)
+    if path.parent != resolved_root or path.name != str(document_id):
+        raise InvalidDocumentPathError("La ruta del documento no pertenece a su espacio")
+    return path
+
+
 def acquire_instance_lock(root: Path) -> IO[bytes]:
     """Impide ejecutar dos instancias escritoras sobre el mismo almacenamiento."""
     root.mkdir(parents=True, exist_ok=True)

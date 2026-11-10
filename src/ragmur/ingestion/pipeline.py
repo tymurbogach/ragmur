@@ -3,7 +3,6 @@
 import asyncio
 import logging
 import time
-from pathlib import Path
 from uuid import UUID
 
 from sqlalchemy import delete, select, update
@@ -14,6 +13,7 @@ from ragmur.db.models import Document
 from ragmur.ingestion.extractors.core import ExtractionResult, Fragment
 from ragmur.ingestion.extractors.runner import extract_in_process
 from ragmur.ingestion.indexer import IncompleteCleanupError, Indexer
+from ragmur.ingestion.storage import resolve_document_path
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +35,8 @@ class IngestionCoordinator:
 
     def reserve(self, document_id: UUID) -> bool:
         """Reserva capacidad antes de aceptar una subida."""
+        if document_id in self.accepted:
+            return False
         if len(self.accepted) >= self.settings.ingestion_max_jobs:
             return False
         self.accepted.add(document_id)
@@ -59,7 +61,9 @@ class IngestionCoordinator:
                 await session.commit()
                 try:
                     result = await extract_in_process(
-                        Path(doc.storage_path),
+                        resolve_document_path(
+                            self.settings.storage_dir, document_id, doc.storage_path
+                        ),
                         doc.mime_type,
                         max_chars=self.settings.max_extracted_chars,
                         max_pages=self.settings.max_pdf_pages,
@@ -97,8 +101,12 @@ class IngestionCoordinator:
                     logger.warning(
                         "limpieza de puntos pendiente", extra={"document_id": str(document_id)}
                     )
-                    doc.status = "processing"
+                    doc.status = "failed"
                     doc.error = "No se pudo completar la limpieza del índice"
+                except asyncio.CancelledError:
+                    raise
+                except KeyboardInterrupt:
+                    raise
                 except Exception:
                     logger.warning("fallo de extracción", extra={"document_id": str(document_id)})
                     doc.status = "failed"
@@ -132,7 +140,11 @@ class IngestionCoordinator:
             self.release(document_id)
 
     async def reconcile(self) -> None:
-        """Marca trabajos interrumpidos y termina borrados antes de servir tráfico."""
+        """Marca trabajos interrumpidos y termina borrados antes de servir tráfico.
+
+        Cada documento se trata de forma aislada: una fila corrupta o un fallo
+        transitorio no impide reconciliar el resto ni bloquear el arranque.
+        """
         root = self.settings.storage_dir.resolve()
         await asyncio.to_thread(root.mkdir, parents=True, exist_ok=True)
         async with self.sessions() as session:
@@ -142,22 +154,38 @@ class IngestionCoordinator:
                 )
             ).all()
             for document in interrupted:
-                if self.indexer is not None:
-                    await self.indexer.cleanup(document.tenant_id, document.id)
-                document.status = "failed"
-                document.error = "La ingesta se interrumpió durante el reinicio"
+                try:
+                    if self.indexer is not None:
+                        await self.indexer.cleanup(document.tenant_id, document.id)
+                    document.status = "failed"
+                    document.error = "La ingesta se interrumpió durante el reinicio"
+                except Exception:
+                    logger.warning(
+                        "no se pudo limpiar un trabajo interrumpido",
+                        extra={"document_id": str(document.id)},
+                    )
+                    await session.rollback()
+                    document.status = "failed"
+                    document.error = "La ingesta se interrumpió durante el reinicio"
+                await session.commit()
             deleting = (
                 await session.scalars(select(Document).where(Document.status == "deleting"))
             ).all()
             for document in deleting:
-                if self.indexer is not None:
-                    await self.indexer.cleanup(document.tenant_id, document.id)
-                path = Path(document.storage_path)
-                if path.parent != root or path.name != str(document.id):
-                    raise RuntimeError("Ruta de documento inválida")
-                await asyncio.to_thread(path.unlink, missing_ok=True)
-                await session.execute(delete(Document).where(Document.id == document.id))
-            await session.commit()
+                try:
+                    if self.indexer is not None:
+                        await self.indexer.cleanup(document.tenant_id, document.id)
+                    path = resolve_document_path(root, document.id, document.storage_path)
+                    await asyncio.to_thread(path.unlink, missing_ok=True)
+                    await session.execute(delete(Document).where(Document.id == document.id))
+                except Exception:
+                    logger.warning(
+                        "no se pudo completar un borrado pendiente",
+                        extra={"document_id": str(document.id)},
+                    )
+                    await session.rollback()
+                    continue
+                await session.commit()
             referenced = set((await session.scalars(select(Document.storage_path))).all())
         now = time.time()
         for entry in await asyncio.to_thread(lambda: list(root.iterdir())):

@@ -91,7 +91,7 @@ async def test_reindex_scopes_and_new_configuration(
             tenants[1], client, settings.qdrant_collection, docs[1], "alice"
         )
         assert before_a and before_b
-        assert await reindex(settings, document_id=docs[0], tenant_id=None) == (1, 0)
+        assert await reindex(settings, document_id=docs[0], tenant_id=None) == (1, 0, 0)
         after_a = await store.list_document_point_ids(
             tenants[0], client, settings.qdrant_collection, docs[0], "alice"
         )
@@ -100,7 +100,7 @@ async def test_reindex_scopes_and_new_configuration(
         )
         assert after_a and after_a.isdisjoint(before_a)
         assert after_b == before_b
-        assert await reindex(settings, document_id=None, tenant_id=tenants[1]) == (1, 0)
+        assert await reindex(settings, document_id=None, tenant_id=tenants[1]) == (1, 0, 0)
         tenant_b_reindexed = await store.list_document_point_ids(
             tenants[1], client, settings.qdrant_collection, docs[1], "alice"
         )
@@ -120,7 +120,7 @@ async def test_reindex_scopes_and_new_configuration(
             )
             == after_a
         )
-        assert await reindex(settings, document_id=None, tenant_id=None) == (2, 0)
+        assert await reindex(settings, document_id=None, tenant_id=None) == (2, 0, 0)
         assert (
             await store.count_document_points(
                 tenants[0], client, settings.qdrant_collection, docs[0], "alice"
@@ -163,3 +163,75 @@ async def test_reindex_refuses_running_instance(tmp_path: Path) -> None:
     )
     with acquire_instance_lock(tmp_path), pytest.raises(ValueError, match="Stop the API"):
         await reindex(settings, document_id=uuid4(), tenant_id=None)
+
+
+async def test_reindex_counts_unsupported_separately(
+    isolated_qdrant: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Un escaneado (sin texto) cuenta como unsupported, no como failed."""
+    original = make_url(get_settings().database_url)
+    database = "test_" + uuid4().hex
+    admin = create_async_engine(original, isolation_level="AUTOCOMMIT")
+    async with admin.connect() as conn:
+        await conn.execute(text(f'CREATE DATABASE "{database}"'))
+    url = original.set(database=database).render_as_string(hide_password=False)
+    engine = create_async_engine(url)
+    client = store.create_client(isolated_qdrant, 5)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        for attempt in range(50):
+            try:
+                await store.ping(client)
+                break
+            except Exception:
+                if attempt == 49:
+                    raise
+                await asyncio.sleep(0.1)
+        settings = Settings(
+            database_url=url,
+            api_key_hmac_secret="test",
+            storage_dir=tmp_path,
+            qdrant_url=isolated_qdrant,
+            qdrant_collection="maintenance_unsupported_test",
+            chunk_size=100,
+            chunk_overlap=10,
+        )
+        dense = Mock()
+        dense.dimension = 3
+        dense.embed.side_effect = lambda texts, _: [[0.1, 0.2, 0.3] for _ in texts]
+        sparse = Mock()
+        sparse.metadata = {"model": "test"}
+        sparse.embed.side_effect = lambda texts, _: [SparseVector([1], [1.0]) for _ in texts]
+        models = EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock())
+        monkeypatch.setattr("ragmur.ingestion.maintenance.load_models", lambda _: models)
+        factory = async_sessionmaker(engine, expire_on_commit=False)
+        tenant, ok_id, empty_id = uuid4(), uuid4(), uuid4()
+        ok_path = tmp_path / str(ok_id)
+        empty_path = tmp_path / str(empty_id)
+        ok_path.write_text("A short document", encoding="utf-8")
+        empty_path.write_text("   ", encoding="utf-8")
+        async with factory() as session:
+            session.add(Tenant(id=tenant, name="u"))
+            await session.commit()
+            for document_id, path in ((ok_id, ok_path), (empty_id, empty_path)):
+                session.add(
+                    Document(
+                        id=document_id,
+                        tenant_id=tenant,
+                        owner_id=None,
+                        filename="a.txt",
+                        mime_type="text/plain",
+                        content_sha256=str(document_id),
+                        storage_path=str(path),
+                        status="pending",
+                    )
+                )
+            await session.commit()
+        assert await reindex(settings, document_id=None, tenant_id=tenant) == (1, 0, 1)
+    finally:
+        await client.close()
+        await engine.dispose()
+        async with admin.connect() as conn:
+            await conn.execute(text(f'DROP DATABASE "{database}" WITH (FORCE)'))
+        await admin.dispose()
