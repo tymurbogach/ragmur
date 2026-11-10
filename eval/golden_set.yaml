@@ -1,0 +1,335 @@
+- id: q001
+  split: dev
+  scope:
+    tenant: demo
+  query: In what country is Normandy located?
+  expected:
+  - evidence_id: normandy-country
+    document: en-normans
+    locator:
+      type: offset
+      start: 159
+      end: 165
+    quote: France
+  note: paráfrasis mínima; 'France' aparece una vez y prueba la rama léxica
+- id: q002
+  split: dev
+  scope:
+    tenant: demo
+  query: Who was the Norse leader?
+  expected:
+  - evidence_id: norse-leader
+    document: en-normans
+    locator:
+      type: offset
+      start: 308
+      end: 313
+    quote: Rollo
+  note: nombre propio exacto; distingue densa de léxica
+- id: q003
+  split: dev
+  scope:
+    tenant: demo
+  query: Which gas makes up 20.8% of the Earth's atmosphere?
+  expected:
+  - evidence_id: dioxygen-gas
+    document: en-oxygen
+    locator:
+      type: offset
+      start: 485
+      end: 500
+    quote: Diatomic oxygen
+  note: requiere vincular porcentaje con gas; sinónimo parcial
+- id: q004
+  split: dev
+  scope:
+    tenant: demo
+  query: What ideal thermodynamic cycle analyzes the process by which steam engines
+    work?
+  expected:
+  - evidence_id: rankine-cycle
+    document: en-steam
+    locator:
+      type: offset
+      start: 283
+      end: 290
+    quote: Rankine
+  note: término técnico único en el corpus inglés
+- id: q005
+  split: dev
+  scope:
+    tenant: demo
+  query: When were the Wars of Religion fought?
+  expected:
+  - evidence_id: wars-dates
+    document: en-huguenot
+    locator:
+      type: offset
+      start: 469
+      end: 486
+    quote: from 1562 to 1598
+  note: rango de fechas; la consulta no repite el literal completo
+- id: q006
+  split: dev
+  scope:
+    tenant: demo
+  query: ¿En qué año murió Tesla?
+  expected:
+  - evidence_id: tesla-death
+    document: es-tesla-1
+    locator:
+      type: offset
+      start: 512
+      end: 516
+    quote: '1943'
+  note: cifra en español; prueba stemming y stopwords en español
+- id: q007
+  split: dev
+  scope:
+    tenant: demo
+  query: ¿Dónde vivió Tesla la mayor parte de su vida?
+  expected:
+  - evidence_id: tesla-hotels
+    document: es-tesla-1
+    locator:
+      type: offset
+      start: 442
+      end: 463
+    quote: hoteles de Nueva York
+  note: sintagma largo en español con preposiciones
+- id: q008
+  split: dev
+  scope:
+    tenant: demo
+  query: ¿Cuál fue el primer cabaret literario de Varsovia?
+  expected:
+  - evidence_id: momus-cabaret
+    document: es-warsaw
+    locator:
+      type: offset
+      start: 209
+      end: 214
+    quote: Momus
+  note: nombre propio raro; la rama léxica debería aislarlo
+- id: q009
+  split: dev
+  scope:
+    tenant: demo
+  query: ¿En qué año reconoció Joseph Priestley el oxígeno?
+  expected:
+  - evidence_id: priestley-year
+    document: es-oxygen
+    locator:
+      type: offset
+      start: 137
+      end: 141
+    quote: '1774'
+  note: cifra que compite con 1773 y 1777 en el mismo documento
+- id: q010
+  split: dev
+  scope:
+    tenant: demo
+  query: ¿Qué tipo de elemento calefactor se utiliza a menudo en las máquinas de vapor
+    de juguete?
+  expected:
+  - evidence_id: toy-heater
+    document: es-steam
+    locator:
+      type: offset
+      start: 532
+      end: 541
+    quote: eléctrico
+  note: adjetivo al final del documento; prueba cobertura de cola
+- id: q011
+  split: dev
+  scope:
+    tenant: demo
+  query: Who gave their name to Normandy in the 1000's and 1100's
+  expected: []
+  note: 'negativa SQuAD: formula imposible sobre Normans; no debe contar en recall'
+- id: q012
+  split: dev
+  scope:
+    tenant: demo
+  query: Along with geothermal and nuclear, what is a notable combustion heat source?
+  expected: []
+  note: 'negativa SQuAD: variante imposible que invierte combustión/no-combustión'
+- id: q013
+  split: dev
+  scope:
+    tenant: demo
+  query: What counties does the more extensive eight county definition of SoCal include?
+  expected: []
+  note: 'negativa SQuAD: contradice la definición de diez condados del texto'
+- id: q014
+  split: dev
+  scope:
+    tenant: demo
+  query: When did the Huguenot movement start?
+  expected: []
+  note: 'negativa SQuAD: el texto da pico y guerras, no inicio del movimiento'
+- id: q015
+  split: test
+  scope:
+    tenant: demo
+  query: What is Southern California often abbreviated as?
+  expected:
+  - evidence_id: socal-abbr
+    document: en-california
+    locator:
+      type: offset
+      start: 39
+      end: 44
+    quote: SoCal
+  note: abreviatura exacta; reservada para prueba
+- id: q016
+  split: test
+  scope:
+    tenant: demo
+  query: Of what group in the periodic table is oxygen a member?
+  expected:
+  - evidence_id: oxygen-group
+    document: en-oxygen
+    locator:
+      type: offset
+      start: 86
+      end: 95
+    quote: chalcogen
+  note: término científico; reservada para prueba
+- id: q017
+  split: test
+  scope:
+    tenant: demo
+  query: Along with geothermal and nuclear, what is a notable non-combustion heat
+    source?
+  expected:
+  - evidence_id: solar-source
+    document: en-steam
+    locator:
+      type: offset
+      start: 149
+      end: 160
+    quote: solar power
+  note: palabra frecuente; la densa debe compensar la léxica
+- id: q018
+  split: test
+  scope:
+    tenant: demo
+  query: What treaty ended the Wars of Religion?
+  expected:
+  - evidence_id: edict-nantes
+    document: en-huguenot
+    locator:
+      type: offset
+      start: 536
+      end: 551
+    quote: Edict of Nantes
+  note: entidad con artículo variable; cita sin artículo inicial
+- id: q019
+  split: test
+  scope:
+    tenant: demo
+  query: From which countries did the Norse originate?
+  expected:
+  - evidence_id: norse-origin
+    document: en-normans
+    locator:
+      type: offset
+      start: 256
+      end: 283
+    quote: Denmark, Iceland and Norway
+  note: lista de tres; exige cita completa y no parcial
+- id: q020
+  split: test
+  scope:
+    tenant: demo
+  query: ¿Con quién se asoció Tesla en 1886?
+  expected:
+  - evidence_id: tesla-partners
+    document: es-tesla-2
+    locator:
+      type: offset
+      start: 66
+      end: 93
+    quote: Robert Lane y Benjamin Vail
+  note: dos nombres propios en español; reservada para prueba
+- id: q021
+  split: test
+  scope:
+    tenant: demo
+  query: ¿Cuándo se formó la sociedad entre Tesla, Lane y Vale?
+  expected:
+  - evidence_id: tesla-year
+    document: es-tesla-2
+    locator:
+      type: offset
+      start: 57
+      end: 61
+    quote: '1886'
+  note: año repetido en el documento; la fecha basta como evidencia
+- id: q022
+  split: test
+  scope:
+    tenant: demo
+  query: ¿Cuánto tiempo estuvo en funcionamiento el Teatro de Verano?
+  expected:
+  - evidence_id: summer-theatre
+    document: es-warsaw
+    locator:
+      type: offset
+      start: 115
+      end: 130
+    quote: 1870 hasta 1939
+  note: rango con 'hasta' frente al 'to' inglés; prueba idioma
+- id: q023
+  split: test
+  scope:
+    tenant: demo
+  query: ¿Qué investigador usó por primera vez la palabra oxígeno?
+  expected:
+  - evidence_id: lavoisier-word
+    document: es-oxygen
+    locator:
+      type: offset
+      start: 265
+      end: 282
+    quote: Antoine Lavoisier
+  note: nombre con diacríticos ausentes; reservada para prueba
+- id: q024
+  split: test
+  scope:
+    tenant: demo
+  query: Junto con el calor residual de la energía nuclear, geotérmica y de los motores
+    de combustión interna, ¿qué tipo de energía podría suministrar el calor para una
+    máquina de vapor?
+  expected:
+  - evidence_id: solar-es
+    document: es-steam
+    locator:
+      type: offset
+      start: 349
+      end: 362
+    quote: energía solar
+  note: consulta larga en español que parafrasea el contexto
+- id: q025
+  split: test
+  scope:
+    tenant: demo
+  query: What is France a region of?
+  expected: []
+  note: 'negativa SQuAD reservada: invierte la relación Normandy/France'
+- id: q026
+  split: test
+  scope:
+    tenant: demo
+  query: Who did King Charles III swear fealty to?
+  expected: []
+  note: 'negativa SQuAD reservada: invierte quién jura a quién'
+- id: q027
+  split: test
+  scope:
+    tenant: demo
+  query: ¿Cuál es la penalización por retraso en la entrega del vapor?
+  expected: []
+  note: 'negativa manual en español: el corpus no menciona penalizaciones; prueba
+    abstención futura'

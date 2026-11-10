@@ -24,6 +24,7 @@ dependencies = [
     "sentence-transformers==6.2.0",
     "fastembed==0.9.1",
     "huggingface-hub>=1.33.0",
+    "pyyaml==6.0.3",
 ]
 
 [project.optional-dependencies]
@@ -79,7 +80,7 @@ python_version = "3.12"
 strict = true
 # `eval` se añade en la tarea 1.7, cuando exista `eval/run.py`: mypy falla si se le
 # apunta a un directorio sin ficheros Python.
-files = ["src", "tests"]
+files = ["src", "tests", "eval"]
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]

@@ -71,6 +71,33 @@ async def test_hybrid_filters_and_idf_corpus(isolated_qdrant: str) -> None:
             p.sparse_score for p in after if p.payload["document_id"] == str(document_a)
         )
         assert score_after == score_before
+        for branch in ("dense", "sparse"):
+            branch_hits = await store.branch_search(
+                tenant_a,
+                client,
+                collection,
+                branch=branch,
+                dense=[1.0, 0.0, 0.0],
+                sparse_indices=[1],
+                sparse_values=[1.0],
+                owner_id="alice",
+                document_ids=None,
+                limit=30,
+            )
+            assert branch_hits and all(hit.payload["owner_id"] == "alice" for hit in branch_hits)
+            foreign = await store.branch_search(
+                tenant_b,
+                client,
+                collection,
+                branch=branch,
+                dense=[1.0, 0.0, 0.0],
+                sparse_indices=[1],
+                sparse_values=[1.0],
+                owner_id="alice",
+                document_ids=None,
+                limit=30,
+            )
+            assert foreign == []
         filtered = await search(tenant_a, "alice", [document_a])
         assert len(filtered) == 1 and filtered[0].payload["document_id"] == str(document_a)
         assert filtered[0].sparse_score == score_before

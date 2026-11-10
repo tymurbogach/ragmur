@@ -1,0 +1,211 @@
+documents:
+- key: en-normans
+  path: corpus/en-normans.txt
+  sha256: dd5c8526091ce0e937a062da23833808b4e54d9ce41cdc101173265b6a718bbd
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-oxygen
+  path: corpus/en-oxygen.txt
+  sha256: e1e68b90e348d860a1f3c0cfe6e1367d9c8c8a57ad577d564b36e00900222682
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-steam
+  path: corpus/en-steam.txt
+  sha256: 43d98e0a6026101ae60c61b15713fa0e50a69eebbbe6afa3fabf9e4d3146d377
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-huguenot
+  path: corpus/en-huguenot.txt
+  sha256: f20bb42b5e294e6d2d01963844230d83bfdf35592386b5cad0545b14a5462b4c
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-california
+  path: corpus/en-california.txt
+  sha256: 443784f71b85ab6f58648fe4eb266a7020505d78a8661774accc6a72ddeac883
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-tesla-1
+  path: corpus/es-tesla-1.txt
+  sha256: 55763f4425188ca66d6487a097caf29c3dc46194f042bf548e2790583934e2ea
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-tesla-2
+  path: corpus/es-tesla-2.txt
+  sha256: 7c202e046a59256f14fed08c9c1a206d1a26dca2dacd2a4eb221b5ad56ce13df
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-warsaw
+  path: corpus/es-warsaw.txt
+  sha256: 3aabc6e1c78083e13b379bdb2a4d8b0510fe6f3dba7899786881e4eb673c81c5
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-oxygen
+  path: corpus/es-oxygen.txt
+  sha256: ed630200778b801c4907c8c02d0852fa6f19182fdc94b1aa2cb596e2885ee1c3
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-steam
+  path: corpus/es-steam.txt
+  sha256: edbd4ac0a5b44e37a96a889e58caa349bfa1532442e3975aac875a340158bae6
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-normans-1
+  path: corpus/en-normans-1.txt
+  sha256: 6a4859b84af16a97c8e1dcf1acad6e45d077ea9ef8ecf5e9a80b9bc201a26760
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-normans-2
+  path: corpus/en-normans-2.txt
+  sha256: 72457fa0c9150fb2a7fed021650358b9295b523f55397d61363a047683297908
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-oxygen-1
+  path: corpus/en-oxygen-1.txt
+  sha256: 6b5baac861c36b5fd13e7a181e848be90fe9291892c24fcaa534999aeb639149
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-steam-1
+  path: corpus/en-steam-1.txt
+  sha256: e506629a68c63a7cf4a1fa5216ccd76592f2355601e104882cf833dd45804915
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-huguenot-1
+  path: corpus/en-huguenot-1.txt
+  sha256: 76a69efa5b44ac59ec611714b624dd900a527ebd441fa5d4b1077a0b18bdbd5b
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-california-1
+  path: corpus/en-california-1.txt
+  sha256: 8a148fbb97c8eaaa2ffba94677745201a37bfac096e9222f9299c75c2b5afe76
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-complexity-0
+  path: corpus/en-complexity-0.txt
+  sha256: 4d3f905eee7981da9b9da72fa2e46d6de1701497204d573cd2b11c15b077ad99
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-amazon-0
+  path: corpus/en-amazon-0.txt
+  sha256: c7c7ec362f0439a4c9ad1edead0e0f7505b22fd24ce7be23b8711356cdcda6a3
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-blackdeath-0
+  path: corpus/en-blackdeath-0.txt
+  sha256: 0d50de71a8220db34991fd3710e965ad95973a5e898da92d2e09819ee0ff21b8
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-packet-0
+  path: corpus/en-packet-0.txt
+  sha256: dfc62fde23936e1ea3cab0f6a04aa5f4eb4ce3a3a1c3c79813ebfd4a6fbee7b8
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-victoria-0
+  path: corpus/en-victoria-0.txt
+  sha256: 3548c9026a06bf244b562a301cf08d02a4d7cc064187ea4773284ab64ab44ef3
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-sky-0
+  path: corpus/en-sky-0.txt
+  sha256: bc5f1c2743b9de3bbf84078611d839665374c71f9f5ce23ea41ca3d84c8793ba
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-eulaw-0
+  path: corpus/en-eulaw-0.txt
+  sha256: 0b1769dcd4b05af8e663c9fb941ba1d9c5ce34cd2639f1abfef5b71e0bcc146c
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-ctenophora-0
+  path: corpus/en-ctenophora-0.txt
+  sha256: f1fd21822238bc914acc770ffbb65f55d8c7f833cb4d0a1c420d323ecdd137dd
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: en-fresno-0
+  path: corpus/en-fresno-0.txt
+  sha256: d619b23bf7b93c1267c56dec97767d7a43f0b1d60b5a2d4b27068ccf50232fbf
+  source: https://rajpurkar.github.io/SQuAD-explorer/
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-tesla-3
+  path: corpus/es-tesla-3.txt
+  sha256: 8aa942b052afb87a331cccd75634619faaec2993a3f739cb614cfbc5d42f5da8
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-warsaw-1
+  path: corpus/es-warsaw-1.txt
+  sha256: f6150ee8fa8e23c7deb3a4eccb2344a57e87aa8b87a77a4ddac69dd9df898da3
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-oxygen-1
+  path: corpus/es-oxygen-1.txt
+  sha256: 40a602b9ffbc05206eb2851360d836c726e8612d76a5db8228817a8ba94cc9c4
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-steam-1
+  path: corpus/es-steam-1.txt
+  sha256: eafd1e2941251affc5d537dc188a7014377d34b60d1016088ac118e357730d89
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-california-0
+  path: corpus/es-california-0.txt
+  sha256: f7afee824abff4bce989b61ced53d558a4e26e0334f8786d245b93320d415c8b
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-teacher-0
+  path: corpus/es-teacher-0.txt
+  sha256: 5749f5bba6361dbba0da70162a493a7b6d6c104ddf2e2d9f86205914f7011850
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-luther-0
+  path: corpus/es-luther-0.txt
+  sha256: 71a8f0fa3bbc3e201d40cced36f5ec721f981e79399a2eedd482249d518c9b6e
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-apollo-0
+  path: corpus/es-apollo-0.txt
+  sha256: 00df5809c64d339b23121ef0b36c69570a0398562958e4f3a093eeb8bdbd48d1
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-amazon-0
+  path: corpus/es-amazon-0.txt
+  sha256: 87dbf67626c4794c39e3bd4bdfeeeaee09d76842fbdea732a570f53d7f48dc3e
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo
+- key: es-complexity-0
+  path: corpus/es-complexity-0.txt
+  sha256: 930b37b78fafced47f1919c3c2a605d480d3394626a14e35c10804109560c30d
+  source: https://github.com/google-deepmind/xquad
+  license: CC BY-SA 4.0
+  tenant: demo

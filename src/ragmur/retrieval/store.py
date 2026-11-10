@@ -14,7 +14,7 @@ import asyncio
 import math
 import re
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal
 from uuid import UUID
 
 from qdrant_client import AsyncQdrantClient, models
@@ -25,8 +25,11 @@ from qdrant_client import AsyncQdrantClient, models
 # simple test de imports.
 __all__ = [
     "AsyncQdrantClient",
+    "BranchPoint",
     "HybridPoint",
+    "StoredPoint",
     "VectorPoint",
+    "branch_search",
     "count_document_points",
     "create_client",
     "delete_document_points",
@@ -35,6 +38,7 @@ __all__ = [
     "hybrid_search",
     "list_document_point_ids",
     "ping",
+    "retrieve_points",
     "set_reindex_metadata",
     "upsert_points",
 ]
@@ -320,6 +324,105 @@ class HybridPoint:
     sparse_score: float | None
 
 
+@dataclass(frozen=True, slots=True)
+class BranchPoint:
+    """Resultado de una rama, usado para evaluación independiente."""
+
+    id: UUID
+    payload: dict[str, Any]
+    score: float
+
+
+@dataclass(frozen=True, slots=True)
+class StoredPoint:
+    """Punto recuperado por identificador para verificación."""
+
+    id: UUID
+    payload: dict[str, Any]
+
+
+def _result_filter(
+    tenant_id: UUID, owner_id: str | None, document_ids: list[UUID] | None
+) -> models.Filter:
+    result = _tenant_filter(tenant_id, owner_id=owner_id)
+    assert isinstance(result.must, list)
+    if document_ids is not None:
+        result.must.append(
+            models.FieldCondition(
+                key="document_id", match=models.MatchAny(any=[str(value) for value in document_ids])
+            )
+        )
+    return result
+
+
+def _checked_payload(
+    point: models.ScoredPoint,
+    tenant_id: UUID,
+    owner_id: str | None,
+    document_ids: list[UUID] | None,
+) -> dict[str, Any]:
+    payload = point.payload or {}
+    if payload.get("tenant_id") != str(tenant_id):
+        raise RuntimeError("Qdrant returned a point outside the authorized tenant")
+    if owner_id is not None and payload.get("owner_id") != owner_id:
+        raise RuntimeError("Qdrant returned a point outside the authorized owner")
+    if document_ids is not None and payload.get("document_id") not in {
+        str(value) for value in document_ids
+    }:
+        raise RuntimeError("Qdrant returned a point outside the document filter")
+    return payload
+
+
+async def branch_search(
+    tenant_id: UUID,
+    client: AsyncQdrantClient,
+    collection: str,
+    *,
+    branch: Literal["dense", "sparse"],
+    dense: list[float],
+    sparse_indices: list[int],
+    sparse_values: list[float],
+    owner_id: str | None,
+    document_ids: list[UUID] | None,
+    limit: int,
+) -> list[BranchPoint]:
+    """Consulta una rama con los mismos filtros que la búsqueda híbrida."""
+    if (
+        branch not in ("dense", "sparse")
+        or limit < 1
+        or (document_ids is not None and not document_ids)
+    ):
+        raise ValueError("Invalid search parameters")
+    if not await client.collection_exists(collection) or (
+        branch == "sparse" and not sparse_indices
+    ):
+        return []
+    query: list[float] | models.SparseVector = dense
+    params = None
+    if branch == "sparse":
+        query = models.SparseVector(indices=sparse_indices, values=sparse_values)
+        params = models.SearchParams(
+            idf=models.IdfCorpusParams(corpus=_tenant_filter(tenant_id, owner_id=owner_id))
+        )
+    response = await client.query_points(
+        collection_name=collection,
+        query=query,
+        using=branch,
+        query_filter=_result_filter(tenant_id, owner_id, document_ids),
+        search_params=params,
+        limit=limit,
+        with_payload=True,
+    )
+    return [
+        BranchPoint(
+            id=UUID(str(point.id)),
+            score=point.score,
+            payload=_checked_payload(point, tenant_id, owner_id, document_ids),
+        )
+        for point in response.points
+    ]
+
+
 async def hybrid_search(
     tenant_id: UUID,
     client: AsyncQdrantClient,
@@ -339,14 +442,7 @@ async def hybrid_search(
     if not await client.collection_exists(collection):
         return []
     corpus_filter = _tenant_filter(tenant_id, owner_id=owner_id)
-    result_filter = _tenant_filter(tenant_id, owner_id=owner_id)
-    assert isinstance(result_filter.must, list)
-    if document_ids is not None:
-        result_filter.must.append(
-            models.FieldCondition(
-                key="document_id", match=models.MatchAny(any=[str(value) for value in document_ids])
-            )
-        )
+    result_filter = _result_filter(tenant_id, owner_id, document_ids)
     sparse_query = models.SparseVector(indices=sparse_indices, values=sparse_values)
     sparse_params = models.SearchParams(idf=models.IdfCorpusParams(corpus=corpus_filter))
     prefetch = [models.Prefetch(query=dense, using="dense", filter=result_filter, limit=candidates)]
@@ -403,16 +499,9 @@ async def hybrid_search(
     dense_ranks = {str(point.id): index for index, point in enumerate(dense_points, 1)}
     sparse_ranks = {str(point.id): index for index, point in enumerate(sparse_points, 1)}
     sparse_scores = {str(point.id): point.score for point in sparse_points}
-    allowed_documents = None if document_ids is None else {str(value) for value in document_ids}
     output = []
     for point in fused_points:
-        payload = point.payload or {}
-        if payload.get("tenant_id") != str(tenant_id):
-            raise RuntimeError("Qdrant returned a point outside the authorized tenant")
-        if owner_id is not None and payload.get("owner_id") != owner_id:
-            raise RuntimeError("Qdrant returned a point outside the authorized owner")
-        if allowed_documents is not None and payload.get("document_id") not in allowed_documents:
-            raise RuntimeError("Qdrant returned a point outside the document filter")
+        payload = _checked_payload(point, tenant_id, owner_id, document_ids)
         output.append(
             HybridPoint(
                 id=UUID(str(point.id)),
@@ -423,4 +512,36 @@ async def hybrid_search(
                 sparse_score=sparse_scores.get(str(point.id)),
             )
         )
+    return output
+
+
+async def retrieve_points(
+    tenant_id: UUID,
+    client: AsyncQdrantClient,
+    collection: str,
+    chunk_ids: list[UUID],
+    owner_id: str | None,
+) -> list[StoredPoint]:
+    """Recupera puntos por identificador dentro del espacio autorizado.
+
+    Los identificadores fuera del espacio del solicitante se ignoran en lugar de
+    puntuarse: así `/verify` no se convierte en un oráculo para sondear
+    fragmentos ajenos.
+    """
+    if not chunk_ids or not await client.collection_exists(collection):
+        return []
+    records = await client.retrieve(collection_name=collection, ids=chunk_ids, with_payload=True)
+    output: list[StoredPoint] = []
+    seen: set[UUID] = set()
+    for record in records:
+        point_id = UUID(str(record.id))
+        if point_id in seen:
+            continue
+        seen.add(point_id)
+        payload = record.payload or {}
+        if payload.get("tenant_id") != str(tenant_id):
+            continue
+        if owner_id is not None and payload.get("owner_id") != owner_id:
+            continue
+        output.append(StoredPoint(id=point_id, payload=payload))
     return output
