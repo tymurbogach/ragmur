@@ -211,7 +211,7 @@ El borrado de puntos y la transición completa a `indexed` se verifican en 1.4, 
 
 ### 1.4 Indexado
 
-La inferencia y el reindexado están verificados en CPU. La prueba en RTX 5080 requiere el homelab Linux; en Windows se comprobó GPU y controlador sin desplegar, y se retiró la prueba temporal.
+La inferencia y el reindexado están verificados en CPU. Inferencia validada en RTX 5080 sobre Windows (torch cu130, `sm_120`, revisiones fijadas, limpieza temporal completa); la evaluación completa en GPU queda pendiente de WSL/Linux.
 El filtro del corpus IDF se implementa y prueba con la búsqueda de 1.5.
 
 - [x] Fijar PyTorch, rueda CUDA y controlador compatibles con `sm_120`; variante CPU para CI y prueba real de inferencia
