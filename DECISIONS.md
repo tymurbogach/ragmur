@@ -300,6 +300,12 @@ La resolución de dependencias se comprobó para ambos modos. La inferencia real
 CUDA 13.0 GA requiere el [controlador Linux 580.65.06 o posterior](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-toolkit-release-notes/index.html).
 La prueba en RTX 5080 y la combinación efectiva de controlador quedan pendientes.
 
+### 3.27 Búsqueda previa al reranking
+
+La tarea 1.5 usa RRF con `k=2`, el valor predeterminado de Qdrant.
+La configuración se registra en la respuesta. No se ajusta sin evaluación.
+Hasta implementar 1.6, `rerank=false` es el valor inicial y `rerank=true` devuelve `503`.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU.
+Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU. La siguiente tarea funcional es **1.6**.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -242,22 +242,22 @@ La falta de esta capacidad impide el arranque, no autoriza omitirla. Ver `DECISI
 
 ### 1.5 Búsqueda híbrida
 
-- [ ] `POST /v1/search` con `query`, `top_k`, `candidates`, `rerank`, `owner_id` y filtro por documento
-- [ ] Rama densa: embedding de consulta + búsqueda vectorial
-- [ ] Rama léxica: vector disperso BM25
-- [ ] Aplicar el corpus IDF por tenant y `owner_id` en el prefetch disperso
-- [ ] Fusión RRF mediante la Query API de Qdrant
-- [ ] Registrar constante RRF y límites por rama; conservar la misma configuración durante cada comparación
-- [ ] `candidates` definido como el tamaño de la lista **tras la fusión** y antes del reranking; cada rama recupera internamente lo necesario para alimentarla
-- [ ] Filtro por `tenant_id` obligatorio en toda consulta, con test que lo garantice
-- [ ] Filtro adicional por `owner_id` cuando la petición lo incluye, con test de aislamiento entre dos `owner_id` del mismo tenant
-- [ ] Test de arquitectura: solo `retrieval/store.py` importa `qdrant_client`; sus funciones públicas reciben `tenant_id` primero, excepto `create_client()` y `ping()`
-- [ ] Respuesta con `chunk_id`, `document_id`, filename, localizador, texto, score y rango por rama
-- [ ] `1 <= top_k <= candidates`; límites de consulta y listas; `document_ids=[]` devuelve `422`
-- [ ] Filtro completo en ambas ramas y fusión; resolución por IDs con el mismo alcance
-- [ ] Validación de documentos `indexed` en PostgreSQL antes de devolver fragmentos o citas
-- [ ] `score_type` explícito; rangos desde listas de rama y coste de consultas adicionales incluido en `timings_ms`
-- [ ] Tests con corpus vacío, términos sin coincidencias, IDs ajenos, owner omitido y documentos compartidos
+- [x] `POST /v1/search` con `query`, `top_k`, `candidates`, `rerank`, `owner_id` y filtro por documento; `rerank=true` se activa en 1.6
+- [x] Rama densa: embedding de consulta + búsqueda vectorial
+- [x] Rama léxica: vector disperso BM25
+- [x] Aplicar el corpus IDF por tenant y `owner_id` en el prefetch disperso
+- [x] Fusión RRF mediante la Query API de Qdrant
+- [x] Registrar constante RRF y límites por rama; conservar la misma configuración durante cada comparación
+- [x] `candidates` definido como el tamaño de la lista **tras la fusión** y antes del reranking; cada rama recupera internamente lo necesario para alimentarla
+- [x] Filtro por `tenant_id` obligatorio en toda consulta, con test que lo garantice
+- [x] Filtro adicional por `owner_id` cuando la petición lo incluye, con test de aislamiento entre dos `owner_id` del mismo tenant
+- [x] Test de arquitectura: solo `retrieval/store.py` importa `qdrant_client`; sus funciones públicas reciben `tenant_id` primero, excepto `create_client()` y `ping()`
+- [x] Respuesta con `chunk_id`, `document_id`, filename, localizador, texto, score y rango por rama
+- [x] `1 <= top_k <= candidates`; límites de consulta y listas; `document_ids=[]` devuelve `422`
+- [x] Filtro completo en ambas ramas y fusión; resolución por IDs con el mismo alcance
+- [x] Validación de documentos `indexed` en PostgreSQL antes de devolver fragmentos o citas
+- [x] `score_type` explícito; rangos desde listas de rama y coste de consultas adicionales incluido en `timings_ms`
+- [x] Tests con corpus vacío, términos sin coincidencias, IDs ajenos, owner omitido y documentos compartidos
 
 **Nota.** El filtro por tenant se aplica en la capa de aplicación: una consulta que lo olvide devuelve datos ajenos sin dar ningún error. De ahí el punto de estrangulamiento en `store.py`, que es la misma idea que la regla del `llm/provider.py` aplicada a Qdrant.
 

@@ -2,7 +2,8 @@
 
 Qué se construye y con qué contratos. El porqué de cada decisión está en [`DECISIONS.md`](DECISIONS.md); el orden en [`ROADMAP.md`](ROADMAP.md).
 
-Este documento describe el objetivo, no solo las funciones disponibles. La siguiente tarea funcional es 1.4.
+Este documento describe el objetivo, no solo las funciones disponibles. La siguiente tarea funcional es 1.6.
+La validación de CUDA de la tarea 1.4 sigue pendiente en el homelab.
 La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendientes antes de continuar.
 
 ## Estructura del repositorio
@@ -320,6 +321,8 @@ Recuperación directa, sin capa agéntica ni generación.
 ```
 
 `candidates` limita la lista tras RRF y antes del reranking. Se valida `1 <= top_k <= candidates` y los máximos configurados.
+Hasta 1.6, `rerank` vale `false` por defecto y `true` devuelve `503`.
+La constante RRF inicial es `2`, el valor predeterminado de Qdrant; queda sujeta a evaluación.
 Cada rama recupera inicialmente hasta `candidates` puntos. Sus límites se registran en cada evaluación.
 `document_ids` omitido no restringe documentos; una lista vacía es inválida y nunca equivale a buscar en todo el tenant.
 Los identificadores ajenos o inexistentes no añaden resultados ni revelan su existencia.

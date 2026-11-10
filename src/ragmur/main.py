@@ -5,6 +5,7 @@ import logging
 from collections.abc import AsyncIterator
 from contextlib import AsyncExitStack, asynccontextmanager
 
+import asyncpg  # type: ignore[import-untyped]
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -13,7 +14,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import Request
 
 from ragmur.api.deps import Resources
-from ragmur.api.routes import documents, health
+from ragmur.api.routes import documents, health, search
+from ragmur.api.timing import RequestTimingMiddleware
 from ragmur.api.upload_limit import UploadLimitMiddleware
 from ragmur.core.config import get_settings
 from ragmur.core.logging import configure_logging
@@ -70,6 +72,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             sessions=sessions,
             qdrant=qdrant,
             ingestion=ingestion,
+            models=models,
         )
         logger.info("servicio arrancado", extra={"qdrant_url": settings.qdrant_url})
         yield
@@ -111,12 +114,14 @@ def create_app() -> FastAPI:
             headers=exc.headers,
         )
 
+    @app.exception_handler(OSError)
+    @app.exception_handler(asyncpg.PostgresError)
     @app.exception_handler(SQLAlchemyError)
-    async def database_error(request: Request, exc: SQLAlchemyError) -> JSONResponse:
+    async def database_error(request: Request, exc: Exception) -> JSONResponse:
         """Oculta parámetros y excepciones del controlador de base de datos."""
-        logger.warning("base de datos inaccesible")
+        logger.warning("dependencia inaccesible")
         return JSONResponse(
-            status_code=503, content={"code": "http_503", "detail": "Database unavailable"}
+            status_code=503, content={"code": "http_503", "detail": "Service unavailable"}
         )
 
     settings = get_settings()
@@ -125,8 +130,10 @@ def create_app() -> FastAPI:
         max_bytes=settings.max_upload_bytes,
         overhead_bytes=settings.multipart_overhead_bytes,
     )
+    app.add_middleware(RequestTimingMiddleware)
     app.include_router(health.router)
     app.include_router(documents.router)
+    app.include_router(search.router)
     return app
 
 

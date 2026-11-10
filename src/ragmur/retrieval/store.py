@@ -10,9 +10,11 @@ que el servidor responde no leen ni escriben puntos de ninguna colección, así 
 hay espacio de tenant que aislar. Cualquier función que sí toque datos la cumple.
 """
 
+import asyncio
 import math
 import re
 from dataclasses import dataclass
+from typing import Any
 from uuid import UUID
 
 from qdrant_client import AsyncQdrantClient, models
@@ -23,12 +25,14 @@ from qdrant_client import AsyncQdrantClient, models
 # simple test de imports.
 __all__ = [
     "AsyncQdrantClient",
+    "HybridPoint",
     "VectorPoint",
     "count_document_points",
     "create_client",
     "delete_document_points",
     "delete_tenant_points",
     "ensure_collection",
+    "hybrid_search",
     "list_document_point_ids",
     "ping",
     "set_reindex_metadata",
@@ -302,3 +306,121 @@ async def set_reindex_metadata(
         if not updated:
             raise RuntimeError("Qdrant did not update the collection metadata")
     await ensure_collection(tenant_id, client, collection, dense_size, metadata)
+
+
+@dataclass(frozen=True, slots=True)
+class HybridPoint:
+    """Resultado de RRF con rangos diagnósticos por rama."""
+
+    id: UUID
+    payload: dict[str, Any]
+    score: float
+    dense_rank: int | None
+    sparse_rank: int | None
+    sparse_score: float | None
+
+
+async def hybrid_search(
+    tenant_id: UUID,
+    client: AsyncQdrantClient,
+    collection: str,
+    dense: list[float],
+    sparse_indices: list[int],
+    sparse_values: list[float],
+    *,
+    owner_id: str | None,
+    document_ids: list[UUID] | None,
+    candidates: int,
+    rrf_k: int,
+) -> list[HybridPoint]:
+    """Fusiona las ramas con filtros de autorización y corpus IDF acotado."""
+    if candidates < 1 or rrf_k < 1 or (document_ids is not None and not document_ids):
+        raise ValueError("Invalid search parameters")
+    if not await client.collection_exists(collection):
+        return []
+    corpus_filter = _tenant_filter(tenant_id, owner_id=owner_id)
+    result_filter = _tenant_filter(tenant_id, owner_id=owner_id)
+    assert isinstance(result_filter.must, list)
+    if document_ids is not None:
+        result_filter.must.append(
+            models.FieldCondition(
+                key="document_id", match=models.MatchAny(any=[str(value) for value in document_ids])
+            )
+        )
+    sparse_query = models.SparseVector(indices=sparse_indices, values=sparse_values)
+    sparse_params = models.SearchParams(idf=models.IdfCorpusParams(corpus=corpus_filter))
+    prefetch = [models.Prefetch(query=dense, using="dense", filter=result_filter, limit=candidates)]
+    if sparse_indices:
+        prefetch.append(
+            models.Prefetch(
+                query=sparse_query,
+                using="sparse",
+                filter=result_filter,
+                params=sparse_params,
+                limit=candidates,
+            )
+        )
+
+    async def dense_branch() -> list[models.ScoredPoint]:
+        response = await client.query_points(
+            collection_name=collection,
+            query=dense,
+            using="dense",
+            query_filter=result_filter,
+            limit=candidates,
+            with_payload=False,
+        )
+        return response.points
+
+    async def sparse_branch() -> list[models.ScoredPoint]:
+        if not sparse_indices:
+            return []
+        response = await client.query_points(
+            collection_name=collection,
+            query=sparse_query,
+            using="sparse",
+            query_filter=result_filter,
+            search_params=sparse_params,
+            limit=candidates,
+            with_payload=False,
+        )
+        return response.points
+
+    async def fused_branch() -> list[models.ScoredPoint]:
+        response = await client.query_points(
+            collection_name=collection,
+            prefetch=prefetch,
+            query=models.RrfQuery(rrf=models.Rrf(k=rrf_k)),
+            query_filter=result_filter,
+            limit=candidates,
+            with_payload=True,
+        )
+        return response.points
+
+    dense_points, sparse_points, fused_points = await asyncio.gather(
+        dense_branch(), sparse_branch(), fused_branch()
+    )
+    dense_ranks = {str(point.id): index for index, point in enumerate(dense_points, 1)}
+    sparse_ranks = {str(point.id): index for index, point in enumerate(sparse_points, 1)}
+    sparse_scores = {str(point.id): point.score for point in sparse_points}
+    allowed_documents = None if document_ids is None else {str(value) for value in document_ids}
+    output = []
+    for point in fused_points:
+        payload = point.payload or {}
+        if payload.get("tenant_id") != str(tenant_id):
+            raise RuntimeError("Qdrant returned a point outside the authorized tenant")
+        if owner_id is not None and payload.get("owner_id") != owner_id:
+            raise RuntimeError("Qdrant returned a point outside the authorized owner")
+        if allowed_documents is not None and payload.get("document_id") not in allowed_documents:
+            raise RuntimeError("Qdrant returned a point outside the document filter")
+        output.append(
+            HybridPoint(
+                id=UUID(str(point.id)),
+                payload=payload,
+                score=point.score,
+                dense_rank=dense_ranks.get(str(point.id)),
+                sparse_rank=sparse_ranks.get(str(point.id)),
+                sparse_score=sparse_scores.get(str(point.id)),
+            )
+        )
+    return output

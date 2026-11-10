@@ -1,7 +1,7 @@
 # Ragmur
 
 Ragmur es un prototipo para un servicio de recuperación multi-tenant.
-No es una API RAG lista para producción. Todavía no ofrece recuperación ni respuestas generadas.
+No es una API RAG lista para producción. Ofrece búsqueda de fragmentos, pero todavía no genera respuestas.
 
 ## Estado actual
 
@@ -48,10 +48,10 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La tarea 1.4, indexado, está en curso. El recorrido CPU funciona; CUDA está pendiente de validación.
+La búsqueda híbrida funciona en CPU. La prueba CUDA y la evaluación de recuperación están pendientes.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
-`/health` comprueba PostgreSQL y Qdrant. `/ready` y la búsqueda todavía no están implementados.
+`/health` comprueba PostgreSQL y Qdrant. `/ready` todavía no está implementado.
 
 La ingesta acepta PDF con texto, DOCX, TXT y Markdown en `POST /v1/documents`.
 La petición usa `multipart/form-data`, el campo `file` y un `owner_id` opcional.
@@ -74,7 +74,19 @@ uv run python -m ragmur.cli revoke-key <key-id>
 La emisión muestra la clave completa una sola vez. El `key-id` es el segundo
 componente de `rgm_<key-id>_<secret>`. Protege la clave como una contraseña.
 Cambiar `API_KEY_HMAC_SECRET` invalida todas las claves existentes; emite otras nuevas.
-Las rutas protegidas futuras recibirán la clave mediante `X-API-Key`.
+Las rutas protegidas reciben la clave mediante `X-API-Key`.
+
+`POST /v1/search` recupera fragmentos con búsqueda densa y BM25, y combina sus posiciones mediante RRF.
+Usa `query` y, opcionalmente, `owner_id`, `document_ids`, `top_k` y `candidates`.
+Por ahora, `rerank` debe ser `false`: el reordenado corresponde a la tarea 1.6.
+La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son probabilidades.
+La calidad de recuperación sigue pendiente de medición con `eval/`.
+
+Para ejecutar la prueba funcional opcional con modelos reales en CPU y Qdrant temporal:
+
+```bash
+RAGMUR_REAL_MODEL_TESTS=1 OMP_NUM_THREADS=2 uv run pytest tests/retrieval/test_real_models.py
+```
 
 Para reindexar, detén primero la API y ejecuta uno de estos comandos:
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class DependencyHealth(BaseModel):
@@ -55,3 +55,50 @@ class DocumentList(BaseModel):
 
     items: list[DocumentView]
     next_cursor: str | None
+
+
+class SearchRequest(BaseModel):
+    """Consulta de recuperación híbrida."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    query: str = Field(min_length=1)
+    top_k: int = Field(default=5, ge=1)
+    candidates: int = Field(default=30, ge=1)
+    rerank: bool = False
+    owner_id: str | None = None
+    document_ids: list[UUID] | None = Field(default=None, min_length=1)
+
+    @model_validator(mode="after")
+    def validate_search(self) -> "SearchRequest":
+        """Comprueba las relaciones entre los parámetros de búsqueda."""
+        if not self.query.strip():
+            raise ValueError("query must not be blank")
+        if self.owner_id is not None and not self.owner_id.strip():
+            raise ValueError("owner_id must not be blank")
+        if self.top_k > self.candidates:
+            raise ValueError("top_k must not exceed candidates")
+        return self
+
+
+class SearchHit(BaseModel):
+    """Fragmento recuperado con su procedencia."""
+
+    chunk_id: UUID
+    document_id: UUID
+    filename: str
+    locator: dict[str, str | int | list[str]]
+    text: str
+    score: float
+    score_type: Literal["rrf"] = "rrf"
+    dense_rank: int | None
+    sparse_rank: int | None
+
+
+class SearchResponse(BaseModel):
+    """Resultados, configuración de fusión y tiempos en milisegundos."""
+
+    results: list[SearchHit]
+    timings_ms: dict[str, float]
+    rrf_k: int
+    branch_limit: int

@@ -58,6 +58,10 @@ class Settings(BaseSettings):
     bm25_k: float = Field(default=1.2, gt=0, allow_inf_nan=False)
     bm25_b: float = Field(default=0.75, ge=0, le=1, allow_inf_nan=False)
     bm25_avg_len: float = Field(default=256, gt=0, allow_inf_nan=False)
+    search_max_query_chars: int = Field(default=4096, gt=0)
+    search_max_candidates: int = Field(default=100, ge=30)
+    search_max_document_ids: int = Field(default=100, gt=0)
+    rrf_k: int = Field(default=2, gt=0)
 
     log_level: str = "INFO"
 
