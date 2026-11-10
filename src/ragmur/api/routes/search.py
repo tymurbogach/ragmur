@@ -69,19 +69,22 @@ async def search(
 
     valid_documents: set[UUID] = set()
     if document_ids:
-        filters = [
-            Document.tenant_id == tenant_id,
-            Document.status == "indexed",
-            Document.id.in_(document_ids),
-        ]
-        if request.owner_id is not None:
-            filters.append(Document.owner_id == request.owner_id)
-        if request.document_ids is not None:
-            filters.append(Document.id.in_(request.document_ids))
-        async with resources.sessions() as session:
-            valid_documents = set(
-                (await session.scalars(select(Document.id).where(*filters))).all()
-            )
+        try:
+            filters = [
+                Document.tenant_id == tenant_id,
+                Document.status == "indexed",
+                Document.id.in_(document_ids),
+            ]
+            if request.owner_id is not None:
+                filters.append(Document.owner_id == request.owner_id)
+            if request.document_ids is not None:
+                filters.append(Document.id.in_(request.document_ids))
+            async with resources.sessions() as session:
+                valid_documents = set(
+                    (await session.scalars(select(Document.id).where(*filters))).all()
+                )
+        except Exception as exc:
+            raise HTTPException(503, detail="Search unavailable") from exc
     results = []
     try:
         for point in points:

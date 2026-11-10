@@ -53,11 +53,11 @@ async def verify(
             unique_ids,
             request.owner_id,
         )
+        document_ids = {UUID(str(point.payload["document_id"])) for point in points}
     except Exception as exc:
         raise HTTPException(503, detail="Verification unavailable") from exc
     if not points:
         return _unsupported(claims, None)
-    document_ids = {UUID(str(point.payload["document_id"])) for point in points}
     try:
         async with resources.sessions() as session:
             filters = [

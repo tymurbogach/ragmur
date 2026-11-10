@@ -62,3 +62,20 @@ async def test_rate_limit_returns_429_with_retry_after(
         assert limited.status_code == 429
         assert limited.headers.get("Retry-After") is not None
         assert (await client.get("/protected", headers={"X-API-Key": second})).status_code == 200
+
+
+async def test_rate_limit_counts_invalid_keys(
+    rate_setup: tuple[FastAPI, str, str],
+) -> None:
+    """Las claves inválidas también consumen ventana: el tercer intento es 429, no 401."""
+    app, _, _ = rate_setup
+    async with (
+        app.router.lifespan_context(app),
+        AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client,
+    ):
+        bad = {"X-API-Key": "rgm_deadbeef_wrong"}
+        assert (await client.get("/protected", headers=bad)).status_code == 401
+        assert (await client.get("/protected", headers=bad)).status_code == 401
+        limited = await client.get("/protected", headers=bad)
+        assert limited.status_code == 429
+        assert limited.headers.get("Retry-After") is not None

@@ -24,6 +24,10 @@ class RateLimiter:
             queue = self._hits.setdefault(key, deque())
             while queue and queue[0] <= now - window_seconds:
                 queue.popleft()
+            if not queue:
+                # Evita que las claves inactivas crezcan sin cota.
+                del self._hits[key]
+                queue = self._hits.setdefault(key, deque())
             if len(queue) >= limit:
                 return max(0.0, queue[0] + window_seconds - now)
             queue.append(now)

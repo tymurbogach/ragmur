@@ -17,6 +17,7 @@ ragmur/
 │   │   └── logging.py
 │   ├── api/
 │   │   ├── deps.py
+│   │   ├── rate_limit.py     # ventana deslizante por clave (429)
 │   │   ├── schemas.py
 │   │   └── routes/
 │   │       ├── health.py

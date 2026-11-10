@@ -231,10 +231,13 @@ async def delete_document(
             raise HTTPException(404, detail="Document not found")
         if document_id in resources.ingestion.accepted:
             raise HTTPException(409, detail="Document is processing")
+        from ragmur.ingestion.storage import InvalidDocumentPathError, resolve_document_path
+
         root = get_settings().storage_dir.resolve()
-        path = Path(doc.storage_path)
-        if path.parent != root or path.name != str(doc.id):
-            raise HTTPException(503, detail="Storage unavailable")
+        try:
+            path = resolve_document_path(root, doc.id, doc.storage_path)
+        except InvalidDocumentPathError as exc:
+            raise HTTPException(503, detail="Storage unavailable") from exc
         doc.status = "deleting"
         await session.commit()
         try:

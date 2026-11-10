@@ -57,24 +57,26 @@ async def get_current_tenant(
     """Obtiene el tenant de la clave presentada con límite por clave."""
     from ragmur.api.rate_limit import limiter
 
-    if api_key:
-        async with resources.sessions() as session:
-            tenant_id = await authenticate(
-                session, api_key, get_settings().api_key_hmac_secret.get_secret_value()
-            )
-            if tenant_id is not None:
-                settings = get_settings()
-                key_id = api_key.split("_", 2)[1] if api_key.count("_") >= 2 else api_key
-                retry_after = await limiter.check(
-                    key_id, settings.rate_limit_requests, settings.rate_limit_window_seconds
-                )
-                if retry_after is not None:
-                    raise HTTPException(
-                        status_code=429,
-                        detail="Rate limit exceeded",
-                        headers={"Retry-After": str(max(1, int(retry_after + 1)))},
-                    )
-                return tenant_id
+    if not api_key:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    parts = api_key.split("_", 2)
+    key_id = parts[1] if len(parts) == 3 and parts[0] == "rgm" and parts[1] else api_key
+    settings = get_settings()
+    retry_after = await limiter.check(
+        key_id, settings.rate_limit_requests, settings.rate_limit_window_seconds
+    )
+    if retry_after is not None:
+        raise HTTPException(
+            status_code=429,
+            detail="Rate limit exceeded",
+            headers={"Retry-After": str(max(1, int(retry_after + 1)))},
+        )
+    async with resources.sessions() as session:
+        tenant_id = await authenticate(
+            session, api_key, settings.api_key_hmac_secret.get_secret_value()
+        )
+        if tenant_id is not None:
+            return tenant_id
     raise HTTPException(status_code=401, detail="Invalid API key")
 
 

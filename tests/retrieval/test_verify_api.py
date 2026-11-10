@@ -209,3 +209,74 @@ async def test_verify_verdicts_and_isolation(
         async with admin.connect() as connection:
             await connection.execute(text(f'DROP DATABASE IF EXISTS "{database}" WITH (FORCE)'))
         await admin.dispose()
+
+
+async def test_verify_corrupt_payload_returns_503(
+    isolated_qdrant: str, tmp_path: object, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Un payload sin document_id es 503, nunca 500."""
+    from pathlib import Path
+    from unittest.mock import AsyncMock
+
+    assert isinstance(tmp_path, Path)
+    original = make_url(get_settings().database_url)
+    database = "test_" + uuid4().hex
+    admin = create_async_engine(original, isolation_level="AUTOCOMMIT")
+    async with admin.connect() as connection:
+        await connection.execute(text(f'CREATE DATABASE "{database}"'))
+    url = original.set(database=database).render_as_string(hide_password=False)
+    engine = create_async_engine(url)
+    probe = store.create_client(isolated_qdrant, 5)
+    try:
+        async with engine.begin() as connection:
+            await connection.run_sync(Base.metadata.create_all)
+        for attempt in range(50):
+            try:
+                await store.ping(probe)
+                break
+            except Exception:
+                if attempt == 49:
+                    raise
+                await asyncio.sleep(0.1)
+        monkeypatch.setenv("DATABASE_URL", url)
+        monkeypatch.setenv("QDRANT_URL", isolated_qdrant)
+        monkeypatch.setenv("STORAGE_DIR", str(tmp_path))
+        monkeypatch.setenv("QDRANT_COLLECTION", "verify_corrupt_test")
+        get_settings.cache_clear()
+        dense = __import__("unittest.mock", fromlist=["Mock"]).Mock()
+        dense.dimension = 3
+        dense.embed.side_effect = lambda texts, _: [[1.0, 0.0, 0.0] for _ in texts]
+        sparse = __import__("unittest.mock", fromlist=["Mock"]).Mock()
+        sparse.metadata = {"model": "test"}
+        sparse.embed.side_effect = lambda texts, _: [SparseVector([1], [1.0]) for _ in texts]
+        sparse.query_embed.side_effect = lambda value: SparseVector([1], [1.0])
+        models = EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock(), reranker=None)
+        verifier = __import__("unittest.mock", fromlist=["Mock"]).Mock()
+        verifier.check_hypothesis.return_value = None
+        monkeypatch.setattr("ragmur.main.load_models", lambda _: models)
+        monkeypatch.setattr("ragmur.main.load_verifier", lambda _: verifier)
+        from ragmur.main import create_app
+
+        app = create_app()
+        async with (
+            app.router.lifespan_context(app),
+            AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client,
+        ):
+            factory = async_sessionmaker(engine, expire_on_commit=False)
+            async with factory() as session:
+                tenant = await create_tenant(session, "verify-corrupt")
+                secret = get_settings().api_key_hmac_secret.get_secret_value()
+                key = await issue_key(session, tenant.id, None, secret)
+            headers = {"X-API-Key": key}
+            bad = store.StoredPoint(id=uuid4(), payload={"text": "sin documento"})
+            monkeypatch.setattr(store, "retrieve_points", AsyncMock(return_value=[bad]))
+            response = await client.post(
+                "/v1/verify", headers=headers, json={"answer": "Algo.", "chunk_ids": [str(bad.id)]}
+            )
+            assert response.status_code == 503
+    finally:
+        await probe.close()
+        await engine.dispose()
+        async with admin.connect() as connection:
+            await connection.execute(text(f'DROP DATABASE IF EXISTS "{database}" WITH (FORCE)'))
+        await admin.dispose()

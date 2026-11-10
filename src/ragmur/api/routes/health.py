@@ -16,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["health"])
 
+# Dimensión que produce el modelo de embeddings configurado. Si cambia el
+# modelo, este chequeo debe cambiar con él: documenta el acoplamiento.
+EXPECTED_DENSE_DIMENSION = 1024
+
 
 async def _comprobar(
     nombre: str, comprobacion: Awaitable[str], limite_segundos: float
@@ -34,9 +38,11 @@ async def _comprobar(
     except Exception as exc:
         logger.warning(
             "dependencia inaccesible",
-            extra={"dependencia": nombre, "error": type(exc).__name__},
+            extra={"dependencia": nombre, "error": type(exc).__name__, "cause": str(exc)},
         )
-        return DependencyHealth(status="error", detail=f"{type(exc).__name__}: {exc}")
+        # El detalle público es genérico: el mensaje crudo puede filtrar
+        # rutas, hosts o fragmentos de SQL a quien no está autenticado.
+        return DependencyHealth(status="error", detail="no disponible")
     return DependencyHealth(status="ok", detail=str(version))
 
 
@@ -67,7 +73,7 @@ async def ready(response: Response, resources: ResourcesDep) -> HealthResponse:
 
     async def _modelos() -> str:
         dimension = resources.models.dense.dimension
-        if dimension != 1024 or resources.verifier is None:
+        if dimension != EXPECTED_DENSE_DIMENSION or resources.verifier is None:
             raise RuntimeError("Models not loaded")
         return f"dense-{dimension}+nli"
 
