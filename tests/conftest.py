@@ -22,9 +22,13 @@ def configuracion_limpia() -> Iterator[None]:
     que cambia una variable de entorno se la dejaría puesta al siguiente, y el orden
     de ejecución decidiría el resultado.
     """
+    from ragmur.api.rate_limit import limiter
+
     get_settings.cache_clear()
+    limiter.clear()
     yield
     get_settings.cache_clear()
+    limiter.clear()
 
 
 @pytest.fixture(autouse=True)
@@ -33,7 +37,11 @@ def modelos_simulados(monkeypatch: pytest.MonkeyPatch) -> None:
     model = Mock()
     model.dense.dimension = 1024
     model.sparse.metadata = {"model": "test"}
+    verifier = Mock()
+    verifier.check_hypothesis.return_value = None
+    verifier.score_pairs.return_value = []
     monkeypatch.setattr("ragmur.main.load_models", Mock(return_value=model))
+    monkeypatch.setattr("ragmur.main.load_verifier", Mock(return_value=verifier))
     monkeypatch.setattr("ragmur.main.first_tenant", AsyncMock(return_value=None))
 
 

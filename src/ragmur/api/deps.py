@@ -16,6 +16,7 @@ from ragmur.retrieval.models import EmbeddingModels
 # Importado de `store` y no de `qdrant_client`: la regla es que solo `store.py` toca
 # la biblioteca de Qdrant, y una anotación de tipo no es motivo para romperla.
 from ragmur.retrieval.store import AsyncQdrantClient
+from ragmur.verification.nli import NliVerifier
 
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
@@ -34,6 +35,7 @@ class Resources:
     qdrant: AsyncQdrantClient
     ingestion: IngestionCoordinator
     models: EmbeddingModels
+    verifier: NliVerifier
 
 
 def get_resources(request: Request) -> Resources:
@@ -52,13 +54,26 @@ async def get_current_tenant(
     resources: ResourcesDep,
     api_key: Annotated[str | None, Depends(api_key_header)],
 ) -> UUID:
-    """Obtiene el tenant de la clave presentada."""
+    """Obtiene el tenant de la clave presentada con límite por clave."""
+    from ragmur.api.rate_limit import limiter
+
     if api_key:
         async with resources.sessions() as session:
             tenant_id = await authenticate(
                 session, api_key, get_settings().api_key_hmac_secret.get_secret_value()
             )
             if tenant_id is not None:
+                settings = get_settings()
+                key_id = api_key.split("_", 2)[1] if api_key.count("_") >= 2 else api_key
+                retry_after = await limiter.check(
+                    key_id, settings.rate_limit_requests, settings.rate_limit_window_seconds
+                )
+                if retry_after is not None:
+                    raise HTTPException(
+                        status_code=429,
+                        detail="Rate limit exceeded",
+                        headers={"Retry-After": str(max(1, int(retry_after + 1)))},
+                    )
                 return tenant_id
     raise HTTPException(status_code=401, detail="Invalid API key")
 

@@ -65,6 +65,18 @@ class Settings(BaseSettings):
     search_max_candidates: int = Field(default=100, ge=30)
     search_max_document_ids: int = Field(default=100, gt=0)
     rrf_k: int = Field(default=2, gt=0)
+    rate_limit_requests: int = Field(default=60, gt=0)
+    rate_limit_window_seconds: float = Field(default=60.0, gt=0, allow_inf_nan=False)
+    nli_model: str = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
+    nli_revision: str = "b5113eb38ab63efdd7f280f8c144ea8b13f978ce"
+    nli_batch_size: int = Field(default=8, gt=0)
+    verify_max_answer_chars: int = Field(default=4096, gt=0)
+    verify_max_claims: int = Field(default=20, gt=0)
+    verify_max_chunks: int = Field(default=20, gt=0)
+    verify_max_pairs: int = Field(default=400, gt=0)
+    verify_supported_threshold: float = Field(default=0.75, ge=0, le=1)
+    verify_weak_threshold: float = Field(default=0.5, ge=0, le=1)
+    verify_contradiction_threshold: float = Field(default=0.75, ge=0, le=1)
 
     log_level: str = "INFO"
 
@@ -73,6 +85,15 @@ class Settings(BaseSettings):
         """Comprueba que el solape permita avanzar."""
         if self.chunk_overlap >= self.chunk_size:
             raise ValueError("chunk_overlap must be smaller than chunk_size")
+        return self
+
+    @model_validator(mode="after")
+    def validate_verify_thresholds(self) -> "Settings":
+        """Comprueba el orden de los umbrales de verificación."""
+        if not (0 <= self.verify_weak_threshold < self.verify_supported_threshold <= 1) or not (
+            0 <= self.verify_contradiction_threshold <= 1
+        ):
+            raise ValueError("Invalid verification thresholds")
         return self
 
 

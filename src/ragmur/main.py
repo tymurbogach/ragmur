@@ -14,7 +14,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import Request
 
 from ragmur.api.deps import Resources
-from ragmur.api.routes import documents, health, search
+from ragmur.api.routes import documents, health, search, verify
 from ragmur.api.timing import RequestTimingMiddleware
 from ragmur.api.upload_limit import UploadLimitMiddleware
 from ragmur.core.config import get_settings
@@ -30,6 +30,7 @@ from ragmur.ingestion.pipeline import IngestionCoordinator
 from ragmur.ingestion.storage import acquire_instance_lock
 from ragmur.retrieval.models import load_models
 from ragmur.retrieval.store import create_client, ensure_collection, ping
+from ragmur.verification.nli import load_verifier
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +56,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         sessions = create_session_factory(engine)
         await ping(qdrant)
         models = await asyncio.to_thread(load_models, settings)
+        verifier = await asyncio.to_thread(load_verifier, settings)
         indexer = Indexer(qdrant, models, settings)
         ingestion = IngestionCoordinator(sessions, settings, indexer)
         await ingestion.reconcile()
@@ -73,6 +75,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             qdrant=qdrant,
             ingestion=ingestion,
             models=models,
+            verifier=verifier,
         )
         logger.info("servicio arrancado", extra={"qdrant_url": settings.qdrant_url})
         yield
@@ -134,6 +137,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
     app.include_router(documents.router)
     app.include_router(search.router)
+    app.include_router(verify.router)
     return app
 
 

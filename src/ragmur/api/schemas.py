@@ -102,3 +102,47 @@ class SearchResponse(BaseModel):
     timings_ms: dict[str, float]
     rrf_k: int
     branch_limit: int
+
+
+class VerifyRequest(BaseModel):
+    """Texto redactado y evidencias citadas para verificar."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    answer: str = Field(min_length=1)
+    chunk_ids: list[UUID] = Field(min_length=1)
+    owner_id: str | None = None
+
+    @model_validator(mode="after")
+    def validate_verify(self) -> "VerifyRequest":
+        """Comprueba los límites de la petición de verificación."""
+        if not self.answer.strip():
+            raise ValueError("answer must not be blank")
+        if self.owner_id is not None and not self.owner_id.strip():
+            raise ValueError("owner_id must not be blank")
+        return self
+
+
+class VerifyClaim(BaseModel):
+    """Veredicto por frase con su evidencia."""
+
+    text: str
+    verdict: Literal["supported", "weak", "unsupported", "contradicted"]
+    score: float
+    best_chunk_id: UUID | None
+
+
+class VerifySummary(BaseModel):
+    """Recuento de veredictos."""
+
+    supported: int = Field(ge=0)
+    weak: int = Field(ge=0)
+    unsupported: int = Field(ge=0)
+    contradicted: int = Field(ge=0)
+
+
+class VerifyResponse(BaseModel):
+    """Frases verificadas y resumen."""
+
+    claims: list[VerifyClaim]
+    summary: VerifySummary
