@@ -304,7 +304,14 @@ La prueba en RTX 5080 y la combinación efectiva de controlador quedan pendiente
 
 La tarea 1.5 usa RRF con `k=2`, el valor predeterminado de Qdrant.
 La configuración se registra en la respuesta. No se ajusta sin evaluación.
-Hasta implementar 1.6, `rerank=false` es el valor inicial y `rerank=true` devuelve `503`.
+Desde 1.6, `rerank=true` es el valor inicial; `false` conserva el orden RRF.
+
+### 3.28 Reranking en CPU y CUDA
+
+El reranker usa `BAAI/bge-reranker-v2-m3` con revisión `953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e`.
+Sentence Transformers lo ejecuta como cross-encoder con puntuaciones sin sigmoid.
+El modelo tiene licencia Apache 2.0. Las puntuaciones no son probabilidades calibradas.
+La medición preliminar en CPU está en `benchmarks/reranking-cpu-2026-11-10.md`.
 
 ## 4. Aclaraciones conceptuales fijadas
 

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from ragmur.core.config import Settings
 from ragmur.retrieval.embedder import DenseEmbedder
+from ragmur.retrieval.reranker import Reranker
 from ragmur.retrieval.sparse import SparseEmbedder
 
 
@@ -15,6 +16,7 @@ class EmbeddingModels:
     dense: DenseEmbedder
     sparse: SparseEmbedder
     lock: asyncio.Lock
+    reranker: Reranker | None = None
 
 
 def load_models(settings: Settings) -> EmbeddingModels:
@@ -35,4 +37,10 @@ def load_models(settings: Settings) -> EmbeddingModels:
         settings.bm25_b,
         settings.bm25_avg_len,
     )
-    return EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock())
+    reranker = Reranker(
+        settings.reranker_model,
+        settings.reranker_revision,
+        settings.embedding_device,
+        settings.model_cache_dir,
+    )
+    return EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock(), reranker=reranker)

@@ -1,10 +1,13 @@
 """Búsqueda híbrida dentro del espacio autorizado."""
 
 import asyncio
+import logging
 import math
+import resource
 import time
 from uuid import UUID
 
+import torch
 from fastapi import APIRouter, HTTPException, Request
 from sqlalchemy import select
 
@@ -15,6 +18,7 @@ from ragmur.db.models import Document
 from ragmur.retrieval import store
 
 router = APIRouter(prefix="/v1", tags=["search"])
+logger = logging.getLogger(__name__)
 
 
 @router.post("/search", response_model=SearchResponse)
@@ -33,9 +37,6 @@ async def search(
         and len(request.document_ids) > settings.search_max_document_ids
     ):
         raise HTTPException(422, detail="Too many document IDs")
-    if request.rerank:
-        raise HTTPException(503, detail="Reranking is not available yet")
-
     try:
         waiting = time.perf_counter()
         async with resources.models.lock:
@@ -101,21 +102,66 @@ async def search(
                     sparse_rank=point.sparse_rank,
                 )
             )
-            if len(results) == request.top_k:
-                break
     except (KeyError, TypeError, ValueError) as exc:
         raise HTTPException(503, detail="Search unavailable") from exc
+    validated = time.perf_counter()
+    rerank_wait = 0.0
+    rerank_elapsed = 0.0
+    if request.rerank and results:
+        reranker = resources.models.reranker
+        if reranker is None:
+            raise HTTPException(503, detail="Reranking unavailable")
+        try:
+            rerank_queued = time.perf_counter()
+            async with resources.models.lock:
+                rerank_started = time.perf_counter()
+                scores = await asyncio.to_thread(
+                    reranker.score,
+                    request.query,
+                    [hit.text for hit in results],
+                    settings.reranker_batch_size,
+                )
+            rerank_done = time.perf_counter()
+            if len(scores) != len(results) or any(not math.isfinite(score) for score in scores):
+                raise ValueError("Invalid reranker scores")
+            results = [
+                hit.model_copy(update={"score": score, "score_type": "reranker"})
+                for hit, score in zip(results, scores, strict=True)
+            ]
+            results.sort(key=lambda hit: hit.score, reverse=True)
+            rerank_wait = rerank_started - rerank_queued
+            rerank_elapsed = rerank_done - rerank_started
+            gpu_peak = None
+            if settings.embedding_device == "cuda":
+                try:
+                    gpu_peak = torch.cuda.max_memory_allocated()
+                except RuntimeError:
+                    logger.warning("no se pudo leer la memoria de GPU")
+            logger.info(
+                "reranking completado",
+                extra={
+                    "candidates": len(results),
+                    "batch_size": settings.reranker_batch_size,
+                    "device": settings.embedding_device,
+                    "elapsed_ms": rerank_elapsed * 1000,
+                    "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+                    * 1024,
+                    "gpu_peak_allocated_bytes": gpu_peak,
+                },
+            )
+        except Exception as exc:
+            raise HTTPException(503, detail="Reranking unavailable") from exc
     finished = time.perf_counter()
     return SearchResponse(
-        results=results,
+        results=results[: request.top_k],
         rrf_k=settings.rrf_k,
         branch_limit=request.candidates,
         timings_ms={
-            "capacity_wait": (acquired - waiting) * 1000,
+            "capacity_wait": (acquired - waiting + rerank_wait) * 1000,
             "embed": (embedded - acquired) * 1000,
             "search": (searched - embedded) * 1000,
-            "validation": (finished - searched) * 1000,
-            "rerank": 0.0,
+            "validation": (validated - searched) * 1000,
+            "rerank": rerank_elapsed * 1000,
             "total": (finished - started) * 1000,
         },
     )

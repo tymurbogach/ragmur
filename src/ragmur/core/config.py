@@ -50,6 +50,9 @@ class Settings(BaseSettings):
     embedding_device: Literal["cpu", "cuda"] = "cpu"
     model_cache_dir: Path = Path("./models/huggingface")
     embedding_batch_size: int = Field(default=16, gt=0)
+    reranker_model: str = "BAAI/bge-reranker-v2-m3"
+    reranker_revision: str = "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+    reranker_batch_size: int = Field(default=8, gt=0)
     index_batch_size: int = Field(default=64, gt=0)
     bm25_model: str = "Qdrant/bm25"
     bm25_revision: str = "22b8d2af71a76161e18dd432d2cee0eefa66e412"

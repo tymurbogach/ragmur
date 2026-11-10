@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU. La siguiente tarea funcional es **1.6**.
+Las tareas 1.1 a 1.3 están completadas. La tarea **1.4** funciona en CPU y queda pendiente la prueba en GPU. La siguiente tarea funcional es **1.7**.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -265,12 +265,16 @@ La falta de esta capacidad impide el arranque, no autoriza omitirla. Ver `DECISI
 
 ### 1.6 Reranking
 
-- [ ] Cross-encoder bge-reranker-v2-m3 sobre los candidatos de la fusión
-- [ ] `candidates` por defecto 30 → `top_k` por defecto 5
-- [ ] Candidatos puntuados por lotes acotados, sin una llamada por candidato; registrar memoria y latencia
-- [ ] Activable y desactivable por petición
-- [ ] Latencia añadida registrada en `timings_ms`
-- [ ] Objetivo de latencia p95 de `/search` con reranking activo, fijado y medido, indicando el hardware
+Objetivo inicial de prueba: p95 de `/search` ≤ 10 s en CPU Intel Core Ultra 9 285H,
+con 16 núcleos, 62 GiB de RAM, dos hilos de inferencia y concurrencia uno.
+La prueba usa 30 candidatos sintéticos, `top_k=5` y el servicio ya calentado.
+
+- [x] Cross-encoder bge-reranker-v2-m3 sobre los candidatos de la fusión
+- [x] `candidates` por defecto 30 → `top_k` por defecto 5
+- [x] Candidatos puntuados por lotes acotados, sin una llamada por candidato; registrar memoria y latencia
+- [x] Activable y desactivable por petición
+- [x] Latencia añadida registrada en `timings_ms`
+- [x] Objetivo de latencia p95 de `/search` con reranking activo, fijado y medido, indicando el hardware
 
 **Nota.** El reranking es el coste dominante de una consulta. Sin un objetivo de latencia declarado, la capa entra en el sistema sin presupuesto y no hay forma de decidir si compensa.
 

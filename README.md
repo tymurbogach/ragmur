@@ -78,9 +78,10 @@ Las rutas protegidas reciben la clave mediante `X-API-Key`.
 
 `POST /v1/search` recupera fragmentos con búsqueda densa y BM25, y combina sus posiciones mediante RRF.
 Usa `query` y, opcionalmente, `owner_id`, `document_ids`, `top_k` y `candidates`.
-Por ahora, `rerank` debe ser `false`: el reordenado corresponde a la tarea 1.6.
+`rerank` está activado por defecto y puede desactivarse por petición.
 La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son probabilidades.
 La calidad de recuperación sigue pendiente de medición con `eval/`.
+La [medición preliminar de latencia en CPU](benchmarks/reranking-cpu-2026-11-10.md) usa datos sintéticos.
 
 Para ejecutar la prueba funcional opcional con modelos reales en CPU y Qdrant temporal:
 

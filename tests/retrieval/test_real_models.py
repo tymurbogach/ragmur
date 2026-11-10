@@ -34,6 +34,18 @@ async def test_real_models_find_semantic_and_rare_terms_with_isolation(
                     raise
                 await asyncio.sleep(0.1)
         models = await asyncio.to_thread(load_models, settings)
+        assert models.reranker is not None
+        scores = await asyncio.to_thread(
+            models.reranker.score,
+            "plazo de entrega",
+            ["El plazo de entrega es de 48 horas.", "Las montañas tienen árboles."],
+            2,
+        )
+        assert len(scores) == 2 and scores[0] > scores[1]
+        one_score = await asyncio.to_thread(
+            models.reranker.score, "plazo", ["El plazo es de 48 horas."], 2
+        )
+        assert len(one_score) == 1
         indexer = Indexer(client, models, settings)
         tenant_a, tenant_b = uuid4(), uuid4()
         semantic_id, rare_id = uuid4(), uuid4()

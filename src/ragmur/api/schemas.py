@@ -65,7 +65,7 @@ class SearchRequest(BaseModel):
     query: str = Field(min_length=1)
     top_k: int = Field(default=5, ge=1)
     candidates: int = Field(default=30, ge=1)
-    rerank: bool = False
+    rerank: bool = True
     owner_id: str | None = None
     document_ids: list[UUID] | None = Field(default=None, min_length=1)
 
@@ -90,7 +90,7 @@ class SearchHit(BaseModel):
     locator: dict[str, str | int | list[str]]
     text: str
     score: float
-    score_type: Literal["rrf"] = "rrf"
+    score_type: Literal["rrf", "reranker"] = "rrf"
     dense_rank: int | None
     sparse_rank: int | None
 

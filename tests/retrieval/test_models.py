@@ -48,3 +48,21 @@ def test_sparse_uses_different_document_and_query_operations(
     assert factory.call_args.kwargs["specific_model_path"] == str(tmp_path)
     model.embed.assert_called_once()
     model.query_embed.assert_called_once()
+
+
+def test_reranker_loads_once_and_scores_in_batches(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from ragmur.retrieval.reranker import Reranker
+
+    model = Mock()
+    model.predict.return_value = np.array([2.0, -1.0])
+    factory = Mock(return_value=model)
+    monkeypatch.setattr("ragmur.retrieval.reranker.CrossEncoder", factory)
+    reranker = Reranker("model", "revision", "cpu", tmp_path)
+    assert reranker.score("question", ["first", "second"], 8) == [2.0, -1.0]
+    assert reranker.score("question", [], 8) == []
+    assert factory.call_args.kwargs["revision"] == "revision"
+    assert factory.call_args.kwargs["trust_remote_code"] is False
+    model.predict.assert_called_once()
+    assert model.predict.call_args.kwargs["batch_size"] == 8

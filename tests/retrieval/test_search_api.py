@@ -56,7 +56,11 @@ async def test_search_api_authorization_and_indexed_gate(
         sparse.query_embed.side_effect = lambda value: (
             SparseVector([], []) if value == "empty" else SparseVector([1], [1.0])
         )
-        model = EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock())
+        reranker = Mock()
+        reranker.score.side_effect = lambda _query, texts, _batch: [
+            float(index) for index in range(len(texts))
+        ]
+        model = EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock(), reranker=reranker)
         monkeypatch.setattr("ragmur.main.load_models", lambda _: model)
         from ragmur.main import create_app
 
@@ -137,11 +141,34 @@ async def test_search_api_authorization_and_indexed_gate(
                 assert (
                     await client.post("/v1/search", headers=headers_a, json=invalid)
                 ).status_code == 422
-            assert (
-                await client.post(
-                    "/v1/search", headers=headers_a, json={"query": "test", "rerank": True}
-                )
-            ).status_code == 503
+            direct = await client.post(
+                "/v1/search",
+                headers=headers_a,
+                json={"query": "test", "rerank": False, "top_k": 3},
+            )
+            reordered = await client.post(
+                "/v1/search",
+                headers=headers_a,
+                json={"query": "test", "rerank": True, "top_k": 3},
+            )
+            direct_ids = [hit["chunk_id"] for hit in direct.json()["results"]]
+            reordered_hits = reordered.json()["results"]
+            assert {hit["chunk_id"] for hit in reordered_hits} == set(direct_ids)
+            assert [hit["chunk_id"] for hit in reordered_hits] == list(reversed(direct_ids))
+            assert all(hit["score_type"] == "reranker" for hit in reordered_hits)
+            first = await client.post(
+                "/v1/search",
+                headers=headers_a,
+                json={"query": "test", "rerank": True, "top_k": 1},
+            )
+            assert first.json()["results"][0]["chunk_id"] == reordered_hits[0]["chunk_id"]
+            reranker.score.side_effect = RuntimeError("private failure")
+            failed_rerank = await client.post(
+                "/v1/search",
+                headers=headers_a,
+                json={"query": "test", "rerank": True},
+            )
+            assert failed_rerank.status_code == 503 and "private" not in failed_rerank.text
             async with factory() as session:
                 await session.execute(
                     update(Document).where(Document.id == alice).values(status="failed")
