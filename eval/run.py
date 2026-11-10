@@ -37,6 +37,7 @@ from ragmur.ingestion.chunker import split_document
 from ragmur.ingestion.extractors.core import ExtractionResult, Fragment
 from ragmur.retrieval import store
 from ragmur.retrieval.models import EmbeddingModels, load_models
+from ragmur.retrieval.sparse import SparseVector
 
 logger = logging.getLogger(__name__)
 
@@ -198,7 +199,8 @@ def hit_from_payload(payload: dict[str, object]) -> Hit:
     document_id = UUID(str(payload["document_id"]))
     locator = cast(Locator, payload["locator"])
     text = payload["text"]
-    assert isinstance(text, str)
+    if not isinstance(text, str):
+        raise RuntimeError("Qdrant returned a point without text")
     return Hit(document_id=document_id, locator=locator, text=text)
 
 
@@ -209,7 +211,7 @@ def expected_evidences(query: QuerySpec, mapping: dict[str, UUID]) -> list[Evide
     evidences: list[Evidence] = []
     for item in query.expected:
         doc_id = mapping[item.document]
-        locator = cast(Locator, dict(item.locator))
+        locator = cast(Locator, item.locator.model_dump())
         evidences.append(
             Evidence(
                 evidence_id=item.evidence_id,
@@ -239,12 +241,18 @@ async def run_configuration(
     details: dict[str, dict[str, object]] = {}
     for query in queries:
         started = time.perf_counter()
-        dense = await asyncio.to_thread(
-            models.dense.embed, [query.query], settings.embedding_batch_size
-        )
-        sparse = await asyncio.to_thread(models.sparse.query_embed, query.query)
+        dense: list[list[float]] | None = None
+        sparse: SparseVector | None = None
+        if configuration in ("dense", "hybrid", "hybrid_rerank"):
+            dense = await asyncio.to_thread(
+                models.dense.embed, [query.query], settings.embedding_batch_size
+            )
+        if configuration in ("sparse", "hybrid", "hybrid_rerank"):
+            sparse = await asyncio.to_thread(models.sparse.query_embed, query.query)
+        assert dense is not None or sparse is not None
         candidate_hits: list[Hit] = []
         if configuration == "dense":
+            assert dense is not None
             points = await store.branch_search(
                 tenant_id,
                 client,
@@ -259,12 +267,13 @@ async def run_configuration(
             )
             candidate_hits = [hit_from_payload(point.payload) for point in points]
         elif configuration == "sparse":
+            assert sparse is not None
             points = await store.branch_search(
                 tenant_id,
                 client,
                 collection,
                 branch="sparse",
-                dense=dense[0],
+                dense=[],
                 sparse_indices=sparse.indices,
                 sparse_values=sparse.values,
                 owner_id=query.scope.owner_id,
@@ -273,6 +282,7 @@ async def run_configuration(
             )
             candidate_hits = [hit_from_payload(point.payload) for point in points]
         elif configuration in ("hybrid", "hybrid_rerank"):
+            assert dense is not None and sparse is not None
             fused = await store.hybrid_search(
                 tenant_id,
                 client,
@@ -289,7 +299,9 @@ async def run_configuration(
         else:
             raise ValueError(f"Unknown configuration: {configuration}")
         result_hits = list(candidate_hits[:top_k])
-        if configuration == "hybrid_rerank" and candidate_hits and models.reranker is not None:
+        if configuration == "hybrid_rerank" and candidate_hits:
+            if models.reranker is None:
+                raise RuntimeError("Reranker is required for the hybrid_rerank configuration")
             scores = await asyncio.to_thread(
                 models.reranker.score,
                 query.query,
@@ -421,6 +433,7 @@ async def evaluate(
             comparisons[name] = {"wins": wins, "losses": losses, "ties": ties}
         manifest_hash = await asyncio.to_thread(_manifest_hash, manifest_path)
         corpus_hash = manifest_hash
+        golden_hash = await asyncio.to_thread(_manifest_hash, golden_path)
         summary = {
             "date": datetime.now(UTC).isoformat(),
             "commit": read_commit(),
@@ -428,6 +441,7 @@ async def evaluate(
                 "manifest": str(manifest_path),
                 "golden": str(golden_path),
                 "manifest_sha256": corpus_hash,
+                "golden_sha256": golden_hash,
                 "documents": len(manifest.documents),
                 "queries": len(queries),
                 "positives": sum(1 for query in queries if query.expected),
@@ -462,7 +476,7 @@ async def evaluate(
             "summaries": summaries,
             "comparisons": comparisons,
         }
-        timestamp = datetime.now(UTC).strftime("%Y-%m-%dT%H%M%SZ")
+        timestamp = datetime.now(UTC).strftime("%Y-%m-%dT%H%M%S%fZ")
         await asyncio.to_thread(results_dir.mkdir, parents=True, exist_ok=True)
         summary_path = results_dir / f"summary-{timestamp}-{split}.json"
         await asyncio.to_thread(write_json, summary_path, summary)

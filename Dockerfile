@@ -18,7 +18,7 @@ COPY src ./src
 ARG INSTALL_CUDA=false
 
 RUN if [ "$INSTALL_CUDA" = "true" ]; then \
-      uv sync --locked --no-dev --extra cuda; \
+      uv sync --locked --no-dev --no-group cpu --extra cuda; \
     else \
       uv sync --locked --no-dev; \
     fi

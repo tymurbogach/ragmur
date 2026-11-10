@@ -121,3 +121,48 @@ def test_query_validation_rejects_duplicates_and_requires_partitions(tmp_path: P
     write_yaml(queries_file, [query])
     with pytest.raises(ValidationError):
         load_queries(queries_file, manifest)
+
+
+def test_negative_query_with_unknown_tenant_is_rejected(tmp_path: Path) -> None:
+    data = b"a"
+    (tmp_path / "a.txt").write_bytes(data)
+    manifest_file = tmp_path / "manifest.yaml"
+    write_yaml(
+        manifest_file,
+        {
+            "documents": [
+                {
+                    "key": "a",
+                    "path": "a.txt",
+                    "sha256": hashlib.sha256(data).hexdigest(),
+                    "source": "test",
+                    "license": "test",
+                    "tenant": "demo",
+                }
+            ]
+        },
+    )
+    manifest = load_manifest(manifest_file)
+    queries_file = tmp_path / "queries.yaml"
+    write_yaml(
+        queries_file,
+        [
+            {
+                "id": "q1",
+                "split": "dev",
+                "scope": {"tenant": "otro"},
+                "query": "Why?",
+                "expected": [],
+                "note": "negative",
+            }
+        ],
+    )
+    with pytest.raises(ValueError, match="unknown tenant"):
+        load_queries(queries_file, manifest)
+
+
+def test_section_locator_rejects_blank_value() -> None:
+    from eval.dataset import SectionLocator
+
+    with pytest.raises(ValidationError):
+        SectionLocator(type="section", path=["Plazos"], ordinal=1, value=" ")

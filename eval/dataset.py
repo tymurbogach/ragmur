@@ -51,6 +51,13 @@ class SectionLocator(StrictModel):
             raise ValueError("Section path must not be blank")
         return value
 
+    @field_validator("value")
+    @classmethod
+    def validate_value(cls, value: str | None) -> str | None:
+        if value is not None and not value.strip():
+            raise ValueError("Section value must not be blank")
+        return value
+
 
 Locator = Annotated[PageLocator | OffsetLocator | SectionLocator, Field(discriminator="type")]
 
@@ -168,9 +175,13 @@ def load_queries(path: Path, manifest: CorpusManifest) -> list[QuerySpec]:
     if len(set(ids)) != len(ids):
         raise ValueError("Query IDs must be unique")
     documents = {document.key: document for document in manifest.documents}
+    tenants = {document.tenant for document in manifest.documents}
     keys = set(documents)
     if any(evidence.document not in keys for query in queries for evidence in query.expected):
         raise ValueError("A query references an unknown document")
+    for query in queries:
+        if query.scope.tenant not in tenants:
+            raise ValueError("A query scope references an unknown tenant")
     for query in queries:
         for evidence in query.expected:
             document = documents[evidence.document]
