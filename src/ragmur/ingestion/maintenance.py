@@ -2,7 +2,6 @@
 
 import asyncio
 from contextlib import AsyncExitStack
-from pathlib import Path
 from uuid import UUID
 
 from sqlalchemy import delete, select, update
@@ -153,18 +152,20 @@ async def delete_tenant(settings: Settings, tenant_id: UUID) -> int:
             documents = (
                 await session.scalars(select(Document).where(Document.tenant_id == tenant_id))
             ).all()
-            paths = [Path(document.storage_path) for document in documents]
+            root = settings.storage_dir.resolve()
+            try:
+                paths = [
+                    resolve_document_path(root, document.id, document.storage_path)
+                    for document in documents
+                ]
+            except InvalidDocumentPathError as exc:
+                raise RuntimeError("Invalid document path") from exc
         client = create_client(settings.qdrant_url, settings.health_timeout_seconds)
         stack.push_async_callback(client.close)
         await ping(client)
         await delete_tenant_points(tenant_id, client, settings.qdrant_collection)
-        root = settings.storage_dir.resolve()
-        for document, path in zip(documents, paths, strict=True):
-            try:
-                resolved = resolve_document_path(root, document.id, str(path))
-            except InvalidDocumentPathError as exc:
-                raise RuntimeError("Invalid document path") from exc
-            await asyncio.to_thread(resolved.unlink, missing_ok=True)
+        for path in paths:
+            await asyncio.to_thread(path.unlink, missing_ok=True)
         async with sessions() as session:
             await session.execute(delete(Document).where(Document.tenant_id == tenant_id))
             await session.execute(delete(Tenant).where(Tenant.id == tenant_id))

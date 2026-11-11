@@ -127,6 +127,10 @@ uv run python -m ragmur.cli reindex --all
 Si cambias los modelos o el troceado, usa `--all`. Los comandos parciales rechazan configuraciones distintas.
 El reindexado completo elimina primero los puntos de cada tenant y conserva los originales.
 Antes del borrado marca los documentos como fallidos. Si se interrumpe, repite `reindex --all`.
+Si una fila `deleting` tiene una ruta corrupta, el arranque conserva la fila y registra su identificador.
+Detén la API y comprueba el original y el identificador antes de reparar `storage_path` en PostgreSQL.
+La ruta debe ser la ruta absoluta de `STORAGE_DIR` seguida del UUID del documento.
+No apuntes a otro fichero ni cambies el estado. Reinicia la API para reintentar la limpieza.
 Para borrar un tenant con sus puntos y ficheros, detén la API y ejecuta:
 
 ```bash

@@ -174,6 +174,7 @@ El aislamiento sobre documentos y puntos se verifica cuando existan esas interfa
 - [x] Extractor DOCX (python-docx) con localizador de tipo `section` u `offset`
 - [x] Rechazar DOCX con texto en tablas u otros bloques del cuerpo que el extractor no procesa, también si contienen párrafos extraíbles
 - [x] Limitar `owner_id` en todas las rutas y PostgreSQL, y acotar el cuerpo JSON antes de analizarlo
+- [x] Validar rutas antes del borrado de tenant y conservar limpiezas pendientes tras un fallo de Qdrant
 - [x] Extractor TXT y Markdown con localizador `offset` y `section` respectivamente
 - [x] PDF sin capa de texto → estado `unsupported` con mensaje explícito. Definir el umbral de detección (caracteres extraídos por página)
 - [x] Límites de subida: tamaño máximo en bytes, número máximo de páginas y timeout de extracción

@@ -164,18 +164,16 @@ class IngestionCoordinator:
                         "no se pudo limpiar un trabajo interrumpido",
                         extra={"document_id": str(document.id)},
                     )
-                    await session.rollback()
-                    document.status = "failed"
-                    document.error = "La ingesta se interrumpió durante el reinicio"
+                    continue
                 await session.commit()
             deleting = (
                 await session.scalars(select(Document).where(Document.status == "deleting"))
             ).all()
             for document in deleting:
                 try:
+                    path = resolve_document_path(root, document.id, document.storage_path)
                     if self.indexer is not None:
                         await self.indexer.cleanup(document.tenant_id, document.id)
-                    path = resolve_document_path(root, document.id, document.storage_path)
                     await asyncio.to_thread(path.unlink, missing_ok=True)
                     await session.execute(delete(Document).where(Document.id == document.id))
                 except Exception:

@@ -3,6 +3,8 @@
 import os
 import time
 from pathlib import Path
+from typing import cast
+from unittest.mock import AsyncMock, Mock
 from uuid import uuid4
 
 from sqlalchemy import text
@@ -11,6 +13,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from ragmur.core.config import Settings, get_settings
 from ragmur.db.models import Base, Document, Tenant
 from ragmur.db.session import create_engine
+from ragmur.ingestion.indexer import Indexer
 from ragmur.ingestion.pipeline import IngestionCoordinator
 
 
@@ -62,7 +65,18 @@ async def test_recovery_marks_jobs_and_finishes_deletions(tmp_path: Path) -> Non
                     )
                 )
             await session.commit()
-        await IngestionCoordinator(factory, settings).reconcile()
+        indexer = Mock(spec=Indexer)
+        indexer.cleanup = AsyncMock(side_effect=RuntimeError("Qdrant unavailable"))
+        coordinator = IngestionCoordinator(factory, settings, cast(Indexer, indexer))
+        await coordinator.reconcile()
+        async with factory() as session:
+            pending = await session.get(Document, pending_id)
+            deleting = await session.get(Document, deleting_id)
+            assert pending is not None and pending.status == "pending"
+            assert deleting is not None and deleting.status == "deleting"
+        assert deleting_path.exists()
+        indexer.cleanup.side_effect = None
+        await coordinator.reconcile()
         async with factory() as session:
             pending = await session.get(Document, pending_id)
             assert pending is not None and pending.status == "failed"

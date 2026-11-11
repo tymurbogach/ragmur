@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from ragmur.core.config import Settings, get_settings
 from ragmur.db.models import Base, Document, Tenant
 from ragmur.ingestion.indexer import Indexer
-from ragmur.ingestion.maintenance import reindex
+from ragmur.ingestion.maintenance import delete_tenant, reindex
 from ragmur.ingestion.pipeline import IngestionCoordinator
 from ragmur.retrieval import store
 from ragmur.retrieval.models import EmbeddingModels
@@ -91,6 +91,25 @@ async def test_reindex_scopes_and_new_configuration(
             tenants[1], client, settings.qdrant_collection, docs[1], "alice"
         )
         assert before_a and before_b
+        async with factory() as session:
+            document = await session.get(Document, docs[0])
+            assert document is not None
+            original_path = document.storage_path
+            document.storage_path = "/invalid/path"
+            await session.commit()
+        with pytest.raises(RuntimeError, match="Invalid document path"):
+            await delete_tenant(settings, tenants[0])
+        assert (
+            await store.list_document_point_ids(
+                tenants[0], client, settings.qdrant_collection, docs[0], "alice"
+            )
+            == before_a
+        )
+        async with factory() as session:
+            document = await session.get(Document, docs[0])
+            assert document is not None
+            document.storage_path = original_path
+            await session.commit()
         assert await reindex(settings, document_id=docs[0], tenant_id=None) == (1, 0, 0)
         after_a = await store.list_document_point_ids(
             tenants[0], client, settings.qdrant_collection, docs[0], "alice"
