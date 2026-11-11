@@ -584,6 +584,8 @@ Si se interrumpe, conserva los originales y se puede repetir el comando completo
 El borrado de tenant elimina puntos y ficheros antes de eliminar sus filas; una cascada SQL no limpia almacenes externos.
 
 Las subidas tienen límites de bytes, páginas, texto extraído y expansión de DOCX comprimidos.
+La recepción limita la concurrencia y su duración antes de analizar el multipart.
+La saturación devuelve `503`; el plazo agotado devuelve `408`.
 La validación combina firma, estructura y decodificación; TXT y Markdown no tienen una firma MIME inequívoca.
 Los PDF mixtos requieren detectar páginas sin texto útil y emitir un diagnóstico; una portada vacía no basta para declarar un escaneado.
 

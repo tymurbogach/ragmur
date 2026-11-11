@@ -132,6 +132,8 @@ def create_app() -> FastAPI:
         UploadLimitMiddleware,
         max_bytes=settings.max_upload_bytes,
         overhead_bytes=settings.multipart_overhead_bytes,
+        max_concurrent=settings.upload_max_concurrent,
+        timeout_seconds=settings.upload_timeout_seconds,
     )
     app.add_middleware(RequestTimingMiddleware)
     app.include_router(health.router)
