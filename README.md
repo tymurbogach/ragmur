@@ -118,7 +118,8 @@ Medido el 2026-11-10 en CPU sin GPU, con `candidates=30` y `top_k=10`, concurren
 | Híbrida + reranking | 1.0 | 1.0 | 1.0 | 16448 ms | 23725 ms |
 
 Victorias/derrotas/empates en recall@10: 0/0/20 entre híbrida y densa, híbrida y BM25, y reranking frente a híbrida.
-La muestra es pequeña y no demuestra significación; documenta cobertura y orden, no una mejora general.
+La muestra es pequeña y poco discriminativa: las cuatro configuraciones recuperan todas las evidencias a `top_k=10`.
+No demuestra una mejora general.
 Los resúmenes versionados están en `eval/results/`; los volcados por consulta se ignoran.
 
 ```bash

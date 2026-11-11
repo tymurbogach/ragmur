@@ -315,11 +315,16 @@ La medición preliminar en CPU está en `benchmarks/reranking-cpu-2026-11-10.md`
 
 ### 3.29 Evaluación 1.7 con corpus mixto
 
-El golden set usa 35 documentos (10 nucleares + 25 distractores) y 27 consultas (20 positivas, 7 negativas; 14 en desarrollo y 13 en prueba reservada) de SQuAD 2.0 y XQuAD en inglés y español. Con `candidates=30` y `top_k=10`, la línea base en CPU da recall@10 1.0 en las cuatro configuraciones; MRR densa 0.975, híbrida 0.925, BM25 0.858; el reranking restaura MRR y nDCG 1.0 a costa de 5.7 s frente a 0.13 s. Comparación léxica en desarrollo: `language="spanish"` MRR 0.833 contra `disable_stemmer=True` MRR 0.85; diferencia mínima en muestra pequeña, se mantiene `spanish`. Se conservan troceado 800/120 y `top_k` 5 en API.
+El golden set usa 35 documentos y 27 consultas de SQuAD 2.0 y XQuAD en inglés y español.
+El [resumen de CPU](eval/results/summary-2026-11-10T141148917615Z-all.json) registra parámetros y resultados por etapa.
+La línea base es poco discriminativa: las cuatro configuraciones alcanzan recall@10 1.0 en 20 consultas positivas.
+Se conservan troceado 800/120 y `top_k` 5 en API. Esta muestra no demuestra una mejora general.
 
 ### 3.30 Verificación NLI y umbrales
 
-El verificador usa `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` con revisión `b5113eb38ab63efdd7f280f8c144ea8b13f978ce`, etiquetas leídas de la configuración y ventanas con presupuesto para hipótesis y tokens especiales. Umbrales 0.75/0.5/0.75 calibrados con inferencia real (idéntica 0.96, contradicción 0.97, no relacionada 0.00) y evaluados en partición reservada. La correferencia aislada y con frase anterior quedan por debajo de `weak` (0.02); no se activa mitigación.
+El verificador usa `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` con revisión `b5113eb38ab63efdd7f280f8c144ea8b13f978ce`.
+Los umbrales 0.75/0.5/0.75 son provisionales. La [prueba funcional](eval/results/nli-test-2026-11-11.json) contiene nueve afirmaciones manuales y no justifica una calibración.
+Falta evaluar fragmentos reales, incluidas negaciones, cifras, fechas y correferencias, con particiones por documento.
 
 ### 3.31 Cierre operativo de la fase 1
 
