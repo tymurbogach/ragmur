@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI y umbrales calibrados. La tarea **1.9** deja el código listo; el despliegue en el homelab y la demo pública quedan pendientes.
+Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI; su calibración y evaluación reservada están pendientes. La tarea **1.9** requiere todavía el despliegue en el homelab y la demo pública.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -322,13 +322,14 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [x] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
 - [x] `POST /v1/verify` — entrada: texto redactado + `chunk_ids` + `owner_id` opcional; salida: veredicto por frase con score
 - [x] Los `chunk_ids` se resuelven filtrando por `tenant_id` y, si se envía, por `owner_id`. Un `chunk_id` fuera del espacio del solicitante se ignora, no se puntúa
-- [x] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
+- [ ] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
 - [x] Evaluar correferencia con y sin frase anterior antes de activar la mitigación
 - [x] Set de prueba con afirmaciones deliberadamente falsas y afirmaciones deliberadamente contradichas
 - [x] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
-- [x] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
+- [ ] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
 
-Calibración 2026-11-10 con inferencia real en CPU: idéntica 0.96/0.01, contradicción 0.00/0.97, no relacionada 0.00/0.00; umbrales 0.75/0.5/0.75 separan los tres casos. Correferencia aislada y con frase anterior quedan por debajo de `weak` (0.02), sin mitigación activada. Tasa de respaldo falso 0 sobre el set de prueba con umbrales fijados.
+Los ejemplos de inferencia real son pruebas funcionales, no una evaluación reservada reproducible.
+Los umbrales actuales son provisionales hasta completar la calibración y publicar sus resultados.
 
 **Por qué `contradicted` va separado.** El modelo NLI ya distingue tres clases. Que la fuente no diga nada sobre una afirmación (`unsupported`) y que la fuente afirme lo contrario (`contradicted`) son fallos de gravedad muy distinta, y el segundo es la mejor demostración de lo que hace el verificador. Colapsarlos tira la señal más valiosa.
 
@@ -355,7 +356,7 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 - [ ] Copia y restauración comprobadas de PostgreSQL y originales; reconstrucción de Qdrant documentada
 - [x] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
 
-Código listo para desplegar; el homelab, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes fuera de este equipo.
+La evaluación NLI, el homelab, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.
