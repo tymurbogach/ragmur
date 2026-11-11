@@ -1,0 +1,66 @@
+{
+  "source": "BEIR SciFact",
+  "archive_sha256": "536e14446a0ba56ed1398ab1055f39fe852686ecad24a6306c80c490fa8e0165",
+  "license": "CC BY-SA 4.0 as listed by BeIR dataset card",
+  "revision": "c409b39",
+  "documents": 5183,
+  "chunks": 14267,
+  "queries": 300,
+  "qrels": 339,
+  "device": "cuda",
+  "bm25_language": "spanish",
+  "chunk_size": 800,
+  "chunk_overlap": 120,
+  "candidates_chunks": 30,
+  "result_limit_chunks": 10,
+  "method": "internal retrieval pipeline, not HTTP; rank first 10 chunks then deduplicate documents, evaluate document qrels",
+  "ranking": {
+    "hit": 0.8533333333333334,
+    "recall": 0.8366666666666667,
+    "ndcg": 0.7205479631299238
+  },
+  "latency_ms": {
+    "p50": 235.14728150075825,
+    "p95": 265.82953600154724
+  },
+  "concurrency": {
+    "1": {
+      "count": 12,
+      "p50_ms": 234.82603500087862,
+      "p95_ms": 245.15820600208826,
+      "queries_per_second": 4.289176217705103
+    },
+    "2": {
+      "count": 12,
+      "p50_ms": 416.22803550126264,
+      "p95_ms": 431.53701499977615,
+      "queries_per_second": 4.824470773285092
+    },
+    "4": {
+      "count": 12,
+      "p50_ms": 773.117145499782,
+      "p95_ms": 801.2747680004395,
+      "queries_per_second": 5.2017431447058415
+    }
+  },
+  "isolation": "tenant and owner canaries passed",
+  "diagnosis": {
+    "found": 256,
+    "missing_from_candidates": 34,
+    "outside_top_10_after_reranking": 10,
+    "unit": "queries",
+    "cutoff_chunks": 10
+  },
+  "limitations": [
+    "Diagnostic rerun on the previously inspected SciFact test set; not an independent held-out evaluation.",
+    "A missing relevance judgment is not proof that a document is irrelevant.",
+    "The script is a temporary adapter; the full evaluator is not yet reproducible from the repository.",
+    "Direct retrieval components only; excludes HTTP and PostgreSQL.",
+    "The candidate classification identifies whether any labeled relevant document occurs in the first 30 chunks."
+  ],
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "cpu": "AMD Ryzen 9 9950X3D",
+    "torch": "2.12.0+cu130"
+  }
+}

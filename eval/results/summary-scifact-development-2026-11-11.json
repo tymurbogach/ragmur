@@ -1,0 +1,209 @@
+{
+  "date": "2026-11-11",
+  "source_revision": "c409b39",
+  "method": "SciFact development questions, paired by query; component-level evaluation, not HTTP",
+  "baseline": {
+    "source": "BEIR SciFact",
+    "split": "train",
+    "partition": "dev",
+    "documents": 5183,
+    "chunks": 14267,
+    "queries": 627,
+    "corpus_sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6",
+    "judgments_sha256": "a53f2114831916c096b6c37d9e54da68cef4efdcdbd5ed46533601af972acf1d",
+    "device": "cuda",
+    "bm25_language": "spanish",
+    "chunk_size": 800,
+    "chunk_overlap": 120,
+    "candidates_chunks": 30,
+    "result_limit_chunks": 10,
+    "classification": {
+      "found": 547,
+      "missing_from_candidates": 53,
+      "outside_top_10_after_reranking": 27
+    },
+    "ranking": {
+      "hit": 0.8724082934609251,
+      "recall": 0.8492557150451887,
+      "ndcg": 0.7338000696258935
+    },
+    "model": "BAAI/bge-m3",
+    "model_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "rrf_k": 2,
+    "concurrency": 1,
+    "latency_p50_ms": 235.4317950012046,
+    "latency_p95_ms": 258.45011999990675,
+    "index_seconds": 106.58809787800055,
+    "limitations": [
+      "Direct retrieval components, not HTTP or PostgreSQL.",
+      "Document labels evaluated after cutting to 10 chunks.",
+      "SciFact test was previously inspected and is not an independent holdout.",
+      "Query groups are split by labeled relevant documents; the full corpus remains searchable in both partitions."
+    ],
+    "bm25_disable_stemmer": false,
+    "hardware": {
+      "cpu": "AMD Ryzen 9 9950X3D",
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "driver": "621.01",
+      "torch": "2.12.0+cu130"
+    }
+  },
+  "no_stemmer": {
+    "source": "BEIR SciFact",
+    "split": "train",
+    "partition": "dev",
+    "documents": 5183,
+    "chunks": 14267,
+    "queries": 627,
+    "corpus_sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6",
+    "judgments_sha256": "a53f2114831916c096b6c37d9e54da68cef4efdcdbd5ed46533601af972acf1d",
+    "device": "cuda",
+    "bm25_language": "spanish",
+    "chunk_size": 800,
+    "chunk_overlap": 120,
+    "candidates_chunks": 30,
+    "result_limit_chunks": 10,
+    "classification": {
+      "found": 548,
+      "missing_from_candidates": 50,
+      "outside_top_10_after_reranking": 29
+    },
+    "ranking": {
+      "hit": 0.8740031897926634,
+      "recall": 0.8503189792663477,
+      "ndcg": 0.7348502215878565
+    },
+    "model": "BAAI/bge-m3",
+    "model_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "rrf_k": 2,
+    "concurrency": 1,
+    "latency_p50_ms": 234.7219440016488,
+    "latency_p95_ms": 256.95605800137855,
+    "index_seconds": 107.23954407899873,
+    "limitations": [
+      "Direct retrieval components, not HTTP or PostgreSQL.",
+      "Document labels evaluated after cutting to 10 chunks.",
+      "SciFact test was previously inspected and is not an independent holdout.",
+      "Query groups are split by labeled relevant documents; the full corpus remains searchable in both partitions."
+    ],
+    "bm25_disable_stemmer": true,
+    "hardware": {
+      "cpu": "AMD Ryzen 9 9950X3D",
+      "gpu": "NVIDIA GeForce RTX 5080",
+      "driver": "621.01",
+      "torch": "2.12.0+cu130"
+    }
+  },
+  "paired_no_stemmer_vs_baseline": {
+    "hit": {
+      "wins": 1,
+      "losses": 0,
+      "ties": 626
+    },
+    "recall": {
+      "wins": 1,
+      "losses": 1,
+      "ties": 625
+    },
+    "ndcg": {
+      "wins": 10,
+      "losses": 5,
+      "ties": 612
+    }
+  },
+  "baseline_reranker_hit_comparison": {
+    "before": 0.8596491228070176,
+    "after": 0.8724082934609251,
+    "wins": 18,
+    "losses": 10,
+    "ties": 599
+  },
+  "baseline_reranker_ndcg": {
+    "before": 0.7411683051288781,
+    "after": 0.7338000696258935
+  },
+  "decision": "Retain current settings: neither alternative shows a convincing development improvement. The holdout partition was not evaluated.",
+  "english": {
+    "source": "BEIR SciFact",
+    "date": "2026-11-11T20:55:35.208452+00:00",
+    "commit": "unknown",
+    "hardware": {
+      "platform": "Linux-6.18.58.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+      "python": "3.12.16",
+      "cpu_count": 32,
+      "device": "cuda",
+      "torch_version": "2.12.0+cu130",
+      "cuda_available": true,
+      "cuda_device_name": "NVIDIA GeForce RTX 5080",
+      "omp_threads": null,
+      "concurrency": 1
+    },
+    "split": "train",
+    "partition": "dev",
+    "documents": 5183,
+    "chunks": 14267,
+    "queries": 627,
+    "corpus_sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6",
+    "judgments_sha256": "a53f2114831916c096b6c37d9e54da68cef4efdcdbd5ed46533601af972acf1d",
+    "device": "cuda",
+    "bm25_language": "english",
+    "bm25_disable_stemmer": false,
+    "embedding_batch_size": 16,
+    "reranker_batch_size": 8,
+    "chunk_size": 800,
+    "chunk_overlap": 120,
+    "candidates_chunks": 30,
+    "result_limit_chunks": 10,
+    "classification": {
+      "found": 546,
+      "missing_from_candidates": 49,
+      "outside_top_10_after_reranking": 32
+    },
+    "before_reranking": {
+      "hit": 0.8628389154704944,
+      "recall": 0.8424774056353004,
+      "ndcg": 0.7503953596560524
+    },
+    "ranking": {
+      "hit": 0.8708133971291866,
+      "recall": 0.8495215311004785,
+      "ndcg": 0.7365106343514285
+    },
+    "model": "BAAI/bge-m3",
+    "model_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "rrf_k": 2,
+    "concurrency": 1,
+    "latency_p50_ms": 237.38830600268557,
+    "latency_p95_ms": 267.15455099838437,
+    "index_seconds": 106.55713903099968,
+    "limitations": [
+      "Direct retrieval components, not HTTP or PostgreSQL.",
+      "Document labels evaluated after cutting to 10 chunks.",
+      "SciFact test was previously inspected and is not an independent holdout."
+    ],
+    "source_revision": "c409b39"
+  },
+  "paired_english_vs_baseline": {
+    "hit": {
+      "wins": 5,
+      "losses": 6,
+      "ties": 616
+    },
+    "recall": {
+      "wins": 6,
+      "losses": 7,
+      "ties": 614
+    },
+    "ndcg": {
+      "wins": 18,
+      "losses": 31,
+      "ties": 578
+    }
+  }
+}

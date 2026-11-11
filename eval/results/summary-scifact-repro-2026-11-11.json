@@ -1,0 +1,57 @@
+{
+  "source": "BEIR SciFact",
+  "split": "test",
+  "partition": "all",
+  "documents": 5183,
+  "chunks": 14267,
+  "queries": 300,
+  "corpus_sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6",
+  "judgments_sha256": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c",
+  "device": "cuda",
+  "bm25_language": "spanish",
+  "bm25_disable_stemmer": false,
+  "embedding_batch_size": 16,
+  "reranker_batch_size": 8,
+  "chunk_size": 800,
+  "chunk_overlap": 120,
+  "candidates_chunks": 30,
+  "result_limit_chunks": 10,
+  "classification": {
+    "missing_from_candidates": 35,
+    "found": 254,
+    "outside_top_10_after_reranking": 11
+  },
+  "before_reranking": {
+    "hit": 0.83,
+    "recall": 0.812,
+    "ndcg": 0.6989508493867983
+  },
+  "ranking": {
+    "hit": 0.8466666666666667,
+    "recall": 0.8293333333333334,
+    "ndcg": 0.7174662214710064
+  },
+  "model": "BAAI/bge-m3",
+  "model_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+  "reranker_model": "BAAI/bge-reranker-v2-m3",
+  "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+  "rrf_k": 2,
+  "concurrency": 1,
+  "latency_p50_ms": 234.03101800067816,
+  "latency_p95_ms": 262.03005999923334,
+  "index_seconds": 106.79958139500013,
+  "limitations": [
+    "Direct retrieval components, not HTTP or PostgreSQL.",
+    "Document labels evaluated after cutting to 10 chunks.",
+    "SciFact test was previously inspected and is not an independent holdout.",
+    "The executable test preceded the final addition of hardware and commit metadata."
+  ],
+  "date": "2026-11-11",
+  "source_revision": "c409b39",
+  "hardware": {
+    "cpu": "AMD Ryzen 9 9950X3D",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "torch": "2.12.0+cu130",
+    "driver": "621.01"
+  }
+}
