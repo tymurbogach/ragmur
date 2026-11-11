@@ -1,0 +1,68 @@
+{
+  "source": "BEIR SciFact",
+  "archive_sha256": "536e14446a0ba56ed1398ab1055f39fe852686ecad24a6306c80c490fa8e0165",
+  "license": "CC BY-SA 4.0 as listed by BeIR dataset card",
+  "revision": "c409b39",
+  "documents": 5183,
+  "chunks": 14267,
+  "queries": 300,
+  "qrels": 339,
+  "device": "cuda",
+  "bm25_language": "spanish",
+  "chunk_size": 800,
+  "chunk_overlap": 120,
+  "candidates_chunks": 30,
+  "result_limit_chunks": 10,
+  "method": "internal retrieval pipeline, not HTTP; rank first 10 chunks then deduplicate documents, evaluate document qrels",
+  "index_seconds": 107.53364541599876,
+  "ranking": {
+    "hit": 0.85,
+    "recall": 0.8333333333333334,
+    "ndcg": 0.71969488628438
+  },
+  "latency_ms": {
+    "p50": 234.73044250022213,
+    "p95": 265.0159889999486
+  },
+  "concurrency": {
+    "1": {
+      "count": 12,
+      "p50_ms": 235.93855899980554,
+      "p95_ms": 259.3120279998402,
+      "queries_per_second": 4.255051228579305
+    },
+    "2": {
+      "count": 12,
+      "p50_ms": 406.0889960001077,
+      "p95_ms": 426.437915999486,
+      "queries_per_second": 4.915862494031819
+    },
+    "4": {
+      "count": 12,
+      "p50_ms": 770.462530000259,
+      "p95_ms": 822.5782009994873,
+      "queries_per_second": 5.182960044459079
+    }
+  },
+  "isolation": "tenant and owner canaries passed",
+  "date": "2026-11-11",
+  "hardware": {
+    "cpu": "AMD Ryzen 9 9950X3D",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "gpu_driver": "621.01",
+    "torch": "2.12.0+cu130",
+    "platform": "Docker Desktop / WSL2"
+  },
+  "dataset_url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+  "dataset_card": "https://huggingface.co/datasets/BeIR/scifact",
+  "benchmark_script_sha256": "839dcbff1f25a17fac2cdfb1d0a04177a4a68cc4319002ef27e824b9c71793f0",
+  "limitations": [
+    "The evaluator is a temporary adapter and is not the official BEIR evaluator.",
+    "The test ranks chunks, cuts to 10, then deduplicates document IDs before scoring document-level relevance.",
+    "Index time excludes model loading, chunk creation, HTTP uploads, PostgreSQL, and original-file storage; vectors are computed across documents in batches.",
+    "Search timings measure the retrieval components directly and exclude HTTP, authentication, PostgreSQL validation, and response serialization.",
+    "Concurrency uses an in-process model lock and 12 queries per level; it does not measure the HTTP service.",
+    "The corpus and queries are English; BM25 uses the current Spanish configuration.",
+    "No PDF extraction is measured."
+  ]
+}
