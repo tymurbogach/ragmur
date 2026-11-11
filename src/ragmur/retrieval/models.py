@@ -1,12 +1,31 @@
 """Carga y coordinación de los modelos de indexado."""
 
 import asyncio
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from ragmur.core.config import Settings
 from ragmur.retrieval.embedder import DenseEmbedder
 from ragmur.retrieval.reranker import Reranker
 from ragmur.retrieval.sparse import SparseEmbedder
+
+
+async def run_inference[T](operation: Callable[..., T], *args: object) -> T:
+    """Espera al hilo incluso si se cancela la petición que mantiene el bloqueo."""
+    task = asyncio.create_task(asyncio.to_thread(operation, *args))
+    try:
+        return await asyncio.shield(task)
+    except asyncio.CancelledError:
+        while not task.done():
+            try:
+                await asyncio.shield(task)
+            except asyncio.CancelledError:
+                continue
+            except Exception:
+                break
+        if not task.cancelled():
+            task.exception()
+        raise
 
 
 @dataclass(slots=True)

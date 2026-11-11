@@ -72,6 +72,7 @@ class Settings(BaseSettings):
     auth_rate_limit_requests: int = Field(default=120, gt=0)
     auth_rate_limit_window_seconds: float = Field(default=60.0, gt=0, allow_inf_nan=False)
     rate_limit_max_keys: int = Field(default=10000, gt=0)
+    inference_max_requests: int = Field(default=16, gt=0)
     nli_model: str = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
     nli_revision: str = "b5113eb38ab63efdd7f280f8c144ea8b13f978ce"
     nli_batch_size: int = Field(default=8, gt=0)

@@ -1,6 +1,5 @@
 """Búsqueda híbrida dentro del espacio autorizado."""
 
-import asyncio
 import logging
 import math
 import resource
@@ -16,6 +15,7 @@ from ragmur.api.schemas import SearchHit, SearchRequest, SearchResponse
 from ragmur.core.config import get_settings
 from ragmur.db.models import Document
 from ragmur.retrieval import store
+from ragmur.retrieval.models import run_inference
 
 router = APIRouter(prefix="/v1", tags=["search"])
 logger = logging.getLogger(__name__)
@@ -41,12 +41,10 @@ async def search(
         waiting = time.perf_counter()
         async with resources.models.lock:
             acquired = time.perf_counter()
-            dense_vectors = await asyncio.to_thread(
+            dense_vectors = await run_inference(
                 resources.models.dense.embed, [request.query], settings.embedding_batch_size
             )
-            sparse_vector = await asyncio.to_thread(
-                resources.models.sparse.query_embed, request.query
-            )
+            sparse_vector = await run_inference(resources.models.sparse.query_embed, request.query)
         embedded = time.perf_counter()
         if len(dense_vectors) != 1:
             raise RuntimeError("Embedding model returned an unexpected result")
@@ -118,7 +116,7 @@ async def search(
             rerank_queued = time.perf_counter()
             async with resources.models.lock:
                 rerank_started = time.perf_counter()
-                scores = await asyncio.to_thread(
+                scores = await run_inference(
                     reranker.score,
                     request.query,
                     [hit.text for hit in results],

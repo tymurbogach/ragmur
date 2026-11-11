@@ -7,7 +7,7 @@ from ragmur.core.config import Settings
 from ragmur.ingestion.chunker import split_document
 from ragmur.ingestion.extractors.core import ExtractionResult
 from ragmur.retrieval import store
-from ragmur.retrieval.models import EmbeddingModels
+from ragmur.retrieval.models import EmbeddingModels, run_inference
 
 
 class IncompleteCleanupError(RuntimeError):
@@ -78,10 +78,10 @@ class Indexer:
                 batch = chunks[start : start + settings.index_batch_size]
                 texts = [chunk.text for chunk in batch]
                 async with self.models.lock:
-                    dense = await asyncio.to_thread(
+                    dense = await run_inference(
                         self.models.dense.embed, texts, settings.embedding_batch_size
                     )
-                    sparse = await asyncio.to_thread(
+                    sparse = await run_inference(
                         self.models.sparse.embed, texts, settings.embedding_batch_size
                     )
                 if len(dense) != len(batch) or len(sparse) != len(batch):

@@ -548,6 +548,8 @@ No hay garantía de ejecución tras un reinicio; una cola durable requiere una d
 Se limita tanto el número de trabajos aceptados como el de trabajos activos.
 Un semáforo de ejecución no limita por sí solo las tareas que esperan ni el espacio que consumen sus ficheros.
 La inferencia y la extracción no bloquean el event loop; sus límites de concurrencia también se aplican a búsqueda y verificación.
+Las peticiones de búsqueda y verificación comparten un límite de admisión configurable.
+Al cancelar una petición, el bloqueo se conserva hasta que termine la inferencia iniciada en un hilo.
 
 PDFium no admite llamadas simultáneas desde varios hilos, ni siquiera sobre documentos distintos.
 La extracción PDF usa un proceso aislado y terminable para hacer efectivo el timeout sin bloquear la API.

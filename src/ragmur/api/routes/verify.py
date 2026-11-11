@@ -13,6 +13,7 @@ from ragmur.api.schemas import VerifyClaim, VerifyRequest, VerifyResponse, Verif
 from ragmur.core.config import get_settings
 from ragmur.db.models import Document
 from ragmur.retrieval import store
+from ragmur.retrieval.models import run_inference
 from ragmur.verification.splitter import split_claims
 
 router = APIRouter(prefix="/v1", tags=["verify"])
@@ -86,7 +87,7 @@ async def verify(
             pair_index.append((claim_idx, chunk_idx))
     try:
         async with resources.models.lock:
-            scores = await asyncio.to_thread(
+            scores = await run_inference(
                 resources.verifier.score_pairs,
                 pair_premises,
                 pair_hypotheses,
