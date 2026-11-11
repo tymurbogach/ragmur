@@ -80,6 +80,7 @@ class Settings(BaseSettings):
     verify_max_claims: int = Field(default=20, gt=0)
     verify_max_chunks: int = Field(default=20, gt=0)
     verify_max_pairs: int = Field(default=400, gt=0)
+    verify_max_windows: int = Field(default=2000, gt=0)
     verify_supported_threshold: float = Field(default=0.75, ge=0, le=1)
     verify_weak_threshold: float = Field(default=0.5, ge=0, le=1)
     verify_contradiction_threshold: float = Field(default=0.75, ge=0, le=1)

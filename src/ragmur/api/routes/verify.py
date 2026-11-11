@@ -93,6 +93,8 @@ async def verify(
                 pair_hypotheses,
                 settings.nli_batch_size,
             )
+    except ValueError as exc:
+        raise HTTPException(422, detail="Verification input exceeds model limits") from exc
     except Exception as exc:
         raise HTTPException(503, detail="Verification unavailable") from exc
     max_ent = [0.0] * len(claims)

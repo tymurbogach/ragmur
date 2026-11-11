@@ -27,7 +27,14 @@ def _find_label(id2label: dict[int, str], names: tuple[str, ...]) -> int:
 class NliVerifier:
     """Cross-encoder NLI cargado una vez y reutilizado entre peticiones."""
 
-    def __init__(self, model_name: str, revision: str, device: str, cache_dir: Path) -> None:
+    def __init__(
+        self,
+        model_name: str,
+        revision: str,
+        device: str,
+        cache_dir: Path,
+        max_windows: int = 2000,
+    ) -> None:
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name,
             revision=revision,
@@ -49,6 +56,7 @@ class NliVerifier:
         _find_label(raw_labels, ("neutral",))
         position_embeddings = getattr(self.model.config, "max_position_embeddings", 512)
         self.max_length = min(int(position_embeddings), 512)
+        self.max_windows = max_windows
 
     def check_hypothesis(self, hypothesis: str) -> None:
         """Rechaza hipótesis que no caben con los tokens especiales."""
@@ -56,7 +64,7 @@ class NliVerifier:
             raise ValueError("Hypothesis must not be blank")
         tokens = self.tokenizer(hypothesis, add_special_tokens=False)["input_ids"]
         special = self.tokenizer.num_special_tokens_to_add(pair=True)
-        if len(tokens) + special > self.max_length:
+        if len(tokens) + special >= self.max_length:
             raise ValueError("Hypothesis exceeds the model context")
 
     def score_pairs(
@@ -74,12 +82,26 @@ class NliVerifier:
             return []
         for hypothesis in hypotheses:
             self.check_hypothesis(hypothesis)
+        special = self.tokenizer.num_special_tokens_to_add(pair=True)
+        budgets = [
+            self.max_length
+            - special
+            - len(self.tokenizer(h, add_special_tokens=False)["input_ids"])
+            for h in hypotheses
+        ]
+        stride = min(50, min(budgets) - 1)
+        windows = 0
+        for premise, budget in zip(premises, budgets, strict=True):
+            length = len(self.tokenizer(premise, add_special_tokens=False)["input_ids"])
+            windows += 1 + max(0, (length - budget + budget - stride - 1) // (budget - stride))
+            if windows > self.max_windows:
+                raise ValueError("Too many verification windows")
         encoding = self.tokenizer(
             premises,
             hypotheses,
             truncation="only_first",
             max_length=self.max_length,
-            stride=50,
+            stride=stride,
             return_overflowing_tokens=True,
             padding=True,
             return_tensors="pt",
@@ -120,4 +142,5 @@ def load_verifier(settings: Settings) -> NliVerifier:
         settings.nli_revision,
         settings.embedding_device,
         settings.model_cache_dir,
+        settings.verify_max_windows,
     )

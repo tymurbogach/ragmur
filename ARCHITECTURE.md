@@ -509,6 +509,9 @@ Los scores de similitud coseno y BM25 no son comparables; normalizarlos requiere
 
 ### Verificación por NLI
 
+El verificador adapta el solape de ventanas al espacio disponible para cada hipótesis.
+Rechaza la petición si supera `VERIFY_MAX_WINDOWS` antes de ejecutar el modelo.
+
 Un modelo NLI clasifica pares (premisa, hipótesis) como entailment, neutral o contradiction.
 La ejecución local evita tarifas por API, pero consume recursos y puede clasificar mal una afirmación.
 
