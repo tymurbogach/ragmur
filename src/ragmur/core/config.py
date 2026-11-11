@@ -1,6 +1,6 @@
 """Configuración del servicio, leída del entorno al arrancar."""
 
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from pathlib import Path
 from typing import Literal
 
@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     chunk_overlap: int = Field(default=120, ge=0)
     embedding_model: str = "BAAI/bge-m3"
     embedding_revision: str = "5617a9f61b028005a4858fdac845db406aefb181"
-    embedding_device: Literal["cpu", "cuda"] = "cpu"
+    embedding_device: Literal["auto", "cpu", "cuda"] = "auto"
     model_cache_dir: Path = Path("./models/huggingface")
     embedding_batch_size: int = Field(default=16, gt=0)
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
@@ -86,6 +86,20 @@ class Settings(BaseSettings):
     verify_contradiction_threshold: float = Field(default=0.75, ge=0, le=1)
 
     log_level: str = "INFO"
+
+    @cached_property
+    def resolved_device(self) -> Literal["cpu", "cuda"]:
+        """Selecciona el dispositivo una vez para todos los modelos del proceso."""
+        if self.embedding_device == "cpu":
+            return "cpu"
+        import torch
+
+        available = torch.cuda.is_available()
+        if self.embedding_device == "cuda" and not available:
+            raise RuntimeError(
+                "CUDA requested but unavailable; check PyTorch, drivers and GPU access"
+            )
+        return "cuda" if available else "cpu"
 
     @model_validator(mode="after")
     def validate_chunk_overlap(self) -> "Settings":

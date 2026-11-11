@@ -25,5 +25,6 @@
 - Usar un corpus real y preparar una demo pública segura, sin exponer claves ni bases de datos.
 - Comprobar copia y restauración de PostgreSQL y originales, con reconstrucción de Qdrant.
 - Revisar la configuración y permisos de los secretos en Windows antes de publicar el servicio.
-- El usuario preguntó por selección automática CPU o CUDA. Solicitó expresamente no implementarla todavía.
+- `EMBEDDING_DEVICE=auto` selecciona CPU o CUDA al arrancar; `cpu` y `cuda` fuerzan la elección.
+  El despliegue existente en Skynet aún usa la versión anterior y fuerza CUDA; no se ha actualizado.
 - No abrir la fase 2 hasta cumplir todos los criterios de cierre del roadmap.

@@ -133,7 +133,7 @@ async def search(
             rerank_wait = rerank_started - rerank_queued
             rerank_elapsed = rerank_done - rerank_started
             gpu_peak = None
-            if settings.embedding_device == "cuda":
+            if settings.resolved_device == "cuda":
                 try:
                     gpu_peak = torch.cuda.max_memory_allocated()
                 except RuntimeError:
@@ -143,7 +143,7 @@ async def search(
                 extra={
                     "candidates": len(results),
                     "batch_size": settings.reranker_batch_size,
-                    "device": settings.embedding_device,
+                    "device": settings.resolved_device,
                     "elapsed_ms": rerank_elapsed * 1000,
                     "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
                     * 1024,

@@ -33,7 +33,7 @@ services:
       DATABASE_URL: postgresql+asyncpg://ragmur:${POSTGRES_PASSWORD}@postgres:5432/ragmur
       API_KEY_HMAC_SECRET: ${API_KEY_HMAC_SECRET:?required}
       QDRANT_URL: http://qdrant:6333
-      EMBEDDING_DEVICE: cuda
+      EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-auto}
     ports:
       - '127.0.0.1:8000:8000'
     gpus: all

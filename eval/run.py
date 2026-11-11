@@ -95,7 +95,7 @@ def hardware_info(settings: Settings) -> dict[str, object]:
         "platform": platform.platform(),
         "python": platform.python_version(),
         "cpu_count": os.cpu_count(),
-        "device": settings.embedding_device,
+        "device": settings.resolved_device,
         "torch_version": torch_version,
         "cuda_available": cuda_available,
         "cuda_device_name": cuda_name,

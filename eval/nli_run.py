@@ -65,7 +65,7 @@ def main() -> None:
         "dataset_sha256": hashlib.sha256(raw).hexdigest(),
         "model": settings.nli_model,
         "revision": settings.nli_revision,
-        "device": settings.embedding_device,
+        "device": settings.resolved_device,
         "hardware": {"platform": platform.platform(), "cpu": cpu_model},
         "commit": commit,
         "thresholds": {

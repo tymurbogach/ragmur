@@ -58,6 +58,10 @@ El estado `indexed` indica que se han confirmado los vectores densos y dispersos
 El servicio carga los modelos al arrancar. La primera ejecución descarga sus revisiones fijadas.
 La caché predeterminada está en `models/huggingface` y no se versiona.
 La instalación normal usa PyTorch 2.12.0 para CPU. La variante CUDA 13.0 se ha probado con RTX 5080.
+`EMBEDDING_DEVICE=auto` selecciona CUDA si PyTorch puede acceder a la GPU; en caso contrario usa CPU.
+Para forzar un dispositivo usa `cpu` o `cuda`. Si se fuerza CUDA y no está disponible, el servicio no arranca.
+La GPU requiere PyTorch con CUDA, controladores compatibles y acceso del contenedor a la GPU.
+La selección se mantiene hasta reiniciar; un fallo posterior de CUDA no cambia el servicio a CPU automáticamente.
 Elimina un original con `DELETE /v1/documents/{id}`. Todas estas rutas requieren `X-API-Key`.
 La aplicación usa una sola instancia escritora para cada base de datos y directorio de almacenamiento.
 
@@ -138,7 +142,7 @@ uv sync --locked --no-group cpu --extra cuda
 uv run --no-group cpu --extra cuda uvicorn ragmur.main:app
 ```
 
-Configura `EMBEDDING_DEVICE=cuda` y comprueba el controlador antes de usarla.
+Con `EMBEDDING_DEVICE=auto`, comprueba el dispositivo seleccionado en el log de arranque.
 CUDA 13.0 requiere un controlador Linux 580.65.06 o posterior para la versión GA.
 Inferencia validada en RTX 5080 (`sm_120`, torch cu130, revisiones fijadas): 30 pares de reranking en 0.20 s frente a 6–16 s en CPU. Evaluación completa en GPU (WSL2, mismo corpus y consultas): calidad idéntica a CPU y reranking en p50 163 ms frente a 15856 ms en CPU. Detalle y límites en [gpu-rtx5080-2026-11-10](benchmarks/gpu-rtx5080-2026-11-10.md).
 El límite por clave devuelve `429` con `Retry-After`; la ingesta llena y las dependencias caídas devuelven `503`.
@@ -160,7 +164,8 @@ docker build --build-arg INSTALL_CUDA=true -t ragmur:cuda .
 docker run --gpus all --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cuda
 ```
 
-El despliegue privado con GPU usa `docker-compose.deploy.yml`.
+El despliegue privado con GPU usa `docker-compose.deploy.yml` y requiere una GPU disponible para Docker.
+En un equipo sin GPU usa la imagen de CPU indicada arriba, sin solicitar `--gpus`.
 Define `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` en un archivo de entorno privado.
 Ejecuta `docker compose --env-file <archivo> -f docker-compose.deploy.yml up -d --build`.
 La API escucha solo en `127.0.0.1:8000`; PostgreSQL y Qdrant no publican puertos.

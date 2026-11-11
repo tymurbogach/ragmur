@@ -56,6 +56,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         stack.push_async_callback(database_lock.close)
         sessions = create_session_factory(engine)
         await ping(qdrant)
+        logger.info(
+            "dispositivo de inferencia seleccionado", extra={"device": settings.resolved_device}
+        )
         models = await asyncio.to_thread(load_models, settings)
         verifier = await asyncio.to_thread(load_verifier, settings)
         indexer = Indexer(qdrant, models, settings)

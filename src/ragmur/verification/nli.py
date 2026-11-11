@@ -140,7 +140,7 @@ def load_verifier(settings: Settings) -> NliVerifier:
     return NliVerifier(
         settings.nli_model,
         settings.nli_revision,
-        settings.embedding_device,
+        settings.resolved_device,
         settings.model_cache_dir,
         settings.verify_max_windows,
     )

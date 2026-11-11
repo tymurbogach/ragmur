@@ -43,7 +43,7 @@ def load_models(settings: Settings) -> EmbeddingModels:
     dense = DenseEmbedder(
         settings.embedding_model,
         settings.embedding_revision,
-        settings.embedding_device,
+        settings.resolved_device,
         settings.model_cache_dir,
     )
     sparse = SparseEmbedder(
@@ -59,7 +59,7 @@ def load_models(settings: Settings) -> EmbeddingModels:
     reranker = Reranker(
         settings.reranker_model,
         settings.reranker_revision,
-        settings.embedding_device,
+        settings.resolved_device,
         settings.model_cache_dir,
     )
     return EmbeddingModels(dense=dense, sparse=sparse, lock=asyncio.Lock(), reranker=reranker)

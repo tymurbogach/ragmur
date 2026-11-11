@@ -540,6 +540,10 @@ Multilingüe (corpus mixto español/inglés), buen rendimiento en recuperación,
 
 «Carga perezosa» en este proyecto significa *una sola vez por proceso y reutilizada entre peticiones*, no *diferida hasta que alguien la necesite*. Los modelos se instancian en el `lifespan` de FastAPI y viven en `Resources`, junto al motor de base de datos y al cliente de Qdrant.
 
+`EMBEDDING_DEVICE=auto` selecciona CUDA si está disponible y CPU en caso contrario.
+La selección se calcula una vez y se aplica al modelo denso, reranker y verificador NLI.
+El valor `cuda` exige disponibilidad y falla al arrancar si no existe; `cpu` fuerza la CPU.
+
 La razón es `/ready`: si el chequeo respondiera 200 con los modelos aún sin cargar, el orquestador mandaría tráfico y las primeras peticiones expirarían esperando decenas de segundos de carga. Diferir la carga hasta la primera consulta hace imposible que `/ready` diga la verdad. La contrapartida es un arranque lento, que es exactamente lo que `/ready` existe para comunicar.
 
 ### Ingesta, fallos y consistencia
