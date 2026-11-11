@@ -7,6 +7,7 @@ from zipfile import BadZipFile, ZipFile
 
 import pypdfium2  # type: ignore[import-untyped]
 from docx import Document
+from docx.oxml import parse_xml
 
 
 class ExtractionError(Exception):
@@ -90,6 +91,36 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
             if "[Content_Types].xml" not in names or "word/document.xml" not in names:
                 raise ExtractionError("El fichero no es un DOCX válido")
         document = Document(str(path))
+        # Paragraph.text reads direct runs and hyperlinks, but not nested content.
+        namespace = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+        body = document.element.body
+        omitted = False
+        for node in body.iter(f"{namespace}t"):
+            if not (node.text or "").strip():
+                continue
+            parent = node.getparent()
+            if parent is None or parent.tag != f"{namespace}r":
+                omitted = True
+                break
+            parent = parent.getparent()
+            if parent is not None and parent.tag == f"{namespace}hyperlink":
+                parent = parent.getparent()
+            if parent is None or parent.tag != f"{namespace}p" or parent.getparent() is not body:
+                omitted = True
+                break
+        for part in document.part.package.parts:
+            name = str(part.partname)
+            if re.fullmatch(r"/word/(?:header\d+|footer\d+|footnotes|endnotes)\.xml", name):
+                element = parse_xml(part.blob)
+                if any(
+                    (node.text or "").strip() for node in element.iter(f"{namespace}t")
+                ):
+                    omitted = True
+                    break
+        if omitted:
+            raise UnsupportedDocumentError(
+                "El DOCX contiene texto en tablas u otros elementos no extraídos"
+            )
         fragments: list[Fragment] = []
         offset = 0
         section_path: list[str] = []

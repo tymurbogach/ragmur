@@ -5,6 +5,7 @@ from zipfile import ZipFile
 
 import pytest
 from docx import Document
+from docx.oxml import OxmlElement
 
 from ragmur.ingestion.extractors.core import (
     ExtractionError,
@@ -39,6 +40,41 @@ def test_docx_extraction_and_expansion_limit(tmp_path: Path) -> None:
     assert result.fragments[1].locator["start"] == len("Primero\n")
     with pytest.raises(ExtractionError):
         extract_docx(path, 100, 10)
+
+
+@pytest.mark.parametrize("with_body_text", [False, True])
+def test_docx_rejects_omitted_table_text(tmp_path: Path, with_body_text: bool) -> None:
+    path = tmp_path / "table.docx"
+    document = Document()
+    if with_body_text:
+        document.add_paragraph("Texto fuera de la tabla")
+    table = document.add_table(rows=1, cols=1)
+    table.cell(0, 0).text = "Texto de la tabla"
+    document.save(str(path))
+
+    with pytest.raises(UnsupportedDocumentError, match="tablas"):
+        extract_docx(path, 100, 1_000_000)
+
+
+@pytest.mark.parametrize("location", ["header", "footer", "nested"])
+def test_docx_rejects_other_omitted_text(tmp_path: Path, location: str) -> None:
+    path = tmp_path / "omitted.docx"
+    document = Document()
+    paragraph = document.add_paragraph("Texto visible")
+    if location == "nested":
+        wrapper = OxmlElement("w:sdt")
+        run = OxmlElement("w:r")
+        text = OxmlElement("w:t")
+        text.text = "Texto omitido"
+        run.append(text)
+        wrapper.append(run)
+        paragraph._p.append(wrapper)
+    else:
+        part = getattr(document.sections[0], location)
+        part.paragraphs[0].text = "Texto omitido"
+    document.save(str(path))
+    with pytest.raises(UnsupportedDocumentError, match="no extraídos"):
+        extract_docx(path, 1000, 1_000_000)
 
 
 def test_docx_rejects_wrong_structure(tmp_path: Path) -> None:
