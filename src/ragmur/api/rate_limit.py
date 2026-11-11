@@ -17,10 +17,19 @@ class RateLimiter:
         self._hits: dict[str, deque[float]] = {}
         self._lock = asyncio.Lock()
 
-    async def check(self, key: str, limit: int, window_seconds: float) -> float | None:
+    async def check(
+        self, key: str, limit: int, window_seconds: float, max_keys: int = 10000
+    ) -> float | None:
         """Devuelve segundos de espera si se supera el límite, o `None`."""
         now = time.monotonic()
         async with self._lock:
+            expired = [key for key, hits in self._hits.items() if hits[-1] <= now - window_seconds]
+            for expired_key in expired:
+                del self._hits[expired_key]
+            if key not in self._hits and len(self._hits) >= max_keys:
+                return max(
+                    0.0, min(hits[-1] for hits in self._hits.values()) + window_seconds - now
+                )
             queue = self._hits.setdefault(key, deque())
             while queue and queue[0] <= now - window_seconds:
                 queue.popleft()
@@ -44,3 +53,4 @@ class RateLimiter:
 
 
 limiter = RateLimiter()
+auth_limiter = RateLimiter()

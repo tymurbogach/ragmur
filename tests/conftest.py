@@ -22,13 +22,15 @@ def configuracion_limpia() -> Iterator[None]:
     que cambia una variable de entorno se la dejaría puesta al siguiente, y el orden
     de ejecución decidiría el resultado.
     """
-    from ragmur.api.rate_limit import limiter
+    from ragmur.api.rate_limit import auth_limiter, limiter
 
     get_settings.cache_clear()
     limiter.clear()
+    auth_limiter.clear()
     yield
     get_settings.cache_clear()
     limiter.clear()
+    auth_limiter.clear()
 
 
 @pytest.fixture(autouse=True)

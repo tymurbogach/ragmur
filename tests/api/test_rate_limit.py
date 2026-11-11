@@ -67,15 +67,26 @@ async def test_rate_limit_returns_429_with_retry_after(
 async def test_rate_limit_counts_invalid_keys(
     rate_setup: tuple[FastAPI, str, str],
 ) -> None:
-    """Las claves inválidas también consumen ventana: el tercer intento es 429, no 401."""
-    app, _, _ = rate_setup
+    """Un secreto incorrecto no consume la cuota de la clave legítima."""
+    app, first, _ = rate_setup
     async with (
         app.router.lifespan_context(app),
         AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client,
     ):
-        bad = {"X-API-Key": "rgm_deadbeef_wrong"}
+        bad = {"X-API-Key": f"rgm_{first.split('_', 2)[1]}_wrong"}
         assert (await client.get("/protected", headers=bad)).status_code == 401
         assert (await client.get("/protected", headers=bad)).status_code == 401
-        limited = await client.get("/protected", headers=bad)
-        assert limited.status_code == 429
-        assert limited.headers.get("Retry-After") is not None
+        assert (await client.get("/protected", headers=bad)).status_code == 401
+        assert (await client.get("/protected", headers={"X-API-Key": first})).status_code == 200
+
+
+async def test_rate_limit_caps_keys_and_expires(monkeypatch: pytest.MonkeyPatch) -> None:
+    from ragmur.api.rate_limit import RateLimiter
+
+    now = [100.0]
+    monkeypatch.setattr("ragmur.api.rate_limit.time.monotonic", lambda: now[0])
+    limiter = RateLimiter()
+    assert await limiter.check("a", 2, 10, 1) is None
+    assert await limiter.check("b", 2, 10, 1) == 10
+    now[0] += 11
+    assert await limiter.check("b", 2, 10, 1) is None
