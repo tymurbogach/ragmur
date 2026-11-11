@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI; su calibración y evaluación reservada están pendientes. La tarea **1.9** requiere todavía el despliegue en el homelab y la demo pública.
+Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI; falta una evaluación representativa y calibración. La tarea **1.9** tiene un despliegue privado de prueba en Skynet; faltan corpus real, demo pública y restauración.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -360,7 +360,8 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 - [ ] Copia y restauración comprobadas de PostgreSQL y originales; reconstrucción de Qdrant documentada
 - [x] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
 
-La evaluación NLI, el homelab, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes.
+Skynet tiene un despliegue privado de prueba con GPU; todavía no contiene un corpus real.
+La evaluación NLI, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.

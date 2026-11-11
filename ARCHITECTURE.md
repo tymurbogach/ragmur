@@ -2,7 +2,7 @@
 
 Qué se construye y con qué contratos. El porqué de cada decisión está en [`DECISIONS.md`](DECISIONS.md); el orden en [`ROADMAP.md`](ROADMAP.md).
 
-Este documento describe el objetivo, no solo las funciones disponibles. La fase 1 deja el código listo; el despliegue en el homelab, la demo pública y la prueba GPU en Linux quedan pendientes.
+Este documento describe el objetivo, no solo las funciones disponibles. Existe un despliegue privado de prueba con GPU en Skynet; la demo pública y el cierre de fase quedan pendientes.
 La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendientes antes de continuar.
 
 ## Estructura del repositorio

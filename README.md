@@ -46,7 +46,7 @@ Lee [ROADMAP.md](ROADMAP.md) antes de implementar. No construyas una fase
 posterior antes de que la fase actual cumpla sus criterios de cierre.
 
 La [revisión previa](REVIEW.md) recoge los ajustes de diseño y las correcciones pendientes del esqueleto.
-La búsqueda híbrida y la verificación funcionan en CPU. La prueba GPU en Linux y el despliegue quedan pendientes.
+La búsqueda híbrida y la verificación funcionan en CPU. Hay un despliegue privado de prueba con GPU en Skynet.
 
 Si mueves el repositorio, crea un entorno virtual nuevo y ejecuta `uv sync --locked`; sus ejecutables pueden conservar la ruta anterior.
 `/health` indica proceso vivo sin comprobar dependencias. `/ready` comprueba PostgreSQL, Qdrant y modelos cargados.
@@ -57,7 +57,7 @@ Consulta el estado con `GET /v1/documents/{id}` o lista con `GET /v1/documents`.
 El estado `indexed` indica que se han confirmado los vectores densos y dispersos.
 El servicio carga los modelos al arrancar. La primera ejecución descarga sus revisiones fijadas.
 La caché predeterminada está en `models/huggingface` y no se versiona.
-La instalación normal usa PyTorch 2.12.0 para CPU. Existe una variante CUDA 13.0 aún sin verificar en GPU.
+La instalación normal usa PyTorch 2.12.0 para CPU. La variante CUDA 13.0 se ha probado con RTX 5080.
 Elimina un original con `DELETE /v1/documents/{id}`. Todas estas rutas requieren `X-API-Key`.
 La aplicación usa una sola instancia escritora para cada base de datos y directorio de almacenamiento.
 
