@@ -144,9 +144,12 @@ async def test_reindex_scopes_and_new_configuration(
                 document = await session.get(Document, document_id)
                 assert document is not None and document.status == "failed"
         for tenant, document_id in zip(tenants, docs, strict=True):
-            assert await store.count_document_points(
-                tenant, client, settings.qdrant_collection, document_id
-            ) == 0
+            assert (
+                await store.count_document_points(
+                    tenant, client, settings.qdrant_collection, document_id
+                )
+                == 0
+            )
         monkeypatch.setattr(maintenance, "set_reindex_metadata", original_metadata)
         original_run = IngestionCoordinator.run
         calls = 0
