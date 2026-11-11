@@ -62,6 +62,21 @@ La instalación normal usa PyTorch 2.12.0 para CPU. La variante CUDA 13.0 se ha 
 Para forzar un dispositivo usa `cpu` o `cuda`. Si se fuerza CUDA y no está disponible, el servicio no arranca.
 La GPU requiere PyTorch con CUDA, controladores compatibles y acceso del contenedor a la GPU.
 La selección se mantiene hasta reiniciar; un fallo posterior de CUDA no cambia el servicio a CPU automáticamente.
+
+El Compose privado usa CPU por defecto. Para construir y arrancar la variante CPU:
+
+```bash
+docker compose -f docker-compose.deploy.yml up -d --build
+```
+
+Para construir y arrancar la variante CUDA con una GPU compatible:
+
+```bash
+docker compose -f docker-compose.deploy.yml -f docker-compose.cuda.yml up -d --build
+```
+
+Ambas variantes conservan los mismos volúmenes dentro del mismo proyecto Compose.
+El servicio publica la API solo en la interfaz local; configura los secretos antes de arrancar.
 Elimina un original con `DELETE /v1/documents/{id}`. Todas estas rutas requieren `X-API-Key`.
 La aplicación usa una sola instancia escritora para cada base de datos y directorio de almacenamiento.
 

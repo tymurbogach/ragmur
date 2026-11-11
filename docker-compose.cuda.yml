@@ -1,0 +1,8 @@
+services:
+  api:
+    build:
+      args:
+        INSTALL_CUDA: 'true'
+    environment:
+      EMBEDDING_DEVICE: cuda
+    gpus: all

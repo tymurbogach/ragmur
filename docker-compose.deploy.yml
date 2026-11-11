@@ -22,7 +22,7 @@ services:
     build:
       context: .
       args:
-        INSTALL_CUDA: 'true'
+        INSTALL_CUDA: 'false'
     restart: unless-stopped
     depends_on:
       postgres:
@@ -33,10 +33,9 @@ services:
       DATABASE_URL: postgresql+asyncpg://ragmur:${POSTGRES_PASSWORD}@postgres:5432/ragmur
       API_KEY_HMAC_SECRET: ${API_KEY_HMAC_SECRET:?required}
       QDRANT_URL: http://qdrant:6333
-      EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-auto}
+      EMBEDDING_DEVICE: cpu
     ports:
       - '127.0.0.1:8000:8000'
-    gpus: all
     volumes:
       - model_data:/app/models
       - original_data:/app/storage
