@@ -3,7 +3,7 @@
 import asyncio
 from pathlib import Path
 from unittest.mock import Mock
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 from sqlalchemy import text
@@ -148,6 +148,27 @@ async def test_reindex_scopes_and_new_configuration(
                 tenant, client, settings.qdrant_collection, document_id
             ) == 0
         monkeypatch.setattr(maintenance, "set_reindex_metadata", original_metadata)
+        original_run = IngestionCoordinator.run
+        calls = 0
+
+        async def interrupted_run(
+            coordinator: IngestionCoordinator, tenant_id: UUID, document_id: UUID
+        ) -> None:
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise RuntimeError("interrupted during rebuild")
+            await original_run(coordinator, tenant_id, document_id)
+
+        monkeypatch.setattr(IngestionCoordinator, "run", interrupted_run)
+        with pytest.raises(RuntimeError, match="interrupted during rebuild"):
+            await reindex(settings, document_id=None, tenant_id=None)
+        async with factory() as session:
+            rows = [await session.get(Document, doc_id) for doc_id in docs]
+            assert all(row is not None for row in rows)
+            statuses = [row.status for row in rows if row is not None]
+            assert sorted(statuses) == ["indexed", "pending"]
+        monkeypatch.setattr(IngestionCoordinator, "run", original_run)
         assert await reindex(settings, document_id=None, tenant_id=None) == (2, 0, 0)
         assert (
             await store.count_document_points(
