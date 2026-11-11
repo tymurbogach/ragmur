@@ -112,9 +112,7 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
             name = str(part.partname)
             if re.fullmatch(r"/word/(?:header\d+|footer\d+|footnotes|endnotes)\.xml", name):
                 element = parse_xml(part.blob)
-                if any(
-                    (node.text or "").strip() for node in element.iter(f"{namespace}t")
-                ):
+                if any((node.text or "").strip() for node in element.iter(f"{namespace}t")):
                     omitted = True
                     break
         if omitted:

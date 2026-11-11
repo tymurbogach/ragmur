@@ -43,7 +43,7 @@ def owner_filter(owner_id: str | None) -> ColumnElement[bool]:
     """Filtra el usuario solicitado cuando está presente."""
     if owner_id is None:
         return true()
-    if not owner_id.strip():
+    if not owner_id.strip() or len(owner_id) > 256:
         raise HTTPException(422, detail="Invalid owner_id")
     return Document.owner_id == owner_id
 
@@ -56,7 +56,7 @@ async def upload(
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
     file: Annotated[UploadFile, File()],
-    owner_id: Annotated[str | None, Form()] = None,
+    owner_id: Annotated[str | None, Form(max_length=256)] = None,
 ) -> DocumentAccepted:
     """Conserva el original y acepta su extracción."""
     owner_filter(owner_id)
@@ -149,7 +149,7 @@ async def upload(
 async def list_documents(
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: str | None = None,
+    owner_id: Annotated[str | None, Query(max_length=256)] = None,
     limit: Annotated[int | None, Query(ge=1)] = None,
     cursor: str | None = None,
 ) -> DocumentList:
@@ -197,7 +197,7 @@ async def document_detail(
     document_id: uuid.UUID,
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: str | None = None,
+    owner_id: Annotated[str | None, Query(max_length=256)] = None,
 ) -> DocumentView:
     """Devuelve metadatos dentro del espacio autorizado."""
     async with resources.sessions() as session:
@@ -216,7 +216,7 @@ async def delete_document(
     document_id: uuid.UUID,
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: str | None = None,
+    owner_id: Annotated[str | None, Query(max_length=256)] = None,
 ) -> Response:
     """Borra el original y después la fila, con reintentos."""
     async with resources.sessions() as session:

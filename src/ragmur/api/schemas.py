@@ -66,7 +66,7 @@ class SearchRequest(BaseModel):
     top_k: int = Field(default=5, ge=1)
     candidates: int = Field(default=30, ge=1)
     rerank: bool = True
-    owner_id: str | None = None
+    owner_id: str | None = Field(default=None, max_length=256)
     document_ids: list[UUID] | None = Field(default=None, min_length=1)
 
     @model_validator(mode="after")
@@ -111,7 +111,7 @@ class VerifyRequest(BaseModel):
 
     answer: str = Field(min_length=1)
     chunk_ids: list[UUID] = Field(min_length=1)
-    owner_id: str | None = None
+    owner_id: str | None = Field(default=None, max_length=256)
 
     @model_validator(mode="after")
     def validate_verify(self) -> "VerifyRequest":

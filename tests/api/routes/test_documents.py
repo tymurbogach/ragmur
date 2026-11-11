@@ -93,6 +93,44 @@ async def test_upload_deduplicate_and_isolate(
     assert (await client.get(f"/v1/documents/{document_id}", headers=headers)).status_code == 404
 
 
+async def test_owner_id_length_on_document_routes(
+    document_client: tuple[AsyncClient, str, str],
+) -> None:
+    client, first, _ = document_client
+    headers = {"X-API-Key": first}
+    owner = "x" * 256
+    response = await client.post(
+        "/v1/documents",
+        headers=headers,
+        files={"file": ("hello.txt", b"hello", "text/plain")},
+        data={"owner_id": owner},
+    )
+    assert response.status_code == 202
+    document_id = response.json()["document_id"]
+    too_long = owner + "x"
+    for method, path in [
+        ("GET", "/v1/documents"),
+        ("GET", f"/v1/documents/{document_id}"),
+        ("DELETE", f"/v1/documents/{document_id}"),
+    ]:
+        assert (
+            await client.request(method, path, headers=headers, params={"owner_id": too_long})
+        ).status_code == 422
+    assert (
+        await client.post(
+            "/v1/documents",
+            headers=headers,
+            files={"file": ("other.txt", b"other", "text/plain")},
+            data={"owner_id": too_long},
+        )
+    ).status_code == 422
+    assert (
+        await client.get(
+            f"/v1/documents/{document_id}", headers=headers, params={"owner_id": owner}
+        )
+    ).status_code == 200
+
+
 async def test_upload_rejects_wrong_format_and_missing_key(
     document_client: tuple[AsyncClient, str, str],
 ) -> None:

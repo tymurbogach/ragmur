@@ -15,6 +15,7 @@ from starlette.requests import Request
 
 from ragmur.api.deps import Resources
 from ragmur.api.inference_limit import InferenceLimitMiddleware
+from ragmur.api.json_limit import JsonLimitMiddleware
 from ragmur.api.routes import documents, health, search, verify
 from ragmur.api.timing import RequestTimingMiddleware
 from ragmur.api.upload_limit import UploadLimitMiddleware
@@ -133,6 +134,7 @@ def create_app() -> FastAPI:
 
     settings = get_settings()
     app.add_middleware(InferenceLimitMiddleware, max_requests=settings.inference_max_requests)
+    app.add_middleware(JsonLimitMiddleware, max_bytes=settings.max_json_body_bytes)
     app.add_middleware(
         UploadLimitMiddleware,
         max_bytes=settings.max_upload_bytes,

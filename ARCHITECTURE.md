@@ -106,6 +106,7 @@ Con `owner_id`, los documentos compartidos (`owner_id=null`) tampoco entran en l
 Sin `owner_id`, la API key permite acceder a todos los usuarios del tenant; no es una credencial para entregar al navegador.
 
 `owner_id` es texto opaco y sensible a mayúsculas. Se rechazan valores vacíos o compuestos solo por espacios.
+Su longitud máxima es de 256 caracteres en todas las rutas y en PostgreSQL.
 La aplicación cliente deriva este campo de su sesión autenticada y lo incluye en cada operación sobre documentos privados.
 Un identificador inexistente y uno fuera del alcance producen el mismo `404` en detalle y borrado.
 
@@ -252,6 +253,7 @@ Concatenar chunks directamente duplica el solape y no es una prueba válida de c
 
 Las rutas `/v1/*` requieren `X-API-Key`. El tenant se deriva de la clave; un campo de entrada `tenant_id` se rechaza.
 Los esquemas rechazan campos desconocidos. Los límites de texto, listas, subida y concurrencia son configuración validada al arrancar.
+`MAX_JSON_BODY_BYTES` limita el cuerpo de búsqueda y verificación antes de analizar JSON.
 
 | Condición | HTTP |
 |---|---|

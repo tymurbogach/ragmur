@@ -33,6 +33,7 @@ class Settings(BaseSettings):
 
     storage_dir: Path = Path("./storage")
     max_upload_bytes: int = Field(default=20 * 1024 * 1024, gt=0)
+    max_json_body_bytes: int = Field(default=65536, gt=0)
     multipart_overhead_bytes: int = Field(default=65536, gt=0)
     upload_max_concurrent: int = Field(default=8, gt=0)
     upload_timeout_seconds: float = Field(default=120, gt=0, allow_inf_nan=False)

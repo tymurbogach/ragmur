@@ -67,6 +67,7 @@ class Document(Base):
             "'failed', 'unsupported', 'deleting')",
             name="status",
         ),
+        CheckConstraint("owner_id IS NULL OR char_length(owner_id) <= 256", name="owner_id_length"),
         Index("ix_documents_tenant_id_owner_id", "tenant_id", "owner_id"),
     )
 
