@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ragmur
+      POSTGRES_DB: ragmur
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ragmur -d ragmur"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  qdrant:
+    image: qdrant/qdrant:v1.19.0
+    restart: unless-stopped
+    volumes:
+      - qdrant_data:/qdrant/storage
+  api:
+    build:
+      context: .
+      args:
+        INSTALL_CUDA: 'true'
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ragmur:${POSTGRES_PASSWORD}@postgres:5432/ragmur
+      API_KEY_HMAC_SECRET: ${API_KEY_HMAC_SECRET:?required}
+      QDRANT_URL: http://qdrant:6333
+      EMBEDDING_DEVICE: cuda
+    ports:
+      - '127.0.0.1:8000:8000'
+    gpus: all
+    volumes:
+      - model_data:/app/models
+      - original_data:/app/storage
+volumes:
+  postgres_data:
+  qdrant_data:
+  model_data:
+  original_data:

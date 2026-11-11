@@ -160,6 +160,12 @@ docker build --build-arg INSTALL_CUDA=true -t ragmur:cuda .
 docker run --gpus all --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cuda
 ```
 
+El despliegue privado con GPU usa `docker-compose.deploy.yml`.
+Define `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` en un archivo de entorno privado.
+Ejecuta `docker compose --env-file <archivo> -f docker-compose.deploy.yml up -d --build`.
+La API escucha solo en `127.0.0.1:8000`; PostgreSQL y Qdrant no publican puertos.
+Los volúmenes conservan los datos, originales y modelos entre reinicios.
+
 ## Stack
 
 | Capa | Tecnología |
