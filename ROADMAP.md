@@ -328,8 +328,12 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [x] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
 - [ ] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
 
-Los ejemplos de inferencia real son pruebas funcionales, no una evaluación reservada reproducible.
+Las pruebas funcionales anteriores no constituyen una evaluación reservada reproducible.
 Los umbrales actuales son provisionales hasta completar la calibración y publicar sus resultados.
+Una prueba inicial reproducible del 11 de noviembre de 2026 usa nueve ejemplos manuales reservados.
+Con CPU Intel Core Ultra 9 285H, detectó dos de tres contradicciones y clasificó una como no respaldada.
+No hubo falsos respaldos entre seis afirmaciones no respaldadas o contradictorias; la muestra es insuficiente para generalizar.
+Los resultados están en `eval/results/nli-test-2026-11-11.json` y la muestra en `eval/nli_cases.yaml`.
 
 **Por qué `contradicted` va separado.** El modelo NLI ya distingue tres clases. Que la fuente no diga nada sobre una afirmación (`unsupported`) y que la fuente afirme lo contrario (`contradicted`) son fallos de gravedad muy distinta, y el segundo es la mejor demostración de lo que hace el verificador. Colapsarlos tira la señal más valiosa.
 

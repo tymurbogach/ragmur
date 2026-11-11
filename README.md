@@ -80,6 +80,9 @@ Usa `query` y, opcionalmente, `owner_id`, `document_ids`, `top_k` y `candidates`
 La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son probabilidades.
 
 `POST /v1/verify` puntúa cada frase contra `chunk_ids` autorizados con NLI local.
+La evaluación NLI inicial usa pocos ejemplos manuales. No demuestra la calidad sobre documentos reales.
+En la prueba reservada detectó dos de tres contradicciones; una quedó como no respaldada.
+Consulta los detalles y el hardware en `eval/results/nli-test-2026-11-11.json`.
 Devuelve `supported`, `weak`, `unsupported` o `contradicted` con score y mejor evidencia.
 Los identificadores ajenos se ignoran; sin evidencia válida todo queda `unsupported`.
 
