@@ -1,0 +1,44 @@
+# Ejemplos manuales de prueba funcional, no un benchmark representativo.
+# Cada premisa pertenece a una sola partición.
+- id: dev-delivery
+  split: dev
+  premise: El plazo de entrega es de 48 horas.
+  claims:
+  - {text: El plazo de entrega es de 48 horas., label: supported}
+  - {text: El plazo de entrega es de una semana., label: contradicted}
+  - {text: El contrato incluye mantenimiento., label: unsupported}
+- id: dev-temperature
+  split: dev
+  premise: La temperatura del horno es de 200 grados.
+  claims:
+  - {text: El horno está a 200 grados., label: supported}
+  - {text: El horno está a 100 grados., label: contradicted}
+  - {text: El horno es de color rojo., label: unsupported}
+- id: dev-price
+  split: dev
+  premise: El precio del servicio es de 50 euros al mes.
+  claims:
+  - {text: El servicio cuesta 50 euros mensuales., label: supported}
+  - {text: El servicio cuesta 100 euros mensuales., label: contradicted}
+  - {text: El servicio incluye soporte telefónico., label: unsupported}
+- id: test-capacity
+  split: test
+  premise: El ascensor admite un máximo de ocho personas.
+  claims:
+  - {text: El ascensor admite hasta ocho personas., label: supported}
+  - {text: El ascensor admite como máximo cuatro personas., label: contradicted}
+  - {text: El ascensor está pintado de azul., label: unsupported}
+- id: test-date
+  split: test
+  premise: La biblioteca abre sus puertas el lunes 12 de abril.
+  claims:
+  - {text: La biblioteca abre el 12 de abril., label: supported}
+  - {text: La biblioteca abre el 15 de abril., label: contradicted}
+  - {text: La biblioteca cuenta con aparcamiento., label: unsupported}
+- id: test-volume
+  split: test
+  premise: El depósito contiene 300 litros de agua.
+  claims:
+  - {text: El depósito contiene 300 litros de agua., label: supported}
+  - {text: El depósito contiene 200 litros de agua., label: contradicted}
+  - {text: El depósito se encuentra en el sótano., label: unsupported}
