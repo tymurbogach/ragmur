@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-12",
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "model_revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+  "hardware": {
+    "device": "cpu",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H",
+    "omp_threads": 2,
+    "mkl_threads": 2
+  },
+  "scoring_commit": "78270daa51b7f859993665f64d0009bf13aaed88",
+  "analysis_commit": "caa53a6a5332333d638a49f4b0561a85eb318ce3",
+  "samples": {
+    "inferes_dev": {
+      "details_sha256": "f606dbe7d3ae2980337909cad078905a6f04c56199d0e3a9c316562b8a2f8917",
+      "contradiction_threshold": 0.75,
+      "support_thresholds": {
+        "0.75": {
+          "true_supported": 55,
+          "false_supported": 15,
+          "expected_supported": 80,
+          "expected_not_supported": 160
+        },
+        "0.85": {
+          "true_supported": 51,
+          "false_supported": 10,
+          "expected_supported": 80,
+          "expected_not_supported": 160
+        },
+        "0.9": {
+          "true_supported": 48,
+          "false_supported": 10,
+          "expected_supported": 80,
+          "expected_not_supported": 160
+        },
+        "0.95": {
+          "true_supported": 42,
+          "false_supported": 7,
+          "expected_supported": 80,
+          "expected_not_supported": 160
+        },
+        "0.99": {
+          "true_supported": 23,
+          "false_supported": 3,
+          "expected_supported": 80,
+          "expected_not_supported": 160
+        }
+      },
+      "limitations": "Development only; no threshold selection or held-out validation."
+    },
+    "scifact_chunks_dev": {
+      "details_sha256": "e2a5207c01202bd675741a3b5be56aea3dc4fbd00fd34a65b0eeaa0f4f1e3c43",
+      "contradiction_threshold": 0.75,
+      "support_thresholds": {
+        "0.75": {
+          "true_supported": 93,
+          "false_supported": 6,
+          "expected_supported": 183,
+          "expected_not_supported": 86
+        },
+        "0.85": {
+          "true_supported": 82,
+          "false_supported": 5,
+          "expected_supported": 183,
+          "expected_not_supported": 86
+        },
+        "0.9": {
+          "true_supported": 73,
+          "false_supported": 5,
+          "expected_supported": 183,
+          "expected_not_supported": 86
+        },
+        "0.95": {
+          "true_supported": 59,
+          "false_supported": 4,
+          "expected_supported": 183,
+          "expected_not_supported": 86
+        },
+        "0.99": {
+          "true_supported": 40,
+          "false_supported": 3,
+          "expected_supported": 183,
+          "expected_not_supported": 86
+        }
+      },
+      "limitations": "Development only; no threshold selection or held-out validation."
+    }
+  },
+  "limitations": [
+    "Development samples only; held-out partitions were not run.",
+    "InferES includes disputed labels and primarily short Spanish premises.",
+    "SciFact includes selected English scientific chunks with no neutral examples.",
+    "Class proportions are not representative of production.",
+    "Changing thresholds requires an explicit acceptable false-support and missed-support tradeoff, and independent evaluation."
+  ]
+}

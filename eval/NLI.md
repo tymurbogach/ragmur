@@ -130,3 +130,12 @@ uv run python -m eval.nli_thresholds --details /tmp/nli-details.json --support 0
 
 La comparación conserva la precedencia del umbral de contradicción.
 No selecciona un umbral ni sustituye la evaluación de una partición reservada.
+
+La comparación exploratoria de cinco umbrales de respaldo está en
+`eval/results/nli-thresholds-development-2026-11-12.json`.
+Con 0,75, InferES produce 15 respaldos falsos y reconoce 55 de 80 respaldos etiquetados.
+Con 0,95 produce siete respaldos falsos y reconoce 42 de 80.
+En SciFact, 0,75 produce seis respaldos falsos y reconoce 93 de 183 respaldos etiquetados.
+Con 0,95 produce cuatro respaldos falsos y reconoce 59 de 183.
+Son muestras de desarrollo con límites distintos; no se han elegido ni cambiado los umbrales.
+Antes de elegir uno hay que acordar el compromiso aceptable y evaluar datos reservados.

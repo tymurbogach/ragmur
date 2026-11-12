@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-12T04:35:50.563052+00:00",
+  "split": "dev",
+  "dataset_sha256": "d9e42c3be7700445f00df5f6e6c37da8be6b3d652730db69bacdfbb97bd35e5f",
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+  "device": "cpu",
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H"
+  },
+  "thread_settings": {
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2"
+  },
+  "commit": "982e068534e11d1e2e27b28f21b1bf4c7ef5996f",
+  "thresholds": {
+    "supported": 0.75,
+    "weak": 0.5,
+    "contradicted": 0.75
+  },
+  "counts": {
+    "contradicted": 86,
+    "supported": 183
+  },
+  "confusion_matrix": {
+    "supported": {
+      "supported": 93,
+      "weak": 14,
+      "unsupported": 60,
+      "contradicted": 16
+    },
+    "weak": {
+      "supported": 0,
+      "weak": 0,
+      "unsupported": 0,
+      "contradicted": 0
+    },
+    "unsupported": {
+      "supported": 0,
+      "weak": 0,
+      "unsupported": 0,
+      "contradicted": 0
+    },
+    "contradicted": {
+      "supported": 6,
+      "weak": 4,
+      "unsupported": 46,
+      "contradicted": 30
+    }
+  },
+  "false_support": {
+    "numerator": 6,
+    "denominator": 86,
+    "rate": 0.06976744186046512,
+    "wilson_95": [
+      0.032365414509921336,
+      0.14396140641036848
+    ]
+  },
+  "limitations": "Development only, expert document-level evidence labels mapped to chunks containing an annotated rationale. Extra context may affect meaning; labels not independently re-reviewed. English scientific abstracts only; no neutral examples or weak reference labels. Model-training overlap is unknown. Claims and documents were previously used in retrieval experiments. Test partition was not evaluated. Wilson assumes independence and does not account for shared scientific topics.",
+  "dataset": {
+    "name": "SciFact original",
+    "authors": "David Wadden et al.",
+    "archive_sha256": "11c621288d41ac144d29b13b0f8503b3820b7d6e8b1f6ff24dff335c196d76be",
+    "claims_license": "CC BY 4.0",
+    "abstracts_license": "ODC-By 1.0",
+    "source": "https://github.com/allenai/scifact",
+    "selection": "Train claims, one per document and claim, grouped by relevant document, evidence contained in 800/120 Ragmur chunk; eval/scifact_nli.py"
+  },
+  "working_tree": "An additional test-only file change was uncommitted during execution; inference code and dataset converter were committed.",
+  "metadata_note": "Dataset metadata and limitations added after execution; source matrix is unchanged."
+}

@@ -33,6 +33,16 @@ En Skynet, el nombre de proyecto observado fue `ragmur_deploy`.
 - Las pruebas de modelos reales de la muestra exploratoria se ejecutaron en CPU.
 - Se mantuvieron los umbrales y el comportamiento del reindexado.
 
+## Evaluación adicional del verificador
+
+- [InferES y SciFact](eval/NLI.md) aportan muestras públicas de desarrollo en español e inglés.
+- InferES: 240 parejas cortas; 15 de 160 negativas recibieron `supported` según las etiquetas originales.
+- SciFact: 269 fragmentos; seis de 86 contradicciones recibieron `supported` según las etiquetas originales.
+- Se observaron etiquetas discutibles. Ambas muestras requieren más revisión y no representan uso real.
+- Las particiones reservadas, de 180 y 59 parejas, no se han evaluado.
+- Los umbrales siguen sin calibrar. La exploración de límites y sus compromisos está en `eval/NLI.md`.
+- Falta acordar el compromiso aceptable entre respaldo falso y respaldo perdido antes de seleccionar umbrales.
+
 ## Pendiente antes de cerrar la fase 1
 
 - Revisar y ampliar la evaluación NLI con fragmentos reales. Los umbrales siguen provisionales.
