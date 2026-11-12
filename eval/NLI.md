@@ -115,3 +115,18 @@ No se revisó de forma independiente el efecto del contexto adicional en cada et
 Para revisar errores concretos, añade `--details /tmp/nli-details.json`.
 El archivo contiene identificadores, etiquetas, veredictos y puntuaciones, pero no textos.
 Guarda los detalles fuera de Git; los resúmenes por ejecución sí se versionan.
+
+En una revisión manual posterior se encontró un desacuerdo claro en `inferes-2633`.
+La premisa dice que los reglamentos europeos prevalecen sobre el derecho nacional.
+La hipótesis afirma que tienen carácter secundario; el verificador la clasificó como respaldada.
+En otros ejemplos, como `inferes-329` y `inferes-6167`, la etiqueta original admite dudas.
+Estos ejemplos requieren revisión independiente; no se excluyen de la matriz inicial.
+
+Para explorar el compromiso entre respaldos correctos y falsos sin cambiar Ragmur:
+
+```bash
+uv run python -m eval.nli_thresholds --details /tmp/nli-details.json --support 0.75 --support 0.85 --support 0.90 --support 0.95 --support 0.99 --contradiction 0.75 --output /tmp/nli-thresholds.json
+```
+
+La comparación conserva la precedencia del umbral de contradicción.
+No selecciona un umbral ni sustituye la evaluación de una partición reservada.
