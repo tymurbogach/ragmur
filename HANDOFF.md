@@ -21,6 +21,18 @@ El repositorio ofrece `docker-compose.deploy.yml` para CPU y `docker-compose.cud
 Antes de usar esos archivos con datos existentes, comprueba el nombre de proyecto, la configuración y los volúmenes.
 En Skynet, el nombre de proyecto observado fue `ragmur_deploy`.
 
+## Estado de la revisión del 12 de noviembre de 2026
+
+- El árbol está limpio tras los commits de documentación y evaluación.
+- SciFact exige una revisión Git completa y registra si se detectó o declaró.
+- Falta repetir SciFact con GPU tras ese cambio de trazabilidad.
+- La [evaluación exploratoria del verificador](eval/NLI.md) usa ocho textos públicos y 24 afirmaciones.
+- La muestra no permite calibrar umbrales ni proporciona una prueba reservada independiente.
+- En desarrollo se observó un falso rechazo sobre el texto del descubrimiento del oxígeno.
+- La suite pasó con 125 pruebas correctas y cuatro omitidas, usando bases temporales aisladas.
+- Las pruebas de modelos reales de la muestra exploratoria se ejecutaron en CPU.
+- Se mantuvieron los umbrales y el comportamiento del reindexado.
+
 ## Pendiente antes de cerrar la fase 1
 
 - Revisar y ampliar la evaluación NLI con fragmentos reales. Los umbrales siguen provisionales.
