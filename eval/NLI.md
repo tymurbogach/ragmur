@@ -64,3 +64,41 @@ Las premisas son generalmente frases, no fragmentos de 800 caracteres de la inge
 La revisión manual preliminar detectó una etiqueta discutible en `inferes-2650`.
 Se conserva el ejemplo para no seleccionar resultados según su dificultad.
 Esta muestra no representa por sí sola el uso real ni justifica calibrar umbrales.
+
+### Primera medición de desarrollo
+
+El 12 de noviembre de 2026 se evaluaron los 240 pares de desarrollo con los umbrales vigentes.
+En CPU Intel Core Ultra 9 285H, 15 de 160 pares etiquetados como contradicción o neutral recibieron `supported`.
+El resultado y su matriz están en `eval/results/nli-inferes-dev-2026-11-12.json`.
+La muestra está equilibrada por diseño; sus proporciones no describen la frecuencia real de esos casos.
+El intervalo de Wilson presupone independencia, que compartir temas puede afectar.
+El test de 180 pares no se ha evaluado y sigue reservado para una decisión posterior.
+
+La revisión preliminar de nueve ejemplos identificó una etiqueta discutible.
+La premisa de `inferes-2650` menciona seis países y la hipótesis una ampliación posterior a nueve.
+La premisa no niega necesariamente la hipótesis. No se ha revisado toda la muestra.
+
+## SciFact: evidencia anotada en fragmentos reales
+
+[SciFact](https://github.com/allenai/scifact) incluye afirmaciones y frases de evidencia anotadas.
+Sus autores publican las anotaciones bajo CC BY 4.0 y los resúmenes bajo ODC-By 1.0.
+Descarga [los datos originales](https://scifact.s3-us-west-2.amazonaws.com/release/latest/data.tar.gz) fuera del repositorio.
+El SHA-256 del archivo descargado es `11c621288d41ac144d29b13b0f8503b3820b7d6e8b1f6ff24dff335c196d76be`.
+El adaptador también comprueba las huellas de los archivos utilizados tras extraerlos.
+
+```bash
+uv run python -m eval.scifact_nli --input /ruta/data --output /tmp/scifact-nli-cases.yaml
+uv run python -m eval.nli_run --dataset /tmp/scifact-nli-cases.yaml --split dev --output /tmp/scifact-nli-dev.json
+```
+
+El adaptador aplica el troceador de Ragmur con tamaño 800 y solape 120.
+Conserva solo fragmentos que contienen todas las frases de una evidencia anotada.
+Agrupa las afirmaciones conectadas por documentos antes de separar desarrollo y prueba.
+Selecciona como máximo una afirmación por documento y un documento por afirmación.
+La selección tiene 269 pares de desarrollo y 59 de prueba, de 277 a 800 caracteres.
+
+Solo hay etiquetas de respaldo y contradicción. No se generan etiquetas de neutralidad ni `weak`.
+La etiqueta original describe la evidencia anotada; el texto adicional del fragmento puede afectar a su interpretación.
+Las afirmaciones y documentos ya se usaron para estudiar recuperación, aunque no se evaluaron estas etiquetas del verificador.
+El corpus es científico y en inglés; no representa por sí solo documentos generales en español.
+La partición de prueba no se ha ejecutado para esta evaluación del verificador.
