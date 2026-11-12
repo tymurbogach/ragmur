@@ -63,7 +63,11 @@ Para forzar un dispositivo usa `cpu` o `cuda`. Si se fuerza CUDA y no está disp
 La GPU requiere PyTorch con CUDA, controladores compatibles y acceso del contenedor a la GPU.
 La selección se mantiene hasta reiniciar; un fallo posterior de CUDA no cambia el servicio a CPU automáticamente.
 
-El Compose privado usa CPU por defecto. Para construir y arrancar la variante CPU:
+El Compose privado usa CPU por defecto. El nombre del proyecto determina sus volúmenes.
+Si reutilizas una instalación, comprueba su nombre y sus archivos antes de ejecutar Compose.
+El proyecto observado en Skynet se llama `ragmur_deploy`.
+
+Para construir y arrancar la variante CPU:
 
 ```bash
 docker compose -f docker-compose.deploy.yml up -d --build
