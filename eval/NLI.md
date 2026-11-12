@@ -27,3 +27,10 @@ Con cero errores en ocho ejemplos, el intervalo del 95 % llega aproximadamente a
 Para calibrar hacen falta más documentos y etiquetas revisadas, con particiones por documento.
 Incluye negaciones, cifras, fechas, referencias entre frases y ejemplos difíciles.
 Mantén los umbrales actuales hasta evaluar cambios con una partición reservada.
+
+## Observación exploratoria
+
+En desarrollo, la premisa sobre el oxígeno sitúa el descubrimiento de Priestley en 1774.
+El verificador clasificó la afirmación correspondiente como contradictoria.
+La puntuación de contradicción fue 0,975 y la de respaldo 0,021 en CPU.
+Este caso muestra un falso rechazo en la muestra; no identifica por sí solo su causa.
