@@ -29,7 +29,8 @@ En Skynet, el nombre de proyecto observado fue `ragmur_deploy`.
 - La [evaluación exploratoria del verificador](eval/NLI.md) usa ocho textos públicos y 24 afirmaciones.
 - La muestra no permite calibrar umbrales ni proporciona una prueba reservada independiente.
 - En desarrollo se observó un falso rechazo sobre el texto del descubrimiento del oxígeno.
-- La suite pasó con 125 pruebas correctas y cuatro omitidas, usando bases temporales aisladas.
+- Tras la evaluación adicional, la suite pasó con 135 pruebas correctas y cuatro omitidas.
+  Usó PostgreSQL y Qdrant temporales aislados; se detuvieron al terminar.
 - Las pruebas de modelos reales de la muestra exploratoria se ejecutaron en CPU.
 - Se mantuvieron los umbrales y el comportamiento del reindexado.
 
@@ -42,6 +43,12 @@ En Skynet, el nombre de proyecto observado fue `ragmur_deploy`.
 - Las particiones reservadas, de 180 y 59 parejas, no se han evaluado.
 - Los umbrales siguen sin calibrar. La exploración de límites y sus compromisos está en `eval/NLI.md`.
 - Falta acordar el compromiso aceptable entre respaldo falso y respaldo perdido antes de seleccionar umbrales.
+- Revisa las etiquetas dudosas y reúne fragmentos representativos en español antes de calibrar.
+- No evalúes las particiones reservadas hasta fijar el procedimiento y los criterios de elección.
+- Los datos descargados y detalles por consulta están en `/tmp`; pueden desaparecer.
+  Sigue las instrucciones de `eval/NLI.md` para regenerarlos sin guardar volcados por consulta en Git.
+- No se han cambiado los umbrales. La fase 1 sigue abierta.
+
 
 ## Pendiente antes de cerrar la fase 1
 
