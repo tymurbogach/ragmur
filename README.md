@@ -184,10 +184,11 @@ docker build --build-arg INSTALL_CUDA=true -t ragmur:cuda .
 docker run --gpus all --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cuda
 ```
 
-El despliegue privado con GPU usa `docker-compose.deploy.yml` y requiere una GPU disponible para Docker.
-En un equipo sin GPU usa la imagen de CPU indicada arriba, sin solicitar `--gpus`.
+El Compose privado usa CPU por defecto. Añade `docker-compose.cuda.yml` para activar CUDA.
 Define `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` en un archivo de entorno privado.
-Ejecuta `docker compose --env-file <archivo> -f docker-compose.deploy.yml up -d --build`.
+Usa los comandos de Compose de la sección de instalación.
+El nombre de proyecto determina los volúmenes: usa el mismo nombre para conservarlos.
+El proyecto existente en Skynet se llama `ragmur_deploy`; comprueba su configuración antes de actualizarlo.
 La API escucha solo en `127.0.0.1:8000`; PostgreSQL y Qdrant no publican puertos.
 Los volúmenes conservan los datos, originales y modelos entre reinicios.
 

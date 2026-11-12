@@ -364,7 +364,9 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 - [x] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
 
 Skynet tiene un despliegue privado de prueba con GPU; todavía no contiene un corpus real.
-La evaluación NLI, la demo pública, el endurecimiento de red y la prueba de copia/restauración quedan pendientes.
+La evaluación NLI, la demo pública y el endurecimiento de red quedan pendientes.
+Una restauración aislada local recuperó PostgreSQL y originales y reconstruyó Qdrant.
+Falta probar la restauración de una copia de Skynet.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.
