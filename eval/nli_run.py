@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import logging
+import math
 import platform
 import subprocess
 from collections import Counter
@@ -16,6 +17,24 @@ from ragmur.core.config import get_settings
 from ragmur.verification.nli import load_verifier
 
 LABELS = ("supported", "weak", "unsupported", "contradicted")
+
+
+def wilson_interval(successes: int, total: int) -> tuple[float, float] | None:
+    """Calcula el intervalo de Wilson del 95 % para una proporción."""
+    if total < 0 or successes < 0 or successes > total:
+        raise ValueError("Invalid counts")
+    if total == 0:
+        return None
+    z = 1.959963984540054
+    proportion = successes / total
+    denominator = 1 + z * z / total
+    center = (proportion + z * z / (2 * total)) / denominator
+    margin = (
+        z
+        * math.sqrt(proportion * (1 - proportion) / total + z * z / (4 * total * total))
+        / denominator
+    )
+    return max(0.0, center - margin), min(1.0, center + margin)
 
 
 def main() -> None:
@@ -79,6 +98,7 @@ def main() -> None:
             "numerator": false_support,
             "denominator": unsupported,
             "rate": false_support / unsupported if unsupported else None,
+            "wilson_95": wilson_interval(false_support, unsupported),
         },
         "limitations": "Small manually authored functional set; not representative of deployment.",
     }
