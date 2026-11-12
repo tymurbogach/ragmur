@@ -9,6 +9,8 @@ import hashlib
 import json
 import logging
 import math
+import os
+import re
 import statistics
 import time
 from collections import Counter, defaultdict
@@ -276,8 +278,25 @@ def partition_queries(relevance: dict[str, dict[str, int]]) -> dict[str, str]:
     return result
 
 
-async def run(root: Path, split: str, partition: str, output: Path) -> None:
+def resolve_commit(detected: str, supplied: str | None) -> tuple[str, str]:
+    """Exige una revisión completa y distingue la declarada de la verificada."""
+    valid = r"[0-9a-f]{40}"
+    if supplied is not None and re.fullmatch(valid, supplied) is None:
+        raise ValueError("Source commit must be a full lowercase Git SHA-1")
+    if re.fullmatch(valid, detected):
+        if supplied is not None and supplied != detected:
+            raise ValueError("Source commit does not match the Git checkout")
+        return detected, "git"
+    if supplied is None:
+        raise ValueError("Git revision unavailable; supply --source-commit")
+    return supplied, "declared"
+
+
+async def run(
+    root: Path, split: str, partition: str, output: Path, source_commit: str | None = None
+) -> None:
     """Ejecuta la prueba en un tenant temporal y guarda sus resultados."""
+    commit, commit_source = resolve_commit(read_commit(), source_commit)
     docs, queries, relevance = load_dataset(root, split)
     if split == "test" and partition != "all":
         raise ValueError("The official test split only supports partition all")
@@ -314,8 +333,13 @@ async def run(root: Path, split: str, partition: str, output: Path) -> None:
         summary = {
             "source": "BEIR SciFact",
             "date": datetime.now(UTC).isoformat(),
-            "commit": read_commit(),
+            "commit": commit,
+            "commit_source": commit_source,
             "hardware": hardware_info(settings),
+            "thread_settings": {
+                "OMP_NUM_THREADS": os.environ.get("OMP_NUM_THREADS"),
+                "MKL_NUM_THREADS": os.environ.get("MKL_NUM_THREADS"),
+            },
             "split": split,
             "partition": partition,
             "documents": len(docs),
@@ -356,6 +380,8 @@ async def run(root: Path, split: str, partition: str, output: Path) -> None:
                 "Direct retrieval components, not HTTP or PostgreSQL.",
                 "Document labels evaluated after cutting to 10 chunks.",
                 "SciFact test was previously inspected and is not an independent holdout.",
+                "Git identifies the checkout, not uncommitted changes or container images.",
+                "Ties and concurrent numerical execution can change rankings across runs.",
             ],
         }
         await asyncio.to_thread(write_results, output, f"{split}-{partition}", summary, details)
@@ -388,8 +414,9 @@ def main() -> None:
     parser.add_argument("--split", choices=("train", "test"), required=True)
     parser.add_argument("--partition", choices=("dev", "holdout", "all"), default="all")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-commit", help="Full Git commit when the checkout is unavailable")
     args = parser.parse_args()
-    asyncio.run(run(args.dataset, args.split, args.partition, args.output))
+    asyncio.run(run(args.dataset, args.split, args.partition, args.output, args.source_commit))
 
 
 if __name__ == "__main__":

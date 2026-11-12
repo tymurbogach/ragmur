@@ -30,3 +30,17 @@ def test_partition_keeps_shared_relevant_documents_together() -> None:
     partitions = partition_queries(labels)
     assert partitions["q1"] == partitions["q2"] == partitions["q3"]
     assert partitions == partition_queries(dict(reversed(list(labels.items()))))
+
+
+def test_source_commit_is_verified_or_explicitly_declared() -> None:
+    from eval.scifact import resolve_commit
+
+    sha = "a" * 40
+    assert resolve_commit(sha, None) == (sha, "git")
+    assert resolve_commit("unknown", sha) == (sha, "declared")
+    with pytest.raises(ValueError, match="revision unavailable"):
+        resolve_commit("unknown", None)
+    with pytest.raises(ValueError, match="full lowercase"):
+        resolve_commit("unknown", "abcdef1")
+    with pytest.raises(ValueError, match="does not match"):
+        resolve_commit(sha, "b" * 40)

@@ -41,6 +41,12 @@ Comprueba el aislamiento entre tenants y usuarios antes de evaluar.
 Al terminar, elimina los puntos temporales de ese tenant.
 Si el proceso termina de forma abrupta, pueden quedar puntos temporales.
 El resumen se guarda como JSON; los resultados por consulta van en `per_query/`.
+Git ignora `per_query/`; conserva una copia externa si necesitas comparar consultas individuales.
+El resumen registra la revisión completa y la configuración de hilos OMP y MKL.
+En un contenedor sin Git, añade `--source-commit` con el SHA completo de la imagen.
+El campo `commit_source` distingue una revisión declarada de la detectada por Git.
+La revisión detectada no demuestra que el árbol estuviera limpio.
+Los empates RRF pueden variar entre ejecuciones; compara varias ejecuciones antes de concluir.
 
 ## Interpretar los resultados
 
