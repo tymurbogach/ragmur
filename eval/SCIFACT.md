@@ -74,3 +74,11 @@ Antes del reordenamiento se encontró una fuente en 539 consultas; después, en 
 El reordenamiento recuperó 18 consultas y perdió 10, respecto a los diez primeros fragmentos.
 La puntuación media de orden bajó de 0,741 a 0,734 en esta muestra.
 Estas cifras describen documentos etiquetados, no la calidad de una respuesta redactada.
+
+## Variación observada
+
+Tres ejecuciones exploratorias del test en la RTX 5080 obtuvieron un hit-rate entre 0,847 y 0,853.
+La cifra mide consultas con al menos un documento etiquetado entre los diez fragmentos finales.
+Una ejecución reutilizó el índice; las otras lo reconstruyeron.
+Las primeras usaron un adaptador temporal y la última usó el evaluador del repositorio.
+Por tanto, el intervalo describe estas ejecuciones y no una variabilidad estadística general.
