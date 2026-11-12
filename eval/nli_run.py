@@ -41,8 +41,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--split", choices=("dev", "test"), required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--dataset", type=Path, default=Path("eval/nli_cases.yaml"))
     args = parser.parse_args()
-    path = Path("eval/nli_cases.yaml")
+    path = args.dataset
     raw = path.read_bytes()
     cases = yaml.safe_load(raw)
     settings = get_settings()

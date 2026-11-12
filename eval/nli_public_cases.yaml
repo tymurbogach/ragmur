@@ -1,0 +1,142 @@
+# Muestra exploratoria manual basada en textos públicos de eval/corpus.
+- id: es-tesla-1
+  split: dev
+  premise: Tesla era famoso por sus logros y también por sus dotes para el espectáculo que, con el tiempo,
+    le hicieron ganarse una reputación dentro de la cultura popular como arquetipo de "científico loco".
+    Gracias a sus patentes, consiguió acumular una considerable cantidad de dinero que luego utilizaba
+    en su mayoría para financiarse sus propios proyectos con un éxito dispar. Vivió la mayor parte de
+    su vida, incluso hasta su retiro, en diferentes hoteles de Nueva York. Después de la muerte de Tesla
+    el 7 de enero de 1943, su obra cayó en un periodo de relativo olvido, pero en 1960 la Conferencia
+    General de Pesos y Medidas nombró a la unidad de densidad de flujo magnético del SI el Tesla, en su
+    honor. Por otra parte, se ha experimentado un resurgir en el interés popular de Tesla desde la década
+    de los 90.
+  claims:
+  - text: Tesla murió en 1943.
+    label: supported
+  - text: Tesla murió en 1950.
+    label: contradicted
+  - text: Tesla nació en París.
+    label: unsupported
+- id: es-warsaw
+  split: dev
+  premise: Muy cerca, en Ogród Saski (Jardín Sajón), se encontraba el Teatro de Verano que se mantuvo
+    en funcionamiento desde 1870 hasta 1939. Durante el periodo de entreguerras, el complejo teatral también
+    contó con el Momus ―el primer cabaret literario de Varsovia― y con el teatro musical Melodram de Leon
+    Schiller. El teatro Wojciech Bogusławski (1922–26) constituía el mejor ejemplo del «teatro monumental
+    polaco» . A partir de mediados de los años 30 el edificio del gran teatro albergó el Instituto Nacional
+    de Arte Dramático, que fue la primera academia estatal de arte dramático, con un departamento de actuación
+    y otro de dirección escénica.
+  claims:
+  - text: El Momus fue el primer cabaret literario de Varsovia.
+    label: supported
+  - text: El Momus no fue el primer cabaret literario de Varsovia.
+    label: contradicted
+  - text: El Momus tenía dos plantas.
+    label: unsupported
+- id: es-oxygen
+  split: dev
+  premise: El oxígeno lo descubrieron de forma independiente Carl Wilhelm Scheele, en Uppsala, en 1773
+    o antes, y Joseph Priestley en Wiltshire, en 1774, pero a Priestley se le suele dar prioridad porque
+    su trabajo fue publicado primero. El nombre oxígeno lo acuñó en 1777 el Antoine Lavoisier, cuyos experimentos
+    con oxígeno ayudaron a desacreditar la entonces popular teoría del flogisto de la combustión y la
+    corrosión. Su nombre deriva de las raíces griegas ὀξύς oxys, "ácido", literalmente "agudo", refiriéndose
+    al sabor agrio de los ácidos y -γενής -genes, "productor", "engendrador", porque en el momento de
+    la denominación, se pensaba erróneamente que todos los ácidos necesitaban oxígeno en su composición.
+    Los usos comunes del oxígeno incluyen el ciclo de producción de acero, plásticos y textiles, soldadura
+    fuerte, soldadura y corte de aceros y otros metales, propulsor de cohetes, terapia de oxígeno y sistemas
+    de soporte vital en aeronaves, submarinos, vuelos espaciales y buceo.
+  claims:
+  - text: Priestley descubrió el oxígeno en 1774.
+    label: supported
+  - text: Priestley descubrió el oxígeno en 1800.
+    label: contradicted
+  - text: Priestley nació en Londres.
+    label: unsupported
+- id: es-steam
+  split: dev
+  premise: 'El calor necesario para hervir el agua y suministrar el vapor puede derivarse de varias fuentes,
+    generalmente de la quema de materiales combustibles con un suministro adecuado de aire en un espacio
+    cerrado (llamado de varias maneras: cámara de combustión, chimenea...). En algunos casos la fuente
+    de calor es un reactor nuclear, energía geotérmica, energía solar o calor residual de un motor de
+    combustión interna o proceso industrial. En el caso de modelos o motores de vapor de juguete, la fuente
+    de calor puede ser un calentador eléctrico.'
+  claims:
+  - text: Un reactor nuclear puede suministrar el calor para generar vapor.
+    label: supported
+  - text: Un reactor nuclear no puede suministrar el calor para generar vapor.
+    label: contradicted
+  - text: Los motores de juguete pesan diez kilos.
+    label: unsupported
+- id: es-apollo-0
+  split: test
+  premise: El establecimiento por Seaman de un comité ad-hoc encabezado por su asistente técnico especial
+    Nicholas E. Golovin en julio de 1961, para recomendar un vehículo de lanzamiento para ser usado en
+    el programa Apollo, representó un punto de inflexión en la decisión de la NASA sobre el modo de misión.
+    Este comité reconoció que el modo elegido era un elemento importante de la elección del vehículo de
+    lanzamiento, y recomendó el uso de un modo híbrido EOR-LOR. Su consideración de LOR, así como el trabajo
+    incesante de Houbolt, jugaron un papel importante en la difusión de la viabilidad del proyecto. A
+    finales de 1961 y principios de 1962, los miembros del Centro de Naves Espaciales Tripuladas comenzaron
+    a apoyar a LOR, entre ellos el recién contratado subdirector de la Oficina de Vuelo Espacial Tripulado,
+    Joseph Shea, quien se convirtió en campeón de LOR. Los ingenieros del Centro de Vuelo Espacial Marshall
+    (MSFC) tardaron más en convencerse de sus méritos, pero su conversión la anunció Wernher von Braun
+    en una sesión informativa en junio de 1962.
+  claims:
+  - text: El comité recomendó un modo híbrido EOR-LOR.
+    label: supported
+  - text: El comité rechazó el modo híbrido EOR-LOR.
+    label: contradicted
+  - text: Nicholas Golovin nació en Francia.
+    label: unsupported
+- id: es-amazon-0
+  split: test
+  premise: 'La selva amazónica (Portugués: Floresta Amazônica o Amazonia; español: selva amazónica, Amazonía
+    o normalmente Amazonia; francés: Forêt amazonienne; holandés: Amazoneregenwoud), también conocida
+    en inglés como Amazonia o la Amazon Jungle, es un bosque latifoliado húmedo que cubre la mayor parte
+    de la cuenca amazónica de Sudamérica. Esta cuenca abarca 7 000 000 000 km2 (2 700 000 millas cuadradas),
+    de los cuales 5 500 000 km2 (2 100 000 pies cuadrados) están cubiertos por la selva tropical. Esta
+    región incluye territorios que pertenecen a nueve naciones. La mayor parte del bosque se encuentra
+    dentro de Brasil, con un 60 % de la selva tropical, seguido por Perú, con un 13 %, Colombia, con un
+    10 % y con cantidades menores en Venezuela, Ecuador, Bolivia, Guyana, Surinam y Guayana Francesa.
+    Estados o departamentos de cuatro naciones contienen "Amazonas" en sus nombres. El Amazonas representa
+    más de la mitad de los bosques lluviosos que quedan en el planeta, y comprende el mayor tracto de
+    bosque lluvioso tropical del mundo, y con mayor biodiversidad, con 390 000 millones de árboles individuales
+    divididos en 16 000 especies.'
+  claims:
+  - text: El 60 % de la selva tropical se encuentra en Brasil.
+    label: supported
+  - text: El 10 % de la selva tropical se encuentra en Brasil.
+    label: contradicted
+  - text: La temperatura media de la selva es de treinta grados.
+    label: unsupported
+- id: es-california-0
+  split: test
+  premise: California del Sur consta de un entorno urbano muy desarrollado que alberga algunas de las
+    mayores áreas urbanas del estado, además de amplias zonas que se han quedado sin desarrollar. Es la
+    tercera megalópolis más poblada de Estados Unidos después de la megalópolis de los Grandes Lagos y
+    la megalópolis del noreste. Gran parte de California del Sur es famosa por sus grandes y extendidas
+    comunidades suburbanas y por el uso de automóviles y autopistas. Las áreas dominantes son Los Ángeles,
+    el condado de Orange, San Diego y Riverside-San Bernardino, cada una de las cuales es el centro de
+    su respectiva área metropolitana, compuesta por numerosas pequeñas ciudades y comunidades. El área
+    urbana también alberga una región metropolitana internacional en forma de San Diego-Tijuana, creada
+    por el área urbana que llega hasta Baja California.
+  claims:
+  - text: Los Ángeles es una de las áreas dominantes de California del Sur.
+    label: supported
+  - text: Los Ángeles no es una de las áreas dominantes de California del Sur.
+    label: contradicted
+  - text: Los Ángeles se fundó en 1781.
+    label: unsupported
+- id: es-teacher-0
+  split: test
+  premise: "\uFEFFEn el pasado, el castigo físico (azotes en las nalgas, golpes, castigo físico o golpear\
+    \ con una vara al estudiante para causarle dolor físico) era una de las formas más comunes de disciplina\
+    \ escolar en gran parte del mundo. La mayoría de los países occidentales y algunos otros lo han prohibido,\
+    \ pero sigue siendo legal en Estados Unidos según una decisión del Tribunal Supremo de Estados Unidos\
+    \ de 1977 que consideró que pegar no violaba la Constitución estadounidense."
+  claims:
+  - text: El Tribunal Supremo de Estados Unidos tomó una decisión sobre el castigo físico en 1977.
+    label: supported
+  - text: La decisión de 1977 declaró que pegar violaba la Constitución estadounidense.
+    label: contradicted
+  - text: El tribunal estaba formado por nueve jueces.
+    label: unsupported
