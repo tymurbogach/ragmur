@@ -34,3 +34,33 @@ En desarrollo, la premisa sobre el oxígeno sitúa el descubrimiento de Priestle
 El verificador clasificó la afirmación correspondiente como contradictoria.
 La puntuación de contradicción fue 0,975 y la de respaldo 0,021 en CPU.
 Este caso muestra un falso rechazo en la muestra; no identifica por sí solo su causa.
+
+## InferES: comparación complementaria en español
+
+[InferES](https://aclanthology.org/2022.coling-1.340/) es un corpus de inferencia en español.
+Sus autores, Venelin Kovatchev y Mariona Taulé, publican los datos bajo CC BY 4.0.
+La [ficha del conjunto](https://huggingface.co/datasets/venelin/inferes) describe sus anotaciones y límites.
+El modelo usado por Ragmur se entrenó con XNLI; no se ha demostrado que InferES sea independiente de todos sus datos de entrenamiento.
+
+La selección usa la revisión `c371a1915e6902b40182b2ae83c5ec7fe5e6cbd2` de InferES.
+Descarga `train.csv` y `test.csv` de esa revisión fuera del repositorio.
+`eval.inferes` comprueba las huellas SHA-256 antes de leerlos.
+
+```bash
+uv run python -m eval.inferes --input /ruta/inferes --output /tmp/inferes-cases.yaml
+uv run python -m eval.nli_run --dataset /tmp/inferes-cases.yaml --split dev --output /tmp/inferes-dev.json
+```
+
+La selección usa 240 pares de desarrollo y reserva 180 pares de prueba.
+Reparte cada partición en tercios entre respaldo, contradicción y neutralidad.
+Selecciona como máximo una hipótesis por premisa y excluye la categoría `Automated`.
+Desarrollo usa los temas 1–5 del entrenamiento; prueba usa los temas 6 y 10 del test original.
+Los temas son disjuntos y se comprueba que las premisas seleccionadas no coincidan exactamente.
+El corpus no identifica documentos de origen de forma suficiente para garantizar separación por documento.
+
+Las etiquetas originales identifican tres relaciones. `weak` es un veredicto de Ragmur, no una cuarta etiqueta de InferES.
+La matriz conserva esa columna y no inventa ejemplos de referencia `weak`.
+Las premisas son generalmente frases, no fragmentos de 800 caracteres de la ingesta.
+La revisión manual preliminar detectó una etiqueta discutible en `inferes-2650`.
+Se conserva el ejemplo para no seleccionar resultados según su dificultad.
+Esta muestra no representa por sí sola el uso real ni justifica calibrar umbrales.
