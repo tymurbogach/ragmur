@@ -102,3 +102,16 @@ La etiqueta original describe la evidencia anotada; el texto adicional del fragm
 Las afirmaciones y documentos ya se usaron para estudiar recuperación, aunque no se evaluaron estas etiquetas del verificador.
 El corpus es científico y en inglés; no representa por sí solo documentos generales en español.
 La partición de prueba no se ha ejecutado para esta evaluación del verificador.
+
+### Primera medición de fragmentos de desarrollo
+
+El 12 de noviembre de 2026 se evaluaron 269 fragmentos con los umbrales existentes.
+En CPU Intel Core Ultra 9 285H se clasificaron como respaldados 6 de 86 casos etiquetados como contradictorios.
+De 183 casos etiquetados como respaldados, 93 recibieron `supported`.
+El [resumen](results/nli-scifact-chunks-dev-2026-11-12.json) incluye la matriz completa.
+Son resultados de desarrollo sobre textos científicos en inglés; no permiten generalizar al español ni a documentos propios.
+No se revisó de forma independiente el efecto del contexto adicional en cada etiqueta.
+
+Para revisar errores concretos, añade `--details /tmp/nli-details.json`.
+El archivo contiene identificadores, etiquetas, veredictos y puntuaciones, pero no textos.
+Guarda los detalles fuera de Git; los resúmenes por ejecución sí se versionan.

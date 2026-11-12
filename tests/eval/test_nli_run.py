@@ -1,5 +1,7 @@
 """Comprueba la incertidumbre de la tasa de respaldo falso."""
 
+from pathlib import Path
+
 import pytest
 from eval.nli_run import wilson_interval
 
@@ -18,8 +20,6 @@ def test_wilson_interval_handles_missing_and_invalid_samples() -> None:
 
 
 def test_public_cases_use_distinct_source_documents() -> None:
-    from pathlib import Path
-
     import yaml  # type: ignore[import-untyped]
 
     cases = yaml.safe_load(Path("eval/nli_public_cases.yaml").read_text())
@@ -33,3 +33,76 @@ def test_public_cases_use_distinct_source_documents() -> None:
             "contradicted",
             "unsupported",
         }
+
+
+def test_empty_partition_fails_before_loading_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import sys
+
+    from eval import nli_run
+
+    dataset = tmp_path / "cases.yaml"
+    dataset.write_text("- split: dev\n")
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "nli_run",
+            "--dataset",
+            str(dataset),
+            "--split",
+            "test",
+            "--output",
+            str(tmp_path / "result.json"),
+        ],
+    )
+    monkeypatch.setattr(nli_run, "load_verifier", lambda _: pytest.fail("Model must not load"))
+    with pytest.raises(ValueError, match="split is empty"):
+        nli_run.main()
+
+
+def test_details_record_scores_without_private_text(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import json
+    import sys
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+
+    from eval import nli_run
+
+    dataset = tmp_path / "cases.yaml"
+    dataset.write_text(
+        "- id: case-1\n  split: dev\n  premise: confidential premise\n"
+        "  claims:\n  - text: confidential claim\n    label: supported\n"
+    )
+    summary = tmp_path / "summary.json"
+    details = tmp_path / "per_query" / "details.json"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "nli_run",
+            "--dataset",
+            str(dataset),
+            "--split",
+            "dev",
+            "--output",
+            str(summary),
+            "--details",
+            str(details),
+        ],
+    )
+    monkeypatch.setattr(
+        nli_run, "load_verifier", lambda _: SimpleNamespace(score_pairs=lambda *_: [(0.9, 0.01)])
+    )
+    monkeypatch.setattr(
+        "eval.nli_run.subprocess.run", Mock(return_value=SimpleNamespace(stdout="a" * 40))
+    )
+    nli_run.main()
+    rows = json.loads(details.read_text())
+    assert rows[0]["case_id"] == "case-1"
+    assert rows[0]["verdict"] == "supported"
+    assert "confidential" not in details.read_text()
+    assert json.loads(summary.read_text())["counts"]["supported"] == 1

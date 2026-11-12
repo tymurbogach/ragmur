@@ -5,6 +5,7 @@ import hashlib
 import json
 import logging
 import math
+import os
 import platform
 import subprocess
 from collections import Counter
@@ -42,20 +43,29 @@ def main() -> None:
     parser.add_argument("--split", choices=("dev", "test"), required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, default=Path("eval/nli_cases.yaml"))
+    parser.add_argument("--details", type=Path, help="Optional output for per-claim scores")
     args = parser.parse_args()
     path = args.dataset
     raw = path.read_bytes()
     cases = yaml.safe_load(raw)
+    selected = [case for case in cases if case["split"] == args.split]
+    if not selected:
+        raise ValueError("Selected evaluation split is empty")
     settings = get_settings()
     verifier = load_verifier(settings)
-    selected = [case for case in cases if case["split"] == args.split]
     premises = [case["premise"] for case in selected for claim in case["claims"]]
     claims = [claim for case in selected for claim in case["claims"]]
+    identifiers = [
+        (case["id"], index) for case in selected for index, _ in enumerate(case["claims"])
+    ]
     scores = verifier.score_pairs(
         premises, [claim["text"] for claim in claims], settings.nli_batch_size
     )
     matrix = {actual: dict.fromkeys(LABELS, 0) for actual in LABELS}
-    for claim, (ent, contra) in zip(claims, scores, strict=True):
+    details = []
+    for claim, (ent, contra), (case_id, claim_index) in zip(
+        claims, scores, identifiers, strict=True
+    ):
         if contra >= settings.verify_contradiction_threshold:
             verdict = "contradicted"
         elif ent >= settings.verify_supported_threshold:
@@ -65,6 +75,16 @@ def main() -> None:
         else:
             verdict = "unsupported"
         matrix[claim["label"]][verdict] += 1
+        details.append(
+            {
+                "case_id": case_id,
+                "claim_index": claim_index,
+                "expected": claim["label"],
+                "verdict": verdict,
+                "entailment": ent,
+                "contradiction": contra,
+            }
+        )
     counts = Counter(claim["label"] for claim in claims)
     unsupported = counts["unsupported"] + counts["contradicted"]
     false_support = matrix["unsupported"]["supported"] + matrix["contradicted"]["supported"]
@@ -87,6 +107,10 @@ def main() -> None:
         "revision": settings.nli_revision,
         "device": settings.resolved_device,
         "hardware": {"platform": platform.platform(), "cpu": cpu_model},
+        "thread_settings": {
+            "OMP_NUM_THREADS": os.environ.get("OMP_NUM_THREADS"),
+            "MKL_NUM_THREADS": os.environ.get("MKL_NUM_THREADS"),
+        },
         "commit": commit,
         "thresholds": {
             "supported": settings.verify_supported_threshold,
@@ -101,12 +125,15 @@ def main() -> None:
             "rate": false_support / unsupported if unsupported else None,
             "wilson_95": wilson_interval(false_support, unsupported),
         },
-        "limitations": "Small manually authored functional set; not representative of deployment.",
+        "limitations": "Results apply only to this dataset; review relevance independently.",
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    if args.details is not None:
+        args.details.parent.mkdir(parents=True, exist_ok=True)
+        args.details.write_text(json.dumps(details, indent=2) + "\n", encoding="utf-8")
     logging.warning("NLI evaluation saved to %s", args.output)
 
 
