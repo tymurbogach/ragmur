@@ -1,0 +1,426 @@
+# FROZEN F01 (2026-11-13): 24 documentos, 18 dev / 6 test. No añadir,
+# quitar ni cambiar particiones sin una fase que lo autorice.
+# `document_id` es la clave estable del corpus: todo caso de
+# `eval/eu_nli_dev.yaml` y `eval/eu_nli_test.yaml` usa el `document_id`
+# del manifiesto y su `split` coincide con el declarado aquí.
+# Detalle de auditoría y protocolo en `eval/NLI.md` (sección F01).
+- document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  title: Breve guía de la UE
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/736395fe-fbf9-11f0-8da5-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=736395fe-fbf9-11f0-8da5-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Breve guía de la UE. Oficina de Publicaciones de la
+    Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 784f856adce4c0963137f00774b5a522fe2968266e9bdcde12b7cf4d69aa0ab2
+  bytes: 5043882
+  pages: 36
+  extracted_chars: 41268
+  extraction_warnings: []
+- document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  title: La UE en 2025
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/a43004fd-12ef-11f1-8870-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=a43004fd-12ef-11f1-8870-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. La UE en 2025. Oficina de Publicaciones de la Unión
+    Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 4
+  sha256: d736f4f51d17e89d742b81c56b443f6fb78cd57dfc3e92c26ccba911bd3a13cf
+  bytes: 14376466
+  pages: 119
+  extracted_chars: 277091
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+- document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  title: Comprender la unión económica y monetaria
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/9cf1c742-2448-11ee-94cb-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=9cf1c742-2448-11ee-94cb-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Comprender la unión económica y monetaria. Oficina de
+    Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 27
+  sha256: c134b960c6e88af66f84b9e2aa69309a94a8f6d7004af36ba4a6fe183fd29a1a
+  bytes: 8242558
+  pages: 28
+  extracted_chars: 36589
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+- document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  title: La estrategia Global Gateway
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. La estrategia Global Gateway. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 4fe9557df7c8a3ac7e5faa0f78f306e1d1242420bbf9980f442d6113552b204b
+  bytes: 3073249
+  pages: 20
+  extracted_chars: 34311
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+- document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  title: Monitor de la Educación y la Formación de 2025
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/3b55834e-bf89-11f0-a612-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=3b55834e-bf89-11f0-a612-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Monitor de la Educación y la Formación de 2025. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 4
+  sha256: 56256cc2b269c450dec82dba9e693a32135bf1daa332041d2340161cf66f4d38
+  bytes: 5013654
+  pages: 20
+  extracted_chars: 51330
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+- document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  title: La etiqueta ecológica de la UE
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. La etiqueta ecológica de la UE. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 0fe7291fc19b58950b656fbb67cb5ab0dbafa99c321254ffa895e135ce0ec289
+  bytes: 6631216
+  pages: 20
+  extracted_chars: 38435
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+- document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  title: Opciones de contenido educativo digital
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/1fa0183b-dbbe-11f0-8da2-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=1fa0183b-dbbe-11f0-8da2-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Opciones de contenido educativo digital. Oficina de
+    Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 831584fc204df9d549bb72dfbd5fc698f2e522e5a25a82a81507be96e803d35e
+  bytes: 11912712
+  pages: 56
+  extracted_chars: 132397
+  extraction_warnings: []
+- document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  title: IA ética en la enseñanza
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/f692aa0b-17a7-11f1-8870-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=f692aa0b-17a7-11f1-8870-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. IA ética en la enseñanza. Oficina de Publicaciones de
+    la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: ab6a2720ed22ba046ced5130ea826d43ff88b22621c85fba22f29368c0e074df
+  bytes: 8552892
+  pages: 50
+  extracted_chars: 172399
+  extraction_warnings: []
+- document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  title: Europa, mejor juntos
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/7eee7159-da2b-11f0-8da2-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=7eee7159-da2b-11f0-8da2-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Europa, mejor juntos. Oficina de Publicaciones de la
+    Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 8ae48a1c8387cf7be568e235eeb095b936d3278564372a86bdbb521944ee6d24
+  bytes: 13563542
+  pages: 63
+  extracted_chars: 127632
+  extraction_warnings:
+  - 5 páginas contienen poco o ningún texto
+- document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  title: Monitor de la educación y la formación de 2023
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Monitor de la educación y la formación de 2023. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 8a34cee6a36447f06343d6b3e5ffcb39e07d15aac3cbd3fec1db87bc62164024
+  bytes: 1926986
+  pages: 24
+  extracted_chars: 47684
+  extraction_warnings:
+  - 4 páginas contienen poco o ningún texto
+- document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  title: El estado de la naturaleza en la UE
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/e733191f-5c65-11eb-b487-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=e733191f-5c65-11eb-b487-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El estado de la naturaleza en la UE. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 8
+  sha256: 409147f1d582e94483ce3311276c073a4f4c7c647cc0c3b35020f45ee506758c
+  bytes: 2157763
+  pages: 8
+  extracted_chars: 20252
+  extraction_warnings: []
+- document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  title: El presupuesto de Europa
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/2acad822-fe54-11f0-8da5-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=2acad822-fe54-11f0-8da5-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El presupuesto de Europa. Oficina de Publicaciones de
+    la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 8
+  sha256: 4afc822dea51a1f0e8fe96a30da68d1cef5250fc9641f439ad67333da0435510
+  bytes: 1399620
+  pages: 8
+  extracted_chars: 15676
+  extraction_warnings: []
+- document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  title: Ficha informativa sanitaria
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/9af3bbaf-5559-11f0-a9d0-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=9af3bbaf-5559-11f0-a9d0-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Ficha informativa sanitaria. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 5
+  sha256: 638a33f31f2a100652305f1cf93210fbde05583f69351f59dead13597a7f18bd
+  bytes: 294817
+  pages: 5
+  extracted_chars: 27539
+  extraction_warnings: []
+- document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  title: Energía limpia para todos los europeos
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/b4e46873-7528-11e9-9f05-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=b4e46873-7528-11e9-9f05-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Energía limpia para todos los europeos. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 2
+  sha256: 83e77d3b7bc29d2ff995a9d91922ce65e2dbd266d1ba0a9fcf384402404441dd
+  bytes: 1440560
+  pages: 26
+  extracted_chars: 63177
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+- document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  title: Premios a la inspiración rural 2021
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/a18b60ce-d888-11eb-895a-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=a18b60ce-d888-11eb-895a-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Premios a la inspiración rural 2021. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 2
+  sha256: fe58e88954eb526fdcad6da2f3447bc7b0dea82373310b5aed30396f43e4f522
+  bytes: 4748262
+  pages: 32
+  extracted_chars: 125308
+  extraction_warnings: []
+- document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  title: Breve guía de la UE, edición 2024
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/6e83d2c4-e503-11ef-bc1c-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=6e83d2c4-e503-11ef-bc1c-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Breve guía de la UE, edición 2024. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: c259c961bd78e66fb4268aa4405135e09fe93730573b314baf150a770f418ad6
+  bytes: 6970964
+  pages: 36
+  extracted_chars: 41282
+  extraction_warnings: []
+- document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  title: Cómo detectar y combatir la desinformación
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/543ccb41-26d3-11ef-a195-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=543ccb41-26d3-11ef-a195-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Cómo detectar y combatir la desinformación. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 45be8e818ea5e06a2e7236b5128f33779d7925905fb6cb0cb28f02eb6c275ea8
+  bytes: 5146795
+  pages: 19
+  extracted_chars: 27194
+  extraction_warnings: []
+- document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  title: El Reglamento de Servicios Digitales explicado
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/33740183-a581-11f0-a7c5-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=33740183-a581-11f0-a7c5-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El Reglamento de Servicios Digitales explicado. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 24
+  sha256: a46b03f851a76355c5f8011905c488f57b151b2cb2833a2e010e3f75360234a0
+  bytes: 12289903
+  pages: 24
+  extracted_chars: 31187
+  extraction_warnings:
+  - 4 páginas contienen poco o ningún texto
+- document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  title: Panel europeo de ciudadanos sobre equidad intergeneracional
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Panel europeo de ciudadanos sobre equidad intergeneracional.
+    Oficina de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: a544f83b0dcebacc3084c70906303c970fbc27b1fd8f0dd72ffb18ca8a6f5b9c
+  bytes: 7808362
+  pages: 52
+  extracted_chars: 152867
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+- document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  title: Una Unión que se esfuerza por lograr más resultados
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/43a17056-ebf1-11e9-9c4e-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=43a17056-ebf1-11e9-9c4e-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. Una Unión que se esfuerza por lograr más resultados.
+    Oficina de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización con atribución indicada en el PDF
+  rights_page: 2
+  sha256: b1890477003a65a6c1dda4f7a335fb29c48a2149b72affbf3713a3258292de37
+  bytes: 1311527
+  pages: 28
+  extracted_chars: 64207
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+- document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  title: El presupuesto europeo
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/186d5adb-d5d7-11f0-8da2-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=186d5adb-d5d7-11f0-8da2-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El presupuesto europeo. Oficina de Publicaciones de
+    la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 883cb0084f27bb9ca1faaed14b5e20aa13728f3e78022b9493dc90c9a988c7c1
+  bytes: 157803
+  pages: 2
+  extracted_chars: 5452
+  extraction_warnings: []
+- document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  title: El rape en la UE
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/06d73220-b88a-11f1-81de-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=06d73220-b88a-11f1-81de-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El rape en la UE. Oficina de Publicaciones de la Unión
+    Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 3
+  sha256: 1d0dca0167196e5ede65b86dd1acb5c311c72453777295084df1d8f991495bab
+  bytes: 879282
+  pages: 13
+  extracted_chars: 28012
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+- document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  title: 'Misión de la UE: restaurar nuestro océano y nuestras aguas'
+  split: dev
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: 'Unión Europea. Misión de la UE: restaurar nuestro océano y nuestras
+    aguas. Oficina de Publicaciones de la Unión Europea.'
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 3
+  sha256: 61885815ef16f9c6ec3ee04bcffda2a092089001c33bfe3c2072983a81c6e6a6
+  bytes: 297781
+  pages: 3
+  extracted_chars: 6581
+  extraction_warnings: []
+- document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  title: El presupuesto de Europa para investigación
+  split: test
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/110f1996-8159-11f0-9af8-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=110f1996-8159-11f0-9af8-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-12
+  attribution: Unión Europea. El presupuesto de Europa para investigación. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: 6d38b35fb8aba6726d8795b0ec22e05f6c4758a00a7966b38f8106f7d8e6adff
+  bytes: 142099
+  pages: 2
+  extracted_chars: 4619
+  extraction_warnings: []

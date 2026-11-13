@@ -1,0 +1,18 @@
+# eu_nli_dev.yaml — F01: esquema congelado, PENDING HUMAN REVIEW.
+# Sin etiquetas válidas: este fichero NO es verdad ni calibra umbrales.
+# Objetivo F02: pares revisados por humanos sobre los 18 documentos dev del
+# manifiesto, con troceado real 800/120 y cobertura de negación, cifras/fechas
+# y correferencia. Equilibrio objetivo del corpus total: 100 supported /
+# 100 contradicted / 100 unsupported (ver `eval/NLI.md`, sección F01).
+# Cada caso exige: `id` único, `document_id` del manifiesto con split dev,
+# `split: dev`, `premise` (chunk exacto del extractor + troceador), `claims`
+# con `text` y `label` (supported | contradicted | unsupported). Sin `weak`
+# como etiqueta de referencia. Doble anotación ciega + adjudicación; los
+# desacuerdos se publican. Prohibido ejecutar NLI sobre estos pares hasta
+# completar la anotación. Ningún documento cruza a test.
+# Documentos dev asignados (autoritativo: `eval/eu_manifest.yaml`):
+# 736395fe, a43004fd, a0d2cd8c, aaf2a1b7, 1fa0183b, f692aa0b, 7eee7159,
+# bc11dbbe, 2acad822, 9af3bbaf, b4e46873, a18b60ce, 6e83d2c4, 33740183,
+# f12b6c43, 43a17056, 186d5adb, 06b9b2a8.
+# PENDING HUMAN REVIEW: 0 pares revisados; no usar para calibrar ni publicar.
+[]

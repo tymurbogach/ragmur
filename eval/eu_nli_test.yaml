@@ -1,0 +1,15 @@
+# eu_nli_test.yaml — F01: esquema congelado, PENDING HUMAN REVIEW.
+# Sin etiquetas válidas: este fichero NO es verdad ni abre la reserva.
+# La reserva test está quemada a nivel de borradores IA (`eut-*`, `euh2-*`
+# y `eval/results/nli-ai-heldout*` / `*holdout2*`): esos artefactos se
+# excluyen como oro y `eval/check_nli_leak.py` rechaza reutilizar sus
+# identificadores. Esta reserva nueva por documento parte de cero pares y
+# solo recibe pares humanos con doble anotación + adjudicación.
+# En esta fase se prohíbe cualquier `nli_run` sobre test. Solo dev o nada.
+# Cada caso exige: `id` único, `document_id` del manifiesto con split test,
+# `split: test`, `premise` (chunk exacto del extractor + troceador),
+# `claims` con `text` y `label` (supported | contradicted | unsupported).
+# Documentos test asignados (autoritativo: `eval/eu_manifest.yaml`):
+# 9cf1c742, 3b55834e, e733191f, 543ccb41, 06d73220, 110f1996.
+# PENDING HUMAN REVIEW: 0 pares revisados; no ejecutar, no publicar.
+[]

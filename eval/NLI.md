@@ -122,14 +122,22 @@ La hipótesis afirma que tienen carácter secundario; el verificador la clasific
 En otros ejemplos, como `inferes-329` y `inferes-6167`, la etiqueta original admite dudas.
 Estos ejemplos requieren revisión independiente; no se excluyen de la matriz inicial.
 
-Para explorar el compromiso entre respaldos correctos y falsos sin cambiar Ragmur:
+Para seleccionar un umbral, primero puntúa solo el desarrollo del nuevo corpus español.
+Los casos deben llevar `document_id` para comprobar que ningún documento cruza particiones.
+Revisa las etiquetas antes de ejecutar el modelo y conserva los desacuerdos de revisión.
+
+Después compara los umbrales candidatos sobre el archivo de puntuaciones de desarrollo:
 
 ```bash
-uv run python -m eval.nli_thresholds --details /tmp/nli-details.json --support 0.75 --support 0.85 --support 0.90 --support 0.95 --support 0.99 --contradiction 0.75 --output /tmp/nli-thresholds.json
+uv run python -m eval.nli_thresholds --details /tmp/nli-details.json --support 0.75 --support 0.85 --support 0.90 --support 0.95 --support 0.99 --contradiction 0.75 --weak 0.5 --minimum-recall 0.5 --output /tmp/nli-thresholds.json
 ```
 
-La comparación conserva la precedencia del umbral de contradicción.
-No selecciona un umbral ni sustituye la evaluación de una partición reservada.
+La selección conserva la precedencia de contradicción y excluye umbrales con recall de respaldo inferior al 50 %.
+Entre los restantes elige la menor tasa de respaldo falso; en un empate elige mayor recall.
+Los umbrales de contradicción y `weak` deben fijarse también con los datos de desarrollo antes de abrir la reserva.
+La selección no modifica la configuración de Ragmur ni ejecuta la partición reservada.
+`eval.nli_run` rechaza sobrescribir un resultado reservado y reporta los tres criterios numéricos.
+Solo una muestra española revisada puede servir para la aceptación; los diagnósticos siguientes no la sustituyen.
 
 La comparación exploratoria de cinco umbrales de respaldo está en
 `eval/results/nli-thresholds-development-2026-11-12.json`.
@@ -139,3 +147,57 @@ En SciFact, 0,75 produce seis respaldos falsos y reconoce 93 de 183 respaldos et
 Con 0,95 produce cuatro respaldos falsos y reconoce 59 de 183.
 Son muestras de desarrollo con límites distintos; no se han elegido ni cambiado los umbrales.
 Antes de elegir uno hay que acordar el compromiso aceptable y evaluar datos reservados.
+
+## F01: protocolo congelado y partición por documento (2026-11-13)
+
+El manifiesto `eval/eu_manifest.yaml` queda congelado en 24 documentos
+(18 dev / 6 test). `document_id` es la clave estable del corpus: todo caso
+de `eval/eu_nli_dev.yaml` y `eval/eu_nli_test.yaml` usa el `document_id`
+del manifiesto y su `split` coincide con el declarado allí.
+`eval/check_nli_leak.py` lo comprueba por documento en verde antes de
+cualquier calibración.
+
+### Auditoría de reservas: ambas quemadas
+
+| Reserva | Artefacto | Prueba de ejecución o inspección |
+|---|---|---|
+| test `eut-*` (6 docs del manifiesto) | `eval/eu_nli_test_ai_provisional_frozen.yaml` (SHA-256 `6c5559ac…`) | `eval/results/nli-ai-heldout-provisional-2026-11-13.json` (split test, umbrales 0,97/0,5/0,75) registra el mismo SHA como `dataset_sha256`; el informe de comparación inspeccionó esos resultados para elegir umbrales |
+| holdout2 `euh2-*` (11 docs fuera del manifiesto) | `eval/eu_nli_holdout2_ai_curated.yaml` (SHA-256 `c4ae0d93…`) | `eval/results/nli-ai-holdout2-2026-11-13.json` (split test, 93/93/93) registra el mismo SHA como `dataset_sha256` |
+
+Las etiquetas de esos borradores las propuso una IA sin revisión humana
+(`status: ai_proposal`, `gold: false`): nunca son verdad ni calibran.
+Se excluyen como oro y sus identificadores quedan bloqueados.
+La reserva test congelada (`eval/eu_nli_test.yaml`) es nueva por documento:
+parte de cero pares y solo admite pares humanos. Los 6 documentos test ya
+fueron inspeccionados a nivel de borrador IA; ese es el riesgo residual
+declarado: los umbrales siguen provisionales y sin cambiar, y la reserva
+solo se abre una vez en F03 con pares escritos a ciegas de las puntuaciones.
+
+### Esquema de los 300 pares revisados (pendiente)
+
+Objetivo: 300 pares (100 supported / 100 contradicted / 100 unsupported),
+repartidos por documento sin cruzar dev y test. Premisas con chunks reales
+del extractor y troceador del proyecto (800/120). Cobertura obligatoria de
+negación, cifras y fechas, y correferencia. Doble anotación ciega por par
+más adjudicación de desacuerdos; los desacuerdos se publican y los pares
+ambiguos sin resolución se sustituyen por otro del mismo fenómeno.
+Estado F01: 0 pares revisados. Ambos conjuntos llevan esquema más
+`PENDING HUMAN REVIEW`; no calibran, no evalúan y no publican cifras.
+
+### Regla de umbrales y definiciones
+
+`eval/nli_thresholds.py` (`select_support_threshold`) aplica: precedencia
+de contradicción sobre respaldo; `0 <= weak < support <= 1` con contradicción
+en `[0, 1]`; `minimum-recall` 0,5 sobre respaldo; entre los elegibles gana la
+menor tasa de respaldo falso y el desempate usa mayor recall.
+Respaldo falso: caso etiquetado `unsupported` o `contradicted` que el
+verificador clasifica como `supported`; `weak` no cuenta como respaldo.
+El intervalo de Wilson del 95 % mide la incertidumbre de esa tasa bajo
+supuestos de independencia que compartir fragmentos y documentos vulnera:
+con pocos documentos es descriptivo y no generaliza a producción.
+
+### Prohibición de esta fase
+
+Ningún `nli_run` sobre test en F01. Solo dev o nada. El corpus de aceptación
+usa `--require-document-id` y guarda detalles con puntuaciones, sin texto,
+fuera de Git; solo los resúmenes dev se versionan en `eval/results/`.

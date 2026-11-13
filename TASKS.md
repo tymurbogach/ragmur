@@ -9,11 +9,11 @@
 
 ## 2. Current state
 
-- What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo (35 docs, 27 consultas, 20 positivas + 7 negativas). NLI funcional con umbrales provisionales 0.75/0.5/0.75. Despliegue privado de prueba en Skynet con GPU, 88 docs `indexed`, 10 PDF públicos UE.
-- Broken or pending work: 1.8 sin calibración representativa ni matriz de confusión en reserva (faltan 300 etiquetas revisadas). 1.9 sin corpus real versionado, sin demo pública, sin endurecimiento de red, sin runbook de copia/restauración versionado.
-- Git branch: `main`, ahead 55 sobre `origin/main` (sin push autorizado).
-- Last review: crítica independiente 2026-11-13 a propuesta F01-F03 (exige protocolo pre-registrado, barrera dev/reserva, diseño proxy demo, trazabilidad Git).
-- Existing local changes: `M README.md, ROADMAP.md, eval/NLI.md, eval/nli_run.py, eval/nli_thresholds.py, tests/eval/*`; ~70 `??` en `eval/` (candidatos AI, resultados `nli-ai-*`, formularios holdout2, informes `skynet_*_2026-11-13.md` sin versionar). Ninguna cifra citable hasta triar.
+- What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo. F01 protocolo NLI congelado: manifiesto 24 docs (18 dev / 6 test), `document_id` obligatorio, reservas `eut-*`/`euh2-*` quemadas, datasets dev/test vacíos con `PENDING HUMAN REVIEW`, anti-fuga en verde. Umbrales siguen provisionales 0.75/0.5/0.75.
+- Broken or pending work: faltan 300 pares humanos (0/300); F02 calibración dev bloqueada hasta anotación. 1.9 sin corpus versionado, sin demo pública, sin endurecimiento, sin runbook versionado.
+- Git branch: `main`, ahead 56 sobre `origin/main` tras snapshot de plan (sin push autorizado).
+- Last review: revisión nativa F01 2026-11-13 (tests ejecutan comportamiento; sin bloqueos de lógica; alcance de commit restringido a F01).
+- Existing local changes tras F01: quedan `M README.md, ROADMAP.md` y ~70 `??` en `eval/` fuera del commit F01 (se trian en F04). Ninguna cifra citable hasta anotación.
 - Required test capabilities and unavailable gates: Docker PG+Qdrant reales, CPU Intel Core Ultra 9 285H y/o RTX 5080 Skynet, modelos fijados (bge-m3, reranker `953dc6f`, NLI `b5113eb`). Sin exposición pública autorizada. Sin autorización de push/demo/DNS/firewall.
 
 ## 3. Architecture and technology
@@ -51,28 +51,12 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| F01 | Protocolo NLI y congelación de dataset | Pending |
+| F01 | Protocolo NLI y congelación de dataset | Completed |
 | F02 | Calibración de umbrales solo en dev | Pending |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Pending |
 | F05 | Diseño proxy demo y endurecimiento | Pending |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
-
-### F01: Protocolo NLI y congelación de dataset
-
-- Objective: fijar qué vale como verdad antes de tocar la reserva y congelar dev/test por documento.
-- Tasks:
-  - [ ] Auditar `eval/eu_nli_*test*`, `*holdout2*`, `results/nli-ai-heldout*`: declarar qué reserva está quemada y regenerarla por documento si se inspeccionó.
-  - [ ] Congelar `eu_manifest.yaml` (24 docs: 18 dev / 6 test) y exigir `document_id` = clave manifiesto.
-  - [ ] Definir 300 pares revisados humanos (100 supported / 100 contradicted / 100 unsupported, chunks reales 800/120, cobertura negación + cifras/fechas + correferencia, doble anotación + adjudicación, desacuerdos publicados).
-  - [ ] Fijar regla `nli_thresholds.py` (precedencia contradicted, `0<=weak<support<=1`, `minimum-recall 0.5`, menor tasa respaldo falso, desempate mayor recall) y definición respaldo falso + Wilson 95%.
-- Dependencies: ninguna.
-- Acceptance criteria: protocolo versionado; script anti-fuga por documento en verde; ningún `nli_run` sobre test en esta fase.
-- Required tests: `uv run ruff check .`, `uv run mypy`, `uv run pytest tests/eval/test_nli_run.py tests/eval/test_nli_thresholds.py -q`, anti-fuga.
-- Test evidence: no run.
-- Files changed: `eval/NLI.md`, `eval/eu_manifest.yaml`, `eval/eu_nli_dev.yaml`, `eval/eu_nli_test.yaml`, scripts.
-- Risks: etiquetas AI usadas como verdad invalidan calibración; reserva inspeccionada deja de ser reserva.
-- Status: Pending
 
 ### F02: Calibración de umbrales solo en dev
 
@@ -156,10 +140,11 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 | Phase | Outcome | Verification | Commit |
 |-------|---------|--------------|--------|
 | — | 1.1-1.6 + 1.7 línea base heredadas de ROADMAP | Ver ROADMAP/DECISIONS | — |
+| F01 | Protocolo congelado, reservas quemadas declaradas, dev/test vacíos, anti-fuga verde | Lead: `ruff check` pass, `mypy` 123 files OK, `pytest tests/eval/test_nli_run+thresholds+check_nli_leak` 20 passed, `check_nli_leak` verde (1200 IDs quemados locales, dev/test 0 pares). Escritor coincide. Sin `nli_run` en fase. Decisión: citas NLI a SHAs AI son declarativas; inventario verificable o purga en F04. Riesgo residual: 6 docs test inspeccionados a nivel borrador. | F01: freeze NLI dataset protocol and anti-leak checks |
 
 ## 8. Recommended next action
 
-- Next phase: ninguna hasta aprobación explícita del plan.
-- Resume command: tras aprobar `TASKS.md`, `run F01` (y luego en orden; `run all` solo con petición explícita).
-- Suggested effort: high (F01-F06 cruzan evaluación humana, Skynet y red).
-- Autorizaciones pendientes: aprobar `TASKS.md` y su commit snapshot; exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
+- Next phase: F02 (bloqueada hasta anotación humana de 300 pares; no ejecutar `nli_run` dev hasta entonces).
+- Resume command: `run F02` cuando existan pares dev revisados; `run all` continúa en orden tras F02.
+- Suggested effort: high (F02-F06 cruzan evaluación humana, Skynet y red).
+- Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus. Plan snapshot ya en Git (`Taskflow: record approved plan`).
