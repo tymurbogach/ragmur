@@ -1,0 +1,176 @@
+{
+  "header": "F07 DIAGNÓSTICO sintético EN+ES solo dev local, sin LLM. No calibrar, no cerrar 1.8. Umbrales 0.75/0.5/0.75 intactos.",
+  "date": "2026-11-13T17:17:38.304038+00:00",
+  "commit": "ec7e26c569bf80e126b600a85c3a20517df1ef44",
+  "device": "cpu",
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H"
+  },
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+  "thresholds": {
+    "supported": 0.75,
+    "weak": 0.5,
+    "contradicted": 0.75
+  },
+  "manifest": {
+    "path": "eval/eu_auto_manifest.yaml",
+    "sha256": "98c7e01cad321a85d67bbc7c40adbaa5416081cc13801e2dd068051ce6794f0c",
+    "total": 35,
+    "dev": 26,
+    "test": 9,
+    "es_dev": 11,
+    "en_dev": 15,
+    "es_test": 4,
+    "en_test": 5,
+    "ids_prefix": "eua-",
+    "frozen_untouched": true
+  },
+  "datasets": {
+    "es": {
+      "path": "eval/eu_nli_dev_auto_es.yaml",
+      "sha256": "bb356a3cfb89d320a3c93e3febb2bab7b3a64f09b17793d0256cf961979f7375",
+      "cases": 300,
+      "counts": {
+        "supported": 100,
+        "contradicted": 100,
+        "unsupported": 100
+      },
+      "rules": {
+        "supported_verbatim": 100,
+        "contradicted_negation": 39,
+        "contradicted_entity": 30,
+        "contradicted_date": 20,
+        "contradicted_numeric": 11,
+        "unsupported_crossdoc": 100
+      }
+    },
+    "en": {
+      "path": "eval/eu_nli_dev_auto_en.yaml",
+      "sha256": "db35d72c910c8b177e13c35c83f5064ef8271a2dbe17eba3c0569c6eedf799a5",
+      "cases": 300,
+      "counts": {
+        "supported": 100,
+        "contradicted": 100,
+        "unsupported": 100
+      },
+      "rules": {
+        "supported_verbatim": 100,
+        "contradicted_numeric": 20,
+        "contradicted_negation": 36,
+        "contradicted_entity": 30,
+        "contradicted_date": 14,
+        "unsupported_crossdoc": 100
+      }
+    }
+  },
+  "matrices": {
+    "es": {
+      "N": 300,
+      "confusion": {
+        "supported": {
+          "supported": 18,
+          "weak": 7,
+          "unsupported": 73,
+          "contradicted": 2
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 6,
+          "weak": 5,
+          "unsupported": 88,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 0,
+          "weak": 1,
+          "unsupported": 12,
+          "contradicted": 87
+        }
+      },
+      "false_support": {
+        "numerator": 6,
+        "denominator": 200,
+        "rate": 0.03,
+        "wilson_95": [
+          0.013820314340111346,
+          0.06389429245451925
+        ]
+      },
+      "supported_recall": {
+        "numerator": 18,
+        "denominator": 100,
+        "rate": 0.18
+      }
+    },
+    "en": {
+      "N": 300,
+      "confusion": {
+        "supported": {
+          "supported": 26,
+          "weak": 7,
+          "unsupported": 63,
+          "contradicted": 4
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 6,
+          "weak": 4,
+          "unsupported": 86,
+          "contradicted": 4
+        },
+        "contradicted": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 17,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 6,
+        "denominator": 200,
+        "rate": 0.03,
+        "wilson_95": [
+          0.013820314340111346,
+          0.06389429245451925
+        ]
+      },
+      "supported_recall": {
+        "numerator": 26,
+        "denominator": 100,
+        "rate": 0.26
+      }
+    }
+  },
+  "sampling_audit": {
+    "scope": "solo dev, por muestreo determinista sin LLM",
+    "supported_containment_checked": 60,
+    "supported_containment_ok": 60,
+    "unsupported_guard_checked": 60,
+    "unsupported_guard_ok": 60,
+    "real_chunks_checked": 20,
+    "real_chunks_ok": 20,
+    "note": "Muestreo automatizado en tests/eval/test_nli_auto.py (contención verbatim, guarda léxica Jaccard<0.3 sin dígitos comunes, premisa==chunk 800/120). Revisión manual de 12 casos: negación y cifra/fecha/entidad mutan lo esperado; verbatim incluye 1 fragmento por corte 800 (eua-es-001) y dobles consecutivas; cross-doc mismo idioma con guarda."
+  },
+  "limitations": "OPTIMISMO SINTÉTICO DECLARADO: verbatim por contención infla la señal de respaldo frente a afirmaciones reales; mutación mínima (cifra/fecha/entidad) es ruidosa y puede no ser contradicción semántica plena; cross-doc con guarda léxica es trivial y subestima el respaldo falso real. Wilson 95% descriptivo con N=200 para respaldo falso y N=100 para recall; compartir fragmentos/documentos vulnera independencia y no generaliza a producción. Solo CPU local Intel Core Ultra 9 285H; nada de Skynet/5080/CUDA. Solo split dev; prohibido test en esta fase. Ninguna cifra calibra umbrales ni cierra 1.8. Detalles con scores sin texto en /tmp, fuera de Git; solo resúmenes dev versionados.",
+  "files_changed": [
+    "eval/eu_auto_manifest.yaml",
+    "eval/eu_nli_dev_auto_es.yaml",
+    "eval/eu_nli_dev_auto_en.yaml",
+    "eval/check_nli_leak.py",
+    "tests/eval/test_nli_auto.py",
+    "eval/results/nli-auto-dev-es-2026-11-13.json",
+    "eval/results/nli-auto-dev-en-2026-11-13.json"
+  ]
+}

@@ -9,12 +9,12 @@
 
 ## 2. Current state
 
-- What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo. F01 protocolo NLI congelado: manifiesto 24 docs (18 dev / 6 test), `document_id` obligatorio, reservas `eut-*`/`euh2-*` quemadas, datasets dev/test vacíos con `PENDING HUMAN REVIEW`, anti-fuga en verde. Umbrales siguen provisionales 0.75/0.5/0.75.
-- Broken or pending work: faltan 300 pares humanos (0/300); F02 calibración dev sigue BLOCKED hasta anotación humana. Propuesta de tests grandes EN+ES solo como diagnóstico dev local, sin calibrar ni cerrar 1.8. 1.9 sin corpus versionado, sin demo pública, sin endurecimiento, sin runbook versionado.
-- Git branch: `main`, ahead 58 sobre `origin/main` tras F01 y nota F02-BLOCKED (sin push autorizado).
-- Last review: crítica independiente 2026-11-13 al plan sintético EN+ES: rechaza sustituto de 300 humanos; acepta solo diagnóstico dev local con 10 condiciones; `weak` no calibrado; sin promedios mixtos; test ciego único.
-- Existing local changes: `M README.md, ROADMAP.md` y ~70 `??` en `eval/` fuera de commits F01 (se trian en F04). Ninguna cifra citable hasta anotación humana.
-- Required test capabilities and unavailable gates: solo CPU local Intel Core Ultra 9 285H para este ciclo; nada de Skynet/5080, nada de `ssh skynet-ts`. Docker PG+Qdrant locales, modelos fijados (bge-m3, reranker `953dc6f`, NLI `b5113eb`). Sin exposición pública autorizada. Sin autorización de push/demo/DNS/firewall.
+- What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo. F01 protocolo congelado. F07 diagnóstico auto dev-local: manifiesto 35 docs (26 dev/9 test, IDs `eua-*`), 300 ES + 300 EN dev (100/100/100, `gold:false`), anti-fuga verde, NLI CPU ES recall 0.18 / EN 0.26, falso respaldo 0.03 Wilson [0.0138,0.0639]. Umbrales siguen provisionales 0.75/0.5/0.75; nada calibra ni cierra 1.8.
+- Broken or pending work: faltan 300 pares humanos (0/300); F02 sigue BLOCKED. 1.9 sin corpus versionado, sin demo pública, sin endurecimiento, sin runbook versionado.
+- Git branch: `main`, ahead 59 sobre `origin/main` (sin push autorizado).
+- Last review: revisión F07 2026-11-13: 16 tests en fichero (12 ejecutan comportamiento, 2 estáticos); sin bloqueos para diagnóstico; 3 hallazgos bajos (umbral guarda 0.2/0.3, código muerto weak, anti-test frágil) anotados sin reparar en fase.
+- Existing local changes tras F07: quedan `M README.md, ROADMAP.md` ajenos y `??` viejos en `eval/` (se trian en F04).
+- Required test capabilities and unavailable gates: solo CPU local Intel Core Ultra 9 285H para este ciclo; nada de Skynet/5080. Docker PG+Qdrant locales, modelos fijados (bge-m3, reranker `953dc6f`, NLI `b5113eb`). Sin exposición pública autorizada. Sin autorización de push/demo/DNS/firewall.
 
 ## 3. Architecture and technology
 
@@ -57,7 +57,7 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 | F04 | Corpus real y runbook copia/restore/reindex | Pending |
 | F05 | Diseño proxy demo y endurecimiento | Pending |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
-| F07 | Diagnóstico sintético EN+ES solo dev local | Pending |
+| F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 
 ### F02: Calibración de umbrales solo en dev
 
@@ -73,22 +73,6 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 - Files changed: ninguno en F02.
 - Risks: n pequeña -> Wilson ancho; InferES/SciFact solo diagnóstico. Riesgo principal: anotación humana de 300 pares fuera del alcance de agentes.
 - Status: BLOCKED — faltan 300 pares humanos (100/100/100) con doble anotación + adjudicación. No lanzar escritor hasta que existan.
-
-### F07: Diagnóstico sintético EN+ES solo dev local
-
-- Objective: tener señal automática grande EN+ES sin fingir calibración ni cerrar 1.8.
-- Tasks:
-  - [ ] Congelar manifiesto auto separado con SHA, procedencia, permisos y partición por `document_id` 75/25, sin reutilizar `eut-*`/`euh2-*` ni tocar `eu_nli_test.yaml`.
-  - [ ] Generar ~300 ES + ~300 EN solo dev con reglas deterministas sobre chunks reales 800/120: `supported` verbatim por contención, `contradicted` por mutación cerrada, `unsupported` cross-doc con guarda; etiquetas `gold: false`, `status: auto_rule_v1`, nunca `weak` como referencia.
-  - [ ] Auditoría solo en dev por muestreo; matrices separadas ES/EN con N y Wilson 95%; declarar optimismo sintético.
-  - [ ] Extender `check_nli_leak` a IDs auto y dejar en verde antes de cualquier `nli_run`; prohibir `nli_run --split test` en esta fase.
-- Dependencies: F01.
-- Acceptance criteria: datasets auto dev versionados con esquema válido; anti-fuga verde; informe diagnóstico dev con matriz 3x3 por lengua + respaldo falso + Wilson; umbrales siguen provisionales 0.75/0.5/0.75; ninguna cifra usada para calibrar ni para cerrar 1.8.
-- Required tests: `uv run ruff check .`, `uv run mypy`, `uv run pytest tests/eval/ -q`, `uv run python -m eval.check_nli_leak`, `nli_run` solo dev con `--require-document-id`, detalles a `/tmp`.
-- Test evidence: no run.
-- Files changed: `eval/*_auto_*.yaml`, manifiesto auto, `eval/check_nli_leak.py`, `tests/eval/*`, `eval/results/*` solo resúmenes dev.
-- Risks: verbatim infla recall, swap mínimo ruidoso, cross-doc trivial subestima respaldo falso; Wilson descriptivo sin generalizar; solo CPU local.
-- Status: Pending
 
 ### F03: Evaluación ciega única en reserva (cierra 1.8)
 
@@ -158,10 +142,11 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 |-------|---------|--------------|--------|
 | — | 1.1-1.6 + 1.7 línea base heredadas de ROADMAP | Ver ROADMAP/DECISIONS | — |
 | F01 | Protocolo congelado, reservas quemadas declaradas, dev/test vacíos, anti-fuga verde | Lead: `ruff check` pass, `mypy` 123 files OK, `pytest tests/eval/test_nli_run+thresholds+check_nli_leak` 20 passed, `check_nli_leak` verde (1200 IDs quemados locales, dev/test 0 pares). Escritor coincide. Sin `nli_run` en fase. Decisión: citas NLI a SHAs AI son declarativas; inventario verificable o purga en F04. Riesgo residual: 6 docs test inspeccionados a nivel borrador. | F01: freeze NLI dataset protocol and anti-leak checks |
+| F07 | Diagnóstico auto 300 ES + 300 EN solo dev local, sin calibrar ni cerrar 1.8 | Lead árbol integrado: `ruff check` pass, `format --check` 151 formatted, `mypy` 124 files OK, `pytest tests/eval/` exit 0 verde (134 passed escritor), `check_nli_leak` verde. NLI CPU dev: ES recall 18/100=0.18, EN 26/100=0.26, falso respaldo 6/200=0.03 Wilson [0.0138,0.0639], umbrales intactos, detalles solo scores en /tmp. Revisión: 12 tests ejecutan comportamiento, 2 estáticos; 3 hallazgos bajos no bloqueantes. | F07: add local EN-ES diagnostic NLI datasets |
 
 ## 8. Recommended next action
 
-- Next phase: F07 diagnóstico pendiente de aprobación explícita; F02 sigue BLOCKED hasta 300 humanos.
-- Resume command: tras aprobar, `run F07` en solo local.
+- Next phase: F02 sigue BLOCKED hasta 300 humanos; F04 pendiente.
+- Resume command: `run F04` para corpus/runbook, o esperar humanos para `run F02`.
 - Suggested effort: medium.
-- Autorizaciones pendientes: aprobar este cambio de plan; exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
+- Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
