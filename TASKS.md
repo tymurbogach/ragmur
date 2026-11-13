@@ -11,7 +11,7 @@
 
 - What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo. F01 protocolo NLI congelado: manifiesto 24 docs (18 dev / 6 test), `document_id` obligatorio, reservas `eut-*`/`euh2-*` quemadas, datasets dev/test vacíos con `PENDING HUMAN REVIEW`, anti-fuga en verde. Umbrales siguen provisionales 0.75/0.5/0.75.
 - Broken or pending work: faltan 300 pares humanos (0/300); F02 calibración dev bloqueada hasta anotación. 1.9 sin corpus versionado, sin demo pública, sin endurecimiento, sin runbook versionado.
-- Git branch: `main`, ahead 56 sobre `origin/main` tras snapshot de plan (sin push autorizado).
+- Git branch: `main`, ahead 57 sobre `origin/main` tras F01 (sin push autorizado).
 - Last review: revisión nativa F01 2026-11-13 (tests ejecutan comportamiento; sin bloqueos de lógica; alcance de commit restringido a F01).
 - Existing local changes tras F01: quedan `M README.md, ROADMAP.md` y ~70 `??` en `eval/` fuera del commit F01 (se trian en F04). Ninguna cifra citable hasta anotación.
 - Required test capabilities and unavailable gates: Docker PG+Qdrant reales, CPU Intel Core Ultra 9 285H y/o RTX 5080 Skynet, modelos fijados (bge-m3, reranker `953dc6f`, NLI `b5113eb`). Sin exposición pública autorizada. Sin autorización de push/demo/DNS/firewall.
@@ -52,7 +52,7 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 | Phase | Title | Status |
 |-------|-------|--------|
 | F01 | Protocolo NLI y congelación de dataset | Completed |
-| F02 | Calibración de umbrales solo en dev | Pending |
+| F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Pending |
 | F05 | Diseño proxy demo y endurecimiento | Pending |
@@ -68,10 +68,10 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 - Dependencies: F01.
 - Acceptance criteria: umbrales congelados con informe dev versionado (matriz 3x3, `recall_supported>=0.5`, hardware, revisión `b5113eb`, commit, hash corpus).
 - Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_dev.yaml --split dev`, `uv run python -m eval.nli_thresholds ...`, unitarios NLI.
-- Test evidence: no run.
-- Files changed: `eval/results/nli-eu-dev-*.json` (resumen), `eval/NLI.md`.
-- Risks: n pequeña -> Wilson ancho; InferES/SciFact solo diagnóstico.
-- Status: Pending
+- Test evidence: no run. Bloqueo verificado por el lead en F01: `eval/eu_nli_dev.yaml` contiene `[]` con `PENDING HUMAN REVIEW` (0 pares); `check_nli_leak` avisa "sin pares todavía". Ejecutar calibración ahora violaría la regla de no calibrar sin verdad humana.
+- Files changed: ninguno en F02.
+- Risks: n pequeña -> Wilson ancho; InferES/SciFact solo diagnóstico. Riesgo principal: anotación humana de 300 pares fuera del alcance de agentes.
+- Status: BLOCKED — faltan 300 pares humanos (100/100/100) con doble anotación + adjudicación. No lanzar escritor hasta que existan.
 
 ### F03: Evaluación ciega única en reserva (cierra 1.8)
 
@@ -144,7 +144,7 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 
 ## 8. Recommended next action
 
-- Next phase: F02 (bloqueada hasta anotación humana de 300 pares; no ejecutar `nli_run` dev hasta entonces).
-- Resume command: `run F02` cuando existan pares dev revisados; `run all` continúa en orden tras F02.
-- Suggested effort: high (F02-F06 cruzan evaluación humana, Skynet y red).
-- Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus. Plan snapshot ya en Git (`Taskflow: record approved plan`).
+- Next phase: F02 BLOCKED — requiere anotación humana (300 pares). No reintentar con agentes.
+- Resume command: cuando existan pares dev revisados, `run F02`.
+- Suggested effort: high.
+- Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
