@@ -333,6 +333,9 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 
 Las pruebas funcionales anteriores no constituyen una evaluación reservada reproducible.
 Los umbrales actuales son provisionales hasta completar la calibración y publicar sus resultados.
+El [manifiesto español](eval/eu_manifest.yaml) fija 24 PDF públicos, con 18 documentos de desarrollo y seis reservados.
+Se verificaron huellas, permisos de reutilización y extracción; faltan las 300 etiquetas revisadas y la inferencia reservada.
+El selector de umbral y la comprobación numérica están implementados, pero no justifican cambiar los umbrales vigentes.
 Una prueba inicial reproducible del 11 de noviembre de 2026 usa nueve ejemplos manuales reservados.
 Con CPU Intel Core Ultra 9 285H, detectó dos de tres contradicciones y clasificó una como no respaldada.
 No hubo falsos respaldos entre seis afirmaciones no respaldadas o contradictorias; la muestra es insuficiente para generalizar.

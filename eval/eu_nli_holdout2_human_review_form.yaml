@@ -1,0 +1,1405 @@
+# Revisión humana final ciega — segunda reserva NLI (1.8).
+# Estado: referencias SIN revisar por humanos; pendiente de revisión humana.
+# Cómo rellenar: para cada afirmación, escriba en `juicio` UNA de estas
+# cuatro palabras exactas: apoyada | contradicha | no dice | ambigua.
+# Regla: solo vale lo que dice el fragmento visible (sin usar conocimiento
+# externo). `comentario` es opcional (dudas breves). No cambie `premisa`,
+# `text`, `fragment_id` ni `item_id`. Guía corta:
+# eval/eu_nli_holdout2_human_review_guia.md. 93 fragmentos x 3 afirmaciones.
+# No hay pistas sobre el reparto de respuestas: juzgue cada caso por separado.
+fragmentos:
+- fragment_id: H2-F01
+  premisa: "ción; \nDesarrollo de productos, \nservicios e infraestructura; \nDesarrollo de habilidades \ntécnicas y creativas; \nMisión\nLa iniciativa Nueva Bauhaus Europea tiene como objetivo desarrollar un \nmovimiento creativo e interdisciplinar que conecte el Pacto Verde Europeo con la \nvida cotidiana de los ciudadanos de la UE. Es una plataforma de experimentación \ndestinada a unir ciudadanos, expertos, empresas e instituciones para imaginar y \ndiseñar un futuro sostenible, estético e inclusivo.\nAcciones\nLa iniciativa fue diseñada conjuntamente a través de la participación directa de \nciudadanos, expertos, empresas e Instituciones. Tras la fase de codiseño, se lanzó \nuna fase de entrega para configurar y ejecutar los nuevos pilotos de la Bauhaus \n"
+  afirmaciones:
+  - item_id: H2-F01-1
+    text: La Nueva Bauhaus Europea es un programa de ayudas directas a la compra de vivienda.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F01-2
+    text: La iniciativa Nueva Bauhaus Europea aspira a desarrollar un movimiento creativo e interdisciplinar que conecte el Pacto Verde con la vida cotidiana.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F01-3
+    text: La fase de entrega de la Bauhaus se lanzó en enero de 2022 con cincuenta proyectos piloto.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F02
+  premisa: " la acción clave 1 por \nvía rápida. Puede solicitar financiación cada \naño; solo tendrá que presentar una solicitud de \nfinanciación a su agencia nacional. \nLa buena noticia es que una solicitud de \nfinanciación es muy diferente de una solicitud \nnormal. Para calcular los fondos necesarios solo \nes necesario proporcionar información básica, \ncomo el número de participantes y el tipo de \nactividades.\nLa agencia nacional distribuye cada año los \nfondos disponibles entre las organizaciones \nacreditadas. La información detallada sobre \nel proceso de solicitud y las asignaciones \npresupuestarias figura en el sitio web de la \nagencia nacional y en la Guía del programa, \nque se publica cada año.\n¿Y SI MI ORGANIZACIÓN TRABAJA \nEN MÁS DE UN ÁMBITO EDUCATIVO?\n"
+  afirmaciones:
+  - item_id: H2-F02-1
+    text: La Guía del programa se publica cada año en el mes de octubre.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F02-2
+    text: La solicitud de financiación exige presentar una auditoría externa completa de la organización.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F02-3
+    text: Para calcular los fondos necesarios solo hay que facilitar información básica, como el número de participantes y el tipo de actividades.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F03
+  premisa: "con una pregunta abierta \nconcebida para suscitar respuestas intuitivas, \nlo que contribuirá a descubrir conocimientos \nprevios, despertar la curiosidad y detectar \nlos intereses del alumnado. Finalizan con una \netapa de reflexión para ayudar a consolidar \nlos nuevos conocimientos, crear conexiones \npersonales y fomentar el pensamiento crítico.\nLa caja de herramientas incluye un amplio \nabanico de métodos pensado tanto para \nla fase de exploración inicial como para la \nde reflexión final. Los métodos difieren en \ncomplejidad, estructura y tiempo requerido; \nalgunos están adaptados para un alumnado \nmás joven, mientras que otros son más \nadecuados para grupos capaces de realizar \nanálisis e introspecciones más avanzados. \nCada método incluye información clave sobre \n"
+  afirmaciones:
+  - item_id: H2-F03-1
+    text: Todos los métodos de la caja de herramientas están pensados únicamente para estudiantes universitarios.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F03-2
+    text: Algunos métodos están adaptados para alumnado más joven y otros para grupos capaces de análisis más avanzados.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F03-3
+    text: La caja de herramientas incluye más de cincuenta métodos didácticos diferentes.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F04
+  premisa: "mación profesional o la \neducación de personas adultas.\nEmpresas y otras organizaciones \nque acogen, forman o trabajan \nde otra manera con estudiantes \ny aprendices de la formación \nprofesional.\nSi desea comprobar \nque su organización \ncumple los requisitos \npara participar, \nle recomendamos que \nvisite la página web \nde su agencia nacional.\nEN FORMACIÓN PROFESIONAL • EN EDUCACIÓN ESCOLAR • EN EDUCACIÓN DE PERSONAS ADULTAS 5\nCREACIÓN DE UNA \nESTRATEGIA PROPIA\nLa acreditación Erasmus \nle permite definir sus propios \nobjetivos y da la libertad de \nelegir la velocidad a la que \nquiere avanzar. A medida \nque progrese su plan, también \npuede actualizarlo para que \nsiga siendo adecuado.\nINVERSIÓN EN \nEL FUTURO\nEl acceso estable a la \nfinanciación significa que su \norganización puede centrarse \n"
+  afirmaciones:
+  - item_id: H2-F04-1
+    text: La acreditación impone un plan único e inmodificable idéntico para todas las organizaciones.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F04-2
+    text: La acreditación permite definir los propios objetivos y elegir la velocidad a la que se quiere avanzar.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F04-3
+    text: El Plan Erasmus debe tener una extensión mínima de veinte páginas.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F05
+  premisa: "ión, lograr \nlos Objetivos de Desarrollo Sostenible de la ONU e impulsar la competitividad y el \ncrecimiento de la UE. \nEl programa facilita la colaboración y refuerza el impacto de la investigación \ny la innovación en el desarrollo, apoyo y aplicación de las políticas de la UE, al \ntiempo que aborda los desafíos globales. Apoya la creación y mejor difusión \nde conocimientos y tecnologías. Crea puestos de trabajo, involucra plenamente \na la reserva de talento de la UE, impulsa el crecimiento económico, promueve \nla competitividad industrial y optimiza el impacto de la inversión dentro de un \nEspacio Europeo de Investigación fortalecido.\nAcciones\nLa estructura del programa contiene tres pilares: \n• Pilar 1 - Ciencia excelente. Este capítulo tiene como objetivo aumentar la \n"
+  afirmaciones:
+  - item_id: H2-F05-1
+    text: La estructura del programa contiene tres pilares y el primero de ellos es Ciencia excelente.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F05-2
+    text: El programa financió más de diez mil proyectos durante el período 2014-2020.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F05-3
+    text: El programa se articula en un único pilar dedicado a la innovación de mercado.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F06
+  premisa: "ación del Parlamento Europeo \nen ámbitos en los que posee poderes de codecisión.\n5. APROBACIÓN DEL PRESUPUESTO DE LA UE\nEl presupuesto anual de la UE es decidido conjuntamente \npor el Consejo y el Parlamento. Si ambas instituciones no \nestán de acuerdo, se sigue el procedimiento de \nconciliación hasta que se aprueba el presupuesto.\nFuncionamiento del Consejo\nTodos los debates del Consejo y las votaciones de actos \nlegislativos son públicos y pueden verse en directo a \ntravés del sitio web del Consejo.\nEl Consejo de Asuntos Generales garantiza la coherencia \nglobal de las actividades de las diferentes formaciones del \nConsejo y supervisa el seguimiento efectivo de las \nreuniones del Consejo Europeo. Recibe apoyo del Comité \n16 CÓMO FUNCIONA LA UNIÓN EUROPEA\n"
+  afirmaciones:
+  - item_id: H2-F06-1
+    text: El presupuesto anual de la UE lo decide únicamente el Consejo, sin intervención del Parlamento.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F06-2
+    text: Si el Consejo y el Parlamento no están de acuerdo sobre el presupuesto anual, se sigue el procedimiento de conciliación hasta aprobarlo.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F06-3
+    text: El procedimiento de conciliación presupuestaria tiene una duración máxima de veintiún días.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F07
+  premisa: "iarios de la financiación \nde la UE. Este derecho se otorga por medio de una licencia exenta de derechos, no exclusiva \ne irrevocable. El beneficiario de la financiación de la UE sigue siendo el propietario del material \nde comunicación y es plenamente responsable de la obtención de todas las licencias y \nautorizaciones necesarias a tal fin. Algunos programas pueden apartarse de esta norma, por \nlo que el alcance específico del derecho de uso debe cotejarse con el acto jurídico y el acuerdo \nde financiación correspondientes.\n¿Cómo define el «material de comunicación» para el que se concede una licencia?\nLa licencia cubre el derecho a utilizar información no sensible relacionada con la acción y los \nmateriales y documentos recibidos de los beneficiarios con fines de información, \n"
+  afirmaciones:
+  - item_id: H2-F07-1
+    text: El beneficiario de la financiación sigue siendo el propietario del material de comunicación y es responsable de obtener las licencias necesarias.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F07-2
+    text: La propiedad del material de comunicación pasa automáticamente a la Comisión Europea.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F07-3
+    text: Algunos programas exigen que el material se publique bajo licencia Creative Commons.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F08
+  premisa: "o \no basta con hacerlo una vez?\nDebe garantizarse la visibilidad de la UE para cada proyecto subvencionado mediante la \nexhibición destacada y correcta del emblema de la UE y la declaración de financiación.\n¿Se aplica la obligación a las actividades generales de promoción realizadas por las \nautoridades nacionales?\nTodo lo anterior sirve para reconocer el apoyo de la UE, en particular en las actividades \nnacionales de comunicación y promoción de programas y proyectos financiados por la UE. Es \nposible que los Estados miembros (y otros socios) dispongan de legislación nacional \ncomplementaria que regule la comunicación y la visibilidad de sus propias contribuciones \nfinancieras. Para más información, consulte también la base jurídica del programa y el acuerdo \nde financiación.\n"
+  afirmaciones:
+  - item_id: H2-F08-1
+    text: Los proyectos subvencionados quedan exentos de exhibir el emblema de la UE en sus actividades.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F08-2
+    text: El emblema de la UE fue diseñado en 1955 por Arsène Heitz.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F08-3
+    text: Debe garantizarse la visibilidad de la UE en cada proyecto subvencionado exhibiendo de forma destacada y correcta el emblema y la declaración de financiación.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F09
+  premisa: "ANCIACIÓN ESTABLE\nSu organización puede \nconfiar en que el programa \nle respaldará con fondos \npara nuevas actividades \nde movilidad cada año.\nOPORTUNIDADES \nDE CRECIMIENTO \nY DESCUBRIMIENTO\nPuede probar nuevos tipos de \nactividades o colaboraciones \ncon organizaciones asociadas \nnuevas, sin tener que \npresentar una solicitud \ndistinta cada vez. \nSi desea comprobar \nque su organización \ncumple los requisitos \npara participar, \nle recomendamos que \nvisite la página web \nde su agencia nacional.\n6 ACREDITACIÓN ERASMUS\nDOS TIPOS DE \nACREDITACIÓN \nERASMUS\nSi decide solicitar la acreditación \nErasmus, tiene dos opciones:\nACREDITACIÓN ERASMUS PARA \nORGANIZACIONES INDIVIDUALES\nEsta es la opción estándar: su \norganización solicita recibir financiación \npara sus trabajadores o estudiantes. \n"
+  afirmaciones:
+  - item_id: H2-F09-1
+    text: Cada organización puede probar nuevos tipos de actividades con socios nuevos sin presentar una solicitud distinta cada vez.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F09-2
+    text: Cada nueva actividad de movilidad exige presentar una solicitud de acreditación completamente nueva.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F09-3
+    text: En 2023 se acreditaron más de cinco mil organizaciones en toda Europa.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F10
+  premisa: "cio \npara la acción de movilidad \ndel programa. \nLas organizaciones solo \nnecesitan obtener la \nacreditación una vez a \nfin de recibir financiación \npara las actividades de \nmovilidad de la acción \nclave 1 durante los siete \naños del programa.\nEN FORMACIÓN PROFESIONAL • EN EDUCACIÓN ESCOLAR • EN EDUCACIÓN DE PERSONAS ADULTAS 3\nEDUCACIÓN DE PERSONAS \nADULTAS\nIncluida la educación formal, \ninformal y no formal de \npersonas adultas.\nFORMACIÓN PROFESIONAL\nIncluida la formación profesional \ninicial, la formación profesional \ncontinua y el aprendizaje en el \ntrabajo en todas sus variantes.\nEDUCACIÓN ESCOLAR \nIncluidas las guarderías y los \ncentros escolares de educación \ngeneral infantil, primaria y \nsecundaria.\n¿QUÉ ABARCA LA \nACREDITACIÓN ERASMUS?\n"
+  afirmaciones:
+  - item_id: H2-F10-1
+    text: Las organizaciones solo necesitan obtener la acreditación una vez para recibir financiación de la acción clave 1 durante los siete años del programa.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F10-2
+    text: El programa Erasmus+ para 2021-2027 dispone de un presupuesto total de veintiséis mil millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F10-3
+    text: La acreditación debe renovarse cada año para mantener la financiación de la movilidad.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F11
+  premisa: "a aporta un \nvalor añadido indiscutible.\nOtras potencias mundiales, como China y los Estados Unidos, persiguen influir \nen las reglas económicas mundiales. Por tanto, es más vital que nunca que \nlos Estados miembros de la Unión Europea se unan y formen una «masa \ncrítica», manteniendo así su influencia en la escena mundial. En la práctica \nesto se refleja, por ejemplo, en el papel que asume la UE en las negociaciones \nmundiales sobre las normas comerciales. Los países de la UE han acordado \nnumerosos principios y normas técnicas que afectan a nuestro día a día y \nsirven de ejemplo a otras muchas partes del mundo, como las normas de salud \ny seguridad, la promoción de las fuentes de energía renovable, el «principio de \n"
+  afirmaciones:
+  - item_id: H2-F11-1
+    text: La UE representa alrededor del 15 % del comercio mundial de mercancías.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F11-2
+    text: Según el texto, ningún país salvo la UE intenta influir en las reglas económicas mundiales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F11-3
+    text: China y Estados Unidos persiguen influir en las reglas económicas mundiales, por lo que es vital que la UE forme una 'masa crítica'.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F12
+  premisa: "adaptación al cambio \nclimático, la vida en ciudades más verdes, la garantía de la salud del suelo para los alimentos, \nla naturaleza, las personas y el clima, así como la protección de nuestras aguas y océanos.\nRacionalizar el panorama de financiación > Simplificación de la aproximación a las \nasociaciones europeas: simplificación del número de asociaciones y fomento de una amplia \nparticipación de socios de los sectores público y privado.\nFortalecer la cooperación internacional > Posibilidades de asociación ampliadas: ampliación \nde la apertura para la asociación a países no pertenecientes a la UE (terceros países) con buena \ncapacidad en materia de ciencia, tecnología e innovación.\nReforzar el carácter abierto > Política de ciencia abierta: acceso abierto obligatorio a las \n"
+  afirmaciones:
+  - item_id: H2-F12-1
+    text: Cada una de las cinco misiones de la UE dispone de mil millones de euros hasta 2027.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F12-2
+    text: Horizonte Europa prohíbe la participación de socios del sector privado en las asociaciones europeas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F12-3
+    text: Horizonte Europa simplifica el número de asociaciones europeas y fomenta una amplia participación de socios públicos y privados.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F13
+  premisa: "un procedimiento simplificado y acelerado que \npermite al Tribunal pronunciarse en un plazo \naproximado de tres meses. \n26 CÓMO FUNCIONA LA UNIÓN EUROPEA\nEl Banco Central Europeo\nGarantizar la estabilidad de los precios\nFunción: Gestionar el euro y la política monetaria de la zona del euro\nMiembros: Los bancos centrales nacionales de la zona del euro\nLugar: Fráncfort del Meno, Alemania\nX http://www.ecb.int\nEl objetivo del Banco Central Europeo (BCE) es \nmantener la estabilidad monetaria en la zona del euro \ngarantizando que la inflación de los precios de consumo \nse mantiene baja y estable. La estabilidad de los \nprecios y una inflación baja se consideran factores de \ncrucial importancia para un crecimiento económico \nsostenido, ya que alientan a las empresas a invertir y \n"
+  afirmaciones:
+  - item_id: H2-F13-1
+    text: El Banco Central Europeo tiene su sede en Fráncfort del Meno, Países Bajos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F13-2
+    text: El Consejo de Gobierno del BCE se reúne cada seis semanas para decidir los tipos de interés.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F13-3
+    text: El objetivo del BCE es mantener la estabilidad monetaria en la zona del euro, con una inflación de los precios de consumo baja y estable.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F14
+  premisa: "a) «Financiado por la Unión \nEuropea – NextGenerationEU»; Asimismo, el Estado miembro velará por que los destinatarios \nfinales de la financiación de la UE en el marco del MRR reconozcan el origen y garanticen la \nvisibilidad de la financiación de la UE. Cuando se exhiba junto con otro logotipo, el emblema \nde la UE debe exponerse al menos de manera tan destacada y visible como el resto de los \nlogotipos. El emblema debe mantenerse diferenciado y separado, y no puede modificarse \nañadiendo otras marcas visuales, marcas o texto. Además del emblema, no puede utilizarse \nninguna otra identidad visual ni logotipo para destacar el apoyo de la UE.\nEn el caso que nos ocupa, en el que los beneficiarios son personas físicas y los lugares de \n"
+  afirmaciones:
+  - item_id: H2-F14-1
+    text: El manual de identidad visual del emblema se actualizó por última vez en 2020.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F14-2
+    text: El emblema de la UE puede mostrarse en un tamaño menor que el resto de logotipos cuando comparta espacio.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F14-3
+    text: Cuando se exhiba junto a otro logotipo, el emblema de la UE debe mostrarse al menos de manera tan destacada y visible como los demás.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F15
+  premisa: "nacionales sobre la base del beneficio \nmutuo y los intereses de la Unión. Esto se vincula con la asociación formal de \nvarios países al programa. Estos países asociados realizarán contribuciones \nal programa, por lo general de acuerdo con su nivel de participación en el \nmismo. Dichas contribuciones aumentan el presupuesto del programa, \npermitiendo una mayor inversión en investigación e innovación.\nEn Horizonte 2020, Islandia y Noruega participaron en el programa \ncomo miembros de la Asociación Europea de Libre Comercio del \nEspacio Económico Europeo, mientras que Albania, Armenia, Bosnia \ny Herzegovina, Georgia, Islas Feroe, Israel, Macedonia del Norte, \nMoldavia, Montenegro, Serbia, Suiza, Túnez, Turquía y Ucrania están \n"
+  afirmaciones:
+  - item_id: H2-F15-1
+    text: Ningún país no perteneciente a la UE pudo participar en Horizonte 2020.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F15-2
+    text: El Reino Unido se asoció a Horizonte Europa en septiembre de 2023 con una contribución de dos mil seiscientos millones.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F15-3
+    text: En Horizonte 2020 participaron como miembros del EEE Islandia y Noruega, junto a países como Albania, Serbia, Suiza, Turquía o Ucrania.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F16
+  premisa: "articipan estrechamente en el proceso \nde consulta, así como en un taller de \ndiciembre de 2023 sobre la hoja de ruta. \nLa Iniciativa Ciudadana Europea le \npermite influir en las políticas de la UE \ny en la vida de todos los ciudadanos \nde la UE. Haga posible el cambio \nponiendo en marcha iniciativas o \napoyándolas. \n¡Tome la iniciativa!\n15\nPARA SABER MÁS\nPágina web de la Iniciativa Ciudadana Europea \nhttps://citizens-initiative.europa.eu/_es\nEn este sitio web encontrará:\n• información sobre todas las iniciativas ciudadanas, presentadas según la etapa en la que se \nencuentren, incluidas las respuestas de la Comisión\n• información detallada sobre las normas que rigen la Iniciativa Ciudadana Europea, orientaciones \ny preguntas frecuentes\n"
+  afirmaciones:
+  - item_id: H2-F16-1
+    text: La web de la ICE no publica las respuestas de la Comisión a las iniciativas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F16-2
+    text: En la web de la ICE puede encontrarse información sobre todas las iniciativas según su etapa, incluidas las respuestas de la Comisión.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F16-3
+    text: El taller sobre la hoja de ruta de diciembre de 2023 contó con más de doscientos participantes.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F17
+  premisa: "ir todas las declaraciones \nde apoyo a más tardar tres meses \ndespués de haber completado el \nproceso de verificación. \nLos datos de quienes apoyan \niniciativas que no alcancen los \numbrales y que no se presenten para \nsu verificación se suprimen una vez \nfinalizado el período de recogida, \nde conformidad con los límites de \nconservación de datos establecidos en \nel Reglamento ICE.\nAntes de firmar, lea la declaración de \nconfidencialidad del formulario en papel \no en línea para saber cómo se tratarán \nsus datos y cómo ejercer sus derechos.\n8 9\nCÓMO ORGANIZAR UNA INICIATIVA \nCIUDADANA EUROPEA\nEtapa 1: INICIAR EL PROCESO\nEn primer lugar, pregúntese \nsi la Iniciativa Ciudadana \nEuropea es el modo más \nadecuado para promover su \nidea. Una iniciativa ciudadana debe \n"
+  afirmaciones:
+  - item_id: H2-F17-1
+    text: La edad mínima para apoyar una iniciativa ciudadana es de dieciséis años en todos los Estados miembros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F17-2
+    text: Los datos de las iniciativas que no alcancen los umbrales se conservan indefinidamente con fines estadísticos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F17-3
+    text: Los datos de quienes apoyan iniciativas que no alcancen los umbrales y no se presenten a verificación se suprimen tras finalizar el período de recogida.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F18
+  premisa: " programas y políticas de la UE:\nun conjunto de soluciones prácticas para la ejecución en sinergia de Horizonte Europa \ny los programas y políticas de I+i pertinentes, por ejemplo InvestEU, Erasmus+, la política \nde cohesión de la UE, Europa Digital, los Fondos Estructurales y de Inversión Europeos, el \nMecanismo «Conectar Europa» y el Mecanismo de Recuperación y Resiliencia, para promover \nuna difusión más rápida a nivel nacional y regional, así como la incorporación de los resultados \nde la investigación y la innovación.\nReducir la carga administrativa > Normas más sencillas: aumento de la seguridad jurídica \ny reducción de la carga administrativa de los beneficiarios y los gestores de programas.\nPor cada euro invertido en I+i \nen la UE se pueden generar \nhasta 11 euros en \n"
+  afirmaciones:
+  - item_id: H2-F18-1
+    text: Horizonte Europa aumenta la carga administrativa exigiendo el triple de documentación a los beneficiarios.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F18-2
+    text: Las normas serán más sencillas, con mayor seguridad jurídica y menor carga administrativa para beneficiarios y gestores.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F18-3
+    text: El programa InvestEU movilizó más de cuatrocientos mil millones de euros en inversiones entre 2021 y 2027.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F19
+  premisa: "ocales \nson las que realizan la mayor parte del trabajo real y del \ngasto, pero la Comisión se encarga de supervisarlo.\nLa Comisión gestiona el presupuesto bajo la supervisión \natenta del Tribunal de Cuentas Europeo órganos. Ambas \ninstituciones deben garantizar una buena gestión \nfinanciera. El Parlamento Europeo solo aprueba la gestión \nde la Comisión en la ejecución del presupuesto si está \nsatisfecho con el informe anual del Tribunal de Cuentas.\n3. HACER CUMPLIR LA LEGISLACIÓN DE LA UE\nLa Comisión actúa como guardiana de los \ntratados, lo que significa que, junto con el Tribunal de \nJusticia de la Unión Europea, es responsable de \ngarantizar la correcta aplicación de la legislación de la \nUE en todos los Estados miembros. Si constata que un \n"
+  afirmaciones:
+  - item_id: H2-F19-1
+    text: La Comisión gestiona el presupuesto sin la supervisión de ninguna otra institución.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F19-2
+    text: El Parlamento Europeo solo aprueba la gestión de la Comisión en la ejecución del presupuesto si está satisfecho con el informe anual del Tribunal de Cuentas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F19-3
+    text: El Tribunal de Cuentas Europeo tiene su sede en Luxemburgo.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F20
+  premisa: "ntrar las normas de comunicación y visibilidad en los nuevos \nprogramas de la UE?\nReglamento Financiero\nConsiderando 11\nConforme al principio de transparencia establecido en el artículo 15 del Tratado de \nFuncionamiento de la Unión Europea (TFUE), las instituciones de la Unión deben actuar con \nel mayor respeto posible al principio de apertura. En cuanto a la ejecución del presupuesto, la \naplicación de dicho principio implica que los ciudadanos deben saber dónde y con qué fines \nse gastan los fondos de la Unión. Esta información fomenta el debate democrático, contribuye \na la participación de los ciudadanos en el proceso de toma de decisiones de la Unión, refuerza \nel control institucional y el examen de los gastos de la Unión y contribuye a incrementar su \n"
+  afirmaciones:
+  - item_id: H2-F20-1
+    text: Conforme al principio de transparencia del artículo 15 del TFUE, los ciudadanos deben saber dónde y con qué fines se gastan los fondos de la Unión.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F20-2
+    text: El Reglamento Financiero establece que la ejecución del presupuesto de la Unión es confidencial.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F20-3
+    text: El considerando 11 del Reglamento Financiero se añadió en la reforma del año 2018.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F21
+  premisa: "llones de euros (*)\npara apoyar la investigación en las fronteras del conocimiento, las becas, las redes de doctorado, \nla formación y los intercambios de investigadores, y el desarrollo de infraestructuras \nde investigación en todos los Estados miembros.\nConsejo Europeo \nde Investigación\nAcciones \nMarie Skłodowska-Curie\nInfraestructuras \nde investigación\n16 000 \nmillones 6 600 millones 2 400 \nmillones\nBeneficios para Europa:\n• Avances en las fronteras del conocimiento.\n• Liderazgo en ámbitos tecnológicos nuevos \ny emergentes.\n• Conseguir que la Unión Europea (UE) sea más \natractiva para los mejores investigadores.\n• Inspirar reformas nacionales que aumenten \nla calidad y la visibilidad de la investigación \neuropea en general.\n• Una comprensión más profunda de los retos \nmundiales.\n"
+  afirmaciones:
+  - item_id: H2-F21-1
+    text: El programa Marie Skłodowska-Curie se creó en 1996 bajo el cuarto programa marco.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F21-2
+    text: El pilar I financia exclusivamente infraestructuras deportivas y culturales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F21-3
+    text: El pilar apoya la investigación en las fronteras del conocimiento, las becas, las redes de doctorado y las infraestructuras de investigación en todos los Estados miembros.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F22
+  premisa: " medidas, teniendo en cuenta el \nprincipio de proporcionalidad, y cancelará hasta un máximo del 3 % de la ayuda de los \nFondos a la operación de que se trate.\n¿Cuáles son las modalidades y las consecuencias prácticas del incumplimiento de esta \nobligación para los Estados miembros? ¿Cómo se aplicará esto en la práctica?\nAl igual que con cualquier otro incumplimiento de obligaciones contractuales, los beneficiarios \nde financiación de la UE que incumplan sus obligaciones de comunicación y visibilidad podrán \nser objeto de una reducción de la contribución financiera de la UE, siempre que así se \nestablezca en las normas aplicables al programa. Los servicios horizontales prevén \norientaciones para la aplicación práctica, sobre la base de la experiencia y las mejores \n"
+  afirmaciones:
+  - item_id: H2-F22-1
+    text: Las orientaciones prácticas de aplicación se publicaron en el Diario Oficial en junio de 2023.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F22-2
+    text: El incumplimiento de las obligaciones de comunicación no conlleva ninguna consecuencia financiera.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F22-3
+    text: Los beneficiarios que incumplan sus obligaciones de comunicación y visibilidad podrán ser objeto de una reducción de la contribución financiera de la UE.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F23
+  premisa: "ado \npremios prestigiosos, incluidos \n7 premios Nobel, \n4 medallas Fields \ny 9 premios Wolf.\nAlrededor del 80 % de los \nproyectos financiados \npor el CEI han dado lugar \na descubrimientos científicos \no a grandes avances.\nCada becario del CEI emplea por \ntérmino medio a seis miembros \ndel equipo. En la actualidad, \nmás de 75 000 postdoctorados, \nestudiantes de doctorado y otros \nmiembros del personal trabajan \nen sus equipos de investigación.\nEL CONSEJO EUROPEO DE INVESTIGACIÓN (CEI)\napoya a los principales investigadores de cualquier lugar \ndel mundo que trabajan en Europa para expandir las \nfronteras del conocimiento. Los propios investigadores \ndeterminan los temas y las orientaciones de sus proyectos. \nEsto garantiza que los fondos se canalicen hacia los \n"
+  afirmaciones:
+  - item_id: H2-F23-1
+    text: Menos del 10 % de los proyectos del CEI ha producido resultados científicos relevantes.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F23-2
+    text: El CEI concede cada año unas cuatrocientas subvenciones de inicio a investigadores noveles.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F23-3
+    text: Alrededor del 80 % de los proyectos financiados por el CEI han dado lugar a descubrimientos científicos o a grandes avances.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F24
+  premisa: "y las pymes.\n¡Una antigua becaria de las \nAMSC gana un premio Nobel!\nEn 2020, Emmanuelle \nCharpentier, antigua becaria \nde las AMSC, recibió, junto con \nJennifer A. Doudna, el Premio \nNobel de Química «por el \ndesarrollo de un método de \nedición del genoma». Otros \nbecarios y supervisores de las \nAMSC también han ganado \npremios prestigiosos, entre ellos \n9 premios Nobel y 1 Óscar.\nEn el marco de Horizonte 2020, \nlas AMSC han prestado apoyo \na más de 65 000 investigadores\nde la UE y de fuera de ella, \nincluidos 25 000 doctorandos. \nTambién han financiado más de \n1 000 programas de doctorado.\nEl programa también ha \nreforzado los vínculos entre \nel mundo académico y la \nindustria, con la participación \nde 4 700 empresas\ny casi 2 200 pymes.\nCon más del 37 % de los \n"
+  afirmaciones:
+  - item_id: H2-F24-1
+    text: El presupuesto anual de las AMSC asciende a mil cien millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F24-2
+    text: En 2020, Emmanuelle Charpentier, antigua becaria de las AMSC, recibió el Nobel de Química junto a Jennifer Doudna por un método de edición del genoma.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F24-3
+    text: Emmanuelle Charpentier recibió el Premio Nobel de Física en 2020 por sus trabajos en astrofísica.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F25
+  premisa: "¿LA INICIATIVA CIUDADANA EUROPEA HA TENIDO ALGÚN\nEFECTO HASTA LA FECHA?\n4\n9\n13\n7\n5\n4 5\n¿Qué es la Iniciativa Ciudadana \nEuropea?\nLa Iniciativa Ciudadana Europea \nconstituye una manera única de que \nusted contribuya a dar forma a la \nUE pidiendo a la Comisión Europea \nque proponga nueva legislación. \nCuando una iniciativa alcanza el \nmillón de firmas comprobadas, \nla Comisión decide el curso \nque debe darse a la misma. \nLa Iniciativa Ciudadana Europea se \nrige por el Reglamento (UE) 2019/788. \n¿Qué temas pueden ser \nobjeto de una iniciativa \nciudadana europea?\nLa iniciativa ciudadana es posible \nen cualquier ámbito en el que la \nComisión tenga competencia para \nproponer legislación, por ejemplo, el \nmedio ambiente, la protección de los \nconsumidores, la agricultura, la pesca, \n"
+  afirmaciones:
+  - item_id: H2-F25-1
+    text: Al alcanzar el millón de firmas, la Comisión está obligada a proponer automáticamente la legislación solicitada.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F25-2
+    text: Cuando una iniciativa alcanza el millón de firmas comprobadas, la Comisión decide el curso que debe darse a la misma.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F25-3
+    text: La primera iniciativa ciudadana registrada fue Fraternité 2020 en el año 2012.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F26
+  premisa: "\ny apoyo a la iniciativa en el \nmomento del registro.\nTambién puede presentar un \ndocumento con información adicional, \nasí como un proyecto de acto jurídico. \nLa inscripción en el registro no es \nautomática. La Comisión comprobará su \npropuesta, en particular para garantizar \nque: \n• su grupo de organizadores se ha \nconstituido correctamente (debe \nfacilitar para cada miembro un \njustificante del país de nacionalidad \ny del país de residencia); \n• la iniciativa se inscribe en uno de \nlos ámbitos competencia de la \nComisión en los que puede presentar \nuna propuesta de acto jurídico; \n10 11\nEtapa 3: OBTENER AYUDA \nDebe recabar el apoyo de al \nmenos un millón de \nciudadanos de la UE, con un \nnúmero mínimo de apoyos \nen al menos siete países de la UE. \nQuienes apoyen la iniciativa deberán \n"
+  afirmaciones:
+  - item_id: H2-F26-1
+    text: 'La inscripción en el registro no es automática: la Comisión comprueba la propuesta antes de registrarla.'
+    juicio: null
+    comentario: ''
+  - item_id: H2-F26-2
+    text: El plazo máximo para recoger las declaraciones de apoyo es de dieciocho meses.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F26-3
+    text: Basta con reunir un millón de firmas de un solo país de la UE para que la iniciativa sea válida.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F27
+  premisa: " las comunidades de \nusuarios una mejor transparencia \ny gestión del conocimiento para \naumentar la visibilidad de los \nresultados de la investigación;\n– que preparen una vía de \ninnovación desde la investigación \nhasta el despliegue;\n– que aporten educación y \ndesarrollo de capacidades a \ntravés de la investigación sobre \nlas capacidades en el futuro, el \ndesarrollo de planes de estudios y la \ntransferencia de conocimientos para \nque la innovación sea adoptada por \nla población, el personal investigador \ny las comunidades de estudiantes y \nempleados.\n¿Qué medidas se adoptarán?\n• Los gestores y las estructuras de gobernanza de los programas aspiran ahora a desarrollar los \nvínculos necesarios para seguir mejorando el potencial de sinergia entre los programas de la UE.\n"
+  afirmaciones:
+  - item_id: H2-F27-1
+    text: Los gestores y estructuras de gobernanza aspiran ahora a desarrollar los vínculos necesarios para mejorar el potencial de sinergia.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F27-2
+    text: La Comisión publica cada año un informe de sinergias con más de cien indicadores.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F27-3
+    text: Los gestores de programas tienen prohibido colaborar entre sí para crear sinergias.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F28
+  premisa: "igios entre dos o más socios comerciales.\nLa política comercial de la UE está estrechamente vinculada a su política de \ndesarrollo. La Unión exime del pago de derechos a la mayoría de las importa\uFFFEciones procedentes de los países en desarrollo y las economías en transición, o \nles aplica un tipo preferencial reducido, con arreglo a su «sistema de preferen\uFFFEcias generalizadas». Y va aún más lejos en lo que atañe a los cuarenta y nueve \npaíses más pobres del mundo, cuyas exportaciones (todas, salvo las armas) \nestán exentas del pago de derechos al entrar en los mercados de la UE.\nSin embargo, la UE no tiene acuerdos comerciales específicos con sus princi\uFFFEpales socios comerciales entre los países desarrollados, a saber, los Estados \n"
+  afirmaciones:
+  - item_id: H2-F28-1
+    text: La UE aplica aranceles plenos a todas las exportaciones de los países más pobres sin excepción.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F28-2
+    text: El sistema de preferencias generalizadas se revisó en 2023 para incluir los servicios digitales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F28-3
+    text: 'La UE va más allá con los cuarenta y nueve países más pobres: todas sus exportaciones salvo las armas están exentas de derechos.'
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F29
+  premisa: "ones de diseño en la era digital\nPaíses participantes (iconos de \nbandera de país agregados)\n \nSector(es)\nDiseño y moda\nFechas\n2018-2020\nPresupuesto\n1 400 000 EUR\nMás información en\nhttps://www.vsvu.sk/en/\nevents/oXz6MbXd/cross\uFFFEborder-cooperation-of-design\uFFFEinstitutions-in-the-digital-age/\ny \nhttps://www.mak.at/\nes/collection/research/\nforschung_article?article_\nid=1542957247421\nEste proyecto recibió financiación de Interreg VA - Eslovaquia-Austria durante \nel período de programación 2014-2020. El proyecto detalla la creación de una \ncooperación de investigación eslovaco-austriaca sobre el tema de «Diseño e \ninnovación». En el futuro, planean construir una red internacional de diseñadores e \ninnovadores, que investigarán los últimos conocimientos en diseño y encontrarán \n"
+  afirmaciones:
+  - item_id: H2-F29-1
+    text: El proyecto detalla la creación de una cooperación de investigación eslovaco-austriaca sobre diseño e innovación durante 2018-2020.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F29-2
+    text: El proyecto describe una cooperación entre Francia y Alemania en el sector pesquero.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F29-3
+    text: La red internacional prevista reunirá a más de quinientos diseñadores de veinte países.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F30
+  premisa: "e distintos colores para escribir \nlas respuestas.\n• Mesas o espacio en las paredes para poner las \nhojas de rotafolio.\n• (Opcional) Cinta adhesiva o portapapeles para \npegar los papeles a la pared. 25\nMÉTODOS PARA LA EXPLORACIÓN Y LA REFLEXIÓN\nJUEGO DE \nPOSICIONAMIENTO\nSe presenta al alumnado una serie de \nafirmaciones y se pide a cada participante \nque adopte una posición al respecto. Para \nindicar hasta qué punto están de acuerdo o en \ndesacuerdo, se colocan de pie a lo largo de una \nlínea trazada en el suelo. Este método fomenta \nla reflexión y ayuda al alumnado a considerar su \npropia posición.\nNiveles de aprendizaje: \nprincipiante, intermedio\ny avanzado\nDuración: entre 10 y 30 minutos\nTamaño del grupo: entre 5 \ny 30 participantes\nGrupo de edad: entre 11 \ny 24 años\n"
+  afirmaciones:
+  - item_id: H2-F30-1
+    text: El juego de posicionamiento fue validado en un estudio con dos mil estudiantes de diez países.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F30-2
+    text: El juego de posicionamiento se juega por escrito e individualmente, sin moverse del asiento.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F30-3
+    text: En el juego de posicionamiento se pide a cada participante adoptar una posición colocándose de pie a lo largo de una línea según su grado de acuerdo o desacuerdo.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F31
+  premisa: "ión y promoción de contenidos.\nAcciones\nEl programa incluye dos capítulos principales, Cultura y MEDIA, y también está \nrespaldado por un subprograma intersectorial: \n• El subprograma Cultura apoya proyectos que buscan fortalecer la \ncapacidad del sector para operar transnacionalmente mediante la cocreación, \nel establecimiento de redes, plataformas para artistas emergentes y el apoyo \na la movilidad de los profesionales del sector cultural y creativo, así como \nla circulación de sus obras. También tiene como objetivo crear e involucrar \naudiencias, con un enfoque en la inclusión y la diversidad, y fomentar modelos \ncomerciales innovadores y efectos indirectos intersectoriales;\n• El subprograma MEDIA aborda las necesidades del cine de la UE y \n"
+  afirmaciones:
+  - item_id: H2-F31-1
+    text: El subprograma Cultura dispone de un presupuesto de dos mil millones de euros para 2021-2027.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F31-2
+    text: El programa incluye dos capítulos principales, Cultura y MEDIA, respaldados además por un subprograma intersectorial.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F31-3
+    text: El programa consta de un único capítulo dedicado exclusivamente al sector audiovisual.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F32
+  premisa: "a al MRR en la \npágina 47.\n¿Son las normas de comunicación y visibilidad las mismas para todos los programas de la \nUE?\nAdemás del artículo sobre comunicación institucional y de las normas institucionales \ncoherentes, dependiendo del programa, podría haber algunos ajustes específicos de ciertas \npolíticas reflejados en la base jurídica de un programa y en el acuerdo de financiación \naplicable.\n¿Qué ocurre con las orientaciones existentes para beneficiarios y socios, por ejemplo, en el \námbito de la acción exterior?\nEn el caso de los beneficiarios que han recibido financiación de la UE durante el período de \nprogramación 2014-2020, siguen aplicándose las disposiciones y directrices anteriores \ncorrespondientes. En el marco financiero plurianual 2021-2027, las directrices para los \n"
+  afirmaciones:
+  - item_id: H2-F32-1
+    text: Las directrices del período 2014-2020 quedaron derogadas retroactivamente para todos los beneficiarios.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F32-2
+    text: Las orientaciones de acción exterior se publicaron en francés e inglés en el año 2021.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F32-3
+    text: Para los beneficiarios de financiación de la UE en 2014-2020 siguen aplicándose las disposiciones y directrices anteriores correspondientes.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F33
+  premisa: "ortunidad de participar en debates \nanimados y defender posiciones, negociar, \nmodificar, votar y, por último, adoptar \nresoluciones sobre cuestiones europeas reales. \nQuienes participan tienen la oportunidad \nde familiarizarse con el funcionamiento de \nlas instituciones europeas, debatir sobre la \ndemocracia, los derechos fundamentales y los \nvalores europeos y expresar su opinión sobre \ndecisiones adoptadas a escala de la UE.\n49\nParticipad en el Evento Europeo de la \nJuventud (EYE) para inspirar y dejaros \ninspirar, debatir directamente con diputados \ny diputadas al Parlamento Europeo y con \nresponsables europeos e intercambiar \nopiniones con expertos y expertas, activistas \ny creadores y creadoras de contenidos.\nAparte del EYE y Euroscola, la oferta juvenil \n"
+  afirmaciones:
+  - item_id: H2-F33-1
+    text: Estas actividades prohíben a los participantes debatir sobre democracia o derechos fundamentales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F33-2
+    text: Quienes participan en estas actividades tienen la oportunidad de familiarizarse con el funcionamiento de las instituciones europeas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F33-3
+    text: El Evento Europeo de la Juventud se celebra cada dos años en Estrasburgo desde 2014.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F34
+  premisa: "der \ntomar democráticamente y a nivel europeo decisiones \nsobre asuntos específicos de interés conjunto. Por lo tanto, \nla UE se sitúa en un término medio entre el sistema \nfederal pleno de los Estados Unidos y el débil sistema de \ncooperación intergubernamental de las Naciones Unidas.\nLa UE ha conseguido muchos logros desde su creación en \n1950. Ha creado un mercado único de bienes y servicios que \nabarca a veintiocho países con más de 500 millones de \nciudadanos, que tienen libertad para desplazarse y \nestablecerse donde deseen. Creó la moneda única (el euro) \nque es ahora una gran moneda mundial, y que hace que el \nmercado único sea más eficiente. También es el mayor \nproveedor de programas de ayuda al desarrollo y ayuda \nhumanitaria en el mundo. Estos son solo algunos de los \n"
+  afirmaciones:
+  - item_id: H2-F34-1
+    text: La UE ocupa una posición intermedia entre el sistema federal pleno de Estados Unidos y el sistema débil de cooperación intergubernamental de Naciones Unidas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F34-2
+    text: La UE constituye un sistema federal pleno idéntico al de Estados Unidos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F34-3
+    text: El mercado único europeo se estableció formalmente en 1993 con la entrada en vigor del Tratado de Maastricht.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F35
+  premisa: "s desafíos.\n2\nEste presupuesto mejora en comparación con el del programa anterior, Horizonte 2020. En términos reales, \ny excluyendo la participación de los beneficiarios del Reino Unido en Horizonte 2020, se ha producido un \naumento del 30 %. Esto demuestra el amplio consenso existente sobre el papel clave de la investigación y la \ninnovación para acelerar la transformación ecológica y digital de Europa, fortalecer su resiliencia y preparación \npara afrontar futuras crisis y fomentar su ventaja competitiva en la carrera mundial por el conocimiento. En \nla siguiente tabla se muestra el desarrollo de los presupuestos de los programas marco de investigación \ne innovación.\nPM1\n3 271\nPM6\n19 256\nPM2\n5 357\nHorizonte 2020\n77 992\nHorizonte Europa\n96 899\nPM5\n14 871\nPM3\n6 552\nPM4\n13 121\n"
+  afirmaciones:
+  - item_id: H2-F35-1
+    text: Excluyendo la participación británica, el presupuesto de Horizonte Europa supone un aumento del 30 % en términos reales respecto a Horizonte 2020.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F35-2
+    text: El primer programa marco de investigación se lanzó en 1984 con un presupuesto de 3 750 millones de ecus.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F35-3
+    text: El presupuesto de Horizonte Europa supone un recorte del 30 % respecto al de Horizonte 2020.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F36
+  premisa: "ocurado que esta oferta sea \nclara, adaptable y, por encima de todo, que \nesté centrada en el alumnado. Su objetivo es \ndotar a jóvenes de entre once y veinticuatro \naños del conocimiento, las habilidades, \nlas actitudes y los valores necesarios para \nparticipar en la vida cívica con confianza \ny determinación.\nTanto si trabajas en el ámbito de la educación \nformal como si no, aquí encontrarás las \nherramientas que necesitas para elaborar \ntus propias experiencias de aprendizaje \no para poner en práctica planes didácticos \npredefinidos.\nEl camino hacia la ciudadanía activa es como \nel ascenso hasta la cima de una montaña. Tus \nestudiantes se esfuerzan por alcanzarla, y tú \nles das tu apoyo en cada etapa del proceso, \nexplorando competencias clave, abordando \n"
+  afirmaciones:
+  - item_id: H2-F36-1
+    text: La oferta educativa está dirigida exclusivamente a mayores de sesenta y cinco años.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F36-2
+    text: El manual del docente se publicó en las veinticuatro lenguas oficiales de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F36-3
+    text: La oferta educativa se dirige a jóvenes de entre once y veinticuatro años.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F37
+  premisa: "ión, la UE debe evaluar \nsi puede absorber al nuevo o nuevos miembros y si sus instituciones pueden seguir funcionando \nadecuadamente.\nq Durante la legislatura 2014-2019 no habrá nuevas adhesiones de países a la UE, ya que esta sigue \ncentrada en el crecimiento económico.\nq La política de vecindad de la UE se enfrenta a desafíos sin precedentes desde la Guerra Fría. La \npolítica de Rusia, con la anexión ilegal de Crimea en 2014 como punto álgido, ha despertado tensiones \ndiplomáticas y militares. En Oriente Próximo, los actos terroristas de extremistas en Siria e Irak suponen \nun ataque directo a los intereses y valores fundamentales de Europa. El éxodo masivo de más de \nun millón de refugiados de esta región plantea, a largo plazo, innumerables desafíos políticos y \n"
+  afirmaciones:
+  - item_id: H2-F37-1
+    text: El texto anuncia diez nuevas adhesiones de países a la UE durante la legislatura 2014-2019.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F37-2
+    text: Durante la legislatura 2014-2019 no habría nuevas adhesiones de países a la UE, al seguir centrada en el crecimiento económico.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F37-3
+    text: Croacia se convirtió en el vigésimo octavo Estado miembro en julio de 2013.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F38
+  premisa: " que los jóvenes puedan ir al extranjero \na formarse o a estudiar, aprender nuevas lenguas y participar en actividades \nconjuntas con escuelas o universidades de otros países. Se prevé que 4 millo\uFFFEnes de personas se beneficien durante el período 2014-2020 de este apoyo, \ncuyo presupuesto se ha aumentado en un 40 % en comparación con el período \nanterior hasta llegar a los 16 000 millones de euros.\nLos países europeos están trabajando conjuntamente, a través del «proceso \nde Bolonia», para crear un espacio europeo de educación superior. Esto signi\uFFFEfica, por ejemplo, que los cursos universitarios de todos los países concernidos \ndarán lugar a titulaciones comparables y mutuamente reconocidas (Licencia\uFFFEtura, Maestría y Doctorado).\n77\n12 LECCIONES SOBRE EUROPA\n"
+  afirmaciones:
+  - item_id: H2-F38-1
+    text: Se prevé que 4 millones de personas se beneficien del programa en 2014-2020, con un presupuesto aumentado un 40 % hasta los 16 000 millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F38-2
+    text: El presupuesto del programa se redujo un 40 % hasta los 16 000 millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F38-3
+    text: El programa financió más de veinticinco mil asociaciones estratégicas en 2019.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F39
+  premisa: "\nPara inspirarse - Lake Peipus Festival 2017\nPaíses participantes (iconos de la \nbandera del país agregados)\nSector(es)\nPatrimonio cultural;\nArtes escénicas;\nArtes visuales;\nMúsica.\nFechas\n2017\nPresupuesto\n38 000 EUR\nMás información en\nhttps://enrd.ec.europa.eu/\nprojects-practice/lake-peipus\uFFFEfestival-2017_en\nEl proyecto Lake Peipus Festival fue financiado por el Fondo Europeo Agrícola de \nDesarrollo Rural (FEADER) durante el período de programación 2014-2020. El \nFestival es un evento cultural itinerante, donde durante un período de ocho a \ndiez días cada verano, una flota de barcos navega desde el extremo norte hasta \nel extremo sur del lago Peipus, deteniéndose todos los días en un puerto diferente. \nSe invita a los participantes a experimentar la cultura, el patrimonio y la \n"
+  afirmaciones:
+  - item_id: H2-F39-1
+    text: El proyecto Lake Peipus Festival, financiado por el FEADER en 2014-2020, tuvo un presupuesto de 38 000 EUR para un festival itinerante de ocho a diez días cada verano.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F39-2
+    text: El Festival del lago Peipus es un certamen anual de cine que se celebra en una única sede.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F39-3
+    text: El festival atrae cada año a más de cien mil visitantes de toda Europa.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F40
+  premisa: "Sibiu (Rumanía) en mayo de 2019;\n• prioridades legislativas conjuntas para 2021 y objetivos y prioridades comunes para \n2021-2024;\n• las prioridades de la Comisión Europea;\n• historias de recuperación de la Unión Europea;\n• la campaña NextGenerationEU (NextGenEU): la Comisión puso en marcha en la \nprimavera de 2021 una campaña de comunicación institucional que ofrece una \nnarrativa, historias y múltiples materiales en todas las lenguas de la UE que ilustran el \ncamino hacia la recuperación y la transición hacia una Unión verde, digital y resiliente; \nla Comisión anima a los Estados miembros y a otros beneficiarios de financiación de \nla UE a utilizarlos en la mayor medida posible;\n• el MRR;\n• vacunas seguras contra la COVID-19 para la población europea;\n"
+  afirmaciones:
+  - item_id: H2-F40-1
+    text: La cumbre de Sibiu contó con la asistencia de los veintiocho jefes de Estado o de Gobierno.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F40-2
+    text: La campaña NextGenerationEU se lanzó exclusivamente en inglés y francés.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F40-3
+    text: En la primavera de 2021 la Comisión puso en marcha la campaña NextGenerationEU, con narrativa, historias y materiales en todas las lenguas de la UE.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F41
+  premisa: "smo y discriminación. Las atractivas \nofertas didácticas incluyen visitas guiadas \ny autoguiadas, talleres y programas \npúblicos, todo ello concebido para fomentar \nla curiosidad, la reflexión crítica y la libre \nformulación de preguntas. El museo también \nofrece herramientas digitales innovadoras \ncomo HistoriCall (recursos digitales gratuitos \npara la educación ciudadana e histórica) y la \naplicación IWalk, que amplía la experiencia \nmás allá de las paredes del museo hasta \nla ciudad de Bruselas. Quienes visitan el \nmuseo desde el extranjero pueden seguir \nexplorándolo en línea mediante su oferta \ndigital ampliada.\nEl Info Hub, también situado en Bruselas, \ncuenta con una amplia gama de recursos \ny ofrece actividades interactivas para \nestimular la curiosidad del alumnado: desde \n"
+  afirmaciones:
+  - item_id: H2-F41-1
+    text: El museo no dispone de ningún recurso digital ni de oferta en línea.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F41-2
+    text: La Casa de la Historia Europea recibe cada año más de un millón de visitantes.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F41-3
+    text: El museo ofrece herramientas digitales como HistoriCall e IWalk, que amplían la experiencia hasta la ciudad de Bruselas.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F42
+  premisa: "Todo tipo de organizaciones\nMisión\nEl Fondo de Cohesión es uno de los fondos a través de los cuales se lleva a cabo la \npolítica de cohesión de la UE, dirigida a los Estados miembros cuya renta nnacional \nbruta (RNB) por habitante es inferior al 90 % de la media de la UE y que apoyan \nproyectos en el ámbito de las RTE-T. y el medio ambiente. El FEDER también forma \nparte de la política de cohesión de la UE y tiene como objetivo fortalecer la \ncohesión económica, social y territorial en la Unión Europea corrigiendo \nlos desequilibrios entre sus regiones, apoyando la recuperación económica, la \ncreación de empleo, la competitividad, la innovación y la sostenibilidad. Cumple las \nprioridades políticas de la Unión, especialmente la transición verde y digital. Dentro \n"
+  afirmaciones:
+  - item_id: H2-F42-1
+    text: El Fondo de Cohesión beneficia únicamente a los Estados con una RNB superior a la media de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F42-2
+    text: El Fondo de Cohesión se dirige a los Estados cuya renta nacional bruta por habitante es inferior al 90 % de la media de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F42-3
+    text: El Fondo de Cohesión financió más de tres mil proyectos de transporte en el año 2022.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F43
+  premisa: " 280\nSeguridad civil para la sociedad 1 596\nMundo digital, industria y espacio 15 349\nClima, energía y movilidad 15 123\nAlimentación, bioeconomía, recursos naturales, agricultura y medio ambiente 8 952\nAcciones directas no nucleares del Centro Común de Investigación 1 970\nEUROPA INNOVADORA, de los cuales: 13 597\nConsejo Europeo de Innovación 10 105\nEcosistemas europeos de innovación 527\nInstituto Europeo de Innovación y Tecnología 2 965\nAMPLIAR LA PARTICIPACIÓN Y REFORZAR EL ESPACIO EUROPEO DE \nINVESTIGACIÓN, de los cuales: 3 393\nAmpliar la participación y difundir la excelencia 2 955\nReformar y mejorar el sistema europeo de investigación e innovación 438\nTOTAL HORIZONTE EUROPA 95 517\nPRESUPUESTO EURATOM 2021-2025\nEstructura del Programa Euratom Total\n(en millones de euros)\n"
+  afirmaciones:
+  - item_id: H2-F43-1
+    text: El Instituto Europeo de Innovación y Tecnología tiene su sede administrativa en Budapest desde 2010.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F43-2
+    text: Dentro de Europa innovadora, el Consejo Europeo de Innovación concentra 10 105 millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F43-3
+    text: El Consejo Europeo de Innovación dispone de un presupuesto de 2 000 millones de euros.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F44
+  premisa: "nciación CultureEU\n74\nInvestigación, desarrollo \ne innovación; \nDesarrollo de productos, \nservicios e infraestructura; \nDigitalización y nuevos \nmodelos de negocio; \nDesarrollo de audiencias; \nRedes e intercambio \nde conocimientos; \nInternacionalización de actividad / \nacceso a nuevos mercados.\n¿Quiere saber más sobre el \nprograma? Visita la página web\nhttps://ec.europa.eu/info/\nbusiness-economy-euro/\nrecovery-coronavirus/recovery\uFFFEand-resilience-facility_es\nConsulte los planes nacionales \npresentados por su país\nhttps://ec.europa.eu/info/business\uFFFEeconomy-euro/recovery-coronavirus/\nrecovery-and-resilience-facility_es\nAdemás, hay siete componentes de las reformas y la inversión: expansión; \nactivación; actualización y perfeccionamiento; conectividad digital; administración \n"
+  afirmaciones:
+  - item_id: H2-F44-1
+    text: Entre los componentes de reformas e inversión figuran la expansión, la activación, la actualización y el perfeccionamiento, y la conectividad digital.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F44-2
+    text: El Mecanismo de Recuperación excluye cualquier inversión en conectividad digital.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F44-3
+    text: España presentó su plan nacional de recuperación en abril de 2021 por valor de setenta mil millones de euros.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F45
+  premisa: "a las que asisten, en principio, todos los \ndiputados. Estas sesiones plenarias se celebran normalmente en Estrasburgo \n(Francia), y las sesiones adicionales se celebran en Bruselas. Los trabajos \npreparatorios también se llevan a cabo habitualmente en Bruselas: la «Confe\uFFFErencia de Presidentes» —es decir, los presidentes de los grupos políticos junto \ncon el presidente del Parlamento— fija el orden del día de las sesiones plena\uFFFErias, mientras que veinte comisiones parlamentarias redactan las enmiendas \nlegislativas que se someten a debate. Las tareas administrativas cotidianas \ndel Parlamento las realiza su Secretaría General, con sede en Luxemburgo y \nBruselas. Cada grupo político tiene también su propia secretaría.\n"
+  afirmaciones:
+  - item_id: H2-F45-1
+    text: El Parlamento Europeo cuenta con setecientos veinte escaños desde el año 2024.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F45-2
+    text: Todas las sesiones plenarias se celebran exclusivamente en Luxemburgo.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F45-3
+    text: Las sesiones plenarias del Parlamento se celebran normalmente en Estrasburgo y las adicionales en Bruselas.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F46
+  premisa: "esto del Consejo Europeo de \nInnovación se asignará a las pymes.\n• Al menos el 3,3 % del presupuesto se destinará a la \nparte del programa de ampliación de la participación \ny difusión de la excelencia.\n• Las inversiones en espacio deben ser proporcionales \na las destinadas en virtud de Horizonte 2020.\n• La participación de la industria en las acciones debe \napoyarse en niveles, al menos, proporcionales a los \nde Horizonte 2020.\n• El presupuesto debe contribuir a la ambición general \nde proporcionar el 7,5 % del gasto anual, en virtud \ndel marco financiero plurianual (MFP), a los objetivos \nen materia de biodiversidad de 2024, y el 10 % del \ngasto anual, en virtud del MFP, a los objetivos de \nbiodiversidad de 2026 y 2027.\n"
+  afirmaciones:
+  - item_id: H2-F46-1
+    text: La ampliación de la participación recibirá como máximo el 1 % del presupuesto total.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F46-2
+    text: Al menos el 3,3 % del presupuesto se destinará a la ampliación de la participación y la difusión de la excelencia.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F46-3
+    text: Las pymes recibirán al menos el 20 % del presupuesto del pilar 2.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F47
+  premisa: "lación para evitar el blanqueo de dinero.\nCon todo, el principal avance registrado en estos últimos años en materia de \ncooperación entre las fuerzas del orden ha sido la creación de Europol, orga\uFFFEnismo perteneciente a la UE, con sede en La Haya, que está integrado por \nfuncionarios policiales y aduaneros. Entre sus cometidos figuran: el tráfico de \nestupefacientes y de vehículos robados, la trata de seres humanos y las redes \nde inmigración ilegal, la explotación sexual de mujeres y niños, la pornografía \ninfantil, la falsificación, el tráfico de material radiactivo y nuclear, el terrorismo, \nel blanqueo de dinero y la falsificación del euro.\nEuropa ha sido objetivo de grupos terroristas islamistas vinculados a Al Qaeda \n"
+  afirmaciones:
+  - item_id: H2-F47-1
+    text: Europol emplea actualmente a más de mil quinientas personas de cuarenta nacionalidades.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F47-2
+    text: Europol, con sede en La Haya e integrado por funcionarios policiales y aduaneros, es el principal avance reciente en cooperación policial.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F47-3
+    text: Europol tiene su sede en Lyon y está integrado por jueces y fiscales.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F48
+  premisa: "micos fortalecen la \nidentidad europea, creando un sentido de pertenencia. La cultura y los sectores creativos también \ntienen el poder de mejorar vidas, transformar comunidades, generar empleo y crecimiento y generar \nefectos indirectos en otros sectores.\nPor eso me complace mucho presentarles la Guía de financiación CultureEU, una guía de \noportunidades de financiación de la dUE para los sectores cultural y creativo. Se ha \ndesarrollado para apoyar a agentes de todos los tipos y tamaños que trabajan en los sectores \ncultural y creativo, para ayudarles a navegar por el panorama de la financiación de la UE, \ncomprender qué oportunidades tienen disponibles y, en última instancia, ayudarles a acceder a la \nfinanciación de la UE más fácilmente. \n"
+  afirmaciones:
+  - item_id: H2-F48-1
+    text: La guía CultureEU está dirigida exclusivamente a las grandes empresas del sector audiovisual.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F48-2
+    text: La guía CultureEU se ha desarrollado para apoyar a agentes de todos los tipos y tamaños que trabajan en los sectores cultural y creativo.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F48-3
+    text: La guía CultureEU se publicó por primera vez en 2018 y se actualiza cada dos años.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F49
+  premisa: "ntre la CEE y \ndieciocho países africanos.\n9 DE MAYO\nRobert Schuman, ministro francés \nde Asuntos Exteriores, propone, \nen un importante discurso \ninspirado por Jean Monnet, \nconsejero político y económico \nfrancés, poner en común los \nrecursos de carbón y de acero de \nFrancia y de la República Federal \nde Alemania en una nueva \norganización abierta a los demás \npaíses de Europa.\n1-2 DE JUNIO\nReunidos en la Conferencia de \nMesina, los ministros de Asuntos \nExteriores de los seis países \ndeciden ampliar la integración \neuropea a toda la economía.\n4 DE ENERO\nA instancias del Reino Unido, \nfirma del Convenio de Estocolmo \npor el que se crea la Asociación \nEuropea de Libre Comercio \n(AELC), que comprende diversos \npaíses europeos que no forman \nparte de la CEE.\n8 DE ABRIL\n"
+  afirmaciones:
+  - item_id: H2-F49-1
+    text: La propuesta de Schuman consistía en crear una alianza militar franco-alemana cerrada a otros países.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F49-2
+    text: El discurso de Schuman se pronunció en el Quai d'Orsay ante más de trescientos periodistas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F49-3
+    text: El 9 de mayo, Robert Schuman propuso poner en común los recursos de carbón y de acero de Francia y Alemania.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F50
+  premisa: "POYO\nSi ha recogido al menos un \nmillón de declaraciones de \napoyo al final del período de \nrecogida, debe pedir a las \nautoridades nacionales competentes \nde los países en los que haya \nalcanzado el número mínimo que \ncertifiquen el número de declaraciones \nde apoyo válidas correspondientes a \nese país. \nDebe presentar las declaraciones de \napoyo para su verificación en un plazo \nde tres meses a partir del final del \nperíodo de recogida. \nA petición suya, la Comisión transferirá \na las autoridades nacionales las \ndeclaraciones de apoyo recogidas \nen línea a través de su sistema de \nrecogida en línea.\nPuede optar por enviar las \ndeclaraciones de apoyo recogidas en \npapel a las autoridades nacionales \nmediante un sistema seguro de \nintercambio de archivos facilitado \n"
+  afirmaciones:
+  - item_id: H2-F50-1
+    text: Las autoridades nacionales disponen de seis meses para certificar las declaraciones de apoyo.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F50-2
+    text: No existe ningún plazo para presentar las declaraciones de apoyo a las autoridades nacionales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F50-3
+    text: Las declaraciones de apoyo deben presentarse para su verificación en un plazo de tres meses desde el final del período de recogida.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F51
+  premisa: " de inspiración para futuros solicitantes.\nLa WORTH Partnership Project / COSME es una iniciativa destinada a impulsar \nel valor añadido de los productos y procesos creativos a través del diseño y la \ntecnología, mejorando así la competitividad de las pymes creativas.\nPrograma sobre el Mercado Único\n49\n¿Quién puede presentarse?\n• El programa está abierto a cualquier organización \nlegalmente constituida creada bajo la ley de la \nUnión o cualquier organización internacional, así como a \norganizaciones legalmente constituidas en un tercer país \nasociado al Programa (es decir, miembros de la AELC, países \ncandidatos y candidatos potenciales, países cubiertos por la \npolítica de vecindad de la Unión Europea);\n• El Programa también está abierto a nuevos \n"
+  afirmaciones:
+  - item_id: H2-F51-1
+    text: El presupuesto total del Programa sobre el Mercado Único asciende a cuatro mil millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F51-2
+    text: El programa está abierto a cualquier organización legalmente constituida creada bajo la ley de la Unión o a cualquier organización internacional.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F51-3
+    text: El programa está reservado exclusivamente a las administraciones públicas nacionales.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F52
+  premisa: "uropeas y establecer una \nred eficaz de las infraestructuras existentes, lo \nque ha dado lugar a la creación de más de \n50 infraestructuras de investigación eu\uFFFEropeas. Esta coordinación de políticas y las \nmedidas incentivadoras en los programas \nmarco han movilizado inversiones por va\uFFFElor de cerca de 20  000 millones de euros.\nLAS INFRAESTRUCTURAS DE INVESTIGACIÓN\nson instalaciones que proporcionan recursos y  servicios \npara llevar a  cabo investigaciones y  fomentar la innovación. \nPueden encontrarse en un único lugar, estar repartidas o ser \nvirtuales. La acción de la UE en favor de las infraestructuras de \ninvestigación apoya el desarrollo, la mejora y la consolidación \nde infraestructuras de investigación paneuropeas excelentes, \n"
+  afirmaciones:
+  - item_id: H2-F52-1
+    text: La UE no ha creado ninguna infraestructura de investigación paneuropea.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F52-2
+    text: La acción de la UE ha dado lugar a la creación de más de 50 infraestructuras de investigación europeas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F52-3
+    text: La Hoja de ruta ESFRI de 2021 incluye veintidós infraestructuras y proyectos.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F53
+  premisa: "rticipar.\n¿QUÉ PASA SI TENGO QUE \nCAMBIAR MI PLAN ERASMUS \nMÁS ADELANTE?\nLas circunstancias cambian y todos los planes \ndeben adaptarse de vez en cuando. Con la \nacreditación Erasmus, esto no es un problema.\nDurante la ejecución, pueden modificarse los \ndetalles prácticos, tales como el número exacto \nde participantes, el lugar o la duración de las \nactividades. También puede cambiar los objetivos \nde su Plan Erasmus si es necesario. \nSu agencia nacional le orientará sobre cuándo \ny cómo puede hacerlo.\n¿PUEDO PRESENTAR UNA \nSOLICITUD EL AÑO QUE VIENE? \nSí, es posible. Cada año, se publica una nueva \nconvocatoria de acreditaciones Erasmus. \nPREGUNTAS Y \nRESPUESTAS\n¿DESEA OBTENER MÁS INFORMACIÓN?\nA continuación, se ofrece más información y recursos: \nLeer la Guía del Programa: \n"
+  afirmaciones:
+  - item_id: H2-F53-1
+    text: Una vez aprobado el Plan Erasmus, no puede modificarse ningún detalle bajo ninguna circunstancia.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F53-2
+    text: Durante la ejecución pueden modificarse los detalles prácticos, como el número exacto de participantes, el lugar o la duración de las actividades.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F53-3
+    text: La convocatoria anual de acreditaciones se cierra el 15 de febrero a las doce del mediodía.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F54
+  premisa: "TA DE ABREVIATURAS 49\n6\n1. Introducción\nLa presente publicación ayuda a los Estados miembros a concienciar a su propia \nAdministración, así como a las partes interesadas, sobre las normas de comunicación y \nvisibilidad jurídicamente vinculantes aplicables a los programas de financiación de la Unión \nEuropea en el marco del presupuesto a largo plazo de la UE y NextGenerationEU a partir de \n2021. Asimismo, los orienta en la aplicación de estas normas en la medida en que tengan una \nresponsabilidad de gestión compartida.\nTras una sección en la que se responde una serie de preguntas generales, se examina cada \nuno de los diez requisitos institucionales que la Comisión Europea ha agrupado en una lista a \nefectos de presentación. Para concluir, se tratan algunas cuestiones de programas \n"
+  afirmaciones:
+  - item_id: H2-F54-1
+    text: Las normas de comunicación y visibilidad descritas son meramente orientativas y carecen de carácter vinculante.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F54-2
+    text: La publicación ayuda a los Estados miembros a concienciar a su Administración sobre las normas de comunicación y visibilidad jurídicamente vinculantes.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F54-3
+    text: La publicación se presentó oficialmente en Bruselas en marzo de 2022.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F55
+  premisa: "ionales de la UE, reglamentos sobre \nayudas estatales, instrumentos de Horizonte Europa) y evalúan el impacto previsto.\n• La Comisión Europea está poniendo en marcha herramientas para aumentar la visibilidad \nde los resultados de la investigación (por ejemplo, la plataforma de resultados de \nHorizonte Europa o la herramienta de cartografía de sinergias de Horizonte-Interreg).\nMÁS INFORMACIÓN\nPlataforma de Resultados de Horizonte \nEuropa\nhttps://europa.eu/!XP94Yp\nAcelerador de Resultados Horizonte\nhttps://europa.eu/!bq98UN\nHerramienta de cartografía de Horizonte\uFFFEInterreg\nhttps://europa.eu/!9ujcDf\nMisiones de Horizonte Europa\nhttps://europa.eu/!khFkWC\nDirectrices sobre las sinergias entre \nprogramas del FEDER y Horizonte Europa\nhttps://europa.eu/!b8xRvw\n"
+  afirmaciones:
+  - item_id: H2-F55-1
+    text: La Comisión está poniendo en marcha herramientas como la plataforma de resultados de Horizonte Europa y la herramienta de cartografía Horizonte-Interreg.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F55-2
+    text: La plataforma de resultados registra más de veinte mil proyectos desde su lanzamiento.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F55-3
+    text: La Comisión ha cancelado la plataforma de resultados de Horizonte Europa y la herramienta de cartografía.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F56
+  premisa: "presidente del \nParlamento Europeo también pueden ser invitado.\nLas reuniones constituyen una oportunidad para debatir \nla gobernanza de la zona del euro, así como reformas \nimportantes en materia de política económica. La Cumbre \ndel Euro se instituyó oficialmente mediante el Tratado de \nEstabilidad, Coordinación y Gobernanza en la Unión \nEconómica y Monetaria (TECG). El presidente de la \nCumbre del Euro es nombrado por los jefes de Estado o \nde Gobierno de los miembros de la zona del euro. El \nnombramiento se produce al mismo tiempo que el del \npresidente del Consejo Europeo, y tiene la misma \nduración. Los dos cargos pueden ser desempeñados por \nla misma persona.\nEn algunos casos, los dirigentes de los países que han \nratificado el TECG pero que no utilizan el euro como \n"
+  afirmaciones:
+  - item_id: H2-F56-1
+    text: La Cumbre del Euro se reúne al menos cuatro veces al año en Bruselas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F56-2
+    text: La Cumbre del Euro se instituyó oficialmente mediante el Tratado de Maastricht.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F56-3
+    text: Los cargos de presidente de la Cumbre del Euro y presidente del Consejo Europeo pueden ser desempeñados por la misma persona.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F57
+  premisa: "és del taller.\n30\n¿CUÁNDO Y DÓNDE USARLO?\nEste método puede ser adecuado para muchos temas, ya que los intereses y las \npreocupaciones del alumnado con respecto al futuro guiarán el propio proceso. Quizá tu \nalumnado haya propuesto temas concretos. En ese caso, podría merecer la pena buscar \nsi otra actividad los trata. Puedes encontrar ejemplos de cómo se desarrolla la actividad \nen los itinerarios de aprendizaje 2 y 4. Para grupos de nivel principiante o si dispones de \ntiempo limitado, céntrate en la fase imaginativa.\nMATERIALES \nY RECURSOS \nNECESARIOS\n• Papel, carteles, dispositivos electrónicos.\n• Bolígrafos y otros materiales para escribir \ny dibujar.\n• Notas adhesivas, tarjetas de moderación.\n31\nMÉTODO PARA LA REFLEXIÓN\nPASEO POR LA \nGALERÍA\n"
+  afirmaciones:
+  - item_id: H2-F57-1
+    text: Pueden encontrarse ejemplos de cómo se desarrolla la actividad en los itinerarios de aprendizaje 2 y 4.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F57-2
+    text: La fase imaginativa de la actividad dura exactamente cuarenta y cinco minutos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F57-3
+    text: La actividad no aparece en ningún itinerario de aprendizaje.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F58
+  premisa: "ra del Pueblo \nEuropeo pueda resolver el problema simplemente \ninformando sobre la denuncia a la institución afectada. \nEn caso de que el asunto no pueda resolverse \nsatisfactoriamente durante el curso de sus \ninvestigaciones, la Defensora del Pueblo Europeo \ntratará de encontrar una solución amistosa que corrija \nel caso de mala administración de manera satisfactoria \npara el denunciante. Si esto no funciona, la Defensora \ndel Pueblo Europeo puede hacer recomendaciones para \nresolver el asunto. Si la institución en cuestión no \nacepta sus recomendaciones, puede presentar un \ninforme especial al Parlamento Europeo.\nEn el sitio web de la Defensora del Pueblo Europeo se \nofrece una guía práctica sobre cómo presentar una \ndenuncia.\nComo Defensora del Pueblo Europeo, Emily O'Reilly examina \n"
+  afirmaciones:
+  - item_id: H2-F58-1
+    text: Emily O'Reilly fue reelegida como Defensora del Pueblo Europeo en 2019.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F58-2
+    text: La Defensora del Pueblo carece de potestad para formular recomendaciones a las instituciones.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F58-3
+    text: Si la institución no acepta sus recomendaciones, la Defensora del Pueblo puede presentar un informe especial al Parlamento Europeo.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F59
+  premisa: "rlamento Europeo. \nLa pregunta clave de este itinerario \nes: «Cómo se toman las decisiones en \nel Parlamento Europeo». \nItinerario 4\nEl itinerario 4 se centra en el efecto de \nlas decisiones del Parlamento Europeo \nen la vida cotidiana de la ciudadanía. \nAsí, la pregunta clave de este itinerario \nes: «La influencia de la Unión \nEuropea en nuestra vida cotidiana».\nLos itinerarios temáticos exploran ámbitos \nespecíficos relevantes para la juventud \ny en los que el Parlamento Europeo \ndesempeña un papel importante. Algunos \nde estos itinerarios pueden requerir \nconocimientos previos.\nItinerario 5\nEl itinerario 5 se centra en el \ndesarrollo de habilidades de \nalfabetización mediática y la \ncomprensión de cómo el Parlamento \nEuropeo contribuye a ello, así como \n"
+  afirmaciones:
+  - item_id: H2-F59-1
+    text: El itinerario 5 sobre alfabetización mediática se lanzó en el año 2024.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F59-2
+    text: La pregunta clave del itinerario 4 es cómo se toman las decisiones en el Parlamento Europeo.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F59-3
+    text: La pregunta clave del itinerario 4 es la influencia de la Unión Europea en nuestra vida cotidiana.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F60
+  premisa: "ncia científica en todos \nlos países.\n• Atraer y retener talentos en Europa.\n• I+i de alta calidad para el crecimiento \nsostenible de Europa.\n• Mayor cooperación estratégica y circulación de \ncerebros entre países, disciplinas y sectores.\n• Nuevos vínculos entre la investigación, la \nindustria y la sociedad.\n• Un Espacio Europeo de Investigación más \nfuerte.\nBeneficios para investigadores \ny organizaciones:\n• Nuevos conocimientos y capacidades dentro \ny fuera del mundo académico.\n• Una mejora de las perspectivas profesionales \ny de la empleabilidad.\n• Una mentalidad orientada a la innovación para \nconvertir las ideas en productos y servicios.\n• Creación de redes y mayor visibilidad \nen la comunidad europea de I+i.\n• Experiencia y exposición \ninternacionales, interdisciplinares \n"
+  afirmaciones:
+  - item_id: H2-F60-1
+    text: Entre los beneficios figuran atraer y retener talentos en Europa y una mayor cooperación estratégica y circulación de cerebros entre países.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F60-2
+    text: El programa pretende reducir la cooperación entre países y frenar la circulación de investigadores.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F60-3
+    text: Los beneficiarios de las AMSC tienen una tasa de empleo del 95 % dos años después de la beca.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F61
+  premisa: "NA EUROPEA \nHA TENIDO ALGÚN \nEFECTO HASTA LA \nFECHA?\nDe todas las iniciativas que han \nobtenido el número necesario de \nfirmas, algunas han dado lugar a nueva \nlegislación y otras han producido otros \nresultados significativos. Por ejemplo:\nEn respuesta a la iniciativa \nRight2Water, la Comisión se \ncomprometió a intensificar los \nesfuerzos por aplicar plenamente la \nlegislación de la UE sobre el agua y \nadoptó una propuesta de revisión \nde la Directiva de la UE sobre el \nagua potable, que obliga a los países \nde la UE a garantizar el acceso a \nagua potable segura para todos \nlos europeos, incluidos los grupos \nvulnerables. Esta Directiva entró en \nvigor en enero de 2021, y los Estados \nmiembros tenían que transponerla a \nsu legislación nacional a más tardar en \nenero de 2023. \n"
+  afirmaciones:
+  - item_id: H2-F61-1
+    text: La iniciativa Right2Water reunió más de dos millones de firmas en toda la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F61-2
+    text: En respuesta a la iniciativa Right2Water, la Comisión adoptó una propuesta de revisión de la Directiva sobre el agua potable.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F61-3
+    text: La iniciativa Right2Water no produjo ningún resultado ni respuesta por parte de la Comisión.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F62
+  premisa: "drían servir para responder eficazmente a la \ndemanda de productos innovadores en hospitales públicos y para facilitar \nestos productos rápidamente a la competencia internacional.\n1EJEMPLO\nElaborar programas de trabajo y \nconvocatorias de propuestas \nque pongan de relieve los \nprogramas de financiación \ncomplementaria (de Horizonte \nEuropa a otros programas de \nla UE y viceversa) para abordar \ndiferentes elementos de la línea \nde desarrollo. \nPor ejemplo, flotas de \nvehículos con bajas \nemisiones de carbono, \ninfraestructuras de recarga \no repostaje y despliegue \nde sistemas de transporte \ninteligentes.\n2\nEJEMPLO\n¿Qué resultados esperamos?\n• Mayor impacto del gasto público, sobre todo en el cumplimiento de los objetivos de las misiones europeas, y una \n"
+  afirmaciones:
+  - item_id: H2-F62-1
+    text: Se desaconseja mencionar la financiación complementaria en los programas de trabajo y convocatorias.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F62-2
+    text: Se propone elaborar programas de trabajo y convocatorias que pongan de relieve la financiación complementaria entre Horizonte Europa y otros programas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F62-3
+    text: Las flotas de vehículos de bajas emisiones recibieron tres mil millones del Mecanismo Conectar Europa.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F63
+  premisa: "los países del \nprograma. Esto incluye a todos \nlos Estados miembros de la Unión \nEuropea, así como a otros países que \nse han adherido al programa. La lista \ncompleta de los países que participan \nen el programa y sus agencias \nnacionales puede consultarse aquí: \nhttps://ec.europa.eu/programmes/\nerasmus-plus/contact_es\n4\nPUEDEN PARTICIPAR MUCHOS TIPOS \nDIFERENTES DE ORGANIZACIONES, \nINCLUIDAS LAS SIGUIENTES:\nOrganizaciones que imparten \neducación escolar, formación \nprofesional y educación \nde personas adultas.\nOrganismos públicos locales \ny regionales, organismos de \ncoordinación y otras organizaciones \ndel ámbito de la educación escolar, \nla formación profesional o la \neducación de personas adultas.\nEmpresas y otras organizaciones \nque acogen, forman o trabajan \n"
+  afirmaciones:
+  - item_id: H2-F63-1
+    text: La lista completa de países participantes se actualiza cada mes en el portal Erasmus+.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F63-2
+    text: Las solicitudes están abiertas a las organizaciones de los países del programa, incluidos todos los Estados miembros de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F63-3
+    text: Las solicitudes están abiertas únicamente a organizaciones de terceros países no asociados.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F64
+  premisa: " serie de normas de \ncalidad Erasmus. Para las \norganizaciones acreditadas, estas \nnormas son la clave del éxito. Para \nlos participantes, suponen una \ngarantía de calidad. Puede consultar \nlas normas de calidad en la \nconvocatoria de acreditaciones o en \nel formulario de solicitud.\nACTIVIDADES APOYADAS:\nMovilidades del personal mediante \nperiodos de observación, periodos \nde docencia y cursos.\nMovilidades individuales de \nestudiantes escolares, adultos \ny de FP, alumnos en prácticas \ny recién graduados.\nMovilidad individual y de grupo \nde alumnos de educación escolar.\nACREDITACIÓN ERASMUS\n¿QUIÉN PUEDE \nPARTICIPAR?\nLas solicitudes están abiertas a las \norganizaciones de los países del \nprograma. Esto incluye a todos \nlos Estados miembros de la Unión \nEuropea, así como a otros países que \n"
+  afirmaciones:
+  - item_id: H2-F64-1
+    text: La acreditación Erasmus excluye cualquier movilidad del personal docente.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F64-2
+    text: Las movilidades del personal incluyen periodos de observación, periodos de docencia y cursos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F64-3
+    text: En 2022 participaron en el programa más de un millón de estudiantes de formación profesional.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F65
+  premisa: "ece misiones de la UE\ncon ambiciosas metas que abordan algunos de \nnuestros principales problemas. También incluye las \nactividades del Centro Común de Investigación, \nque ofrece a los responsables políticos, nacionales \ny de la UE, datos científicos independientes y apoyo \ntécnico.\n(*) El Instituto Europeo de Innovación y Tecnología (EIT) no forma parte del programa específico.\n(**) Actividades no nucleares del Centro Común de Investigación.\nHORIZONTE EUROPA EURATOM\nCentro Común \nde Investigación\nActividades \nde desarrollo\nFisión Actividades \nde investigación\nFusión\nAmpliar la participación y difundir la excelencia Reformar y mejorar el sistema europeo de I+i\nPROGRAMA \nESPECÍFICO: \nFONDO \nEUROPEO \nDE DEFENSA\nCentrado \nexclusivamente en \nla I+D en el ámbito \nde la defensa\n"
+  afirmaciones:
+  - item_id: H2-F65-1
+    text: El Centro Común de Investigación vende sus datos exclusivamente a empresas privadas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F65-2
+    text: El Centro Común de Investigación ofrece a los responsables políticos datos científicos independientes y apoyo técnico.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F65-3
+    text: El Instituto Europeo de Innovación y Tecnología gestiona un presupuesto anual de quinientos millones de euros.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F66
+  premisa: "\nrepercuten en la vida cotidiana de sus \nciudadanos al abordar muchos de los \ndesafíos reales a los que se enfrenta la \nsociedad, como la protección medioam\uFFFEbiental, la salud, la innovación tecnoló\uFFFEgica, la energía, etc.\na) Medio ambiente y desarrollo \nsostenible\nLos científicos llevan advirtiendo desde \nla década de 1960 de que la tempera\uFFFEtura de la Tierra está aumentando. Al \nprincipio los líderes políticos tardaron \nen reaccionar, pero las Naciones Unidas \ncrearon en 1988 su Grupo Interguber\uFFFEnamental de Expertos sobre el Cambio \nClimático. Este grupo de expertos ha \nconseguido llamar la atención mundial \nsobre las posibles consecuencias \nnefastas del calentamiento global, \nprovocado por las emisiones de gases \n"
+  afirmaciones:
+  - item_id: H2-F66-1
+    text: Según el texto, la preocupación científica por el calentamiento global comenzó en la década de 2010.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F66-2
+    text: Los científicos llevan advirtiendo desde la década de 1960 de que la temperatura de la Tierra está aumentando.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F66-3
+    text: El informe del Grupo de 1990 preveía un aumento de tres grados para el año 2100.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F67
+  premisa: "euros para el período 2021-2027 (en precios \ncorrientes). Esto incluye 5 400 millones de euros (en precios corrientes) \nde NextGenerationEU para impulsar nuestra recuperación y lograr \nque la UE sea más resiliente en el futuro, así como un refuerzo adicional \n(en comparación con el acuerdo sobre el marco financiero plurianual \nde julio de 2020) de 4 600 millones de euros (en precios corrientes).\nHorizonte Europa también se ejecutará a través del Fondo Europeo \nde Defensa y se complementará con el Programa de Investigación \ny Formación de la Comunidad Europea de la Energía Atómica.\nESTRUCTURA DE HORIZONTE EUROPA\n• El pilar «Ciencia excelente» aspira a aumentar la \ncompetitividad científica mundial de la UE. Apoya \nproyectos de investigación de frontera definidos \n"
+  afirmaciones:
+  - item_id: H2-F67-1
+    text: El Fondo Europeo de Defensa dispone de ocho mil millones de euros para el período 2021-2027.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F67-2
+    text: Horizonte Europa se financia exclusivamente con el marco financiero plurianual, sin aportaciones de NextGenerationEU.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F67-3
+    text: Horizonte Europa incluye 5 400 millones de euros de NextGenerationEU y un refuerzo adicional de 4 600 millones para 2021-2027.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F68
+  premisa: "particular la Red Europea \nde Desarrollo Rural, la Asociación Europea para la Innovación en materia de Productividad y \nSostenibilidad Agrícolas o la Agencia Ejecutiva Europea de Investigación [para la política de \npromoción agroalimentaria: la migración desde la anterior Agencia Ejecutiva de \nConsumidores, Salud, Agricultura y Alimentación (Chafea) está en curso].\nPor lo que se refiere a los beneficiarios de la política agrícola común (PAC), la comunicación \nla gestionan los propios Estados miembros, lo que significa que las publicaciones no son \nresponsabilidad de la Comisión. No obstante, se facilita un inventario de las publicaciones \npertinentes.\n(\n1\n) La plataforma Kohesio está en fase de desarrollo y se pondrá en marcha oficialmente en marzo de 2022. Hasta entonces, \n"
+  afirmaciones:
+  - item_id: H2-F68-1
+    text: La Comisión gestiona directamente toda la comunicación de la política agrícola común.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F68-2
+    text: La plataforma Kohesio recibió el premio al mejor portal público europeo en 2023.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F68-3
+    text: En el caso de la PAC, la comunicación la gestionan los propios Estados miembros, de modo que las publicaciones no son responsabilidad de la Comisión.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F69
+  premisa: "s allá de la actividad» en muchos de los itinerarios o en \nactividades individuales.\nMATERIALES \nY RECURSOS \nNECESARIOS\n• Está disponible una guía para la persona \nmoderadora que incluye los materiales \ndidácticos.\n38\nACTIVIDADES ADICIONALES DEL PARLAMENTO EUROPEO\nAGENTES DEL \nCAMBIO: DEL ARTE \nCOMPROMETIDO \nAL ACTIVISMO \nDEMOCRÁTICO\nEste kit didáctico se centra en el modo en que \nel arte puede capacitarnos para configurar \nactivamente nuestras comunidades e impulsar el \ncambio democrático.\nNiveles de aprendizaje: \navanzado\nDuración: flexible\nTamaño del grupo: de 10 a 30 \nalumnos\nGrupo de edad: entre 16 y 24 \naños\nTipo de actividad: \nindividual / grupal\nTiempo de preparación: en \nfunción del objetivo de la \nactividad, hasta dos horas\nDESARROLLO DE LA ACTIVIDAD\n"
+  afirmaciones:
+  - item_id: H2-F69-1
+    text: El kit 'Agentes del cambio' se centra en cómo el arte puede capacitarnos para configurar nuestras comunidades e impulsar el cambio democrático.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F69-2
+    text: El kit 'Agentes del cambio' enseña técnicas de contabilidad para asociaciones juveniles.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F69-3
+    text: El kit 'Agentes del cambio' fue descargado más de cincuenta mil veces durante su primer año.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F70
+  premisa: "na y accesible, así como a asistencia y, en \ndeterminadas circunstancias, a compensación en caso de anulación o largos \nretrasos. La inversión en infraestructuras de transporte es una de las principa\uFFFEles prioridades del Plan de Inversiones para Europa de la UE lanzado en 2014.\nb) Competencia\nLa política de competencia es esencial para garantizar que, en el mercado \núnico europeo, la competencia no solo sea libre, sino también equitativa. De \nla aplicación de esta política se ocupa la Comisión Europea, que, junto con \nel Tribunal de Justicia de la Unión Europea, es responsable de garantizar su \ncumplimiento.\nEl objetivo de esta política es evitar que los cárteles, las ayudas de las autori\uFFFEdades públicas o los monopolios desleales puedan falsear la libre competencia \nen el mercado único.\n"
+  afirmaciones:
+  - item_id: H2-F70-1
+    text: En 2022 la Comisión impuso multas por cárteles por valor de dos mil millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F70-2
+    text: La política de competencia es esencial para que en el mercado único la competencia no solo sea libre, sino también equitativa.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F70-3
+    text: La política de competencia permite que cárteles y monopolios desleales falseen la libre competencia.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F71
+  premisa: "de los \nEstados miembros y los países asociados. La financiación se realizará principalmente a través de subvenciones. \nLa selección de los proyectos que se financiarán se realizará principalmente mediante convocatorias abiertas \nde propuestas, que se seleccionarán en función de la excelencia, del impacto y de la calidad y eficiencia de la \nejecución. No hay una distribución fija por país o región. La gestión del programa correrá a cargo de la Comisión \nEuropea, sus agencias ejecutivas y una serie de instituciones jurídicas establecidas como órganos de la Unión.\n3\nMientras que las subvenciones en virtud de los pilares 1 y 3 serán principalmente para un beneficiario \n(esquemas de beneficiario único), las subvenciones en virtud del pilar 2 serán principalmente para un consorcio \n"
+  afirmaciones:
+  - item_id: H2-F71-1
+    text: 'No hay una distribución fija por país o región: la selección atiende a la excelencia, el impacto y la calidad y eficiencia de la ejecución.'
+    juicio: null
+    comentario: ''
+  - item_id: H2-F71-2
+    text: Cada Estado miembro tiene asignada una cuota fija del presupuesto proporcional a su población.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F71-3
+    text: Las convocatorias del pilar 2 se publican cada dos años en el Diario Oficial.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F72
+  premisa: "ntos y acciones de la UE de \nmanera estratégica. En eso consisten las sinergias.\nExplicación del contexto y del desafío\nHorizonte Europa se esfuerza por lograr sinergias con otros programas de la UE desde el diseño:\na) asegurándose de que las prioridades y actividades de \ninvestigación e innovación apoyan diferentes políticas y \nprogramas;\nb) velando por que los resultados de la investigación y la \ninnovación sostengan la transición ecológica y digital de \nla manera más eficiente, lo que refuerza la resiliencia de la \nUE frente a los desafíos sanitarios, económicos y sociales;\nc) desplegando los resultados de la investigación \ny las soluciones innovadoras desarrolladas en \nHorizonte Europa mediante otros programas de \nfinanciación de la UE;\n"
+  afirmaciones:
+  - item_id: H2-F72-1
+    text: Horizonte Europa prohíbe cualquier sinergia con otros programas de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F72-2
+    text: Las sinergias entre fondos se regulan en el artículo 15 del Reglamento de disposiciones comunes.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F72-3
+    text: Horizonte Europa busca sinergias asegurándose de que la investigación apoya distintas políticas y de que sus resultados sostienen la transición ecológica y digital.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F73
+  premisa: " administrativos: 9 000 millones de euros.\nCada presupuesto anual forma parte de un ciclo presupuestario de siete años \nconocido como «marco financiero plurianual». La Comisión Europea se encarga \nde elaborar dicho marco, que los Estados miembros han de aprobar por unani\uFFFEmidad y que se ha de negociar y acordar con el Parlamento Europeo. El marco \nfinanciero plurianual para el período 2014-2020 se decidió en 2013. El límite \nglobal de gasto se redujo aproximadamente en un 3 % en términos reales en \ncomparación con el período anterior de 2007-2013.\nEste plan de gasto pretende incrementar el crecimiento y el empleo en Europa, \nfomentar la agricultura sostenible y construir una Europa más respetuosa del \nmedio ambiente. Se han incrementado los fondos destinados a investigación e \n"
+  afirmaciones:
+  - item_id: H2-F73-1
+    text: Cada presupuesto anual forma parte de un ciclo de siete años conocido como 'marco financiero plurianual'.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F73-2
+    text: La Comisión destina el 40 % del presupuesto anual a la política de cohesión.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F73-3
+    text: El presupuesto de la UE se aprueba para un ciclo de tres años.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F74
+  premisa: " superior a 100 000 EUR;\nd) para las operaciones que no se incluyan en la letra c), exhibirán en un lugar bien visible \npara el público al menos un cartel de tamaño mínimo A3 o una pantalla electrónica \nequivalente con información sobre la operación donde se destaque la ayuda de los Fondos; \nen los casos en los que el beneficiario sea una persona física, dicho beneficiario asegurará, \nen la medida de lo posible, la disponibilidad de información adecuada donde se destaque \nla ayuda de los Fondos, en un lugar visible para el público o mediante una pantalla \nelectrónica;\ne) para las operaciones de importancia estratégica y las operaciones cuyo coste total sea \nsuperior a 10 000 000 EUR, organizarán una actividad o acto de comunicación, según \n"
+  afirmaciones:
+  - item_id: H2-F74-1
+    text: El cartel de tamaño mínimo A3 debe imprimirse a todo color y en papel reciclado.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F74-2
+    text: Las operaciones de más de diez millones de euros están exentas de organizar actos de comunicación.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F74-3
+    text: Para las operaciones de importancia estratégica y las de coste total superior a 10 000 000 EUR se organizará una actividad o acto de comunicación.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F75
+  premisa: " DE CONTROL\nEl Parlamento ejerce de varias formas el control \ndemocrático de las otras instituciones europeas. Esto lo \nhace de varias maneras. En primer lugar, cuando se \ndesigna una nueva Comisión, el Parlamento celebra \naudiencias de todos los candidatos a los cargos de \ncomisarios y presidente de la Comisión (presentados \npor los Estados miembros) y que no pueden ser \nnombrados sin la aprobación del Parlamento.\nPor otra parte, la Comisión es políticamente responsable \nante el Parlamento, que puede presentar una moción de \ncensura pidiendo la dimisión de toda la Comisión. Más \ngeneralmente, el Parlamento ejerce el control \nexaminando periódicamente los informes que le envía \nla Comisión y efectuando preguntas escritas y orales.\nLos comisarios asisten a los plenos del Parlamento y a \n"
+  afirmaciones:
+  - item_id: H2-F75-1
+    text: El Parlamento celebra audiencias de todos los candidatos a comisarios y a la presidencia de la Comisión, que no pueden ser nombrados sin su aprobación.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F75-2
+    text: La moción de censura del Parlamento requiere una mayoría de dos tercios de los votos emitidos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F75-3
+    text: La Comisión puede ser nombrada sin necesidad de aprobación alguna por parte del Parlamento.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F76
+  premisa: "xigido \npor las normas del Estado miembro para la financiación pública sin contribuciones del \npresupuesto de la Unión.\n2. A fin de respetar sus obligaciones en virtud del artículo 34, apartado 2, del Reglamento del \nMRR, y en particular para garantizar el suministro de información coherente, efectiva y \nproporcionada adaptada a múltiples destinatarios, incluidos los medios de comunicación y el \npúblico, el Estado miembro:\na) contará con una estrategia a escala nacional para sensibilizar y garantizar el \nreconocimiento de la contribución del MRR a la recuperación de Europa y, en particular, \na la doble transición ecológica y digital;\nb) cuando proceda, mostrará de forma correcta y destacada en todas las actividades de \n"
+  afirmaciones:
+  - item_id: H2-F76-1
+    text: Los Estados miembros tienen prohibido elaborar estrategias nacionales sobre el MRR.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F76-2
+    text: La estrategia española del MRR se aprobó por real decreto en septiembre de 2021.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F76-3
+    text: Cada Estado miembro contará con una estrategia nacional para sensibilizar y garantizar el reconocimiento de la contribución del MRR.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F77
+  premisa: "cto y  cumplirá \nlas prioridades estratégicas de la Unión Europea \n(UE), como la recuperación y las transiciones verde \ny digital, y abordará desafíos mundiales con el fin \nde mejorar la calidad de nuestra vida cotidiana.\n• Reforzará la ciencia y la tecnología de la UE mediante \nel aumento de la inversión en personas con alto nivel \nde capacidades y en investigación de vanguardia.\n• Impulsará la competitividad industrial de la UE y sus \nresultados en innovación, en particular mediante el \napoyo a la innovación creadora de mercado a través \ndel Consejo Europeo de Innovación y el Instituto \nEuropeo de Innovación y Tecnología.\n• Mejorará el acceso de los investigadores de toda \nEuropa a la excelencia para fomentar la participación \ny la colaboración.\nFebrero de 2021\nUNIÓN EUROPEA\n#HorizonEU\n"
+  afirmaciones:
+  - item_id: H2-F77-1
+    text: El Consejo Europeo de Innovación se creó en 2019 como proyecto piloto.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F77-2
+    text: Horizonte Europa reforzará la ciencia y la tecnología de la UE aumentando la inversión en personas altamente cualificadas y en investigación de vanguardia.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F77-3
+    text: Horizonte Europa eliminará la financiación de la investigación de vanguardia para concentrarse solo en innovación de mercado.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F78
+  premisa: "os \nmiembros y las direcciones de correo \nelectrónico del representante y del \nsustituto se publicarán en el sitio web \nde la Iniciativa Ciudadana Europea.\nTambién se puede crear una persona \njurídica para gestionar la iniciativa.\nSi necesita ideas y ayuda para preparar \nsu iniciativa, visite el Foro de la \nIniciativa Ciudadana Europea (5) para \nencontrar materiales de orientación, \nobtener asesoramiento y contactar \ncon otras personas que piensen como \nusted. \n5 Visite: https://citizens-initiative-forum.europa.eu/_es\n10\nEtapa 2: INSCRIBIR SU \nINICIATIVA \nCuando esté listo para \npresentar su iniciativa, pida \na la Comisión que la registre \na través del sitio web de la \nIniciativa Ciudadana Europea creando \nsu cuenta de organizador. Al presentar \nsu solicitud de registro a través de su \n"
+  afirmaciones:
+  - item_id: H2-F78-1
+    text: Los nombres de los miembros y las direcciones de correo del representante y del sustituto se publican en el sitio web de la ICE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F78-2
+    text: La identidad de los organizadores de una iniciativa se mantiene confidencial y nunca se publica.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F78-3
+    text: El Foro de la ICE organiza cada año un curso presencial de formación en Bruselas.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F79
+  premisa: "idad industrial, Europa innovadora y ampliación de \nla participación, y refuerzo del Espacio Europeo de \nInvestigación.\nHorizonte Europa se complementa con el Programa \nde Investigación y  Formación de la Comunidad \nEuropea de la Energía Atómica (Euratom) 2021-2025. \nEl Programa Euratom llevará a cabo actividades de \ninvestigación y formación nuclear, con un enfoque \nespecial en la mejora continua de la seguridad \ntecnológica nuclear y la protección radiológica, así \ncomo en aportar valor para la consecución de los \nobjetivos de Horizonte Europa. Este programa cuenta \ncon un presupuesto de 1 400 millones de euros para \nel período 2021-2025, lo que eleva el presupuesto \ntotal disponible para ambos programas a 96 900 \nmillones de euros.\nAbril de 2021\nUNIÓN EUROPEA\n#HorizonEU\n"
+  afirmaciones:
+  - item_id: H2-F79-1
+    text: El presupuesto conjunto de Horizonte Europa y Euratom asciende a 50 000 millones de euros.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F79-2
+    text: El Programa Euratom cuenta con 1 400 millones de euros para 2021-2025, lo que eleva el presupuesto conjunto con Horizonte Europa a 96 900 millones.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F79-3
+    text: Euratom financia la construcción de dos nuevos reactores de investigación en Francia y Polonia.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F80
+  premisa: "a permitir sinergias entre la innovación y \nla financiación regional de la UE (véase la ficha informativa al respecto).\nSi deseamos lograr el mayor impacto y el mayor beneficio posible para la población, es necesario ir más allá de la \ninvestigación. Esto significa tener en cuenta una mayor diversidad de factores, como:\ndemostración y \nproyectos piloto\ncontratación \npública \nprecomercial y de \ninnovación\ninfraestructura normas \n(p.ej., espacios \ncontrolados \nde pruebas y acuerdos \nde innovación)\nPosibles ejemplos de sinergias\nFacilitar que los resultados de proyectos de Horizonte Europa se \nconviertan en oportunidades empresariales innovadoras ofrecidas \npor la contratación pública de innovación, donde el sector público, \npor principio, es el primero en desplegar la invención.\n"
+  afirmaciones:
+  - item_id: H2-F80-1
+    text: Un ejemplo de sinergia es que los resultados de Horizonte Europa se conviertan en oportunidades empresariales mediante la contratación pública de innovación.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F80-2
+    text: La contratación pública de innovación excluye por principio los resultados de Horizonte Europa.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F80-3
+    text: La ficha sobre sinergias con financiación regional se publicó en octubre de 2022.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F81
+  premisa: "articipación pueden influir en la vida \ndemocrática de dentro y fuera de la Unión.\nCONOCIMIENTOS\nHABILIDADES\nACTITUDES \nY VALORES\nCIUDADANÍA ACTIVA \nY COMPROMETIDA\n4\nCÓMO USAR LA \nOFERTA EDUCATIVA\nLa oferta educativa del Parlamento Europeo \nsiempre sigue un proceso de aprendizaje \nde tres pasos: exploración, profundización \ny reflexión. Estos pasos te orientan tanto si \nestás planificando un taller personalizado \nadaptado a las necesidades de tu grupo \ncomo si estás siguiendo uno de los itinerarios \nde aprendizaje temáticos predefinidos \n(más detalles a continuación).\n5\nEXPLORACIÓN\nAverigua los intereses y conocimientos previos \ndel alumnado formulando una pregunta \nabierta relacionada con el tema que quieras \nexplorar y que se pueda responder de forma \n"
+  afirmaciones:
+  - item_id: H2-F81-1
+    text: El proceso de aprendizaje consta de un único paso de evaluación final.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F81-2
+    text: Cada itinerario temático tiene una duración recomendada de diez horas lectivas.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F81-3
+    text: 'La oferta educativa sigue un proceso de aprendizaje de tres pasos: exploración, profundización y reflexión.'
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F82
+  premisa: " de la Unión.\nEl Servicio Europeo de Acción Exterior (SEAE)\nconstituye un servicio diplomático y de asuntos exteriores \nde la Unión. Está dirigido por el alto representante y está \nformado por personal experto procedente del Consejo, los \nEstados miembros y la Comisión Europea. La UE posee \ndelegaciones en la mayoría de los países de todo el \nmundo y forman parte del SEAE. Colaboran \nestrechamente con las embajadas de los Estados \nmiembros de la UE en cuestiones vinculadas a la PESC.\nCualquier Estado miembro o el alto representante, por sí \nsolo o con la Comisión, puede plantear asuntos de \nimportancia para la PESC en el Consejo. Habida cuenta de \nla urgencia de algunos asuntos relativos a la PESC, se \ndispone de mecanismos para garantizar una toma de \n"
+  afirmaciones:
+  - item_id: H2-F82-1
+    text: El SEAE es un servicio formado exclusivamente por personal de la Comisión Europea.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F82-2
+    text: El SEAE está dirigido por el alto representante y lo integra personal experto del Consejo, los Estados miembros y la Comisión Europea.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F82-3
+    text: El SEAE cuenta con más de ciento cuarenta delegaciones repartidas por todo el mundo.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F83
+  premisa: "a \npersona jurídica en uno de \nlos Estados miembros para \ngestionar una iniciativa.\nLas organizaciones ya establecidas \nno pueden gestionar iniciativas \nciudadanas, pero sí promover o apoyar \niniciativas siempre que lo hagan de \nmanera abierta y transparente.\n1 La información correspondiente figura en la siguiente \ndirección: https://citizens-initiative.europa.eu/\ndata-requirements_es\n6 7\nCÓMO APOYAR \nUNA INICIATIVA CIUDADANA EUROPEA\nApoyar una iniciativa en línea \no en papel \nTodas las iniciativas ciudadanas \nabiertas pueden consultarse en el \nsitio web de la ICE. Solo se puede \napoyar una iniciativa una vez.\nLos organizadores pueden optar \npor recoger sus firmas en línea o en \npapel. Para apoyar una iniciativa, se \ndeben facilitar los datos siguientes:\n• El país de nacionalidad.\n"
+  afirmaciones:
+  - item_id: H2-F83-1
+    text: Cada persona puede apoyar una misma iniciativa un máximo de tres veces.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F83-2
+    text: Las organizaciones ya establecidas no pueden gestionar iniciativas, pero sí pueden promoverlas o apoyarlas de forma abierta y transparente.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F83-3
+    text: El sistema central de recogida en línea de la Comisión se puso en marcha en enero de 2020.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F84
+  premisa: "alle de la muerte» (evitando que las empresas emergentes innovadoras \nfracasen tan solo por un flujo de caja negativo).\n¿Cómo nos enfrentamos al desafío?\nLa Unión Europea busca sinergias mediante una combinación estratégica de acciones ejecutadas por diferentes \norganismos y grupos. Por tanto, el concepto de sinergias con Horizonte Europa se desplegará en los tres niveles siguientes:\nPOLÍTICA\ncreación de condiciones marco \npara la sinergia\n– estableciendo un marco de \npolíticas que se ajuste a las \nprioridades generales de la Comisión \nEuropea y refleje normativas \nfavorables a la innovación en ámbitos \npertinentes, como la propiedad \nindustrial e intelectual y las ayudas \nestatales.\nPROGRAMACIÓN\nReglamentos, planes estratégicos, \nprogramas de trabajo \ny convocatorias\n"
+  afirmaciones:
+  - item_id: H2-F84-1
+    text: En el nivel de política se eliminarán todas las normativas sobre propiedad industrial e intelectual.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F84-2
+    text: El tercer nivel de sinergias es el de proyectos, con convocatorias conjuntas anuales.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F84-3
+    text: En el nivel de política se crearán condiciones marco mediante un marco de políticas ajustado a las prioridades de la Comisión.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F85
+  premisa: "moneda \ncomún de Europa no es viable sin alguna forma de gobierno económico común.\n65\n12 LECCIONES SOBRE EUROPA\nEL EURO\nEn septiembre de 2015, el presidente de la Comisión, Jean-Claude Juncker, \npresentó sus propuestas para reforzar la zona del euro. Dichas propuestas se \nbasaban en un informe elaborado por los cinco presidentes de las institucio\uFFFEnes de la UE que se ocupan del euro. El plan comprende un sistema común \npara garantizar los depósitos bancarios; un único representante de la zona \ndel euro en las instituciones financieras mundiales, como el Fondo Monetario \nInternacional y el Banco Mundial; un sistema más democrático y eficiente para \nvigilar los presupuestos nacionales; la coordinación de la política fiscal, y una \n"
+  afirmaciones:
+  - item_id: H2-F85-1
+    text: En septiembre de 2015, el presidente de la Comisión Jean-Claude Juncker presentó sus propuestas para reforzar la zona del euro.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F85-2
+    text: El sistema común de garantía de depósitos se puso en marcha en 2019 con un fondo de cincuenta mil millones.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F85-3
+    text: Las propuestas para reforzar la zona del euro fueron presentadas por el presidente del Consejo Europeo en 2012.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F86
+  premisa: "os nacionales al mismo \ntiempo que los envía al legislador de la Unión (es decir, \nal Parlamento Europeo y al Consejo).\nCualquier parlamento nacional puede emitir un \ndictamen motivado si considera que la propuesta en \ncuestión no es conforme con el principio de \nsubsidiariedad. En función del número de dictámenes \nmotivados emitidos por los parlamentos nacionales, la \nComisión podría tener que reexaminar su propuesta y \ndecidir si la mantiene, la modifica o la retira, lo que se \nllama el «procedimiento de tarjeta amarilla y de tarjeta \nnaranja». En el caso del procedimiento legislativo \nordinario, si la mayoría de los parlamentos nacionales \nemite un dictamen motivado y la Comisión decide \nmantener su propuesta, tendrá que explicar sus razones \n"
+  afirmaciones:
+  - item_id: H2-F86-1
+    text: El procedimiento de tarjeta amarilla se activó por primera vez en 2016 contra la propuesta de desplazamiento de trabajadores.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F86-2
+    text: Si un parlamento nacional considera que una propuesta vulnera la subsidiariedad, puede emitir un dictamen motivado.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F86-3
+    text: Los parlamentos nacionales carecen de cualquier vía para pronunciarse sobre la subsidiariedad de las propuestas.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F87
+  premisa: "ente durante la primera mitad del siglo XX.\nSin embargo, de los escombros de la Segunda Guerra Mundial surgió un nuevo \ntipo de esperanza. Quienes se habían opuesto al totalitarismo durante la \nguerra estaban decididos a poner fin al odio y la rivalidad entre las naciones de \nEuropa y a crear las condiciones para el establecimiento de una paz duradera. \nEntre 1945 y 1950, una serie de valientes estadistas, entre los que se cuen\uFFFEtan Robert Schuman, Konrad Adenauer, Alcide de Gasperi y Winston Churchill, \nemprende la tarea de persuadir a sus pueblos de la necesidad de adentrarse \nen una nueva era y de crear nuevas estructuras en Europa Occidental, basadas \nen los intereses comunes y asentadas en tratados que garanticen el Estado de \nDerecho y la igualdad de todos los países.\n"
+  afirmaciones:
+  - item_id: H2-F87-1
+    text: El Congreso de La Haya de 1948 reunió a más de ochocientos delegados de toda Europa.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F87-2
+    text: Tras la guerra, Schuman, Adenauer, De Gasperi y Churchill defendieron el retorno a la rivalidad entre las naciones de Europa.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F87-3
+    text: Entre 1945 y 1950, estadistas como Schuman, Adenauer, De Gasperi y Churchill impulsaron nuevas estructuras europeas basadas en intereses comunes y tratados.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F88
+  premisa: "o se \nrequiere la unanimidad y cuándo una mayoría cualificada \nes suficiente para que el Consejo adopte la legislación.\nLa gran mayoría de la legislación de la UE se adopta a \ntravés del procedimiento legislativo ordinario, en el \nque el Parlamento y el Consejo comparten el poder \nlegislativo.\nEl procedimiento comienza con la Comisión. Al estudiar la \npuesta en marcha de una propuesta de acción, la \nComisión suele invitar a presentar opiniones sobre el \ntema a los gobiernos, las empresas, las organizaciones de \nla sociedad civil y a los ciudadanos. Las opiniones \nrecogidas se incorporan a una propuesta de la Comisión \nque se presenta al Consejo y al Parlamento Europeo. La \nUno de los principales logros de \nla UE consiste en que todos los \nciudadanos son libres para viajar, \n"
+  afirmaciones:
+  - item_id: H2-F88-1
+    text: Toda la legislación de la UE exige la unanimidad del Consejo para poder adoptarse.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F88-2
+    text: El procedimiento legislativo ordinario se introdujo con el Tratado de Lisboa en 2009.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F88-3
+    text: La gran mayoría de la legislación de la UE se adopta por el procedimiento legislativo ordinario, en el que el Parlamento y el Consejo comparten el poder legislativo.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F89
+  premisa: "igital, industria y espacio\n• Clima, energía y movilidad\n• Alimentación, bioeconomía, \nrecursos naturales, agricultura \ny medioambiente\nCentro Común \nde Investigación (**)\nClústeres\nAMPLIAR LA PARTICIPACIÓN Y FORTALECER EL ESPACIO EUROPEO DE INVESTIGACIÓN\n• El pilar «Europa innovadora» aspira a hacer de \nEuropa un líder en innovación creadora de mercado \na través del Consejo Europeo de Innovación. \nTambién contribuye al desarrollo del panorama \ngeneral de la innovación europea a  través del \nInstituto Europeo de Innovación y Tecnología, \nque fomenta la integración del triángulo del \nconocimiento formado por la educación, la \ninvestigación y la innovación.\n• El objetivo «Ampliar la participación y fortalecer \nel Espacio Europeo de Investigación» aumenta \n"
+  afirmaciones:
+  - item_id: H2-F89-1
+    text: El pilar 'Europa innovadora' aspira a hacer de Europa un líder en innovación creadora de mercado a través del Consejo Europeo de Innovación.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F89-2
+    text: El Instituto Europeo de Innovación y Tecnología se fundó en 2008 y tiene su sede en Budapest.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F89-3
+    text: El pilar 'Europa innovadora' se centra en subvencionar la agricultura tradicional.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F90
+  premisa: "ro deben proceder del mismo país que \nsu organización. \n¿No está seguro de querer \nsolicitarla? Existen otras opciones.\nLa acreditación Erasmus no es obligatoria. \nA continuación, se presentan otras formas \nde participar en el programa:\n• solicitar un proyecto breve en el marco \nde la acción clave 1,\n• unirse a un consorcio de movilidad \nya existente,\n• acoger participantes de una \norganización extranjera.\nEN FORMACIÓN PROFESIONAL • EN EDUCACIÓN ESCOLAR • EN EDUCACIÓN DE PERSONAS ADULTAS 7\n¿CÓMO SOLICITAR \nLA ACREDITACIÓN? \nLas solicitudes se presentan en la agencia \nnacional de su país.\nEl proceso de solicitud se centra en la creación \nde su Plan Erasmus. En el plan se establece \ncómo pretende su organización organizar las \nactividades de movilidad y qué es lo que espera \n"
+  afirmaciones:
+  - item_id: H2-F90-1
+    text: Los proyectos breves de la acción clave 1 tienen una duración máxima de seis meses.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F90-2
+    text: 'La acreditación no es obligatoria: también se puede participar solicitando un proyecto breve de la acción clave 1 o uniéndose a un consorcio existente.'
+    juicio: null
+    comentario: ''
+  - item_id: H2-F90-3
+    text: La acreditación Erasmus es obligatoria para cualquier participación en el programa.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F91
+  premisa: "uesta no \nentra en el ámbito de competencias \nde la Comisión, tiene la oportunidad \nde revisarla y dispone de un plazo \nadicional de dos meses para trabajar \nen ella y volver a presentarla, \ntranscurrido el cual la Comisión podrá \nregistrar total o parcialmente su \niniciativa o denegar el registro. \nUna vez registrada la iniciativa, la \nComisión lo notifica oficialmente al \nrepresentante y al sustituto de su grupo \nde organizadores y la publica en el sitio \nweb de la Iniciativa Ciudadana Europea. \nLa Comisión traduce la iniciativa a \ntodas las lenguas oficiales de la UE de \nforma gratuita. Esto le ayudará cuando \nesté haciendo campaña para recoger \nfirmas en toda la UE. \n7 Artículo 2 del Tratado de la Unión Europea: «La \nUnión se fundamenta en los valores de respeto \n"
+  afirmaciones:
+  - item_id: H2-F91-1
+    text: Si la propuesta queda fuera de las competencias de la Comisión, el registro se deniega de forma definitiva y sin posibilidad de revisión.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F91-2
+    text: Si la propuesta queda fuera de las competencias de la Comisión, los organizadores disponen de dos meses adicionales para revisarla y volver a presentarla.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F91-3
+    text: La Comisión traduce cada iniciativa registrada a todas las lenguas oficiales en el plazo de un mes.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F92
+  premisa: "i la UE no adopta \nlegislación, los Estados miembros pueden legislar a nivel \nnacional. En muchos ámbitos de actuación \nlas competencias están compartidas, como en el caso del \nmercado interior, la agricultura, el medio ambiente, la \nprotección de los consumidores y el transporte.\nEn todos los demás ámbitos de actuación las decisiones \nsiguen correspondiendo a los Estados miembros. Por lo \ntanto, si en un tratado no se cita un determinado ámbito \nde actuación, la Comisión no puede proponer legislación \nen dicho ámbito. No obstante, en algunos ámbitos, como \nel sector espacial, la educación, la cultura y el turismo, la \nUnión puede apoyar los esfuerzos de los Estados miembros. \nEn otros, como el de la ayuda exterior y la investigación \n"
+  afirmaciones:
+  - item_id: H2-F92-1
+    text: Los Estados miembros tienen prohibido legislar a nivel nacional aunque la UE no haya adoptado legislación en ese ámbito.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F92-2
+    text: La Agencia Espacial Europea tiene su sede en París y gestiona el sector espacial por delegación de la UE.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F92-3
+    text: Si la UE no adopta legislación en un ámbito, los Estados miembros pueden legislar a nivel nacional.
+    juicio: null
+    comentario: ''
+- fragment_id: H2-F93
+  premisa: "to tiene como objetivo desarrollar \ny presentar una obra de teatro musical que incorpore un enfoque interdisciplinario \ny participativo impulsado por la comunidad, mediante la promoción de \noportunidades para una interpretación común de los dos mitos, entendimiento \nmutuo y transferencia cultural. En este contexto, el proyecto juega con las \ndiferencias y similitudes culturales y requiere un proceso de exploración de las \ndiferentes culturas que se pueden encontrar en los dos mitos.\nEl proyecto se divide en dos partes, la primera tiene como objetivo la creación de \nuna exposición itinerante donde los ciudadanos puedan mostrar sus oficios \nartísticos en las diferentes ciudades de las organizaciones colaboradoras. La \n"
+  afirmaciones:
+  - item_id: H2-F93-1
+    text: La obra de teatro musical se estrenó en Atenas ante más de cinco mil espectadores.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F93-2
+    text: El proyecto se divide en dos partes y la primera prevé crear una exposición itinerante donde los ciudadanos muestren sus oficios artísticos.
+    juicio: null
+    comentario: ''
+  - item_id: H2-F93-3
+    text: El proyecto consiste en una única representación teatral sin ninguna exposición complementaria.
+    juicio: null
+    comentario: ''

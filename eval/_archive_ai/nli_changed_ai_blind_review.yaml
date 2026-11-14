@@ -1,0 +1,125 @@
+# Revisión ciega IA — sin revisión humana
+# Fuente: /tmp/nli_changed_blind.yaml (SHA-256 cf264448c65df76774a95b5d7c3bc5299a6533cc9e6a6aea0fdb9a4d25e213f)
+# Método: etiqueta independiente decidida solo a partir de la premisa visible; sin NLI, sin etiquetas ni mapeos externos
+# Fecha: 2026-11-13
+# Etiquetas: supported | contradicted | unsupported | ambiguous
+- id: f63047242eae5d629bf66c36
+  independent_label: supported
+  justification: "La premisa exige que los usos educativos de la IA respeten la dignidad humana, promuevan la equidad y preserven la integridad del aprendizaje, en consonancia con los valores de la UE."
+- id: 825fe919a71ff7a6b1689781
+  independent_label: supported
+  justification: "La premisa define al Consejo como compuesto por ministros de los Estados miembros, un ministro por país según el tema."
+- id: 9f774ca30ea08d909c8da892
+  independent_label: unsupported
+  justification: "La premisa describe Energy@School en 7 países y cientos de miles de proyectos, sin número 100000 ni puente en Polonia."
+- id: 9b9d94b2c88058bb0d83cf39
+  independent_label: supported
+  justification: "La premisa concede protección temporal a millones que huyen de Ucrania con acceso a alojamiento, escuelas, asistencia sanitaria y empleo."
+- id: 8e8dfda86e7f0883659e7631
+  independent_label: supported
+  justification: "La premisa lo declara el método de mayor precisión y lo basa en pasaporte o DNI e identidades digitales confiables."
+- id: f1e5ae57af42081e4fa9ed87
+  independent_label: supported
+  justification: "La premisa da la misma serie por nivel: 95 % infantil, 77 % primaria, 62 % primer ciclo de secundaria y 57 % segundo."
+- id: a587864a5e3e2953a6fcbbcb
+  independent_label: supported
+  justification: "La premisa atribuye a la UE un papel pionero mundial mediante el Reglamento de IA de 2024, seguro y acorde a derechos fundamentales."
+- id: 4b51db519911cb41d307d57a
+  independent_label: supported
+  justification: "La premisa exige logotipo visible y legible y prohíbe tamaño inferior a 10,6 x 10,6 mm."
+- id: c862855ed176d78fb443ea63
+  independent_label: contradicted
+  justification: "La premisa suma a 25 Estados UE cuatro países no UE (Islandia, Liechtenstein, Noruega y Suiza), lo que refuta el únicamente."
+- id: d3a31d5cf6da7e5a48cdf85f
+  independent_label: unsupported
+  justification: "La premisa define la elección justificada por transparencia y modelos participativos y colaborativos, sin mencionar votación del claustro."
+- id: 14fb0f3a7cc2a9e46883c061
+  independent_label: supported
+  justification: "La premisa cuantifica más de 100 agricultores midiendo salinización y más de 20 000 mediciones resultantes."
+- id: e925ed2684c206cf6dbe8585
+  independent_label: supported
+  justification: "La premisa dice que esos conocimientos pueden facilitar estrategias personalizadas, observaciones adaptativas e intervención temprana por aprendiente."
+- id: 56b0dc288a18e9a14c60ace3
+  independent_label: unsupported
+  justification: "La premisa declara ambición de liderazgo espacial e iniciativa Visión, sin cifra alguna de presupuesto."
+- id: dc6cc23d4ad9f7e6bcd48d7c
+  independent_label: supported
+  justification: "La premisa obliga a las plataformas de más de 45 millones en la UE, con esos tres ejemplos, a identificar y evaluar otros riesgos para menores."
+- id: 325d33bd86460f17b1d1ba73
+  independent_label: supported
+  justification: "La premisa afirma que la UE importa más de la mitad de su energía, principalmente petróleo y gas."
+- id: 0e5cde5191bef942f100fe84
+  independent_label: supported
+  justification: "La premisa enumera los siete derechos: protección, no discriminación, inclusión, privacidad, información y educación, expresión y participación."
+- id: 3f12727db08a09e306bb5f14
+  independent_label: contradicted
+  justification: "La premisa crea la obligación a partir del 10 de enero de 2025, no su terminación ese día; invierte el sentido temporal."
+- id: 9825fe131082f4479fe8b637
+  independent_label: contradicted
+  justification: "La premisa dice que los modelos no verifican hechos y pueden presentar información inventada con alta confianza."
+- id: 32ef7f3591e8e977ff5d75fa
+  independent_label: supported
+  justification: "La premisa lista inversión en capacidades digitales, supercomputación, conectividad rápida y ciberseguridad para el liderazgo tecnológico europeo."
+- id: cdf70f81685cbaf2990d70c5
+  independent_label: supported
+  justification: "La premisa atribuye a la explotación el certificado Lubuskie Pearl of Tourism 2018 de LOTUR."
+- id: cdb4363cbb0d5e280e513cc8
+  independent_label: supported
+  justification: "La premisa fecha la Estrategia en junio y le asigna restaurar el ciclo del agua y garantizar agua limpia y asequible para todos."
+- id: 93523e975fdc09d1fcf6e7ea
+  independent_label: supported
+  justification: "La nota de la premisa excluye del DSA a la mensajería como Messenger o Telegram."
+- id: 0032e216873ca233314b41bc
+  independent_label: ambiguous
+  justification: "El claim es un sintagma sin verbo ni modalidad y la premisa lo formula como posibilidad (podrían ser: garantizar); no se distingue propuesta de hecho existente."
+- id: 6e7d53c42220332427c4ed83
+  independent_label: supported
+  justification: "La premisa fecha el plan en 2021 y lo destina a movilizar hasta 300 000 millones con UE, Estados y socios financieros coordinados."
+- id: 0e9e23e32de154ecae723d8d
+  independent_label: supported
+  justification: "La premisa deriva el símbolo de la épsilon griega y de la inicial de Europa."
+- id: 795bcfbde0b106df0590c579
+  independent_label: unsupported
+  justification: "La premisa constata más aceptación en cinco años y 75 % de comodidad según Eurobarómetro, sin causa ni campaña de 2023."
+- id: 4844b85e3d9eea0fa54ff102
+  independent_label: supported
+  justification: "La premisa fija el Paso 1 en definir objetivos de aprendizaje y valorar en qué y cómo apoyan los CED."
+- id: 82aae88a90dff1d424bc4bd7
+  independent_label: contradicted
+  justification: "La premisa apoya baterías verdes con la menor huella posible; el sin importar la huella invierte ese requisito."
+- id: f06495020cb2f0ff1594ffaa
+  independent_label: supported
+  justification: "La premisa da MDR vigente desde el 26 de mayo de 2021 e IVDR desde el 26 de mayo de 2022 tras sustituir a la Directiva 98/79/CE."
+- id: 007bb464794088c36d1257be
+  independent_label: unsupported
+  justification: "La premisa cita memorando de 2ZERO, CCAM y Batt4EU para automoción, conducción autónoma y baterías; sin industria naval."
+- id: 343a34399baf4fe2f9b8a5b4
+  independent_label: supported
+  justification: "La premisa declara suficientes docentes en general con carencias en ciencia, tecnología, ingeniería y matemáticas."
+- id: a7b813b6d8acc4eae0afc1d1
+  independent_label: supported
+  justification: "La premisa llama al muro símbolo de la Guerra Fría y de la separación este comunista y oeste capitalista."
+- id: e215645865854f069843b018
+  independent_label: supported
+  justification: "La premisa declara los salarios competitivos frente a profesiones con cualificaciones educativas similares."
+- id: b080cf5eb3f2edb2f48161e4
+  independent_label: unsupported
+  justification: "La premisa solo especifica placas de vidrio y banderas; no menciona placas de metal ni sus medidas."
+- id: c77007c63e7a62686e725d57
+  independent_label: unsupported
+  justification: "La premisa solo fija reducir al menos 55 % las muertes por contaminación a 2030; no da total anual de 200 000."
+- id: 6b8431d38a42c2601ad70d2a
+  independent_label: supported
+  justification: "La premisa dice que redactaron veinticuatro recomendaciones a la Comisión, unidos en la diversidad."
+- id: 5f1e54abfa5a7a07495af739
+  independent_label: supported
+  justification: "La premisa exige evaluar la IA con espíritu crítico atendiendo a equidad, diversidad, transparencia, bienestar, privacidad y seguridad."
+- id: 07c6b597671cd50272308f37
+  independent_label: contradicted
+  justification: "La premisa agrupa 29 países, 25 de la UE más cuatro externos; 20 resulta incompatible."
+- id: e1579172672b551191f92b75
+  independent_label: supported
+  justification: "La premisa enumera literalmente dignidad, libertad, democracia, igualdad, Estado de Derecho y derechos humanos."
+- id: cc22bafead207ee8764352a8
+  independent_label: supported
+  justification: "La premisa espera casi 2,2 millones de toneladas de hidrógeno en diez años y 15 millones de toneladas de CO2 evitadas."

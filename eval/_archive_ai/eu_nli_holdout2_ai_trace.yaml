@@ -1,0 +1,5532 @@
+# Trazabilidad de propuestas IA para la segunda reserva NLI (split test).
+# Estado: propuesta IA sin revisión humana; NO es gold.
+# Premisa = chunk exacto del extractor PDF + troceador del proyecto (800/120).
+# Pendiente de segunda revisión y adjudicación por el orquestador.
+# Generado: 2026-11-13T09:38:24.101688+00:00.
+metadata:
+  generated: '2026-11-13T09:38:24.101688+00:00'
+  status: ai_proposal_pending_review
+  gold: false
+  protocol_reference: eval/NLI_AI_EVALUATION_PROTOCOL_V2.md (preregistrado; esta sesión no ejecuta NLI ni produce scores)
+  chunking:
+    size: 800
+    overlap: 120
+  adjudication: pending_orchestrator
+items:
+- id: euh2-001
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 5
+  evidence_quote: término medio
+  label: supported
+  reason: posición intermedia explícita en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-002
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 5
+  evidence_quote: término medio
+  label: contradicted
+  reason: el fragmento la sitúa a medio camino, no en el federalismo pleno
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-003
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 5
+  evidence_quote: término medio
+  label: unsupported
+  reason: ninguna fecha de creación del mercado único en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-004
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: procedimiento legislativo ordinario
+  label: supported
+  reason: procedimiento ordinario y reparto del poder explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-005
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: procedimiento legislativo ordinario
+  label: contradicted
+  reason: el fragmento distingue unanimidad de mayoría cualificada
+  phenomenon:
+  - negation
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-006
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: procedimiento legislativo ordinario
+  label: unsupported
+  reason: origen del procedimiento ausente en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-007
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: pueden legislar
+  label: supported
+  reason: competencia residual de los Estados explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-008
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: pueden legislar
+  label: contradicted
+  reason: el fragmento permite legislar a nivel nacional
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-009
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: pueden legislar
+  label: unsupported
+  reason: la agencia y su sede no aparecen en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-010
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 12
+    - 12
+  evidence_quote: sin la aprobación del Parlamento
+  label: supported
+  reason: audiencias y aprobación previa explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-011
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 12
+    - 12
+  evidence_quote: sin la aprobación del Parlamento
+  label: contradicted
+  reason: el fragmento exige la aprobación del Parlamento
+  phenomenon:
+  - negation
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-012
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 12
+    - 12
+  evidence_quote: sin la aprobación del Parlamento
+  label: unsupported
+  reason: la mayoría exigida no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-013
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 15
+    - 15
+  evidence_quote: misma persona
+  label: supported
+  reason: compatibilidad de ambos cargos explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-014
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 15
+    - 15
+  evidence_quote: misma persona
+  label: contradicted
+  reason: el fragmento atribuye la institución al TECG
+  phenomenon:
+  - negation
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-015
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 15
+    - 15
+  evidence_quote: misma persona
+  label: unsupported
+  reason: frecuencia y sede de reunión ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-016
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 71
+    pages:
+    - 17
+    - 18
+  evidence_quote: procedimiento de conciliación
+  label: supported
+  reason: conciliación como vía de desacuerdo explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-017
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 71
+    pages:
+    - 17
+    - 18
+  evidence_quote: procedimiento de conciliación
+  label: contradicted
+  reason: el fragmento exige decisión conjunta
+  phenomenon:
+  - negation
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-018
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 71
+    pages:
+    - 17
+    - 18
+  evidence_quote: procedimiento de conciliación
+  label: unsupported
+  reason: ningún plazo de conciliación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-019
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 20
+    - 20
+  evidence_quote: Servicio Europeo de Acción Exterior
+  label: supported
+  reason: dirección y composición explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-020
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 20
+    - 20
+  evidence_quote: Servicio Europeo de Acción Exterior
+  label: contradicted
+  reason: el fragmento incluye tres procedencias de personal
+  phenomenon:
+  - negation
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-021
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 20
+    - 20
+  evidence_quote: Servicio Europeo de Acción Exterior
+  label: unsupported
+  reason: el número de delegaciones no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-022
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 97
+    pages:
+    - 23
+    - 23
+  evidence_quote: guardiana de los tratados
+  label: supported
+  reason: condición de la aprobación explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 23
+  - 23
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-023
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 97
+    pages:
+    - 23
+    - 23
+  evidence_quote: guardiana de los tratados
+  label: contradicted
+  reason: el fragmento prevé supervisión del Tribunal y del Parlamento
+  phenomenon:
+  - negation
+  source_pages:
+  - 23
+  - 23
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-024
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 97
+    pages:
+    - 23
+    - 23
+  evidence_quote: guardiana de los tratados
+  label: unsupported
+  reason: la sede no aparece en el fragmento; solo vale lo visible
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 23
+  - 23
+  doubts:
+  - afirmación cierta en el mundo real pero ausente del fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-025
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 25
+    - 25
+  evidence_quote: dictamen motivado
+  label: supported
+  reason: vía del dictamen motivado explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 25
+  - 25
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-026
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 25
+    - 25
+  evidence_quote: dictamen motivado
+  label: contradicted
+  reason: el fragmento les reconoce el dictamen motivado
+  phenomenon:
+  - negation
+  source_pages:
+  - 25
+  - 25
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-027
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 25
+    - 25
+  evidence_quote: dictamen motivado
+  label: unsupported
+  reason: ningún precedente concreto en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 25
+  - 25
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-028
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 123
+    pages:
+    - 27
+    - 28
+  evidence_quote: estabilidad monetaria
+  label: supported
+  reason: objetivo e indicador explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 27
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-029
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 123
+    pages:
+    - 27
+    - 28
+  evidence_quote: estabilidad monetaria
+  label: contradicted
+  reason: el fragmento sitúa la sede en Alemania
+  phenomenon:
+  - negation
+  source_pages:
+  - 27
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-030
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 123
+    pages:
+    - 27
+    - 28
+  evidence_quote: estabilidad monetaria
+  label: unsupported
+  reason: calendario de reuniones ausente en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 27
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-031
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 31
+    - 32
+  evidence_quote: seis años
+  label: supported
+  reason: nombramiento y duración explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 31
+  - 32
+  doubts:
+  - el fragmento incluye una frase sobre marcas auriculares de vacas con crédito a ImageGlobe; la afirmación no usa ese contenido
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-032
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 31
+    - 32
+  evidence_quote: seis años
+  label: contradicted
+  reason: el fragmento prevé nombramiento por el Consejo
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 31
+  - 32
+  doubts:
+  - ver nota de contenido de terceros en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-033
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 31
+    - 32
+  evidence_quote: seis años
+  label: unsupported
+  reason: el número de informes no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 31
+  - 32
+  doubts:
+  - ver nota de contenido de terceros en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-034
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 36
+    - 36
+  evidence_quote: informe especial al Parlamento Europeo
+  label: supported
+  reason: vía del informe especial explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 36
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-035
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 36
+    - 36
+  evidence_quote: informe especial al Parlamento Europeo
+  label: contradicted
+  reason: el fragmento prevé recomendaciones
+  phenomenon:
+  - negation
+  source_pages:
+  - 36
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-036
+  document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 36
+    - 36
+  evidence_quote: informe especial al Parlamento Europeo
+  label: unsupported
+  reason: ninguna fecha de mandato en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 36
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-037
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 4
+    - 5
+  evidence_quote: millón de firmas
+  label: supported
+  reason: umbral y decisión de la Comisión explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-038
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 4
+    - 5
+  evidence_quote: millón de firmas
+  label: contradicted
+  reason: el fragmento le reserva decidir el curso
+  phenomenon:
+  - negation
+  - modality
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-039
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 4
+    - 5
+  evidence_quote: millón de firmas
+  label: unsupported
+  reason: ninguna primera iniciativa citada en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-040
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 6
+    - 7
+  evidence_quote: Solo se puede apoyar una iniciativa una vez
+  label: supported
+  reason: prohibición de gestionar y permiso de apoyar explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-041
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 6
+    - 7
+  evidence_quote: Solo se puede apoyar una iniciativa una vez
+  label: contradicted
+  reason: el fragmento permite apoyar una sola vez
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-042
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 6
+    - 7
+  evidence_quote: Solo se puede apoyar una iniciativa una vez
+  label: unsupported
+  reason: ninguna fecha del sistema en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-043
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 8
+    - 9
+  evidence_quote: se suprimen una vez finalizado
+  label: supported
+  reason: supresión de datos explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 8
+  - 9
+  doubts:
+  - inicio del fragmento truncado por el corte; la afirmación usa solo la parte plenamente visible
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-044
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 8
+    - 9
+  evidence_quote: se suprimen una vez finalizado
+  label: contradicted
+  reason: el fragmento ordena suprimirlos
+  phenomenon:
+  - negation
+  source_pages:
+  - 8
+  - 9
+  doubts:
+  - ver nota de truncamiento en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-045
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 8
+    - 9
+  evidence_quote: se suprimen una vez finalizado
+  label: unsupported
+  reason: ninguna edad mínima en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 9
+  doubts:
+  - ver nota de truncamiento en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-046
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: se publicarán en el sitio web
+  label: supported
+  reason: publicación de identidades explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-047
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: se publicarán en el sitio web
+  label: contradicted
+  reason: el fragmento prevé su publicación
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-048
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: se publicarán en el sitio web
+  label: unsupported
+  reason: ningún curso presencial citado en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-049
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 11
+  evidence_quote: no es automática
+  label: supported
+  reason: control previo explícito
+  phenomenon:
+  - paraphrase
+  - negation
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-050
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 11
+  evidence_quote: no es automática
+  label: contradicted
+  reason: el fragmento exige apoyos en al menos siete países
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-051
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 11
+  evidence_quote: no es automática
+  label: unsupported
+  reason: ninguna duración de recogida en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-052
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: dos meses
+  label: supported
+  reason: plazo de revisión explícito
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-053
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: dos meses
+  label: contradicted
+  reason: el fragmento concede revisión y reenvío
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-054
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: dos meses
+  label: unsupported
+  reason: el plazo de traducción no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-055
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: tres meses
+  label: supported
+  reason: plazo de presentación explícito
+  phenomenon:
+  - paraphrase
+  - numeric
+  - modality
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-056
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: tres meses
+  label: contradicted
+  reason: el fragmento fija tres meses
+  phenomenon:
+  - negation
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-057
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: tres meses
+  label: unsupported
+  reason: el plazo de certificación no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-058
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: Right2Water
+  label: supported
+  reason: respuesta normativa explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-059
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: Right2Water
+  label: contradicted
+  reason: el fragmento describe su respuesta
+  phenomenon:
+  - negation
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-060
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: Right2Water
+  label: unsupported
+  reason: ninguna cifra de firmas en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-061
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 14
+    - 15
+  evidence_quote: respuestas de la Comisión
+  label: supported
+  reason: contenido del sitio web explícito
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 14
+  - 15
+  doubts:
+  - fragmento de cierre con listas de recursos; afirmación ceñida a lo visible
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-062
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 14
+    - 15
+  evidence_quote: respuestas de la Comisión
+  label: contradicted
+  reason: el fragmento las incluye entre sus contenidos
+  phenomenon:
+  - negation
+  source_pages:
+  - 14
+  - 15
+  doubts:
+  - ver nota de fragmento de cierre en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-063
+  document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 14
+    - 15
+  evidence_quote: respuestas de la Comisión
+  label: unsupported
+  reason: ninguna cifra de asistencia en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 14
+  - 15
+  doubts:
+  - ver nota de fragmento de cierre en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-064
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: todos los tipos y tamaños
+  label: supported
+  reason: destinatarios universales explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-065
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: todos los tipos y tamaños
+  label: contradicted
+  reason: el fragmento la abre a todos los tipos y tamaños
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-066
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: todos los tipos y tamaños
+  label: unsupported
+  reason: ninguna fecha de edición en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-067
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: ocho sectores
+  label: supported
+  reason: número de sectores y codificación explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-068
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: ocho sectores
+  label: contradicted
+  reason: el fragmento fija ocho sectores con icono
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-069
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: ocho sectores
+  label: unsupported
+  reason: la autoría de los iconos no figura en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-070
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 16
+    - 16
+  evidence_quote: subprograma intersectorial
+  label: supported
+  reason: estructura en capítulos explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-071
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 16
+    - 16
+  evidence_quote: subprograma intersectorial
+  label: contradicted
+  reason: el fragmento describe dos capítulos más el intersectorial
+  phenomenon:
+  - negation
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-072
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 16
+    - 16
+  evidence_quote: subprograma intersectorial
+  label: unsupported
+  reason: ninguna cifra presupuestaria en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-073
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 20
+    - 20
+  evidence_quote: exposición itinerante
+  label: supported
+  reason: estructura y primera parte explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-074
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 20
+    - 20
+  evidence_quote: exposición itinerante
+  label: contradicted
+  reason: el fragmento prevé dos partes con exposición
+  phenomenon:
+  - negation
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-075
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 20
+    - 20
+  evidence_quote: exposición itinerante
+  label: unsupported
+  reason: ningún estreno ni aforo en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 20
+  - 20
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-076
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 30
+    - 30
+  evidence_quote: Pilar 1 - Ciencia excelente
+  label: supported
+  reason: número de pilares y primero explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 30
+  - 30
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-077
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 30
+    - 30
+  evidence_quote: Pilar 1 - Ciencia excelente
+  label: contradicted
+  reason: el fragmento describe tres pilares
+  phenomenon:
+  - negation
+  source_pages:
+  - 30
+  - 30
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-078
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 30
+    - 30
+  evidence_quote: Pilar 1 - Ciencia excelente
+  label: unsupported
+  reason: ningún recuento de proyectos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 30
+  - 30
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-079
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 80
+    pages:
+    - 34
+    - 36
+  evidence_quote: 38 socios
+  label: supported
+  reason: número y lista de países explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 34
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-080
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 80
+    pages:
+    - 34
+    - 36
+  evidence_quote: 38 socios
+  label: contradicted
+  reason: el fragmento enumera socios de muchos países
+  phenomenon:
+  - negation
+  source_pages:
+  - 34
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-081
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 80
+    pages:
+    - 34
+    - 36
+  evidence_quote: 38 socios
+  label: unsupported
+  reason: ningún premio citado en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 34
+  - 36
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-082
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 100
+    pages:
+    - 44
+    - 44
+  evidence_quote: Pacto Verde Europeo
+  label: supported
+  reason: finalidad del movimiento explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-083
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 100
+    pages:
+    - 44
+    - 44
+  evidence_quote: Pacto Verde Europeo
+  label: contradicted
+  reason: el fragmento la define como movimiento creativo
+  phenomenon:
+  - negation
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-084
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 100
+    pages:
+    - 44
+    - 44
+  evidence_quote: Pacto Verde Europeo
+  label: unsupported
+  reason: ninguna fecha ni cifra de pilotos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-085
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 49
+    - 50
+  evidence_quote: legalmente constituida
+  label: supported
+  reason: elegibilidad general explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 49
+  - 50
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-086
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 49
+    - 50
+  evidence_quote: legalmente constituida
+  label: contradicted
+  reason: el fragmento abre a cualquier organización
+  phenomenon:
+  - negation
+  source_pages:
+  - 49
+  - 50
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-087
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 49
+    - 50
+  evidence_quote: legalmente constituida
+  label: unsupported
+  reason: ninguna cifra presupuestaria en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 49
+  - 50
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-088
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 58
+    - 58
+  evidence_quote: inferior al 90 %
+  label: supported
+  reason: umbral de elegibilidad explícito
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-089
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 58
+    - 58
+  evidence_quote: inferior al 90 %
+  label: contradicted
+  reason: el fragmento exige RNB inferior al 90 %
+  phenomenon:
+  - negation
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-090
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 140
+    pages:
+    - 58
+    - 58
+  evidence_quote: inferior al 90 %
+  label: unsupported
+  reason: ningún recuento de proyectos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-091
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 64
+    - 64
+  evidence_quote: eslovaco-austriaca
+  label: supported
+  reason: países, tema y fechas explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 64
+  - 64
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-092
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 64
+    - 64
+  evidence_quote: eslovaco-austriaca
+  label: contradicted
+  reason: el fragmento sitúa la cooperación entre Eslovaquia y Austria
+  phenomenon:
+  - negation
+  source_pages:
+  - 64
+  - 64
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-093
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 64
+    - 64
+  evidence_quote: eslovaco-austriaca
+  label: unsupported
+  reason: ninguna cifra de la red futura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 64
+  - 64
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-094
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 185
+    pages:
+    - 74
+    - 75
+  evidence_quote: conectividad digital
+  label: supported
+  reason: componentes enumerados en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 74
+  - 75
+  doubts:
+  - fragmento con listas y enlaces; afirmación ceñida a lo visible
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-095
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 185
+    pages:
+    - 74
+    - 75
+  evidence_quote: conectividad digital
+  label: contradicted
+  reason: el fragmento incluye la conectividad digital
+  phenomenon:
+  - negation
+  source_pages:
+  - 74
+  - 75
+  doubts:
+  - ver nota de listas en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-096
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 185
+    pages:
+    - 74
+    - 75
+  evidence_quote: conectividad digital
+  label: unsupported
+  reason: ningún plan nacional concreto en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 74
+  - 75
+  doubts:
+  - ver nota de listas en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-097
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 210
+    pages:
+    - 82
+    - 82
+  evidence_quote: 38 000 EUR
+  label: supported
+  reason: fondo, período, importe y duración explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 82
+  - 82
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-098
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 210
+    pages:
+    - 82
+    - 82
+  evidence_quote: 38 000 EUR
+  label: contradicted
+  reason: el fragmento lo describe como festival itinerante en barco
+  phenomenon:
+  - negation
+  source_pages:
+  - 82
+  - 82
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-099
+  document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  premise_ref:
+    ordinal: 210
+    pages:
+    - 82
+    - 82
+  evidence_quote: 38 000 EUR
+  label: unsupported
+  reason: ninguna cifra de visitantes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 82
+  - 82
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-100
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: jurídicamente vinculantes
+  label: supported
+  reason: finalidad y carácter vinculante explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-101
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: jurídicamente vinculantes
+  label: contradicted
+  reason: el fragmento las declara jurídicamente vinculantes
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-102
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: jurídicamente vinculantes
+  label: unsupported
+  reason: ninguna presentación oficial en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-103
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 9
+    - 9
+  evidence_quote: artículo 15
+  label: supported
+  reason: principio y deber de información explícitos
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-104
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 9
+    - 9
+  evidence_quote: artículo 15
+  label: contradicted
+  reason: el fragmento impone máxima apertura
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-105
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 9
+    - 9
+  evidence_quote: artículo 15
+  label: unsupported
+  reason: el origen del considerando no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-106
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 12
+    - 12
+  evidence_quote: 2014-2020
+  label: supported
+  reason: vigencia de las reglas anteriores explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-107
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 12
+    - 12
+  evidence_quote: 2014-2020
+  label: contradicted
+  reason: el fragmento mantiene su aplicación
+  phenomenon:
+  - negation
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-108
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 12
+    - 12
+  evidence_quote: 2014-2020
+  label: unsupported
+  reason: ninguna fecha ni lenguas de publicación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-109
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 14
+    - 14
+  evidence_quote: no son responsabilidad
+  label: supported
+  reason: reparto de responsabilidades explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 14
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-110
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 14
+    - 14
+  evidence_quote: no son responsabilidad
+  label: contradicted
+  reason: el fragmento la atribuye a los Estados
+  phenomenon:
+  - negation
+  source_pages:
+  - 14
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-111
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 14
+    - 14
+  evidence_quote: no son responsabilidad
+  label: unsupported
+  reason: ningún premio citado en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 14
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-112
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 18
+    - 18
+  evidence_quote: primavera de 2021
+  label: supported
+  reason: fecha y alcance lingüístico explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-113
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 18
+    - 18
+  evidence_quote: primavera de 2021
+  label: contradicted
+  reason: el fragmento la prevé en todas las lenguas
+  phenomenon:
+  - negation
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-114
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 58
+    pages:
+    - 18
+    - 18
+  evidence_quote: primavera de 2021
+  label: unsupported
+  reason: el número de asistentes no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-115
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 75
+    pages:
+    - 24
+    - 24
+  evidence_quote: emblema de la UE
+  label: supported
+  reason: obligación de visibilidad explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 24
+  - 24
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-116
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 75
+    pages:
+    - 24
+    - 24
+  evidence_quote: emblema de la UE
+  label: contradicted
+  reason: el fragmento exige su exhibición
+  phenomenon:
+  - negation
+  source_pages:
+  - 24
+  - 24
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-117
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 75
+    pages:
+    - 24
+    - 24
+  evidence_quote: emblema de la UE
+  label: unsupported
+  reason: el origen del emblema no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 24
+  - 24
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-118
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 92
+    pages:
+    - 28
+    - 28
+  evidence_quote: propietario del material
+  label: supported
+  reason: propiedad y responsabilidad explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 28
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-119
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 92
+    pages:
+    - 28
+    - 28
+  evidence_quote: propietario del material
+  label: contradicted
+  reason: el fragmento mantiene la propiedad del beneficiario
+  phenomenon:
+  - negation
+  source_pages:
+  - 28
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-120
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 92
+    pages:
+    - 28
+    - 28
+  evidence_quote: propietario del material
+  label: unsupported
+  reason: ninguna licencia concreta citada en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 28
+  - 28
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-121
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 33
+    - 33
+  evidence_quote: reducción de la contribución
+  label: supported
+  reason: consecuencia financiera explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 33
+  - 33
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-122
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 33
+    - 33
+  evidence_quote: reducción de la contribución
+  label: contradicted
+  reason: el fragmento prevé la reducción
+  phenomenon:
+  - negation
+  source_pages:
+  - 33
+  - 33
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-123
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 110
+    pages:
+    - 33
+    - 33
+  evidence_quote: reducción de la contribución
+  label: unsupported
+  reason: ninguna publicación concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 33
+  - 33
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-124
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 128
+    pages:
+    - 37
+    - 37
+  evidence_quote: 10 000 000 EUR
+  label: supported
+  reason: umbral y obligación explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  - modality
+  source_pages:
+  - 37
+  - 37
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-125
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 128
+    pages:
+    - 37
+    - 37
+  evidence_quote: 10 000 000 EUR
+  label: contradicted
+  reason: el fragmento las obliga al acto
+  phenomenon:
+  - negation
+  source_pages:
+  - 37
+  - 37
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-126
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 128
+    pages:
+    - 37
+    - 37
+  evidence_quote: 10 000 000 EUR
+  label: unsupported
+  reason: color y material del cartel ausentes en el fragmento
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 37
+  - 37
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-127
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 41
+    - 41
+  evidence_quote: doble transición ecológica y digital
+  label: supported
+  reason: estrategia nacional explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 41
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-128
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 41
+    - 41
+  evidence_quote: doble transición ecológica y digital
+  label: contradicted
+  reason: el fragmento les exige contar con una
+  phenomenon:
+  - negation
+  source_pages:
+  - 41
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-129
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 41
+    - 41
+  evidence_quote: doble transición ecológica y digital
+  label: unsupported
+  reason: ninguna estrategia nacional concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 41
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-130
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 44
+    - 44
+  evidence_quote: tan destacada y visible
+  label: supported
+  reason: regla de prominencia explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-131
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 44
+    - 44
+  evidence_quote: tan destacada y visible
+  label: contradicted
+  reason: el fragmento exige igual o mayor prominencia
+  phenomenon:
+  - negation
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-132
+  document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  premise_ref:
+    ordinal: 160
+    pages:
+    - 44
+    - 44
+  evidence_quote: tan destacada y visible
+  label: unsupported
+  reason: ninguna actualización del manual en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 44
+  - 44
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-133
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 2
+    - 3
+  evidence_quote: siete años
+  label: supported
+  reason: acreditación única y duración explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-134
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 2
+    - 3
+  evidence_quote: siete años
+  label: contradicted
+  reason: el fragmento la exige una sola vez
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-135
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 2
+    - 3
+  evidence_quote: siete años
+  label: unsupported
+  reason: ninguna cifra global del programa en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-136
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 3
+    - 4
+  evidence_quote: periodos de observación
+  label: supported
+  reason: modalidades de personal explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-137
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 3
+    - 4
+  evidence_quote: periodos de observación
+  label: contradicted
+  reason: el fragmento incluye movilidades del personal
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-138
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 3
+    - 4
+  evidence_quote: periodos de observación
+  label: unsupported
+  reason: ninguna cifra de participación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-139
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 4
+    - 4
+  evidence_quote: todos los Estados miembros
+  label: supported
+  reason: elegibilidad geográfica explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-140
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 4
+    - 4
+  evidence_quote: todos los Estados miembros
+  label: contradicted
+  reason: el fragmento abre a los países del programa
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-141
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 4
+    - 4
+  evidence_quote: todos los Estados miembros
+  label: unsupported
+  reason: ninguna frecuencia de actualización en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-142
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 4
+    - 5
+  evidence_quote: elegir la velocidad
+  label: supported
+  reason: autonomía de objetivos y ritmo explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-143
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 4
+    - 5
+  evidence_quote: elegir la velocidad
+  label: contradicted
+  reason: el fragmento permite objetivos propios y actualización
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-144
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 4
+    - 5
+  evidence_quote: elegir la velocidad
+  label: unsupported
+  reason: ninguna extensión mínima en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-145
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 6
+  evidence_quote: sin tener que presentar una solicitud
+  label: supported
+  reason: flexibilidad sin nueva solicitud explícita
+  phenomenon:
+  - paraphrase
+  - negation
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-146
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 6
+  evidence_quote: sin tener que presentar una solicitud
+  label: contradicted
+  reason: el fragmento dispensa de nueva solicitud
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-147
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 5
+    - 6
+  evidence_quote: sin tener que presentar una solicitud
+  label: unsupported
+  reason: ninguna cifra de acreditadas en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-148
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 7
+  evidence_quote: no es obligatoria
+  label: supported
+  reason: alternativas a la acreditación explícitas
+  phenomenon:
+  - paraphrase
+  - negation
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-149
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 7
+  evidence_quote: no es obligatoria
+  label: contradicted
+  reason: el fragmento declara que no es obligatoria
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-150
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 7
+  evidence_quote: no es obligatoria
+  label: unsupported
+  reason: ninguna duración de proyectos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-151
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 7
+    - 7
+  evidence_quote: información básica
+  label: supported
+  reason: simplicidad de la solicitud explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-152
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 7
+    - 7
+  evidence_quote: información básica
+  label: contradicted
+  reason: el fragmento pide solo información básica
+  phenomenon:
+  - negation
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-153
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 7
+    - 7
+  evidence_quote: información básica
+  label: unsupported
+  reason: el mes de publicación no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-154
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 7
+    - 8
+  evidence_quote: número exacto de participantes
+  label: supported
+  reason: modificaciones permitidas explícitas
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-155
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 7
+    - 8
+  evidence_quote: número exacto de participantes
+  label: contradicted
+  reason: el fragmento permite modificar detalles y objetivos
+  phenomenon:
+  - negation
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-156
+  document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 7
+    - 8
+  evidence_quote: número exacto de participantes
+  label: unsupported
+  reason: ninguna fecha de cierre en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-157
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: once y veinticuatro
+  label: supported
+  reason: rango de edad explícito
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-158
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: once y veinticuatro
+  label: contradicted
+  reason: el fragmento fija de once a veinticuatro
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-159
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: once y veinticuatro
+  label: unsupported
+  reason: ninguna lengua de publicación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-160
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: tres pasos
+  label: supported
+  reason: tres pasos explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-161
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: tres pasos
+  label: contradicted
+  reason: el fragmento describe tres pasos
+  phenomenon:
+  - negation
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-162
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 10
+  evidence_quote: tres pasos
+  label: unsupported
+  reason: ninguna duración en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-163
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: vida cotidiana
+  label: supported
+  reason: pregunta del itinerario 4 explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-164
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: vida cotidiana
+  label: contradicted
+  reason: esa es la pregunta del itinerario 3, no del 4
+  phenomenon:
+  - negation
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-165
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 13
+    - 13
+  evidence_quote: vida cotidiana
+  label: unsupported
+  reason: ninguna fecha de lanzamiento en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-166
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 18
+    - 18
+  evidence_quote: alumnado más joven
+  label: supported
+  reason: diferenciación por edad y nivel explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-167
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 18
+    - 18
+  evidence_quote: alumnado más joven
+  label: contradicted
+  reason: el fragmento adapta métodos a distintas edades
+  phenomenon:
+  - negation
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-168
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 18
+    - 18
+  evidence_quote: alumnado más joven
+  label: unsupported
+  reason: ningún recuento de métodos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-169
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 23
+    - 25
+  evidence_quote: No se necesita ningún material
+  label: supported
+  reason: ausencia de material explícita
+  phenomenon:
+  - paraphrase
+  - negation
+  - coreference
+  source_pages:
+  - 23
+  - 25
+  doubts:
+  - el referente de 'este método' está en el contexto previo del fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-170
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 23
+    - 25
+  evidence_quote: No se necesita ningún material
+  label: contradicted
+  reason: el fragmento declara que no hace falta material
+  phenomenon:
+  - negation
+  - coreference
+  source_pages:
+  - 23
+  - 25
+  doubts:
+  - ver nota de referencia en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-171
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 23
+    - 25
+  evidence_quote: No se necesita ningún material
+  label: unsupported
+  reason: ningún origen del método en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 23
+  - 25
+  doubts:
+  - ver nota de referencia en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-172
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 28
+    - 29
+  evidence_quote: línea trazada en el suelo
+  label: supported
+  reason: mecánica del juego explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 28
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-173
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 28
+    - 29
+  evidence_quote: línea trazada en el suelo
+  label: contradicted
+  reason: el fragmento exige colocarse de pie en línea
+  phenomenon:
+  - negation
+  source_pages:
+  - 28
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-174
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 28
+    - 29
+  evidence_quote: línea trazada en el suelo
+  label: unsupported
+  reason: ningún estudio de validación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 28
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-175
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 72
+    pages:
+    - 33
+    - 35
+  evidence_quote: itinerarios de aprendizaje 2 y 4
+  label: supported
+  reason: itinerarios de ejemplo explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  - modality
+  source_pages:
+  - 33
+  - 35
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-176
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 72
+    pages:
+    - 33
+    - 35
+  evidence_quote: itinerarios de aprendizaje 2 y 4
+  label: contradicted
+  reason: el fragmento la sitúa en los itinerarios 2 y 4
+  phenomenon:
+  - negation
+  source_pages:
+  - 33
+  - 35
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-177
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 72
+    pages:
+    - 33
+    - 35
+  evidence_quote: itinerarios de aprendizaje 2 y 4
+  label: unsupported
+  reason: ninguna duración de fases en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 33
+  - 35
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-178
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 40
+    - 41
+  evidence_quote: cambio democrático
+  label: supported
+  reason: enfoque del kit explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 40
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-179
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 40
+    - 41
+  evidence_quote: cambio democrático
+  label: contradicted
+  reason: el fragmento lo centra en arte y cambio democrático
+  phenomenon:
+  - negation
+  source_pages:
+  - 40
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-180
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 84
+    pages:
+    - 40
+    - 41
+  evidence_quote: cambio democrático
+  label: unsupported
+  reason: ninguna cifra de descargas en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 40
+  - 41
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-181
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 96
+    pages:
+    - 46
+    - 46
+  evidence_quote: HistoriCall
+  label: supported
+  reason: herramientas y alcance explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 46
+  - 46
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-182
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 96
+    pages:
+    - 46
+    - 46
+  evidence_quote: HistoriCall
+  label: contradicted
+  reason: el fragmento describe herramientas y oferta digital
+  phenomenon:
+  - negation
+  source_pages:
+  - 46
+  - 46
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-183
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 96
+    pages:
+    - 46
+    - 46
+  evidence_quote: HistoriCall
+  label: unsupported
+  reason: ninguna cifra de visitantes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 46
+  - 46
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-184
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 108
+    pages:
+    - 51
+    - 52
+  evidence_quote: funcionamiento de las instituciones europeas
+  label: supported
+  reason: oportunidad de aprendizaje explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 51
+  - 52
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-185
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 108
+    pages:
+    - 51
+    - 52
+  evidence_quote: funcionamiento de las instituciones europeas
+  label: contradicted
+  reason: el fragmento prevé debatir esos temas
+  phenomenon:
+  - negation
+  source_pages:
+  - 51
+  - 52
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-186
+  document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  premise_ref:
+    ordinal: 108
+    pages:
+    - 51
+    - 52
+  evidence_quote: funcionamiento de las instituciones europeas
+  label: unsupported
+  reason: periodicidad y sede ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 51
+  - 52
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-187
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 6
+  evidence_quote: Robert Schuman
+  label: supported
+  reason: período, nombres y programa explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-188
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 6
+  evidence_quote: Robert Schuman
+  label: contradicted
+  reason: el fragmento les atribuye poner fin al odio y la rivalidad
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-189
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 6
+  evidence_quote: Robert Schuman
+  label: unsupported
+  reason: ningún congreso citado en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-190
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 11
+    - 11
+  evidence_quote: masa crítica
+  label: supported
+  reason: rivalidad y respuesta europea explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-191
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 11
+    - 11
+  evidence_quote: masa crítica
+  label: contradicted
+  reason: el fragmento cita a China y EE. UU.
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-192
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 11
+    - 11
+  evidence_quote: masa crítica
+  label: unsupported
+  reason: ninguna cuota comercial en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-193
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 19
+    - 19
+  evidence_quote: 2014-2019
+  label: supported
+  reason: pausa de ampliaciones explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 19
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-194
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 19
+    - 19
+  evidence_quote: 2014-2019
+  label: contradicted
+  reason: el fragmento declara que no habrá nuevas adhesiones
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 19
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-195
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 45
+    pages:
+    - 19
+    - 19
+  evidence_quote: 2014-2019
+  label: unsupported
+  reason: ninguna adhesión concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 19
+  - 19
+  doubts:
+  - afirmación cierta en el mundo real pero ausente del fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-196
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 70
+    pages:
+    - 29
+    - 29
+  evidence_quote: Estrasburgo
+  label: supported
+  reason: sedes de sesiones explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 29
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-197
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 70
+    pages:
+    - 29
+    - 29
+  evidence_quote: Estrasburgo
+  label: contradicted
+  reason: el fragmento fija Estrasburgo y Bruselas
+  phenomenon:
+  - negation
+  source_pages:
+  - 29
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-198
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 70
+    pages:
+    - 29
+    - 29
+  evidence_quote: Estrasburgo
+  label: unsupported
+  reason: ningún número de escaños en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 29
+  - 29
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-199
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 95
+    pages:
+    - 40
+    - 40
+  evidence_quote: década de 1960
+  label: supported
+  reason: década de las advertencias explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 40
+  - 40
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-200
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 95
+    pages:
+    - 40
+    - 40
+  evidence_quote: década de 1960
+  label: contradicted
+  reason: el fragmento la remonta a los años sesenta
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 40
+  - 40
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-201
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 95
+    pages:
+    - 40
+    - 40
+  evidence_quote: década de 1960
+  label: unsupported
+  reason: ninguna previsión concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 40
+  - 40
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-202
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 48
+    - 48
+  evidence_quote: marco financiero plurianual
+  label: supported
+  reason: ciclo y denominación explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 48
+  - 48
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-203
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 48
+    - 48
+  evidence_quote: marco financiero plurianual
+  label: contradicted
+  reason: el fragmento fija un ciclo de siete años
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 48
+  - 48
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-204
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 120
+    pages:
+    - 48
+    - 48
+  evidence_quote: marco financiero plurianual
+  label: unsupported
+  reason: ningún reparto porcentual en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 48
+  - 48
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-205
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 58
+    - 58
+  evidence_quote: sino también equitativa
+  label: supported
+  reason: doble exigencia explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-206
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 58
+    - 58
+  evidence_quote: sino también equitativa
+  label: contradicted
+  reason: el fragmento ordena evitar ese falseamiento
+  phenomenon:
+  - negation
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-207
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 145
+    pages:
+    - 58
+    - 58
+  evidence_quote: sino también equitativa
+  label: unsupported
+  reason: ninguna multa concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 58
+  - 58
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-208
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 170
+    pages:
+    - 66
+    - 67
+  evidence_quote: Jean-Claude Juncker
+  label: supported
+  reason: fecha, autor y objeto explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 66
+  - 67
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-209
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 170
+    pages:
+    - 66
+    - 67
+  evidence_quote: Jean-Claude Juncker
+  label: contradicted
+  reason: el fragmento atribuye la presentación a Juncker en 2015
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 66
+  - 67
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-210
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 170
+    pages:
+    - 66
+    - 67
+  evidence_quote: Jean-Claude Juncker
+  label: unsupported
+  reason: ninguna puesta en marcha concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 66
+  - 67
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-211
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 195
+    pages:
+    - 78
+    - 79
+  evidence_quote: 16 000 millones
+  label: supported
+  reason: beneficiarios, aumento y presupuesto explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 78
+  - 79
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-212
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 195
+    pages:
+    - 78
+    - 79
+  evidence_quote: 16 000 millones
+  label: contradicted
+  reason: el fragmento declara un aumento del 40 %
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 78
+  - 79
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-213
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 195
+    pages:
+    - 78
+    - 79
+  evidence_quote: 16 000 millones
+  label: unsupported
+  reason: ningún recuento de asociaciones en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 78
+  - 79
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-214
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 220
+    pages:
+    - 87
+    - 87
+  evidence_quote: La Haya
+  label: supported
+  reason: sede, composición e hito explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 87
+  - 87
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-215
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 220
+    pages:
+    - 87
+    - 87
+  evidence_quote: La Haya
+  label: contradicted
+  reason: el fragmento fija La Haya, policías y aduaneros
+  phenomenon:
+  - negation
+  source_pages:
+  - 87
+  - 87
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-216
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 220
+    pages:
+    - 87
+    - 87
+  evidence_quote: La Haya
+  label: unsupported
+  reason: ninguna plantilla en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 87
+  - 87
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-217
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 245
+    pages:
+    - 95
+    - 95
+  evidence_quote: cuarenta y nueve
+  label: supported
+  reason: número de países y exención explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 95
+  - 95
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-218
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 245
+    pages:
+    - 95
+    - 95
+  evidence_quote: cuarenta y nueve
+  label: contradicted
+  reason: el fragmento las exime salvo armas
+  phenomenon:
+  - negation
+  source_pages:
+  - 95
+  - 95
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-219
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 245
+    pages:
+    - 95
+    - 95
+  evidence_quote: cuarenta y nueve
+  label: unsupported
+  reason: ninguna revisión citada en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 95
+  - 95
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-220
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 270
+    pages:
+    - 105
+    - 105
+  evidence_quote: 9 DE MAYO
+  label: supported
+  reason: fecha, autor y propuesta explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 105
+  - 105
+  doubts:
+  - fragmento de cronología; afirmación ceñida a una entrada completa
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-221
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 270
+    pages:
+    - 105
+    - 105
+  evidence_quote: 9 DE MAYO
+  label: contradicted
+  reason: el fragmento propone carbón y acero abiertos a Europa
+  phenomenon:
+  - negation
+  source_pages:
+  - 105
+  - 105
+  doubts:
+  - ver nota de cronología en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-222
+  document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  premise_ref:
+    ordinal: 270
+    pages:
+    - 105
+    - 105
+  evidence_quote: 9 DE MAYO
+  label: unsupported
+  reason: lugar y público ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 105
+  - 105
+  doubts:
+  - ver nota de cronología en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-223
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: 96 900 millones
+  label: supported
+  reason: ambas cifras y suma explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-224
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: 96 900 millones
+  label: contradicted
+  reason: el fragmento fija 96 900 millones
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-225
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: 96 900 millones
+  label: unsupported
+  reason: ningún reactor concreto en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-226
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: aumento del 30
+  label: supported
+  reason: aumento y ajuste explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-227
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: aumento del 30
+  label: contradicted
+  reason: el fragmento declara un aumento del 30 %
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-228
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: aumento del 30
+  label: unsupported
+  reason: ningún primer programa marco en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - afirmación del mundo real ajena al fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-229
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: 10 105
+  label: supported
+  reason: partida del CEI explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-230
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: 10 105
+  label: contradicted
+  reason: el fragmento fija 10 105 millones
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-231
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: 10 105
+  label: unsupported
+  reason: la sede no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts:
+  - afirmación cierta en el mundo real pero ausente del fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-232
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 4
+  evidence_quote: No hay una distribución fija
+  label: supported
+  reason: ausencia de cuotas y criterios explícitos
+  phenomenon:
+  - paraphrase
+  - negation
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-233
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 4
+  evidence_quote: No hay una distribución fija
+  label: contradicted
+  reason: el fragmento niega la distribución fija
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-234
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 4
+  evidence_quote: No hay una distribución fija
+  label: unsupported
+  reason: ningún calendario de convocatorias en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-235
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 3,3 %
+  label: supported
+  reason: cuota mínima explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  - modality
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-236
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 3,3 %
+  label: contradicted
+  reason: el fragmento garantiza al menos el 3,3 %
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-237
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 3,3 %
+  label: unsupported
+  reason: ninguna cuota del pilar 2 en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-238
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Islandia y Noruega
+  label: supported
+  reason: lista de participantes explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-239
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Islandia y Noruega
+  label: contradicted
+  reason: el fragmento enumera muchos terceros países
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-240
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Islandia y Noruega
+  label: unsupported
+  reason: ninguna asociación británica en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-241
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: supported
+  reason: base jurídica y fecha explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - el fragmento incluye créditos de imágenes de terceros; la afirmación no usa ese contenido
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-242
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: contradicted
+  reason: el fragmento declara que no es responsable
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-243
+  document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: unsupported
+  reason: páginas y lenguas ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-244
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: investigación de vanguardia
+  label: supported
+  reason: doble vía de refuerzo explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-245
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: investigación de vanguardia
+  label: contradicted
+  reason: el fragmento la refuerza
+  phenomenon:
+  - negation
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-246
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: investigación de vanguardia
+  label: unsupported
+  reason: ninguna fecha de creación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-247
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: amplia participación
+  label: supported
+  reason: simplificación y apertura explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-248
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: amplia participación
+  label: contradicted
+  reason: el fragmento fomenta su participación
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-249
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: amplia participación
+  label: unsupported
+  reason: ningún presupuesto de misiones en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-250
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: seguridad jurídica
+  label: supported
+  reason: triple mejora normativa explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - el fragmento se corta tras 'hasta 11 euros en'; la afirmación usa solo la parte completa
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-251
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: seguridad jurídica
+  label: contradicted
+  reason: el fragmento reduce la carga
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - ver nota de corte en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-252
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: seguridad jurídica
+  label: unsupported
+  reason: ninguna cifra de InvestEU en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - ver nota de corte en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-253
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: 5 400 millones
+  label: supported
+  reason: ambas aportaciones explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-254
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: 5 400 millones
+  label: contradicted
+  reason: el fragmento incluye 5 400 millones de NextGenerationEU
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-255
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: 5 400 millones
+  label: unsupported
+  reason: ninguna cifra del Fondo de Defensa en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-256
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 3
+    - 3
+  evidence_quote: datos científicos independientes
+  label: supported
+  reason: servicio del CCI explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-257
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 3
+    - 3
+  evidence_quote: datos científicos independientes
+  label: contradicted
+  reason: el fragmento los ofrece a responsables políticos
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-258
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 3
+    - 3
+  evidence_quote: datos científicos independientes
+  label: unsupported
+  reason: ninguna cifra del EIT en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-259
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 4
+  evidence_quote: innovación creadora de mercado
+  label: supported
+  reason: ambición y vía explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-260
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 4
+  evidence_quote: innovación creadora de mercado
+  label: contradicted
+  reason: el fragmento lo centra en innovación de mercado
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-261
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 4
+  evidence_quote: innovación creadora de mercado
+  label: unsupported
+  reason: fundación y sede ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 4
+  doubts:
+  - afirmación cierta en el mundo real pero ausente del fragmento
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-262
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: sin deformar
+  label: supported
+  reason: condiciones de reutilización explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - el fragmento incluye créditos de imágenes de terceros; la afirmación no usa ese contenido
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-263
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: sin deformar
+  label: contradicted
+  reason: el fragmento prohíbe deformarlo
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-264
+  document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 4
+    - 4
+  evidence_quote: sin deformar
+  label: unsupported
+  reason: tirada ausente en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-265
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 2
+  evidence_quote: fronteras del conocimiento
+  label: supported
+  reason: líneas de apoyo explícitas
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-266
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 2
+  evidence_quote: fronteras del conocimiento
+  label: contradicted
+  reason: el fragmento enumera líneas científicas
+  phenomenon:
+  - negation
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-267
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 2
+  evidence_quote: fronteras del conocimiento
+  label: unsupported
+  reason: ningún origen del programa en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-268
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: 80 %
+  label: supported
+  reason: cuota de éxito explícita
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-269
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: 80 %
+  label: contradicted
+  reason: el fragmento fija alrededor del 80 %
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-270
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: 80 %
+  label: unsupported
+  reason: ninguna cifra anual de ayudas en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-271
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: edición del genoma
+  label: supported
+  reason: galardón y motivo explícitos
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-272
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: edición del genoma
+  label: contradicted
+  reason: el fragmento premia Química por edición del genoma
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-273
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 3
+    - 3
+  evidence_quote: edición del genoma
+  label: unsupported
+  reason: ningún presupuesto anual en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-274
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: circulación de cerebros
+  label: supported
+  reason: beneficios de talento y cooperación explícitos
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-275
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: circulación de cerebros
+  label: contradicted
+  reason: el fragmento promueve ambas
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-276
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: circulación de cerebros
+  label: unsupported
+  reason: ninguna tasa de empleo en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-277
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 50 infraestructuras
+  label: supported
+  reason: número de infraestructuras explícito
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-278
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 50 infraestructuras
+  label: contradicted
+  reason: el fragmento cuenta más de 50
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-279
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 4
+    - 4
+  evidence_quote: 50 infraestructuras
+  label: unsupported
+  reason: ninguna hoja de ruta citada en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-280
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: supported
+  reason: base jurídica y fecha explícitas
+  phenomenon:
+  - paraphrase
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - el fragmento incluye créditos de imágenes de terceros; la afirmación no usa ese contenido
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-281
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: contradicted
+  reason: el fragmento regula su reutilización
+  phenomenon:
+  - negation
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-282
+  document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 4
+    - 4
+  evidence_quote: Decisión 2011/833/UE
+  label: unsupported
+  reason: traducciones ausentes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 4
+  - 4
+  doubts:
+  - ver nota de créditos en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-283
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: transición ecológica y digital
+  label: supported
+  reason: doble vía de sinergia explícita
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-284
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: transición ecológica y digital
+  label: contradicted
+  reason: el fragmento las busca desde el diseño
+  phenomenon:
+  - negation
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-285
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 2
+    pages:
+    - 1
+    - 1
+  evidence_quote: transición ecológica y digital
+  label: unsupported
+  reason: ningún artículo citado en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-286
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 1
+    - 2
+  evidence_quote: contratación pública de innovación
+  label: supported
+  reason: ejemplo de sinergia explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-287
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 1
+    - 2
+  evidence_quote: contratación pública de innovación
+  label: contradicted
+  reason: el fragmento la propone como vía
+  phenomenon:
+  - negation
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-288
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 1
+    - 2
+  evidence_quote: contratación pública de innovación
+  label: unsupported
+  reason: ninguna fecha de publicación en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-289
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: financiación complementaria
+  label: supported
+  reason: propuesta del ejemplo 1 explícita
+  phenomenon:
+  - paraphrase
+  - modality
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-290
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: financiación complementaria
+  label: contradicted
+  reason: el ejemplo lo propone
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-291
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 2
+  evidence_quote: financiación complementaria
+  label: unsupported
+  reason: ninguna financiación concreta en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-292
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 2
+    - 2
+  evidence_quote: tres niveles
+  label: supported
+  reason: contenido del nivel política explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - el fragmento se corta antes del tercer nivel; la afirmación usa solo el nivel completo
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-293
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 2
+    - 2
+  evidence_quote: tres niveles
+  label: contradicted
+  reason: el fragmento prevé normativas favorables
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - ver nota de corte en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-294
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 2
+    - 2
+  evidence_quote: tres niveles
+  label: unsupported
+  reason: el tercer nivel no aparece en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - ver nota de corte en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-295
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 2
+    - 3
+  evidence_quote: vínculos necesarios
+  label: supported
+  reason: propósito de los gestores explícito
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-296
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 2
+    - 3
+  evidence_quote: vínculos necesarios
+  label: contradicted
+  reason: el fragmento prevé que desarrollen vínculos
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-297
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 2
+    - 3
+  evidence_quote: vínculos necesarios
+  label: unsupported
+  reason: ningún informe anual en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-298
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 3
+  evidence_quote: plataforma de resultados
+  label: supported
+  reason: herramientas citadas explícitamente
+  phenomenon:
+  - paraphrase
+  source_pages:
+  - 3
+  - 3
+  doubts:
+  - fragmento con enlaces; afirmación ceñida a lo visible
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-299
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 3
+  evidence_quote: plataforma de resultados
+  label: contradicted
+  reason: el fragmento las pone en marcha
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts:
+  - ver nota de enlaces en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: euh2-300
+  document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 3
+    - 3
+  evidence_quote: plataforma de resultados
+  label: unsupported
+  reason: ninguna cifra de proyectos en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts:
+  - ver nota de enlaces en la afirmación hermana
+  status: pending_review
+  adjudication: pending_orchestrator

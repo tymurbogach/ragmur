@@ -1,0 +1,268 @@
+# Registro de adjudicación sobre la 2.ª revisión IA — PENDIENTE de revisión humana — NO es gold
+# gold: false · adjudication: orchestrator-directed-third-pass · status global: pending-human-review
+# PROHIBIDO usar este archivo (y eval/eu_nli_dev_ai_adjudicated.yaml) para calibrar
+# umbrales, puntuar el modelo NLI o como prueba reservada. Solo split dev (eu-dev-001
+# a eu-dev-300); ningún document_id test; sin inferencia sobre test.
+# Método: copia íntegra de eval/eu_nli_dev_ai_corrected.yaml salvo los 12 casos listados
+# aquí; cada nueva afirmación se contrastó solo contra su premisa visible, sin contexto
+# externo y sin ejecutar el modelo NLI. Premisas, premise_locator, document_id, split
+# e IDs intactos en todos los casos.
+# Esquema por fila: id, document_id, split, previous {label, text}, adjudicated {label,
+# text}, change (rewrite-claim | label-change), phenomenon_change, reason, second_review
+# {independent_label, verdict}.
+# Distribución resultante en adjudicated (300 claims): supported 100, contradicted 99,
+# unsupported 101 (eu-dev-267 pasa de contradicted a unsupported).
+# Casos inciertos para la revisión humana: 007/093/096 (sujeto elíptico: la adjudicación
+# conserva la elipsis, pero la premisa aislada sigue sin antecedente visible; considerar
+# ampliar premisa o marcar coreference en la guía); 029 (anáfora «todos los demás» sin
+# antecedente: se conserva por fidelidad al fragmento, pero el par aislado depende de
+# contexto no visible; considerar excluir de métricas o ampliar premisa); 031 («a más
+# tardar» restituido; vigilar en la guía que «límite máximo» no se lea como «inicio»);
+# 062 (el condicional adjudicado sigue fechando 2028 como previsión, no como hecho).
+# Sin defectos objetivos adicionales detectados en los 288 casos conservados; no se tocó
+# la reserva.
+- id: eu-dev-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: Las misiones fijan objetivos concretos con plazos y reúnen a investigadores,
+      responsables políticos y partes interesadas para impulsar la innovación.
+  adjudicated:
+    label: supported
+    text: Establecen objetivos concretos con plazos y reúnen a investigadores, responsables
+      políticos y partes interesadas para impulsar la innovación.
+  change: rewrite-claim
+  phenomenon_change: coreference false -> true
+  reason: La premisa tiene sujeto elíptico («Establecen…») sin antecedente visible en
+    el fragmento; identificarlo como «las misiones» introduce información externa al
+    par. Se elimina la identificación y se conserva la elipsis sin añadir afirmaciones;
+    la paráfrasis restante se sigue literalmente de la premisa.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-029
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: Todos los demás productos necesitan un certificado expedido por un organismo
+      notificado; en ese caso, la marca CE va seguida del número del organismo notificado.
+  adjudicated:
+    label: supported
+    text: Para todos los demás productos es necesario un certificado emitido por un
+      organismo notificado, y entonces el marcado CE aparece acompañado del número
+      de ese organismo.
+  change: rewrite-claim
+  phenomenon_change: coreference false -> true
+  reason: 'La afirmación era copia literal de la premisa. Se parafrasea manteniendo sujeto
+    («todos los demás»), alcance y modalidad; la anáfora queda sin antecedente visible
+    en el fragmento y se marca coreference=true. Caso incierto: el par aislado depende
+    de contexto no visible; la revisión humana debe decidir si ampliar la premisa o
+    excluirlo de métricas.'
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-031
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: El marcado UDI es exigible desde 2023 para la clase D, desde 2025 para las
+      clases B y C, y desde 2027 para la clase A de diagnóstico in vitro.
+  adjudicated:
+    label: supported
+    text: La identificación única debe colocarse, a más tardar, el 26 de mayo de 2023
+      para la clase D, el 26 de mayo de 2025 para las clases B y C, y el 26 de mayo
+      de 2027 para la clase A de diagnóstico in vitro.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La premisa fija límites máximos («debe colocarse, a más tardar»), no fechas
+    de inicio de exigibilidad. «Exigible desde» invierte el sentido del plazo. Se restituye
+    «a más tardar» con día y mes visibles en la premisa; las tres fechas por clase se
+    siguen literalmente.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-062
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: El proyecto prevé construir y equipar un hospital en Bălți con 340 camas
+      de hospitalización y 78 ambulatorias en 38 000 m², con terminación en 2028;
+      una vez terminado será centro de referencia para el norte de Moldavia.
+  adjudicated:
+    label: supported
+    text: El proyecto contemplaría construir y equipar un hospital en Bălți con 340
+      camas de hospitalización y 78 ambulatorias en 38 000 m², que de completarse
+      en 2028 funcionaría como centro de referencia para el norte de Moldavia.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La premisa enuncia un objetivo («tiene como objetivo… Una vez que esté terminado
+    en 2028»), no un hecho consumado. «Con terminación en 2028… será» asegura el desenlace;
+    se expresa en condicional y como plan («contemplaría», «de completarse… funcionaría»).
+    Se conservan cifras, superficie, topónimo y año.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-093
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: La UE se fundamenta en la dignidad humana, la libertad, la democracia, la
+      igualdad, el Estado de Derecho y los derechos humanos.
+  adjudicated:
+    label: supported
+    text: Se menciona el respeto de la dignidad humana, la libertad, la democracia,
+      la igualdad, el Estado de Derecho y los derechos humanos.
+  change: rewrite-claim
+  phenomenon_change: coreference false -> true
+  reason: La premisa tiene sujeto elíptico («Se trata del respeto…») sin antecedente
+    visible en el fragmento; atribuir los valores a la UE introduce información externa
+    al par. Se elimina la atribución y se conserva la lista íntegra de valores.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-096
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: La UE concedió protección temporal a millones de ucranianos con acceso a
+      vivienda, escuelas, sanidad y empleo.
+  adjudicated:
+    label: supported
+    text: Se concedió protección temporal a millones de personas que huían de Ucrania,
+      con acceso a alojamiento, escuelas, asistencia sanitaria y empleo en la UE.
+  change: rewrite-claim
+  phenomenon_change: coreference false -> true
+  reason: La premisa dice «personas que huyen de Ucrania» (origen del desplazamiento,
+    no nacionalidad) con sujeto elíptico («adoptó») sin antecedente visible. «Ucranianos»
+    estrecha el alcance y «La UE concedió» atribuye un agente ausente; se restituye
+    el impersonal y el grupo tal como aparece, conservando «en la UE» solo como lugar
+    del acceso, presente en la premisa.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-150
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: Los países de la UE deben definir una estrategia a diez años vista.
+  adjudicated:
+    label: contradicted
+    text: Los países de la UE solo deben definir una estrategia a diez años vista,
+      y no de al menos treinta años.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La premisa exige un mínimo («por lo menos durante los próximos treinta años»).
+    Fijar el requisito en diez años sin más ya es incompatible, pero hacerlo explícito
+    («solo… y no de al menos treinta») garantiza que la contradicción se lea sobre el
+    mínimo exigido y no sobre una duración compatible con él.
+  second_review:
+    independent_label: contradicted
+    verdict: agree
+- id: eu-dev-242
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: De este modo, las necesidades de cada generación pueden satisfacerse mediante
+      la cooperación y el aprendizaje compartido centrado en la equidad entre generaciones.
+  adjudicated:
+    label: supported
+    text: De este modo, cabe satisfacer las necesidades de cada generación a través
+      de la cooperación y del aprendizaje compartido orientado a la equidad entre
+      generaciones.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La afirmación era copia literal de la premisa. Se parafrasea manteniendo sujeto,
+    modalidad de posibilidad («cabe satisfacer») y alcance; la afirmación se sigue de
+    la premisa sin contexto externo.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-261
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: Antes de introducir nuevas herramientas de IA en el centro, puede ser útil
+      probar el sistema con una determinada cohorte de aprendientes.
+  adjudicated:
+    label: supported
+    text: Previamente a incorporar herramientas nuevas de IA en el centro educativo,
+      podría resultar útil ensayar el sistema con un grupo determinado de aprendientes.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La afirmación era copia casi literal que además recortaba «educativo» del sujeto.
+    Se parafrasea restituyendo el alcance completo («centro educativo») y la modalidad
+    de posibilidad («podría resultar útil»); la afirmación se sigue de la premisa sin
+    contexto externo.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-263
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: Estos conocimientos pueden facilitar el desarrollo de estrategias de aprendizaje
+      personalizadas, observaciones adaptativas sobre el rendimiento y sistemas de
+      intervención temprana adaptados a cada aprendiente.
+  adjudicated:
+    label: supported
+    text: Dichos conocimientos pueden contribuir a elaborar estrategias de aprendizaje
+      personalizadas, valoraciones adaptativas del rendimiento y mecanismos de intervención
+      temprana ajustados a cada aprendiente.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La afirmación era copia literal de la premisa. Se parafrasea manteniendo sujeto
+    anafórico («dichos conocimientos»), modalidad de posibilidad («pueden») y la triple
+    enumeración de alcance; la afirmación se sigue de la premisa sin contexto externo.
+  second_review:
+    independent_label: supported
+    verdict: agree
+- id: eu-dev-267
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: La evaluación del aprendizaje con IA no se considera un uso de alto riesgo.
+  adjudicated:
+    label: unsupported
+    text: La evaluación del aprendizaje con IA no se considera un uso de alto riesgo.
+  change: label-change
+  phenomenon_change: none
+  reason: La premisa visible describe el supuesto (sistemas de IA para evaluar resultados
+    del aprendizaje) sin calificar su nivel de riesgo; la clasificación «no alto riesgo»
+    es compatible con lo visible pero no inferible sin la frase del anexo que califica
+    el uso. No hay contradicción sobre el mismo hecho calificado, luego unsupported.
+    Coincide con la discrepancia de la 2.ª revisión (independent_label unsupported,
+    verdict disagree).
+  second_review:
+    independent_label: unsupported
+    verdict: disagree
+- id: eu-dev-291
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: La coalición apoya la producción de combustibles fósiles para la aviación.
+  adjudicated:
+    label: contradicted
+    text: La coalición apoya la producción de combustibles fósiles para la aviación
+      y no la producción ni la adopción de combustibles de aviación sintéticos.
+  change: rewrite-claim
+  phenomenon_change: none
+  reason: La contradicción anterior dependía de asumir sin base visible que «sintético»
+    y «fósil» se excluyen. Se niega explícitamente el apoyo a los sintéticos, que es
+    lo que la premisa afirma (coalición para apoyar la producción y la adopción de
+    combustibles de aviación sintéticos); la contradicción ya no depende de contexto
+    externo.
+  second_review:
+    independent_label: contradicted
+    verdict: agree

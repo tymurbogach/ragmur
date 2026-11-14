@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import glob
 import hashlib
+import json
 import logging
 import re
 import sys
@@ -33,7 +34,12 @@ EXPECTED_DEV = 18
 EXPECTED_TEST = 6
 PENDING_MARKER = "PENDING HUMAN REVIEW"
 VALID_LABELS = ("supported", "contradicted", "unsupported")
-BURNT_GLOBS = ("eval/eu_nli_test_ai_*.yaml", "eval/eu_nli_holdout2_ai_*.yaml")
+BURNT_GLOBS = (
+    "eval/eu_nli_test_ai_*.yaml",
+    "eval/eu_nli_holdout2_ai_*.yaml",
+    "eval/_archive_ai/eu_nli_test_ai_*.yaml",
+    "eval/_archive_ai/eu_nli_holdout2_ai_*.yaml",
+)
 
 AUTO_EXPECTED_TOTAL = 35
 AUTO_EXPECTED_DEV = 26
@@ -48,6 +54,8 @@ AUTO_VALID_RULES = (
     "contradicted_entity",
     "unsupported_crossdoc",
 )
+
+LEXICAL_JACCARD_THRESHOLD = 0.3
 
 logger = logging.getLogger(__name__)
 
@@ -312,11 +320,14 @@ def auto_dataset_errors(
             errors.append(f"{name}/{case_id} auto necesita afirmaciones no vacías")
             continue
         for claim in claims:
-            if not isinstance(claim, dict) or claim.get("label") not in VALID_LABELS:
+            if not isinstance(claim, dict):
                 errors.append(f"{name}/{case_id} auto tiene una etiqueta inválida")
                 break
             if claim.get("label") == "weak":
                 errors.append(f"{name}/{case_id} auto nunca usa weak como referencia")
+                break
+            if claim.get("label") not in VALID_LABELS:
+                errors.append(f"{name}/{case_id} auto tiene una etiqueta inválida")
                 break
             text = claim.get("text")
             if not isinstance(text, str) or not text.strip():
@@ -348,7 +359,7 @@ def auto_dataset_errors(
                 union = _word_set(premise) | _word_set(text)
                 inter = _word_set(premise) & _word_set(text)
                 jaccard = len(inter) / len(union) if union else 1.0
-                if jaccard >= 0.3:
+                if jaccard >= LEXICAL_JACCARD_THRESHOLD:
                     errors.append(f"{name}/{case_id} auto unsupported sin guarda léxica")
                     break
         if isinstance(rule, str) and rule.startswith("contradicted_"):
@@ -358,6 +369,20 @@ def auto_dataset_errors(
             elif _normalize(str(source)) not in _normalize(premise):
                 errors.append(f"{name}/{case_id} auto origen fuera de la premisa")
     return errors
+
+
+def _contains_test_split(payload: object) -> bool:
+    """Busca `split == "test"` en la estructura JSON sin depender del espaciado."""
+    if isinstance(payload, dict):
+        for key, value in payload.items():
+            if key == "split" and value == "test":
+                return True
+            if _contains_test_split(value):
+                return True
+        return False
+    if isinstance(payload, list):
+        return any(_contains_test_split(item) for item in payload)
+    return False
 
 
 def auto_test_execution_errors(results_dir: Path, auto_shas: set[str]) -> list[str]:
@@ -374,8 +399,14 @@ def auto_test_execution_errors(results_dir: Path, auto_shas: set[str]) -> list[s
             continue
         if "auto" not in text.lower() and path.name.find("auto") < 0:
             continue
+        try:
+            payload: object = json.loads(text)
+        except ValueError:
+            continue
+        if not _contains_test_split(payload):
+            continue
         for sha in auto_shas:
-            if sha in text and '"split": "test"' in text:
+            if sha in text:
                 errors.append(f"{path.name} ejecutó auto en split test")
                 break
     return errors

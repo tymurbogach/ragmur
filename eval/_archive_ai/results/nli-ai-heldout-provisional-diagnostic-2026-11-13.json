@@ -1,0 +1,455 @@
+{
+ "alternatives_considered": {
+  "adopt_candidate_S_0_97": "rejected_on_this_reserve: recall_supported 33/100 below preregistered 0.5; adopting would enshrine a threshold fitted on dev single-case leverage and contradicted by heldout recall",
+  "adopt_current_S_0_75_on_this_reserve": "rejected: the current-vs-candidate contrast on the same scores is descriptive only; this reserve must not select or configure thresholds",
+  "recalibrate_S_W_C_on_this_reserve": "rejected: any tuning on these scores converts the reserve into development; next hypothesis needs new disjoint documents and new frozen references",
+  "integrate_numeric_prototype": "not_part_of_this_protocol: eval/numeric_signal.py is an isolated offline prototype; no product change and no claim from these numbers",
+  "relabel_or_exclude_after_seeing_predictions": "forbidden_and_not_done: 0 label changes, 0 exclusions after inference; human review must stay blind per case"
+ },
+ "code": {
+  "config_sha256": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc",
+  "nli_py_sha256": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+  "nli_run_sha256": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+  "nli_thresholds_sha256": "6413151dff59cbab8b5e5fb08713744fdbbda788c73c648bfb7bec21ca252264"
+ },
+ "comparison_descriptive_only": {
+  "candidate_S_0_97": {
+   "confusion_matrix": {
+    "contradicted": {
+     "contradicted": 84,
+     "supported": 1,
+     "unsupported": 12,
+     "weak": 3
+    },
+    "supported": {
+     "contradicted": 5,
+     "supported": 33,
+     "unsupported": 25,
+     "weak": 37
+    },
+    "unsupported": {
+     "contradicted": 5,
+     "supported": 0,
+     "unsupported": 90,
+     "weak": 1
+    },
+    "weak": {
+     "contradicted": 0,
+     "supported": 0,
+     "unsupported": 0,
+     "weak": 0
+    }
+   },
+   "false_support": {
+    "denominator": 196,
+    "numerator": 1,
+    "rate": 0.00510204081632653,
+    "wilson_95": [
+     0.0009012039505642017,
+     0.028329261315080803
+    ]
+   },
+   "numeric_acceptance": false,
+   "supported_recall": {
+    "denominator": 100,
+    "numerator": 33,
+    "rate": 0.33
+   }
+  },
+  "current_S_0_75_descriptive": {
+   "confusion_matrix": {
+    "contradicted": {
+     "contradicted": 84,
+     "supported": 2,
+     "unsupported": 12,
+     "weak": 2
+    },
+    "supported": {
+     "contradicted": 5,
+     "supported": 65,
+     "unsupported": 25,
+     "weak": 5
+    },
+    "unsupported": {
+     "contradicted": 5,
+     "supported": 1,
+     "unsupported": 90,
+     "weak": 0
+    },
+    "weak": {
+     "contradicted": 0,
+     "supported": 0,
+     "unsupported": 0,
+     "weak": 0
+    }
+   },
+   "false_support": {
+    "denominator": 196,
+    "numerator": 3,
+    "rate": 0.015306122448979591,
+    "wilson_95": [
+     0.005218879779228865,
+     0.04402745218196985
+    ]
+   },
+   "numeric_acceptance": true
+  },
+  "delta_candidate_minus_current": {
+   "false_support_numerator": -2,
+   "supported_recall_numerator": -32,
+   "verdict_marginals": {
+    "contradicted": 0,
+    "supported": -34,
+    "unsupported": 0,
+    "weak": 34
+   }
+  },
+  "method": "same single-inference scores re-thresholded; no second inference; not a selection procedure"
+ },
+ "configuration_unchanged": {
+  "contradicted": 0.75,
+  "supported": 0.75,
+  "weak": 0.5
+ },
+ "dataset": {
+  "case_counts": {
+   "contradicted": 100,
+   "supported": 100,
+   "unsupported": 96
+  },
+  "cases": 296,
+  "label_counts_note": "artificial balance by design; not a production prior",
+  "path": "eval/eu_nli_test_ai_provisional_frozen.yaml",
+  "sha256": "6c5559ac70dc556c584de9bcc1a2469515fd54ca6d699e72b1f76956826a1b11",
+  "unique_chunks": 100,
+  "unique_premises": 100
+ },
+ "date": "2026-11-13",
+ "diagnostic_breakdowns": {
+  "by_document_anonymized": {
+   "mapping_note": "doc_01..doc_06 sorted by case count descending; UUID mapping lives in the comparison file already in Git",
+   "docs": [
+    {
+     "doc": "doc_01",
+     "exact_match": 47,
+     "label_mix": {
+      "contradicted": 25,
+      "supported": 25,
+      "unsupported": 23
+     },
+     "n": 73,
+     "recall_contradicted": "19/25",
+     "recall_supported": "8/25",
+     "recall_unsupported": "20/23",
+     "verdict_marginals": {
+      "contradicted": 23,
+      "supported": 8,
+      "unsupported": 30,
+      "weak": 12
+     }
+    },
+    {
+     "doc": "doc_02",
+     "exact_match": 45,
+     "label_mix": {
+      "contradicted": 20,
+      "supported": 20,
+      "unsupported": 19
+     },
+     "n": 59,
+     "recall_contradicted": "17/20",
+     "recall_supported": "11/20",
+     "recall_unsupported": "17/19",
+     "verdict_marginals": {
+      "contradicted": 20,
+      "supported": 12,
+      "unsupported": 21,
+      "weak": 6
+     }
+    },
+    {
+     "doc": "doc_03",
+     "exact_match": 40,
+     "label_mix": {
+      "contradicted": 18,
+      "supported": 18,
+      "unsupported": 19
+     },
+     "n": 55,
+     "recall_contradicted": "17/18",
+     "recall_supported": "5/18",
+     "recall_unsupported": "18/19",
+     "verdict_marginals": {
+      "contradicted": 20,
+      "supported": 5,
+      "unsupported": 24,
+      "weak": 6
+     }
+    },
+    {
+     "doc": "doc_04",
+     "exact_match": 32,
+     "label_mix": {
+      "contradicted": 17,
+      "supported": 17,
+      "unsupported": 15
+     },
+     "n": 49,
+     "recall_contradicted": "13/17",
+     "recall_supported": "4/17",
+     "recall_unsupported": "15/15",
+     "verdict_marginals": {
+      "contradicted": 13,
+      "supported": 4,
+      "unsupported": 24,
+      "weak": 8
+     }
+    },
+    {
+     "doc": "doc_05",
+     "exact_match": 32,
+     "label_mix": {
+      "contradicted": 15,
+      "supported": 15,
+      "unsupported": 15
+     },
+     "n": 45,
+     "recall_contradicted": "14/15",
+     "recall_supported": "3/15",
+     "recall_unsupported": "15/15",
+     "verdict_marginals": {
+      "contradicted": 14,
+      "supported": 3,
+      "unsupported": 21,
+      "weak": 7
+     }
+    },
+    {
+     "doc": "doc_06",
+     "exact_match": 11,
+     "label_mix": {
+      "contradicted": 5,
+      "supported": 5,
+      "unsupported": 5
+     },
+     "n": 15,
+     "recall_contradicted": "4/5",
+     "recall_supported": "2/5",
+     "recall_unsupported": "5/5",
+     "verdict_marginals": {
+      "contradicted": 4,
+      "supported": 2,
+      "unsupported": 7,
+      "weak": 2
+     }
+    }
+   ],
+   "pattern": "supported recall is low in every document (range 3/15 to 11/20); contradicted and unsupported recall are high except one document with 13/17 contradicted"
+  },
+  "by_hypothesis_length_chars": {
+   "buckets": [
+    {
+     "bucket": "<60",
+     "exact_match": "21/25",
+     "label_mix_note": "unsupported-heavy (21 unsupported)",
+     "rate": 0.84
+    },
+    {
+     "bucket": "60-99",
+     "exact_match": "145/173",
+     "label_mix_note": "mixed, contradicted/unsupported-heavy",
+     "rate": 0.838
+    },
+    {
+     "bucket": ">=100",
+     "exact_match": "41/98",
+     "label_mix_note": "supported-heavy (81 supported, 16 contradicted, 1 unsupported)",
+     "rate": 0.418
+    }
+   ],
+   "pattern": "cases with hypothesis >= 100 chars (mostly supported) mismatch far more often than shorter hypotheses; supported hypotheses are systematically longer (median 125) than contradicted (82.5) and unsupported (67.5), so class and length/complexity are confounded"
+  },
+  "by_phenomenon_metadata": {
+   "coreference": {
+    "false": {
+     "exact_match": "205/290",
+     "rate": 0.707
+    },
+    "true": {
+     "exact_match": "2/6",
+     "note": "n=6, no conclusion"
+    }
+   },
+   "negation": {
+    "false": {
+     "exact_match": "175/250",
+     "rate": 0.7
+    },
+    "true": {
+     "exact_match": "32/46",
+     "rate": 0.696
+    }
+   },
+   "numeric": {
+    "false": {
+     "exact_match": "88/125",
+     "rate": 0.704
+    },
+    "true": {
+     "exact_match": "119/171",
+     "rate": 0.696
+    }
+   },
+   "pattern": "negation and numeric flags show no aggregate exact-match difference; coreference n=6 is too small; flags do not explain the recall gap"
+  },
+  "by_premise_length_chars": {
+   "buckets": [
+    {
+     "bucket": "<750",
+     "exact_match": "33/44",
+     "rate": 0.75
+    },
+    {
+     "bucket": "750-779",
+     "exact_match": "79/119",
+     "rate": 0.664
+    },
+    {
+     "bucket": ">=780",
+     "exact_match": "95/133",
+     "rate": 0.714
+    }
+   ],
+   "pattern": "no strong premise-length gradient; all premises are 678-800 chars (chunk regime 800/120), far from single-sentence XNLI training"
+  },
+  "by_reference_class_candidate_S_0_97": {
+   "contradicted": {
+    "contradicted": 84,
+    "supported": 1,
+    "unsupported": 12,
+    "weak": 3
+   },
+   "supported": {
+    "contradicted": 5,
+    "supported": 33,
+    "unsupported": 25,
+    "weak": 37
+   },
+   "unsupported": {
+    "contradicted": 5,
+    "supported": 0,
+    "unsupported": 90,
+    "weak": 1
+   }
+  },
+  "score_distribution_summaries_no_per_case_scores": {
+   "contradicted_expected": {
+    "contradiction_median": 0.992919921875,
+    "entailment_median": 0.0012001991271972656
+   },
+   "supported_expected": {
+    "contradiction_median": 0.008319854736328125,
+    "entailment_median": 0.929443359375
+   },
+   "unsupported_expected": {
+    "contradiction_median": 0.0022878646850585938,
+    "entailment_median": 0.000484466552734375
+   },
+   "reading": "supported cases score high on entailment in aggregate yet 62/100 fall below S=0.97 (37 weak + 25 unsupported); the long tail of low entailment on near-verbatim supported pairs and the high contradiction on novel-detail unsupported pairs point to model/premise-regime issues, not to a clean threshold cut"
+  },
+  "verdict_marginals_candidate": {
+   "contradicted": 94,
+   "supported": 34,
+   "unsupported": 127,
+   "weak": 41
+  }
+ },
+ "evidence_needed_next": [
+  "blind per-case human review of the frozen references before any acceptance claim (reviewer sees fragment + claim only)",
+  "new disjoint documents and new frozen references for any threshold or modelling iteration; this reserve is closed for tuning",
+  "a reference definition of weak distinct from unsupported before W can be calibrated",
+  "premise-regime analysis (windowing/chunk size vs 800-char premises) tested on new data, not on this reserve",
+  "disjoint replication of the hypothesis-length effect (long supported paraphrases) with human-judged references"
+ ],
+ "findings": [
+  "primary candidate result stands: recall_supported 33/100 < preregistered 0.5, numeric_acceptance=false, false_support 1/196",
+  "raising S from 0.75 to 0.97 moves 32 supported verdicts to weak and removes 2 false supports in aggregate; contradiction and unsupported outcomes are identical between thresholds",
+  "supported recall is low in all six documents; contradicted (84/100) and unsupported (90/96) recall are comparatively high",
+  "hypothesis length is the strongest aggregate confounder: >=100 chars mismatches at 57/98 vs ~16% below 100 chars, and supported claims are systematically longer",
+  "negation/numeric metadata show no aggregate exact-match gap; coreference has only 6 cases",
+  "score medians separate classes in aggregate, but the tails overlap through the thresholds in both directions"
+ ],
+ "inference_provenance": {
+  "details_path": "/tmp/nli-ai-heldout-provisional-details-2026-11-13.json (outside Git)",
+  "details_sha256": "d28fbe0ca4d5b4edd999df4934d8d3b44d68894e0f758e09f6958ff8120b1e",
+  "reinference": false,
+  "second_config_without_reinference": true,
+  "single_inference": true
+ },
+ "limitations": [
+  "AI-proposed labels, artificial data, no human review; not gold and not an acceptance test",
+  "296 cases share 100 chunks and 6 documents; observations are not independent; Wilson intervals are descriptive only",
+  "label classes differ systematically in hypothesis length/complexity (supported median 125 vs contradicted 82.5 vs unsupported 67.5); recall gaps are confounded with that construction choice",
+  "800-char premises are outside single-sentence XNLI training regime; chunking/windowing effects cannot be separated here",
+  "comparison of current thresholds on the same scores is descriptive; it does not authorize selection or configuration from this reserve",
+  "no production, capacity, latency, tenant-isolation, or phase-closure claim follows from this file"
+ ],
+ "model": {
+  "device": "cpu",
+  "hardware_cpu": "Intel(R) Core(TM) Ultra 9 285H",
+  "hardware_platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce"
+ },
+ "notice": "Etiquetas IA sin revision humana; reserva artificial de 6 documentos; revision humana final ciega pendiente. Intervalos Wilson descriptivos. No autoriza produccion, cambios de umbrales ni cierre de fase.",
+ "primary_result": {
+  "criterion": "recall_supported >= 0.5 (preregistered)",
+  "false_support": "1/196",
+  "numeric_acceptance": false,
+  "recall_supported": "33/100",
+  "thresholds": {
+   "contradicted": 0.75,
+   "supported": 0.97,
+   "weak": 0.5
+  }
+ },
+ "provenance": {
+  "candidate_summary_path": "eval/results/nli-ai-heldout-provisional-2026-11-13.json",
+  "candidate_summary_sha256": "ca9d961ba7ce3164531cb02c7e623d9c9093f540c9cdc64b0eb6e7bc87420fb6",
+  "commit": "5397547fd1454467570d6389fa0b8720dc1dea53",
+  "comparison_path": "eval/results/nli-ai-heldout-provisional-comparison-2026-11-13.json",
+  "comparison_sha256_observed_now": "58843b886a9db2747a61c86ba86fca2911e08dd1e0b2c091fea3f2c7a513a1bd",
+  "dataset_sha256": "6c5559ac70dc556c584de9bcc1a2469515fd54ca6d699e72b1f76956826a1b11",
+  "git_tree": "dirty at analysis time (see git status); no commits made by this diagnostic task",
+  "protocol_path": "eval/NLI_AI_EVALUATION_PROTOCOL.md",
+  "protocol_sha256": "92635d4cdb50322069b5530ebc68c6ec346a98dbc08b335754cb757ecdb82d74",
+  "sample_detail_path": "/tmp/nli-ai-heldout-provisional-diagnostic-sample-2026-11-13.json (outside Git; per-case review notes, blind-breaking, never versioned)"
+ },
+ "semantic_sample_review": {
+  "categories_aggregate": {
+   "model_false_contradiction_on_novel_detail": 5,
+   "model_false_support": 1,
+   "model_inversion_supported_as_contradicted": 5,
+   "model_miss_contradiction": 8,
+   "model_miss_entailment_on_near_verbatim_support": 5,
+   "model_over_entailment": 1,
+   "threshold_artifact_ranking_correct_but_below_S_0_97": 5
+  },
+  "label_changes": 0,
+  "label_exclusions": 0,
+  "labels_judged_plausible_on_visible_fragment": "30/30 in this non-blind sample; not evidence of label quality",
+  "method": "stratified non-blind review of 30 discrepancies against visible fragments (premise, claim, note, evidence quote); reviewer saw predictions and scores, so this review breaks blindness and cannot substitute human blind review",
+  "n_reviewed": 30,
+  "patterns": [
+   "near-verbatim supported pairs with very low entailment (model miss)",
+   "near-verbatim supported pairs with very high contradiction (model inversion)",
+   "clear contradictions (swapped numbers/sections/entities) scored below the contradiction threshold",
+   "novel-detail unsupported claims scored as high contradiction (over-trigger on unseen specifics)",
+   "high entailment on a swapped-entity contradicted pair producing the single false support",
+   "high entailment just below 0.97 on clearly supported pairs (threshold artifact, ranking correct)"
+  ],
+  "strata": "supported->weak, supported->unsupported, supported->contradicted, contradicted->unsupported, contradicted->weak/supported, unsupported->contradicted, unsupported->weak"
+ },
+ "split": "test",
+ "status": "diagnostic_only_no_threshold_change_no_code_change_no_reinference_no_acceptance"
+}

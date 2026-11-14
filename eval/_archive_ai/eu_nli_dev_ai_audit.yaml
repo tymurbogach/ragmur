@@ -1,0 +1,2725 @@
+# Auditoría IA independiente de propuestas dev — PENDIENTE de revisión humana — NO es gold
+# gold: false
+# ai_proposals_only: false (etiquetas revisadas por IA a partir de eval/eu_nli_dev_ai_candidates.yaml; NO son etiquetas humanas)
+# review_status global: pending-human-review
+# PROHIBIDO usar este archivo para calibrar umbrales, puntuar el modelo NLI o como prueba reservada.
+# Uso permitido: SOLO insumo para adjudicación humana de la tarea 1.8; no cierra la tarea ni sustituye al tercer revisor.
+# Método: decisión desde la premisa visible antes de consultar la etiqueta propuesta; unsupported exige neutralidad sin conocimiento externo.
+# Atención explícita a contradicted/supported por diferencias modales (puede/debe/propone/se espera/tiene como objetivo) y temporales (como muy tarde/a partir/de aquí a/hasta/al menos).
+# Modelo NLI no usado para decidir referencias. Corpus/manifiesto/código/datos previos intactos; sin commit; split test no abierto.
+# Correspondencia 1:1 con candidatos: 300 IDs únicos (100 supported / 100 contradicted / 100 unsupported propuestos).
+# Resultado auditoría: 288 agree, 11 disagree, 1 ambiguous (eu-dev-062). Ver lista de correcciones al final del informe de revisión.
+- id: eu-dev-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-004
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-006
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-011
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-012
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-013
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-014
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-016
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-017
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-018
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-019
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-020
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-021
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-022
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-023
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-024
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-025
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-026
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-027
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-028
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-029
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: Premisa anafórica "Todos los demás..." sin antecedente visible; "salvo los
+    de menor riesgo" identifica la excepción con contexto externo/previo.
+  correction: Cambiar claim a "Todos los demás productos requieren..." sin identificar,
+    o ampliar premisa con la frase previa que define la excepción.
+- id: eu-dev-030
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-031
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-032
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-033
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-034
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-035
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-036
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-037
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-038
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-039
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-040
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-041
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-042
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-043
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-044
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-045
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-046
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-047
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-048
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-049
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-050
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-051
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-052
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-053
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-054
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-055
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-056
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-057
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-058
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-059
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-060
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Entidad no identificada: premisa "El plan" sin nombre visible; claim identifica
+    "Global Gateway" con conocimiento externo al fragmento.'
+  correction: Cambiar claim a "El plan, lanzado en 2021, aspira..." o incluir antecedente
+    que nombre Global Gateway en la premisa.
+- id: eu-dev-061
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-062
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: ambiguous
+  status: ambiguous
+  reason: 'Certeza alterada objetivo->hecho: "tiene como objetivo construir... Una
+    vez que esté terminado en 2028..." vs "tendrá... y estará terminado...". En género
+    de ficha de proyecto puede leerse como plan; requiere adjudicación humana.'
+  correction: Formular claim como plan ("El proyecto prevé 340+78 camas y terminación
+    en 2028") o descartar y sustituir por par factual.
+- id: eu-dev-063
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Certeza alterada: "con el objetivo de multiplicar por 200..." (propósito)
+    vs "multiplicará por 200..." (hecho). "Prevé/conectará" el tramo sí se sostiene,
+    pero el segundo miembro no.'
+  correction: Cambiar segundo miembro a "con el objetivo de multiplicar por 200..."
+    para respaldado, o mantener como unsupported.
+- id: eu-dev-064
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-065
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-066
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-067
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-068
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-069
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-070
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-071
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-072
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-073
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-074
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-075
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-076
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-077
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-078
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-079
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-080
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-081
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-082
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-083
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-084
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-085
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-086
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-087
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-088
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-089
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-090
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-091
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-092
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-093
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-094
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-095
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-096
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-097
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-098
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-099
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-100
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-101
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-102
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-103
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-104
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-105
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-106
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-107
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-108
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-109
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-110
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-111
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-112
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-113
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-114
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-115
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-116
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-117
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-118
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-119
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-120
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-121
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-122
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-123
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-124
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-125
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-126
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-127
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-128
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-129
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-130
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-131
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-132
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-133
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-134
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-135
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-136
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-137
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-138
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-139
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-140
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-141
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-142
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-143
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-144
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-145
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-146
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-147
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-148
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-149
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-150
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-151
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-152
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-153
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-154
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-155
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-156
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-157
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-158
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-159
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Modalidad propuesta->hecho: "Propondré la ampliación... a fin de..." no
+    entails "se extenderá... y recortará...". Anuncio de propuesta, no realización.'
+  correction: Cambiar claim a "Se propone ampliar el comercio de emisiones al marítimo
+    y recortar derechos gratuitos de aerolíneas".
+- id: eu-dev-160
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-161
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-162
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-163
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-164
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-165
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-166
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-167
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-168
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-169
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-170
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-171
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-172
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-173
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-174
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-175
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-176
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-177
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-178
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-179
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-180
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Posibilidad->actual y alcance: "pueden apoyarlos mejor" + "en qué y cómo"
+    vs "los apoyan". Omite modal y "mejor".'
+  correction: 'Conservar modal: "El primer paso es definir objetivos y valorar en
+    qué y cómo los CED pueden apoyarlos mejor".'
+- id: eu-dev-181
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-182
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-183
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-184
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-185
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-186
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-187
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-188
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-189
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-190
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-191
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-192
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-193
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-194
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-195
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-196
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-197
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-198
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-199
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-200
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-201
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-202
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: unsupported
+  status: disagree
+  reason: 'Plazo máximo compatible con adelanto: "como muy tarde en 2050" se satisface
+    cumpliendo en 2040; "como muy tarde en 2040" es más estricto pero no incompatible.'
+  correction: Para contradicción usar fecha posterior al plazo (p.ej. 2060) o mantener
+    el par como unsupported/neutral.
+- id: eu-dev-203
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-204
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-205
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-206
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-207
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-208
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-209
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-210
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-211
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-212
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-213
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-214
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-215
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-216
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-217
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-218
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-219
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-220
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-221
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-222
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-223
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-224
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-225
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-226
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-227
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-228
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-229
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-230
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-231
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-232
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-233
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-234
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-235
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-236
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-237
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-238
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-239
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-240
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-241
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-242
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Posibilidad->actual: "pueden satisfacerse mediante..." vs "se satisfacen
+    con...". Capacidad no entails realización genérica.'
+  correction: Cambiar claim a "pueden satisfacerse con cooperación y aprendizaje compartido
+    en equidad".
+- id: eu-dev-243
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-244
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-245
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-246
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-247
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-248
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-249
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-250
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-251
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-252
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-253
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-254
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-255
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-256
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-257
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-258
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-259
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-260
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-261
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Utilidad posible->recomendación: "puede ser útil probar..." no entails
+    "Conviene pilotar...".'
+  correction: Cambiar claim a "puede ser útil pilotar la herramienta con un grupo
+    antes de implantarla".
+- id: eu-dev-262
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-263
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Posibilidad->actual: "pueden facilitar..." vs "facilitan...".'
+  correction: Cambiar claim a "pueden facilitar estrategias personalizadas, observación
+    adaptativa e intervención temprana".
+- id: eu-dev-264
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: unsupported
+  status: disagree
+  reason: 'Modalidad: "pueden reforzar involuntariamente..." (posibilidad en algunos
+    casos) no contradice "reducen..." genérico; ambos pueden coexistir. Contradicción
+    exigiría refuerzo necesario/general.'
+  correction: Para contradicción usar "refuerzan necesariamente / solo refuerzan las
+    desigualdades" o mantener como unsupported.
+- id: eu-dev-265
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-266
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-267
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-268
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-269
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-270
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-271
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-272
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-273
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-274
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-275
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-276
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-277
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-278
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-279
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-280
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-281
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-282
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-283
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: unsupported
+  status: disagree
+  reason: 'Expectativa->hecho: "Se espera que produzcan..." vs "generarán...". Aumento
+    de certeza; el segundo miembro "evitará/evitarán" sí es futuro en ambas.'
+  correction: 'Mantener hedge: "Se espera que generen casi 2,2 Mt en diez años y eviten
+    15 Mt de CO2".'
+- id: eu-dev-284
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-285
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: supported
+  revised_label: supported
+  status: agree
+  reason: Paráfrasis fiel desde la premisa visible; cifras/fechas/entidades conservadas
+    sin añadir certeza ni conocimiento externo.
+  correction: ''
+- id: eu-dev-286
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-287
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-288
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-289
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-290
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-291
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-292
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: contradicted
+  revised_label: contradicted
+  status: agree
+  reason: Incompatibilidad directa en el mismo atributo/fecha/entidad desde la premisa
+    visible (negación, número o fecha distintos, inversión u ordinal opuesto).
+  correction: ''
+- id: eu-dev-293
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-294
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-295
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-296
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-297
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-298
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-299
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''
+- id: eu-dev-300
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  original_label: unsupported
+  revised_label: unsupported
+  status: agree
+  reason: 'Neutral desde la premisa visible: compatible pero no inferible; requiere
+    información ausente y no apela a conocimiento externo.'
+  correction: ''

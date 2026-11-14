@@ -1,0 +1,5349 @@
+# Referencias PROVISIONALES de IA para evaluación NLI (split test).
+# Estado: propuesta IA sin revisión humana; NO es gold.
+# Premisa = chunk exacto del extractor PDF + troceador del proyecto (800/120).
+# Esquema compatible con trazabilidad por ID; pendiente de revisión y adjudicación.
+# Generado: 2026-11-13T08:13:15.533922+00:00.
+metadata:
+  generated: '2026-11-13T08:13:15.712570+00:00'
+  status: ai_proposal_pending_review
+  gold: false
+  protocol_reference: eval/NLI_AI_EVALUATION_PROTOCOL.md (SHA-256 registrado por el orquestador antes de abrir fuentes; no
+    leido por esta sesion)
+  chunking:
+    size: 800
+    overlap: 120
+  adjudication: pending_orchestrator
+items:
+- id: eut-001
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 5
+    - 7
+  evidence_quote: consta de dos elementos principales
+  label: supported
+  reason: el fragmento enumera ambos elementos
+  phenomenon: []
+  source_pages:
+  - 5
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-002
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 5
+    - 7
+  evidence_quote: dos elementos principales
+  label: contradicted
+  reason: el fragmento afirma dos elementos, no uno
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-003
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 5
+    - 7
+  evidence_quote: sostenibilidad de las finanzas públicas
+  label: unsupported
+  reason: el fragmento no menciona financiación ni presupuesto
+  phenomenon: []
+  source_pages:
+  - 5
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-004
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 7
+    - 7
+  evidence_quote: Semestre Europeo
+  label: supported
+  reason: nombre del proceso y momento del año explícitos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-005
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 7
+    - 7
+  evidence_quote: primer semestre de cada año
+  label: contradicted
+  reason: el fragmento sitúa las etapas en el primer semestre
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-006
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 7
+    - 7
+  evidence_quote: estrecha coordinación
+  label: unsupported
+  reason: el fragmento no indica fecha ni acto de creación
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-007
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 7
+    - 7
+  evidence_quote: grado de convergencia suficiente
+  label: supported
+  reason: los cuatro ámbitos de estabilidad figuran en el fragmento
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-008
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 7
+    - 7
+  evidence_quote: tienen que asegurarse
+  label: contradicted
+  reason: el fragmento exige convergencia suficiente
+  phenomenon:
+  - negation
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-009
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 7
+    - 7
+  evidence_quote: zona del euro
+  label: unsupported
+  reason: el fragmento no fija ninguna duración
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-010
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 7
+    - 8
+  evidence_quote: define el Banco Central Europeo
+  label: supported
+  reason: autoría e independencia del BCE explícitas
+  phenomenon: []
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-011
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 7
+    - 8
+  evidence_quote: Banco Central Europeo
+  label: contradicted
+  reason: el fragmento atribuye la definición al BCE
+  phenomenon:
+  - negation
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-012
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 7
+    - 8
+  evidence_quote: soberanía en materia de política
+  label: unsupported
+  reason: sede y plantilla no aparecen en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-013
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 8
+    - 8
+  evidence_quote: foro informal
+  label: supported
+  reason: el referente es el Eurogrupo de la frase anterior
+  phenomenon:
+  - coreference
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-014
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 8
+    - 8
+  evidence_quote: ministros de Hacienda
+  label: contradicted
+  reason: esa composición corresponde a la Cumbre del Euro, no al Eurogrupo
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-015
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 8
+    - 8
+  evidence_quote: Cumbre del Euro
+  label: unsupported
+  reason: frecuencia y sede no constan en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-016
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 8
+    - 10
+  evidence_quote: sus propias políticas estructurales
+  label: supported
+  reason: los tres ámbitos figuran como políticas propias
+  phenomenon: []
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-017
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 8
+    - 10
+  evidence_quote: establecen sus propias políticas
+  label: contradicted
+  reason: el fragmento las atribuye a los Estados
+  phenomenon:
+  - negation
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-018
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 8
+    - 10
+  evidence_quote: adoptan la legislación de la UE en el Consejo
+  label: unsupported
+  reason: la regla de voto no aparece en el fragmento
+  phenomenon: []
+  source_pages:
+  - 8
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-019
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: Fue creado en septiembre de 2012
+  label: supported
+  reason: fecha y fundadores explícitos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-020
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: septiembre de 2012
+  label: contradicted
+  reason: el fragmento data la creación en 2012
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-021
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: institución financiera internacional
+  label: unsupported
+  reason: ninguna cifra de capital en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-022
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: hayan adoptado el euro o no
+  label: supported
+  reason: inclusión explícita de los que no usan el euro
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-023
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: bajo ciertas condiciones
+  label: contradicted
+  reason: el fragmento exige ciertas condiciones
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-024
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 11
+    - 11
+  evidence_quote: Consejo de Gobernadores
+  label: unsupported
+  reason: composición sí consta; calendario y sede no
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-025
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 13
+    - 13
+  evidence_quote: Maastricht
+  label: supported
+  reason: lugar y fecha de la puesta en marcha
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-026
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 13
+    - 13
+  evidence_quote: diciembre de 1991
+  label: contradicted
+  reason: el fragmento sitúa el lanzamiento en 1991
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-027
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 13
+    - 13
+  evidence_quote: Consejo Europeo
+  label: unsupported
+  reason: el número de asistentes no consta
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-028
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 13
+    - 13
+  evidence_quote: Informe Werner de octubre de 1970
+  label: supported
+  reason: fecha, informe y número de fases
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-029
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 13
+    - 13
+  evidence_quote: en tres fases
+  label: contradicted
+  reason: el fragmento habla de tres fases
+  phenomenon:
+  - negation
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-030
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 13
+    - 13
+  evidence_quote: iniciativa de la Comisión
+  label: unsupported
+  reason: autoría y cargo no aparecen en el fragmento
+  phenomenon: []
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-031
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 13
+    - 14
+  evidence_quote: serpiente en el túnel
+  label: supported
+  reason: fecha, acuerdo y sistema enlazados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-032
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 13
+    - 14
+  evidence_quote: Acuerdo de Basilea de
+  label: contradicted
+  reason: fecha y vínculo contrarios al fragmento
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 13
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-033
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 13
+    - 14
+  evidence_quote: creado en 1973
+  label: unsupported
+  reason: importes y operaciones no constan
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 14
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-034
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 15
+    - 16
+  evidence_quote: 1,5 puntos porcentuales
+  label: supported
+  reason: umbral y grupo de referencia exactos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-035
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 15
+    - 16
+  evidence_quote: más de 1,5 puntos porcentuales
+  label: contradicted
+  reason: el umbral del fragmento es 1,5 puntos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-036
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 15
+    - 16
+  evidence_quote: criterios de convergencia
+  label: unsupported
+  reason: ningún recuento de cumplidores en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-037
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 16
+    - 16
+  evidence_quote: no debe superar el 60 % del PIB
+  label: supported
+  reason: techo de deuda explícito
+  phenomenon:
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-038
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 16
+    - 16
+  evidence_quote: 60 % del PIB
+  label: contradicted
+  reason: el techo del 60 % no admite esa excepción
+  phenomenon:
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-039
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 16
+    - 16
+  evidence_quote: Tipos de interés a largo plazo
+  label: unsupported
+  reason: publicación periódica no mencionada
+  phenomenon: []
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-040
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 16
+    - 17
+  evidence_quote: excepto Dinamarca
+  label: supported
+  reason: obligación general con una única excepción
+  phenomenon:
+  - negation
+  source_pages:
+  - 16
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-041
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 16
+    - 17
+  evidence_quote: ha optado por no participar
+  label: contradicted
+  reason: el fragmento reconoce su opción de no participar
+  phenomenon:
+  - negation
+  source_pages:
+  - 16
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-042
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 16
+    - 17
+  evidence_quote: Dinamarca puede solicitar
+  label: unsupported
+  reason: Suecia no se menciona en el fragmento
+  phenomenon: []
+  source_pages:
+  - 16
+  - 17
+  doubts:
+  - Suecia no se menciona; confirmar silencio total del fragmento.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-043
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 17
+    - 17
+  evidence_quote: 15 % por encima o por debajo
+  label: supported
+  reason: banda de fluctuación exacta
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-044
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 17
+    - 17
+  evidence_quote: límites normalizados del
+  label: contradicted
+  reason: la banda del fragmento es del 15 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-045
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 17
+    - 17
+  evidence_quote: tipo central que se acuerda
+  label: unsupported
+  reason: intervenciones no mencionadas
+  phenomenon: []
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-046
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 17
+    - 18
+  evidence_quote: Desde 2018
+  label: supported
+  reason: fecha, instrumento y compromiso
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-047
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 17
+    - 18
+  evidence_quote: requisito indispensable
+  label: contradicted
+  reason: el fragmento la declara requisito indispensable
+  phenomenon:
+  - negation
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-048
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 17
+    - 18
+  evidence_quote: hoja de ruta
+  label: unsupported
+  reason: ningún país concreto se cita en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-049
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 17
+    - 18
+  evidence_quote: unidad de cuenta
+  label: supported
+  reason: naturaleza y uso limitado iniciales
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-050
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 17
+    - 18
+  evidence_quote: entraron en circulación el 1 de enero de 2002
+  label: contradicted
+  reason: la circulación empezó en 2002, no en 1999
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-051
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 17
+    - 18
+  evidence_quote: pagos electrónicos
+  label: unsupported
+  reason: diseño de billetes no mencionado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 18
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-052
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 18
+    - 19
+  evidence_quote: ni comisiones de cambio ni gastos
+  label: supported
+  reason: ausencia de costes explícita
+  phenomenon:
+  - negation
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-053
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 18
+    - 19
+  evidence_quote: Eslovenia
+  label: contradicted
+  reason: el orden cronológico del fragmento es inverso
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-054
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 28
+    pages:
+    - 18
+    - 19
+  evidence_quote: libre circulación de bienes
+  label: unsupported
+  reason: terceros países no mencionados
+  phenomenon: []
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-055
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 18
+    - 19
+  evidence_quote: once Estados miembros
+  label: supported
+  reason: fecha, número y carácter irrevocable
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-056
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 18
+    - 19
+  evidence_quote: once Estados miembros
+  label: contradicted
+  reason: el fragmento cifra en once los adoptantes
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-057
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 18
+    - 19
+  evidence_quote: tipos de cambio de manera irrevocable
+  label: unsupported
+  reason: ningún tipo nacional concreto en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 18
+  - 19
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-058
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 19
+    - 21
+  evidence_quote: tipos de interés convergentes
+  label: supported
+  reason: convergencia y bajos costes tras el euro
+  phenomenon: []
+  source_pages:
+  - 19
+  - 21
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-059
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 19
+    - 21
+  evidence_quote: convergentes para los títulos
+  label: contradicted
+  reason: el fragmento describe convergencia, no divergencia
+  phenomenon: []
+  source_pages:
+  - 19
+  - 21
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-060
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 19
+    - 21
+  evidence_quote: mercados financieros eran optimistas
+  label: unsupported
+  reason: compras del BCE no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 19
+  - 21
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-061
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 2
+    - 2
+  evidence_quote: recuperación suficiente de las especies
+  label: supported
+  reason: finalidad de recuperación a largo plazo
+  phenomenon: []
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-062
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 2
+    - 2
+  evidence_quote: más que frenar aún más su declive
+  label: contradicted
+  reason: el fragmento exige más que frenar el declive
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-063
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 2
+    - 2
+  evidence_quote: Especies y hábitats protegidos
+  label: unsupported
+  reason: el año de aprobación no figura en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts:
+  - El año 1992 aparece en otro documento del corpus; la etiqueta solo vale para este fragmento.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-064
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: Cada seis años
+  label: supported
+  reason: periodicidad y contenido del informe
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-065
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: Cada seis años, los Estados miembros deben
+  label: contradicted
+  reason: el fragmento impone el informe sexenal
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-066
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: período 2013-2018
+  label: unsupported
+  reason: ningún coste en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-067
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 3
+  evidence_quote: 47 %
+  label: supported
+  reason: porcentaje de aves en buen estado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-068
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 3
+  evidence_quote: 47 %
+  label: contradicted
+  reason: la cifra del fragmento es 47 %, no 60 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-069
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 2
+    - 3
+  evidence_quote: todas las especies de aves silvestres
+  label: unsupported
+  reason: ninguna especie concreta se cita en el fragmento
+  phenomenon: []
+  source_pages:
+  - 2
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-070
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 3
+    - 3
+  evidence_quote: 27 %
+  label: supported
+  reason: cuota de especies en buen estado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-071
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 3
+    - 3
+  evidence_quote: la mayoría (63 %) aún muestra
+  label: contradicted
+  reason: el fragmento cifra el buen estado en 27 %
+  phenomenon: []
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-072
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 3
+    - 3
+  evidence_quote: datos sobre las especies marinas siguen estando incompletos
+  label: unsupported
+  reason: el fragmento dice que los datos marinos están incompletos
+  phenomenon: []
+  source_pages:
+  - 3
+  - 3
+  doubts:
+  - El buen estado de cetáceos se juzga contra datos declarados incompletos; revisar redacción.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-073
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: 81 %
+  label: supported
+  reason: ambos porcentajes en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-074
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: deficiente o malo (81 %)
+  label: contradicted
+  reason: el fragmento cifra el mal estado en 81 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-075
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 3
+    - 3
+  evidence_quote: Tipos de hábitats
+  label: unsupported
+  reason: ningún ranking de hábitats en el fragmento
+  phenomenon: []
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-076
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 3
+    - 3
+  evidence_quote: 21 %
+  label: supported
+  reason: cuota de tendencia desconocida
+  phenomenon:
+  - numeric
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-077
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 3
+    - 3
+  evidence_quote: simplemente se desconoce
+  label: contradicted
+  reason: el fragmento deja un 21 % desconocido
+  phenomenon:
+  - negation
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-078
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 9
+    pages:
+    - 3
+    - 3
+  evidence_quote: tendencia se mantiene estable
+  label: unsupported
+  reason: la causa no se indica en el fragmento
+  phenomenon: []
+  source_pages:
+  - 3
+  - 3
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-079
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: abandono de las tierras agrícolas
+  label: supported
+  reason: tres presiones agrícolas citadas
+  phenomenon: []
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-080
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: Agricultura
+  label: contradicted
+  reason: la agricultura abre la lista de presiones
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-081
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: intensificación agrícola
+  label: unsupported
+  reason: superficie ecológica no mencionada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-082
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: captura accesoria
+  label: supported
+  reason: dos formas de explotación citadas
+  phenomenon: []
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-083
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: Cambio climático
+  label: contradicted
+  reason: el cambio climático sí figura como presión
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-084
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: Especies exóticas
+  label: unsupported
+  reason: la vía de llegada no se indica
+  phenomenon: []
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-085
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 6
+    - 6
+  evidence_quote: mencionada con mayor frecuencia
+  label: supported
+  reason: primer puesto en frecuencia de mención
+  phenomenon: []
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-086
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 6
+    - 6
+  evidence_quote: la agricultura sigue siendo
+  label: contradicted
+  reason: el fragmento otorga el primer puesto a la agricultura
+  phenomenon: []
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-087
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 6
+    - 6
+  evidence_quote: Estados miembros que informasen
+  label: unsupported
+  reason: fuentes del informe no detalladas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-088
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 6
+    - 7
+  evidence_quote: solo el 8 %
+  label: supported
+  reason: ambos porcentajes explícitos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-089
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 6
+    - 7
+  evidence_quote: 45 % se está deteriorando
+  label: contradicted
+  reason: los porcentajes del fragmento están invertidos en la afirmación
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-090
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 6
+    - 7
+  evidence_quote: alondra común
+  label: unsupported
+  reason: desapariciones nacionales no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-091
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 7
+    - 7
+  evidence_quote: casi 28 000 lugares
+  label: supported
+  reason: lugares y cobertura terrestre
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-092
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 7
+    - 7
+  evidence_quote: 18 %
+  label: contradicted
+  reason: la cobertura del fragmento es del 18 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-093
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 7
+    - 7
+  evidence_quote: red coordinada
+  label: unsupported
+  reason: ningún ranking por países
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-094
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: tres cuartas partes
+  label: supported
+  reason: el referente son los espacios Natura 2000 de la frase anterior
+  phenomenon:
+  - coreference
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-095
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: mejores condiciones que aquellos
+  label: contradicted
+  reason: la relación del fragmento es la inversa
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-096
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: turberas altas y bajas
+  label: unsupported
+  reason: comparación con bosques tropicales ausente
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-097
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: Solo una proporción
+  label: supported
+  reason: cobertura parcial de planes
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-098
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: Solo una proporción
+  label: contradicted
+  reason: el fragmento limita los planes a una proporción
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-099
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: planes de gestión
+  label: unsupported
+  reason: sanciones no mencionadas
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-100
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 7
+    - 7
+  evidence_quote: 1 800 proyectos
+  label: supported
+  reason: proyectos e importe acumulados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-101
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 7
+    - 7
+  evidence_quote: unos 1 800 proyectos
+  label: contradicted
+  reason: la cifra del fragmento ronda los 1 800
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-102
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 7
+    - 7
+  evidence_quote: desde entonces
+  label: unsupported
+  reason: dotación futura no mencionada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-103
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 7
+    - 8
+  evidence_quote: al menos el
+  label: supported
+  reason: ambos umbrales de protección
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-104
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 7
+    - 8
+  evidence_quote: 30 %
+  label: contradicted
+  reason: el 10 % es la parte estricta dentro del 30 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-105
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 7
+    - 8
+  evidence_quote: En mayo de 2020
+  label: unsupported
+  reason: votación y fecha de aprobación ausentes
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-106
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: interlocutores clave
+  label: supported
+  reason: papel de los educadores explícito
+  phenomenon: []
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-107
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: interlocutores clave
+  label: contradicted
+  reason: el fragmento los declara interlocutores clave
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-108
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: estrategias que los propagadores
+  label: unsupported
+  reason: ningún examen mencionado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-109
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: están en inglés o ruso
+  label: supported
+  reason: idiomas y transcripciones
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-110
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: transcripciones traducidas
+  label: contradicted
+  reason: el fragmento indica inglés o ruso con transcripciones
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-111
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 6
+  evidence_quote: Cuatro estudios de caso
+  label: unsupported
+  reason: número total no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-112
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 6
+  evidence_quote: quince y dieciocho años
+  label: supported
+  reason: rango de edad destinatario
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-113
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 6
+  evidence_quote: adolescentes
+  label: contradicted
+  reason: el destinatario es secundaria, 15 a 18 años
+  phenomenon: []
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-114
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 6
+  evidence_quote: cualquier centro de enseñanza
+  label: unsupported
+  reason: cifras de descarga ausentes
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-115
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 6
+    - 6
+  evidence_quote: una o dos clases
+  label: supported
+  reason: duración y nivel
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-116
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 6
+    - 6
+  evidence_quote: una o dos clases
+  label: contradicted
+  reason: el fragmento prevé una o dos clases
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-117
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 6
+    - 6
+  evidence_quote: varios vídeos
+  label: unsupported
+  reason: tamaño del archivo no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-118
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 7
+  evidence_quote: sin la intención de
+  label: supported
+  reason: definición de información errónea
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-119
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 7
+  evidence_quote: para engañar deliberadamente
+  label: contradicted
+  reason: la desinformación exige engaño deliberado o lucro
+  phenomenon:
+  - negation
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-120
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 8
+    pages:
+    - 6
+    - 7
+  evidence_quote: información verificablemente
+  label: unsupported
+  reason: tercera categoría no mencionada
+  phenomenon: []
+  source_pages:
+  - 6
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-121
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 9
+    - 9
+  evidence_quote: cómo pensar de manera crítica
+  label: supported
+  reason: finalidad del material
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-122
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 9
+    - 9
+  evidence_quote: no es enseñar
+  label: contradicted
+  reason: el fragmento niega expresamente esa finalidad
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-123
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 9
+    - 9
+  evidence_quote: valores fundamentales
+  label: unsupported
+  reason: ningún revisor externo citado
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-124
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: fake news
+  label: supported
+  reason: recomendación terminológica y motivo
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-125
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: No recomendamos
+  label: contradicted
+  reason: el fragmento desaconseja ese uso
+  phenomenon: []
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-126
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 12
+    pages:
+    - 9
+    - 10
+  evidence_quote: medios de comunicación independientes
+  label: unsupported
+  reason: origen del término no tratado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-127
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 10
+  evidence_quote: manipulación emocional
+  label: supported
+  reason: el referente es quienes difunden noticias falsas
+  phenomenon:
+  - coreference
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-128
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 10
+  evidence_quote: intencionadamente para engañar
+  label: contradicted
+  reason: el fragmento contempla la difusión intencionada
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-129
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 10
+    - 10
+  evidence_quote: actor o una actriz
+  label: unsupported
+  reason: remuneraciones no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-130
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 10
+    - 11
+  evidence_quote: inundar el espacio informativo
+  label: supported
+  reason: finalidad de saturación
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-131
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 10
+    - 11
+  evidence_quote: inundar
+  label: contradicted
+  reason: el fragmento describe la saturación, no la reducción
+  phenomenon: []
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-132
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 10
+    - 11
+  evidence_quote: sociedad abierta y tolerante
+  label: unsupported
+  reason: ningún estudio de Oxford citado
+  phenomenon: []
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-133
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 11
+    - 11
+  evidence_quote: se han prohibido
+  label: supported
+  reason: medio, titularidad y prohibición
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-134
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 11
+    - 11
+  evidence_quote: estatal rusa
+  label: contradicted
+  reason: el fragmento la describe como estatal rusa y prohibida
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-135
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 11
+    - 11
+  evidence_quote: redes sociales mediante ciberanzuelos
+  label: unsupported
+  reason: ningún ranking de redes
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-136
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: tomarse un respiro
+  label: supported
+  reason: pauta de respuesta pausada
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-137
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: no ceder al impulso
+  label: contradicted
+  reason: el fragmento pide pausa y verificación
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-138
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 11
+    - 11
+  evidence_quote: verificadores de datos profesionales
+  label: unsupported
+  reason: lista de verificadores no incluida
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-139
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 12
+    - 12
+  evidence_quote: cinco o seis alumnos como máximo
+  label: supported
+  reason: tamaño máximo de grupo
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-140
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 12
+    - 12
+  evidence_quote: como máximo
+  label: contradicted
+  reason: el máximo del fragmento es seis
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-141
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 12
+    - 12
+  evidence_quote: medicamento X
+  label: unsupported
+  reason: el fármaco X es un ejemplo ficticio sin identificar
+  phenomenon: []
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-142
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: No todos los casos
+  label: supported
+  reason: alcance de los casos
+  phenomenon:
+  - negation
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-143
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: No todos
+  label: contradicted
+  reason: el fragmento niega que todos lo sean
+  phenomenon: []
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-144
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 12
+    - 12
+  evidence_quote: Área 51
+  label: unsupported
+  reason: la ubicación no se indica en el fragmento
+  phenomenon: []
+  source_pages:
+  - 12
+  - 12
+  doubts:
+  - Ubicación del Área 51 como conocimiento externo; confirmar que el fragmento no la da.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-145
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 15
+    - 15
+  evidence_quote: nombre en clave
+  label: supported
+  reason: identidad invocada por Q
+  phenomenon: []
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-146
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 15
+    - 15
+  evidence_quote: usuario anónimo
+  label: contradicted
+  reason: el fragmento lo presenta como anónimo
+  phenomenon: []
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-147
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 15
+    - 15
+  evidence_quote: habilitación de alta seguridad
+  label: unsupported
+  reason: detenciones no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-148
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 15
+    - 15
+  evidence_quote: 4chan y 8chan en 2017
+  label: supported
+  reason: origen, foros y año
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-149
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 15
+    - 15
+  evidence_quote: en 2017
+  label: contradicted
+  reason: origen en foros en 2017, no en TV en 2005
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-150
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 15
+    - 15
+  evidence_quote: redes sociales europeos
+  label: unsupported
+  reason: cifra de seguidores ausente
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-151
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 10
+    - 10
+  evidence_quote: incertidumbre o el miedo
+  label: supported
+  reason: vulnerabilidad en contextos de incertidumbre
+  phenomenon: []
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-152
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 10
+    - 10
+  evidence_quote: fácil dejarse engañar
+  label: contradicted
+  reason: el fragmento afirma lo contrario
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-153
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 10
+    - 10
+  evidence_quote: tecnología 5G/6G
+  label: unsupported
+  reason: el fragmento no se pronuncia sobre efectos sanitarios
+  phenomenon: []
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-154
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 11
+    - 12
+  evidence_quote: EUvsDisinfo.eu
+  label: supported
+  reason: recurso de verificación recomendado
+  phenomenon: []
+  source_pages:
+  - 11
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-155
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 11
+    - 12
+  evidence_quote: último bulo y la noticia real
+  label: contradicted
+  reason: el fragmento lo recomienda como recurso
+  phenomenon:
+  - negation
+  source_pages:
+  - 11
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-156
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 11
+    - 12
+  evidence_quote: Cuentas de la Comisión Europea
+  label: unsupported
+  reason: adscripción institucional no indicada
+  phenomenon: []
+  source_pages:
+  - 11
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-157
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 36
+    pages:
+    - 17
+    - 17
+  evidence_quote: entre 1959
+  label: supported
+  reason: contenido de la teoría con fechas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-158
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 36
+    pages:
+    - 17
+    - 17
+  evidence_quote: 1959 y 1971
+  label: contradicted
+  reason: las fechas de la teoría son 1959-1971
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-159
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 38
+    pages:
+    - 17
+    - 17
+  evidence_quote: conspiración de Bielefeld
+  label: unsupported
+  reason: el contenido de esa teoría no se expone
+  phenomenon:
+  - negation
+  source_pages:
+  - 17
+  - 17
+  doubts:
+  - El contenido de la teoría de Bielefeld no se expone; confirmar que no es inferible.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-160
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  premise_ref:
+    ordinal: 38
+    pages:
+    - 17
+    - 17
+  evidence_quote: Los pájaros no son reales
+  label: unsupported
+  reason: prohibiciones no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 17
+  - 17
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-161
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: a lo largo de todo el año
+  label: supported
+  reason: disponibilidad anual con pico primaveral
+  phenomenon: []
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-162
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: todo el año
+  label: contradicted
+  reason: el fragmento afirma disponibilidad todo el año
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-163
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 5
+    - 5
+  evidence_quote: 0,13 kg per cápita
+  label: unsupported
+  reason: el fragmento da la cifra de 2023, no la de 2024
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-164
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: mayor importancia comercial
+  label: supported
+  reason: tres especies comerciales
+  phenomenon: []
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-165
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: género Lophi
+  label: contradicted
+  reason: el género del fragmento es Lophius
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-166
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: Lophius
+  label: unsupported
+  reason: longevidad no indicada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-167
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: 70 y 200 cm
+  label: supported
+  reason: rango de talla y peso habituales
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-168
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: 58 kg
+  label: contradicted
+  reason: el fragmento cita hasta 58 kg
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-169
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: 20 y 1.000 metros
+  label: unsupported
+  reason: esperanza de vida no tratada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-170
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 5
+    - 5
+  evidence_quote: 6 o 7 años
+  label: supported
+  reason: el referente es el rape descrito antes
+  phenomenon:
+  - numeric
+  - coreference
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-171
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 5
+    - 5
+  evidence_quote: madurez sexual
+  label: contradicted
+  reason: la madurez llega a los 6 o 7 años
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-172
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 7
+    pages:
+    - 5
+    - 5
+  evidence_quote: millones de huevos
+  label: unsupported
+  reason: el fragmento habla de millones sin cifra exacta
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-173
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: 52.935 toneladas
+  label: supported
+  reason: producción mundial del año
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-174
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: UE-27 (51% de
+  label: contradicted
+  reason: el 51 % corresponde a la UE-27
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-175
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 10
+    pages:
+    - 6
+    - 6
+  evidence_quote: última década
+  label: unsupported
+  reason: 2025 fuera del alcance del fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-176
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 6
+    - 6
+  evidence_quote: 331 %
+  label: supported
+  reason: crecimiento noruego
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-177
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 6
+    - 6
+  evidence_quote: –26 %
+  label: contradicted
+  reason: la UE se redujo un 26 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-178
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 11
+    pages:
+    - 6
+    - 6
+  evidence_quote: a consecuencia del Brexit
+  label: unsupported
+  reason: la merluza no aparece en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-179
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: Francia (68 %
+  label: supported
+  reason: reparto por países
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-180
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: España (11 %)
+  label: contradicted
+  reason: el 68 % corresponde a Francia
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-181
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 13
+    pages:
+    - 6
+    - 6
+  evidence_quote: Bélgica
+  label: unsupported
+  reason: Portugal no figura en el reparto
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-182
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: se redujo un 26 %
+  label: supported
+  reason: caída decenal
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-183
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: aumentaron un 32 %
+  label: contradicted
+  reason: ambas aumentaron, no descendieron
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-184
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 14
+    pages:
+    - 6
+    - 6
+  evidence_quote: cuotas reducidas
+  label: unsupported
+  reason: renegociaciones futuras no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 6
+  - 6
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-185
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 7
+    - 7
+  evidence_quote: 25.150 toneladas
+  label: supported
+  reason: volumen y valor de primera venta
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-186
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 7
+    - 7
+  evidence_quote: 25.150 toneladas
+  label: contradicted
+  reason: el volumen fue de 25.150 toneladas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-187
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 7
+    - 7
+  evidence_quote: Dinamarca
+  label: unsupported
+  reason: Alemania no figura entre los principales países
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-188
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: 98 % del volumen total
+  label: supported
+  reason: reparto fresco-congelado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-189
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: rape fresco (98 %
+  label: contradicted
+  reason: el 98 % corresponde al fresco
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-190
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 7
+    - 7
+  evidence_quote: rape fresco
+  label: unsupported
+  reason: el ahumado no se menciona
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-191
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: 6,92 EUR/kg
+  label: supported
+  reason: talla, peso y precio máximos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-192
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: mayor precio de primera venta
+  label: contradicted
+  reason: el mayor precio fue el de la talla 2
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-193
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 20
+    pages:
+    - 7
+    - 7
+  evidence_quote: cola más larga
+  label: unsupported
+  reason: la demanda japonesa no se menciona
+  phenomenon: []
+  source_pages:
+  - 7
+  - 7
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-194
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 8
+    - 8
+  evidence_quote: descenso del 47 % en volumen
+  label: supported
+  reason: caída española en volumen
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-195
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 8
+    - 8
+  evidence_quote: descenso del 47 %
+  label: contradicted
+  reason: el movimiento fue un descenso
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-196
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 8
+    - 8
+  evidence_quote: 36 % en valor
+  label: unsupported
+  reason: la causa concreta no se indica
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts:
+  - Causa del descenso no indicada; verificar que no sea inferible del fragmento.
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-197
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 8
+    - 8
+  evidence_quote: Vigo
+  label: supported
+  reason: puertos españoles principales
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-198
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 8
+    - 8
+  evidence_quote: un 20 %
+  label: contradicted
+  reason: Vigo concentró un 20 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-199
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 25
+    pages:
+    - 8
+    - 8
+  evidence_quote: Kilmore Quay
+  label: unsupported
+  reason: exclusividad no afirmada
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-200
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 30
+    pages:
+    - 10
+    - 10
+  evidence_quote: 38 % del valor
+  label: supported
+  reason: primer proveedor y cuota
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-201
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 30
+    pages:
+    - 10
+    - 10
+  evidence_quote: Reino Unido
+  label: contradicted
+  reason: el primer puesto es del Reino Unido
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-202
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 30
+    pages:
+    - 10
+    - 10
+  evidence_quote: Namibia
+  label: unsupported
+  reason: certificaciones no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-203
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: 823 toneladas
+  label: supported
+  reason: volumen y valor exportados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-204
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: fueron limitadas
+  label: contradicted
+  reason: 823 toneladas frente a 22.619 importadas
+  phenomenon: []
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-205
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 10
+    - 10
+  evidence_quote: 4,4 millones de euros
+  label: unsupported
+  reason: precios por destino no detallados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-206
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 37
+    pages:
+    - 11
+    - 11
+  evidence_quote: 28 % del valor
+  label: supported
+  reason: cuota española en fresco intra-UE
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-207
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 37
+    pages:
+    - 11
+    - 11
+  evidence_quote: incremento del volumen
+  label: contradicted
+  reason: el comercio se expandió un 51 % en volumen
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-208
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: '35.382'
+  label: supported
+  reason: primer consumidor y cifra
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-209
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: principales mercados de consumo
+  label: contradicted
+  reason: el primer puesto es de España
+  phenomenon: []
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-210
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: per cápita
+  label: unsupported
+  reason: Alemania no aparece en el fragmento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-211
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: Unión de las Competencias
+  label: supported
+  reason: marco de objetivos considerado
+  phenomenon: []
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-212
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: objetivos en materia de educación y competencias para 2030
+  label: contradicted
+  reason: el fragmento incorpora los objetivos 2030
+  phenomenon:
+  - negation
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-213
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 5
+    - 5
+  evidence_quote: marzo de 2025
+  label: unsupported
+  reason: procedimiento de adopción no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-214
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: sección 4
+  label: supported
+  reason: estructura por secciones
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-215
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: sección 5
+  label: contradicted
+  reason: el reparto del fragmento es el inverso
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-216
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 6
+    pages:
+    - 5
+    - 5
+  evidence_quote: SWD(2025) 700
+  label: unsupported
+  reason: extensión no indicada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 5
+  - 5
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-217
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 8
+  evidence_quote: menos pronunciado
+  label: supported
+  reason: comparativa del descenso
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-218
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 8
+  evidence_quote: menos pronunciado que en la mayoría
+  label: contradicted
+  reason: el descenso español fue menor que en la mayoría
+  phenomenon: []
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-219
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 15
+    pages:
+    - 8
+    - 8
+  evidence_quote: profesión docente
+  label: unsupported
+  reason: financiación no mencionada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 8
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-220
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 8
+    - 9
+  evidence_quote: supera la oferta
+  label: supported
+  reason: doble desajuste descrito
+  phenomenon: []
+  source_pages:
+  - 8
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-221
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 8
+    - 9
+  evidence_quote: demanda de especialistas en CTIM supera
+  label: contradicted
+  reason: el fragmento afirma lo contrario
+  phenomenon: []
+  source_pages:
+  - 8
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-222
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 16
+    pages:
+    - 8
+    - 9
+  evidence_quote: sobrecualificación
+  label: unsupported
+  reason: paro juvenil no mencionado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 8
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-223
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 9
+    - 9
+  evidence_quote: 1,39 millones
+  label: supported
+  reason: necesidad y objetivo cuantificados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-224
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 9
+    - 9
+  evidence_quote: se sitúa en el 4,4 %
+  label: contradicted
+  reason: España se sitúa en el 4,4 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-225
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 17
+    pages:
+    - 9
+    - 9
+  evidence_quote: Servicio Público de Empleo Estatal
+  label: unsupported
+  reason: previsiones de creación no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-226
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 9
+    - 9
+  evidence_quote: 14,9 %
+  label: supported
+  reason: sectores y tasas de crecimiento
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-227
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 9
+    - 9
+  evidence_quote: creció con mayor rapidez
+  label: contradicted
+  reason: ambos crecieron con rapidez
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-228
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 18
+    pages:
+    - 9
+    - 9
+  evidence_quote: OCDE, 2024
+  label: unsupported
+  reason: recomendaciones salariales ausentes
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-229
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 9
+    - 9
+  evidence_quote: 24,7 %
+  label: supported
+  reason: cuota española y media europea
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-230
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 9
+    - 9
+  evidence_quote: por debajo de la media
+  label: contradicted
+  reason: España está en 24,7 %, bajo la media
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-231
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 19
+    pages:
+    - 9
+    - 9
+  evidence_quote: ingenierías dominaron
+  label: unsupported
+  reason: paro por titulaciones no tratado
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-232
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 9
+    - 9
+  evidence_quote: 28,6 %
+  label: supported
+  reason: triple comparativa de género
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-233
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 9
+    - 9
+  evidence_quote: desigualdades de género
+  label: contradicted
+  reason: son el 28,6 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-234
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 21
+    pages:
+    - 9
+    - 9
+  evidence_quote: solo el 15,9 % en TIC
+  label: unsupported
+  reason: Finlandia no aparece
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-235
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 9
+    - 9
+  evidence_quote: 11,2 %
+  label: supported
+  reason: cuota y objetivo
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-236
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 9
+    - 9
+  evidence_quote: no cuenta con una estrategia específica
+  label: contradicted
+  reason: el fragmento niega que exista tal estrategia
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-237
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 22
+    pages:
+    - 9
+    - 9
+  evidence_quote: Plan Nacional de Competencias Digitales
+  label: unsupported
+  reason: prórrogas no mencionadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-238
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 9
+    - 9
+  evidence_quote: inteligencia artificial (IA) y datos
+  label: supported
+  reason: novedad de la ley
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-239
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 9
+    - 9
+  evidence_quote: incorporó módulos
+  label: contradicted
+  reason: la ley los incorporó, no los eliminó
+  phenomenon:
+  - negation
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-240
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 23
+    pages:
+    - 9
+    - 9
+  evidence_quote: plan de recuperación y resiliencia
+  label: unsupported
+  reason: votación no mencionada
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-241
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 9
+    - 9
+  evidence_quote: 1 253 aulas
+  label: supported
+  reason: centros y aulas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-242
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 9
+    - 9
+  evidence_quote: cincuenta centros
+  label: contradicted
+  reason: el plan los integró y convirtió, no los cerró
+  phenomenon:
+  - numeric
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-243
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 24
+    pages:
+    - 9
+    - 9
+  evidence_quote: ChicaSTEM
+  label: unsupported
+  reason: financiación no indicada
+  phenomenon: []
+  source_pages:
+  - 9
+  - 9
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-244
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 10
+    - 10
+  evidence_quote: 97,7 %
+  label: supported
+  reason: tasa y objetivo superado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-245
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 10
+    - 10
+  evidence_quote: superado el objetivo del 96 %
+  label: contradicted
+  reason: lo alcanza con 97,7 %
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-246
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 26
+    pages:
+    - 10
+    - 10
+  evidence_quote: cero a dos años
+  label: unsupported
+  reason: obligatoriedad no afirmada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-247
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 10
+    - 10
+  evidence_quote: dos años y medio
+  label: supported
+  reason: duración de la brecha
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-248
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 10
+    - 10
+  evidence_quote: brecha
+  label: contradicted
+  reason: la brecha es de dos años y medio
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-249
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 27
+    pages:
+    - 10
+    - 10
+  evidence_quote: dicho permiso
+  label: unsupported
+  reason: la edad máxima no se indica
+  phenomenon:
+  - numeric
+  - coreference
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-250
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 10
+    - 10
+  evidence_quote: CINE 6
+  label: supported
+  reason: requisito de cualificación
+  phenomenon: []
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-251
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 10
+    - 10
+  evidence_quote: debe poseer una cualificación
+  label: contradicted
+  reason: se exige CINE 6 en educación infantil
+  phenomenon:
+  - negation
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-252
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 29
+    pages:
+    - 10
+    - 10
+  evidence_quote: plan pedagógico
+  label: unsupported
+  reason: salarios no mencionados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 10
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-253
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 10
+    - 11
+  evidence_quote: 27,3 %
+  label: supported
+  reason: bajo rendimiento en matemáticas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-254
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 10
+    - 11
+  evidence_quote: 27,3 %
+  label: contradicted
+  reason: la cifra es 27,3 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-255
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 31
+    pages:
+    - 10
+    - 11
+  evidence_quote: Programa para la Evaluación Internacional
+  label: unsupported
+  reason: primeras participaciones no tratadas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 10
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-256
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 11
+    - 11
+  evidence_quote: 498 puntos
+  label: supported
+  reason: puntuación y media comparada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-257
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 11
+    - 11
+  evidence_quote: inferiores a la media
+  label: contradicted
+  reason: está por debajo en ambas
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-258
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 32
+    pages:
+    - 11
+    - 11
+  evidence_quote: Estudio Internacional de Tendencias
+  label: unsupported
+  reason: organizador no indicado
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-259
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 33
+    pages:
+    - 11
+    - 11
+  evidence_quote: más seguras
+  label: supported
+  reason: valoración del entorno
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-260
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 33
+    pages:
+    - 11
+    - 11
+  evidence_quote: seguras, ordenadas
+  label: contradicted
+  reason: el fragmento las sitúa entre las más seguras
+  phenomenon: []
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-261
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 33
+    pages:
+    - 11
+    - 11
+  evidence_quote: pertenencia
+  label: unsupported
+  reason: equipamiento doméstico no mencionado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-262
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 11
+    - 11
+  evidence_quote: 300 000 dispositivos portátiles
+  label: supported
+  reason: dotación y dispositivos
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-263
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 11
+    - 11
+  evidence_quote: 1 660 millones EUR
+  label: contradicted
+  reason: la dotación supera los 1 660 millones
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-264
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 35
+    pages:
+    - 11
+    - 11
+  evidence_quote: comunidades autónomas
+  label: unsupported
+  reason: marca no indicada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 11
+  - 11
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-265
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 39
+    pages:
+    - 12
+    - 12
+  evidence_quote: Alrededor de la mitad
+  label: supported
+  reason: extensión de las prohibiciones
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-266
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 39
+    pages:
+    - 12
+    - 12
+  evidence_quote: difieren entre
+  label: contradicted
+  reason: solo alrededor de la mitad lo hace
+  phenomenon:
+  - negation
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-267
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 39
+    pages:
+    - 12
+    - 12
+  evidence_quote: normas flexibles
+  label: unsupported
+  reason: norma nacional no mencionada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-268
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 12
+    - 12
+  evidence_quote: 13,0 % en 2024
+  label: supported
+  reason: evolución y mínimo histórico
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-269
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 12
+    - 12
+  evidence_quote: cayó del 20,0 %
+  label: contradicted
+  reason: se redujo del 20 % al 13 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-270
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 40
+    pages:
+    - 12
+    - 12
+  evidence_quote: media de la UE del 9,4 %
+  label: unsupported
+  reason: objetivo nacional no citado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-271
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: 5,5 % del PIB
+  label: supported
+  reason: propuesta de gasto
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-272
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: 5,5 %
+  label: contradicted
+  reason: la propuesta es del 5,5 %
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-273
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 42
+    pages:
+    - 12
+    - 12
+  evidence_quote: cuatro grupos de trabajo
+  label: unsupported
+  reason: composición no detallada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 12
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-274
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 44
+    pages:
+    - 12
+    - 13
+  evidence_quote: 600 EUR
+  label: supported
+  reason: importe total y por estudiante
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-275
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 44
+    pages:
+    - 12
+    - 13
+  evidence_quote: 600 EUR
+  label: contradicted
+  reason: la ayuda fue de 600 euros
+  phenomenon:
+  - numeric
+  source_pages:
+  - 12
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-276
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 44
+    pages:
+    - 12
+    - 13
+  evidence_quote: Real Decreto-ley 8/2024
+  label: unsupported
+  reason: gestor no indicado
+  phenomenon: []
+  source_pages:
+  - 12
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-277
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 13
+    - 13
+  evidence_quote: 68,6 %
+  label: supported
+  reason: tasa y comparativa
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-278
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 13
+    - 13
+  evidence_quote: 83,9 %
+  label: contradicted
+  reason: 68,6 % frente a 83,9 % de universitarios
+  phenomenon: []
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-279
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 48
+    pages:
+    - 13
+    - 13
+  evidence_quote: Eurostat
+  label: unsupported
+  reason: momento de medición no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 13
+  - 13
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-280
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 55
+    pages:
+    - 15
+    - 15
+  evidence_quote: 35,0 %
+  label: supported
+  reason: tasa y primer puesto europeo
+  phenomenon:
+  - numeric
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-281
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 55
+    pages:
+    - 15
+    - 15
+  evidence_quote: mayor tasa de sobrecualificación
+  label: contradicted
+  reason: tiene la mayor, no la menor
+  phenomenon: []
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-282
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 55
+    pages:
+    - 15
+    - 15
+  evidence_quote: 50 millones EUR
+  label: unsupported
+  reason: gestor no indicado
+  phenomenon: []
+  source_pages:
+  - 15
+  - 15
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-283
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 16
+    - 16
+  evidence_quote: 34,1 %
+  label: supported
+  reason: participación española y media europea
+  phenomenon:
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-284
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 16
+    - 16
+  evidence_quote: por debajo del objetivo
+  label: contradicted
+  reason: 34,1 % frente a 39,5 %
+  phenomenon: []
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-285
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  premise_ref:
+    ordinal: 60
+    pages:
+    - 16
+    - 16
+  evidence_quote: objetivo nacional del 60 %
+  label: unsupported
+  reason: el fragmento lo presenta como pendiente
+  phenomenon:
+  - negation
+  - numeric
+  source_pages:
+  - 16
+  - 16
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-286
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 0
+    pages:
+    - 1
+    - 1
+  evidence_quote: 175 000 millones EUR
+  label: supported
+  reason: importe y número de pilares
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-287
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 0
+    pages:
+    - 1
+    - 1
+  evidence_quote: 175 000 millones EUR
+  label: contradicted
+  reason: son 175 000 millones, no 175 millones
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-288
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 0
+    pages:
+    - 1
+    - 1
+  evidence_quote: se basará en los logros
+  label: unsupported
+  reason: aprobación no mencionada
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-289
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 1
+    - 1
+  evidence_quote: 75 876 MILLONES EUR
+  label: supported
+  reason: dotación del Pilar II
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-290
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 1
+    - 1
+  evidence_quote: Pilar II
+  label: contradicted
+  reason: esa dotación es del Pilar II
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-291
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 1
+    pages:
+    - 1
+    - 1
+  evidence_quote: 38 785 MILLONES EUR
+  label: unsupported
+  reason: número anual no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 1
+  - 1
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-292
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 2
+    - 2
+  evidence_quote: tecnología profunda
+  label: supported
+  reason: colectivo y sectores apoyados
+  phenomenon: []
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-293
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 2
+    - 2
+  evidence_quote: investigadores excelentes
+  label: contradicted
+  reason: financia investigación de frontera de investigadores excelentes
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-294
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 3
+    pages:
+    - 2
+    - 2
+  evidence_quote: Elige Europa
+  label: unsupported
+  reason: presupuesto propio no indicado
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-295
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: más específicas
+  label: supported
+  reason: el referente son las asociaciones con Estados y sector privado
+  phenomenon:
+  - coreference
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-296
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: Moviliza inversiones privadas
+  label: contradicted
+  reason: el fragmento prevé movilizar inversiones privadas
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-297
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 4
+    pages:
+    - 2
+    - 2
+  evidence_quote: infraestructuras tecnológicas
+  label: unsupported
+  reason: aportes del FSE+ no mencionados
+  phenomenon:
+  - numeric
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-298
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 2
+    - 2
+  evidence_quote: aviación limpia
+  label: supported
+  reason: tres moonshots de la lista
+  phenomenon: []
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-299
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 2
+    - 2
+  evidence_quote: informática cuántica
+  label: contradicted
+  reason: ambas figuran en la lista
+  phenomenon:
+  - negation
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator
+- id: eut-300
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  premise_ref:
+    ordinal: 5
+    pages:
+    - 2
+    - 2
+  evidence_quote: colisionador circular
+  label: unsupported
+  reason: ubicación no indicada
+  phenomenon: []
+  source_pages:
+  - 2
+  - 2
+  doubts: []
+  status: pending_review
+  adjudication: pending_orchestrator

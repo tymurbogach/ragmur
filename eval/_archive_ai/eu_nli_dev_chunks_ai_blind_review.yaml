@@ -1,0 +1,840 @@
+# Revisión IA ciega dev-chunks — NO humana, NO gold, dataset ciego
+# source: /tmp/eu_nli_dev_chunks_blind.yaml
+# sha256: 146fd92478a0faa4fbef577252852a3cfc596aefd2b3210249fa985be338b2ca
+# split: dev — 277 pares con IDs opacos aleatorios; solo document_id, premise y claim
+# metodo: lectura independiente solo desde la premisa visible, sin etiquetas, sin NLI, sin calibracion, sin abrir test
+# etiquetas: supported | contradicted | unsupported | ambiguous (ambiguo solo si hay apoyo+contradiccion o alcance dudoso)
+# fecha: 2026-11-13
+- id: 4b49600eff192aa6d33f891f
+  independent_label: contradicted
+  evidence: "premisa '25 miembros UE y cuatro no UE (Islandia, Liechtenstein, Noruega, Suiza) en Schengen' vs claim 'solo Estados UE' -> incompatible"
+- id: 311dc1df5ac37b8cfcf3757e
+  independent_label: contradicted
+  evidence: "premisa 'propuestas fiscalidad por codecision y mayoria cualificada' vs claim 'unanimidad' -> opuesto"
+- id: 1b16786b727f65b7c299dd56
+  independent_label: contradicted
+  evidence: "premisa 'plan gratuito maximo 5 colonias' vs claim 'hasta 50' -> cifra 5 vs 50"
+- id: 79842d80d1e856ba05b51bcd
+  independent_label: supported
+  evidence: "premisa 'reduce costes, diversifico, tres empleos, secuestro carbono' replica claim Josenea completo"
+- id: 12f5bb75054e91a5cee79192
+  independent_label: supported
+  evidence: "premisa 'acceso energia derecho universal y bien publico' cita literal del claim"
+- id: b3fe5a14f42fceb8305b2ddd
+  independent_label: unsupported
+  evidence: "premisa da objetivos 2030 y neutralidad 2050, sin periodicidad; claim 'revisa cada 5 anos' no inferible"
+- id: 68c6171ad357bc1b8dd9cc9a
+  independent_label: unsupported
+  evidence: "premisa 'evaluaciones tecnicas y viabilidad puertos, pesquerias' sin construir puertos comerciales"
+- id: ff5168ae607dc1d414b18173
+  independent_label: unsupported
+  evidence: "premisa crea centro biotecnologia sin sede; claim 'Barcelona' no aparece"
+- id: 809899ea2e95f63bbd55321c
+  independent_label: supported
+  evidence: "premisa 'redactamos 24 recomendaciones a Comision' + 'unidos en diversidad' cubre claim"
+- id: 52f15384982fb5cd054a9b66
+  independent_label: supported
+  evidence: "premisa '340 camas, 78 ambulatorias, 38.000 m2, 2028, referencia norte Moldavia' coincide total"
+- id: 1b80e8f7894a01b7ea6db0d6
+  independent_label: unsupported
+  evidence: "premisa habla recursos e infraestructuras, sin cifra 5.000 millones"
+- id: 29476e1e2f0dd18c47a64818
+  independent_label: supported
+  evidence: "premisa 'MDR 26 mayo 2021, IVDR 26 mayo 2022 tras 98/79/CE' igual que claim"
+- id: 81c5f289bf8bfec8216cf08a
+  independent_label: contradicted
+  evidence: "premisa 'contactar asistencia u organismo para uso educativo no promocional' vs 'sin contactar' -> niega"
+- id: f56b967d029814011bbe1916
+  independent_label: unsupported
+  evidence: "premisa encuesta ~millar clientes aclaro demanda, sin coste; claim '20.000 euros' no consta"
+- id: 7862ccca1bde6885182a2014
+  independent_label: contradicted
+  evidence: "premisa 'No permitido pegatina en dispensadores permanentes' vs 'se permite' -> directo"
+- id: d96aab29b310d27440b6ded7
+  independent_label: contradicted
+  evidence: "premisa 'pueden usarse junto con no digitales' vs 'no pueden combinarse' -> opuesto"
+- id: a7b68947052927db07ac675f
+  independent_label: supported
+  evidence: "premisa 'papel pionero mundial con Reglamento IA 2024, enfoque riesgo' sostiene liderazgo mundial"
+- id: b6d8d6417c97d7bb07437317
+  independent_label: contradicted
+  evidence: "premisa 'COP24 Katowice dic 2018 presento estrategia' vs 'COP25 Madrid' -> foro distinto"
+- id: d7980eb8b8676a5d73989fe9
+  independent_label: unsupported
+  evidence: "premisa region aislada Francia, vehiculo electrico, sin nombre; 'Corcega' no inferible"
+- id: 02a0aeb4915c16e9ff8be1f4
+  independent_label: unsupported
+  evidence: "premisa inversion digital y labs Dresde, sin 'tres fabricas antes 2030'"
+- id: 3d8189808f226a992bbd32c1
+  independent_label: unsupported
+  evidence: "premisa equidad tributaria general, sin 'tipo minimo 20%'"
+- id: 93b402c1cadf0d64c777b634
+  independent_label: unsupported
+  evidence: "premisa 450M tiran 1kg, reciclaje y prohibicion plasticos, sin ranking Espana"
+- id: dd4416d1478d5785c9265379
+  independent_label: supported
+  evidence: "premisa enumera seis principios Gateway identicos al claim citado"
+- id: 3c7bb97deb405dbbf94369dc
+  independent_label: contradicted
+  evidence: "premisa 'desde 10-ene-2025 deben informar interrupciones' vs 'obligacion termino' -> empieza, no termina"
+- id: 11509a4d409729ee08ddeb9f
+  independent_label: contradicted
+  evidence: "premisa 'clase I y A menor riesgo no requieren notificado' vs 'siempre requieren' -> niega"
+- id: ef16910383b89df6531da99e
+  independent_label: unsupported
+  evidence: "premisa 1000 acciones, 7700M, 179 paises/regiones, sin observadores Oceania"
+- id: d1716366cdc5745b6c688a2e
+  independent_label: supported
+  evidence: "premisa 'union economica y politica unica 27 que trabajan mejorar vida dentro/fuera' literal"
+- id: 326d045b81d5a437794f183c
+  independent_label: supported
+  evidence: "premisa 'invierte capacidades digitales, supercomputacion, conectividad, ciberseguridad' igual claim"
+- id: 08fcb460f57ae1aa940d88a1
+  independent_label: supported
+  evidence: "premisa 'al menos 13 anos (Espana 14) para TikTok, Snapchat, Instagram' cubre claim"
+- id: 44936e121c3cf9cb3fed1db9
+  independent_label: unsupported
+  evidence: "premisa potencial IA en aulas y gestion, sin '20% jornada directores'"
+- id: 6ff72c67ca940eb6b9ddceaa
+  independent_label: unsupported
+  evidence: "premisa calendario UDI por clases, sin mencionar investigacion; no afirma ni excluye"
+- id: 37b227ac20d00f386311bfb5
+  independent_label: supported
+  evidence: "premisa 'primer acto legislativo que consagra neutralidad 2050' = primera ley climatica"
+- id: ed80601306e67ee65b26917d
+  independent_label: contradicted
+  evidence: "premisa 'implantare impuesto carbono en frontera' vs 'no se creara' -> frontal"
+- id: a539f82a86c499f1ab4f4abc
+  independent_label: unsupported
+  evidence: "premisa pide tabla CTP con licencia/formacion, sin 'actualizar cada curso'"
+- id: cd2d638d6e2022ce0e03bc02
+  independent_label: contradicted
+  evidence: "premisa 'desactivar por defecto geolocalizacion' vs 'activada por defecto' -> inverso"
+- id: 2660eca2628dbd7de5411415
+  independent_label: contradicted
+  evidence: "premisa 'objetivo 2030 reducir 40%' vs claim '60%' -> cifras distintas"
+- id: 57a2197c9b69d5e88f95d2c8
+  independent_label: unsupported
+  evidence: "premisa integrar valores humanistas e intercambio, sin examen europeo anual"
+- id: 4fd17cdd1a2897fe881a0398
+  independent_label: contradicted
+  evidence: "premisa '1.000M a 15 proyectos hidrogeno' vs '5 proyectos' -> 15 vs 5"
+- id: c9ead1916f4b70507756c981
+  independent_label: contradicted
+  evidence: "premisa 'nunca comuniques datos muy personales, protege vida privada' vs 'puedes compartir' -> prohibe"
+- id: 9c84b2b25630c401c9211d90
+  independent_label: supported
+  evidence: "premisa frase final identica: priorizar CED con impacto ayuda mejorar y aprovechar recursos"
+- id: 04b96a73bb4e455c4895ac2c
+  independent_label: contradicted
+  evidence: "premisa lista ciberacoso, desconocidos, contenido nocivo, compras, retos, enganche vs 'ningun riesgo'"
+- id: a3714d0a49181740d49a5dc6
+  independent_label: unsupported
+  evidence: "premisa liderazgo cuantico, Chips, economia espacial, sin '20.000 millones'"
+- id: 9bd28480e8bba19f4f5b22e6
+  independent_label: supported
+  evidence: "premisa 'evaluar con espiritu critico equidad, diversidad, transparencia, bienestar, privacidad, seguridad' literal"
+- id: b87941f69d11cb22eafea2b5
+  independent_label: unsupported
+  evidence: "premisa Super Senior Luxemburgo y FP, sin 'millon en premios'"
+- id: 2eae3b1ad674522e23a1fb4a
+  independent_label: unsupported
+  evidence: "premisa corredor electrico Serbia hub, renovables, sin 'dos nucleares'"
+- id: d86ecf2b28bc3df1d2f86d17
+  independent_label: unsupported
+  evidence: "premisa EUDAMED info basica publica y modulos graduales, sin alertas correo pacientes"
+- id: de4d4858d37247f27c1ae971
+  independent_label: contradicted
+  evidence: "premisa 'trata otros como querrias, se agradable, respeto' vs 'indiferencia' -> opuesto"
+- id: 4eafc1f73ad1c1acd0ad2451
+  independent_label: supported
+  evidence: "premisa 'unirse comunidades energia sumando recursos y beneficiarse incentivos renovables' igual claim"
+- id: 1b0b23db03d1ee94374de612
+  independent_label: contradicted
+  evidence: "premisa 'facultar y exigir gobiernos intervenir contra subidas especulativas' vs 'no deben intervenir'"
+- id: 36cede34feffce23ca3d5f66
+  independent_label: supported
+  evidence: "premisa 'apoyar padres y cuidadores a conciliar trabajo y familia' sostiene claim"
+- id: fa64b2da9f26a1213d8d609e
+  independent_label: supported
+  evidence: "premisa 'enero 2021 nueva fuente: impuesto residuos envases plastico no reciclados' literal"
+- id: 2a981a786af5196e728f0f06
+  independent_label: contradicted
+  evidence: "premisa 'pueden reforzar involuntariamente desigualdades' vs 'imposible que refuercen'"
+- id: 5965c454709d79ab4b7a0b2b
+  independent_label: contradicted
+  evidence: "premisa 'paises invirtieron en equipamiento digital' vs 'ningun pais invirtio'"
+- id: 8110502a7601882737dcc0d0
+  independent_label: supported
+  evidence: "premisa 'seis fundadores 50s hasta 27 y 450M' replica cifras claim"
+- id: 3d808b27005b2e4ddf38bdfc
+  independent_label: supported
+  evidence: "premisa 'suficientes en general pero carencias STEM' identico a claim"
+- id: fe0dad9cef2c20f2c16d92d5
+  independent_label: unsupported
+  evidence: "premisa corredor transcaspiano y ferrocarril/puertos, sin tramo Bombay-El Pireo"
+- id: 6569753871f73621051ddcd4
+  independent_label: unsupported
+  evidence: "premisa explicar datos y enfoques por edad, sin 'basados en juegos'"
+- id: 07f464efb11da39c411a097a
+  independent_label: supported
+  evidence: "premisa 'codigo 16 pero 016 con cero para tres digitos' igual claim"
+- id: 4d71b857991ac3c8276365b8
+  independent_label: contradicted
+  evidence: "premisa 'Mision Belem para 1,5 C' vs 'para 2 C' -> temperatura distinta"
+- id: e661645964aa7f06616d124c
+  independent_label: contradicted
+  evidence: "premisa '20,2% Espana por debajo media UE 24,5%' vs 'supera media' -> inverso"
+- id: 2a618ed63712128a8fb43ed6
+  independent_label: supported
+  evidence: "premisa 'adquirir funcionario permanente principal razon elegir docencia' cubre claim"
+- id: 7642fa20a71c743c1e628cc4
+  independent_label: contradicted
+  evidence: "premisa 'comprueba si integra con tecnologia centro' vs 'no importa' -> exige comprobar"
+- id: 391268226159077be2661f15
+  independent_label: supported
+  evidence: "premisa 'personas y empresas en nucleo inversiones transicion limpia' literal"
+- id: deb2711bd123191a8c77fde9
+  independent_label: contradicted
+  evidence: "premisa 'mundo cero alrededor 2070 para 1,5' vs '2050 no 2070' -> cambia plazo"
+- id: b813933f61c4e0f1beaca66f
+  independent_label: unsupported
+  evidence: "premisa exige EIPD art35 y EIDF art27 alto riesgo, sin 'cada dos anos'"
+- id: 875f83c10ee4fe1c5b969507
+  independent_label: contradicted
+  evidence: "premisa 'cinco sectores: digital, clima-energia, transporte, salud, educacion' vs 'defensa, pesca, turismo'"
+- id: 8b80b995c4455e95c5629d14
+  independent_label: unsupported
+  evidence: "premisa metas 2030 y liderazgo, sin 'aprobara 2028'"
+- id: 3e7e8aa496c8d0551cd447c3
+  independent_label: unsupported
+  evidence: "premisa salarios competitivos y ratios, sin desglose infantil por CCAA"
+- id: e541acb7df3e7c1ef1dca317
+  independent_label: unsupported
+  evidence: "premisa dignidad migrantes y trabajo digno, sin 'plazo tres meses'"
+- id: 972c584259c41b71723abe7a
+  independent_label: unsupported
+  evidence: "premisa Conectar Europa impulsa energia/transporte, sin informe anual pasos fronterizos"
+- id: 24c1f76e05743ab7f4871dfa
+  independent_label: contradicted
+  evidence: "premisa 'GAR agiliza y asegura acceso' vs 'dificulta acceso' -> contrario"
+- id: 793253e3e61f54d840644181
+  independent_label: supported
+  evidence: "premisa 'casi 2,2M toneladas en diez anos y evita 15M CO2' cifras iguales"
+- id: 9e8251635da7c0a7fee02d5c
+  independent_label: contradicted
+  evidence: "premisa 'pueden integrarse en LMS o EVA' vs 'no pueden integrarse'"
+- id: 92e49c0e9abd8fb3926d0b38
+  independent_label: supported
+  evidence: "premisa 'corredores mayo 2022 garantizan importar y exportar agricola' igual claim"
+- id: 7026c1ed9a5f615497b4e635
+  independent_label: contradicted
+  evidence: "premisa 'proporciono alimentos, refugio y asistencia medica' vs 'excluye medica'"
+- id: 8943e61896f8d357668e866c
+  independent_label: supported
+  evidence: "premisa juego, porfolios digitales y VR con modelo 3D edificio cubre tres elementos"
+- id: 2598855716cda4a5120c6b53
+  independent_label: contradicted
+  evidence: "premisa '40% se enfrentara al cancer' vs '10%' -> porcentaje distinto"
+- id: fe56810319f2cbb0ae0f0aff
+  independent_label: unsupported
+  evidence: "premisa Rogun duplica produccion y 10M acceso, sin exportar mitad a China"
+- id: 41d83c70d1d79e2295f403d6
+  independent_label: unsupported
+  evidence: "premisa ECAT lista productos y open data, sin resenas consumidores"
+- id: 863142aff4a06d389f4aa27a
+  independent_label: unsupported
+  evidence: "premisa noticias falsas y burbujas por IA, sin edad 'mayores 65'"
+- id: 6f51b607955422a1253478f4
+  independent_label: contradicted
+  evidence: "premisa 'millones afectadas por catastrofes, conflictos o guerras' vs 'nadie se ve afectado'"
+- id: 43272c6338e15b14395d9ab0
+  independent_label: unsupported
+  evidence: "premisa derecho sufragio local y europeo viviendo en otro pais, sin nacionales; no refuta"
+  doubt: "alcance: lista derechos podria leerse exhaustiva, pero sin 'solo' no hay contradiccion inequivoca"
+- id: 25d5c91af704b6cb0e25e3a6
+  independent_label: unsupported
+  evidence: "premisa +2% PIB y aire/salud, sin 'concentra en norte'"
+- id: 332b8e699a1dcd5ca4b60cd5
+  independent_label: contradicted
+  evidence: "premisa baterias verdes 'menor huella posible' vs 'sin importar huella' -> condicion eliminada"
+- id: 16893f200896db89c8b3b949
+  independent_label: supported
+  evidence: "premisa 'edificios 40% consumo final y 36% emisiones' cifras identicas"
+- id: a25e20a08de6edd8e5f894fc
+  independent_label: contradicted
+  evidence: "premisa 'profesores pueden desarrollar su propio CED' vs 'prohibido crear' -> permite"
+- id: 4a2a1e8be5e3f87613dc3154
+  independent_label: unsupported
+  evidence: "premisa niveles multiples sin enumerar aula/centro/region/Estado"
+- id: 387a8f575f458b3c55670af4
+  independent_label: contradicted
+  evidence: "premisa '174 dias formacion y visitas' vs '17 dias' -> 174 vs 17"
+- id: bb33f18d6701354841dc354b
+  independent_label: unsupported
+  evidence: "premisa ACRE emitira informes mejores practicas, sin 'cada dos anos'"
+- id: a7dd3744b6ccafc73b5a5ff9
+  independent_label: supported
+  evidence: "premisa 'importa mas de mitad energia, petroleo y gas' literal"
+- id: 100056007d5ed3f72c8da62b
+  independent_label: supported
+  evidence: "premisa 'exigir responsabilidades a dirigentes politicos y militares, principales responsables' igual"
+- id: 210aba31e6eab643ae3ae7bd
+  independent_label: contradicted
+  evidence: "premisa 'aplica a plataformas Europa y resto mundo accesibles UE' vs 'solo europeas'"
+- id: ab55ce19e1ade8ae2577632b
+  independent_label: supported
+  evidence: "premisa 'oscilara entre 130 y 240 EUR/ha' horquilla identica"
+- id: cc8841dc053caa9b10605189
+  independent_label: unsupported
+  evidence: "premisa experimentar con CED sin modelo unico, sin 'hora semanal'"
+- id: ba5e4b00d9d4cf86c536184c
+  independent_label: unsupported
+  evidence: "premisa apps adaptan vocabulario/pronunciacion/gramatica, sin 'mas de 20 lenguas'"
+- id: d70cb9cc48ccdfa37f33162c
+  independent_label: supported
+  evidence: "premisa 'visible, legible, no inferior 10,6x10,6 mm' medidas iguales"
+- id: c5176901e26a2fe0ce805bbf
+  independent_label: contradicted
+  evidence: "premisa 'si centro obliga, uso reconocimiento emociones prohibido' vs 'permitido'"
+- id: cd64b8ea5b861b769f3c381b
+  independent_label: contradicted
+  evidence: "premisa 'no incurrir en temporizadores ni comprar ahora' vs 'pueden usarlos'"
+- id: e534a35504efa69861255aaa
+  independent_label: contradicted
+  evidence: "premisa 'coalicion apoyar produccion y adopcion combustibles sinteticos' vs 'fosiles y no sinteticos'"
+- id: fa7763564e5c2f3f58334414
+  independent_label: unsupported
+  evidence: "premisa proyecto verificacion edad julio 2025 facil y +18 sin datos, sin descarga gratis tiendas"
+- id: 2472255374347351d6c6932b
+  independent_label: supported
+  evidence: "premisa 'certificado Lubuskie Pearl 2018 de LOTUR' coincide"
+- id: 930f3a33a7144edece03f0af
+  independent_label: contradicted
+  evidence: "premisa 'basta indicar una vez numero con logotipo' vs 'repetir junto a cada logotipo'"
+- id: 75569450151cdd2096bbe8ea
+  independent_label: supported
+  evidence: "premisa 'reduccion al menos 40% para 2030 en Acuerdo Paris' igual claim"
+- id: 3ea4699e5ab4b107df101fbd
+  independent_label: contradicted
+  evidence: "premisa 'acceso invariable mas de 40 anos' vs 'reforma cada diez'"
+- id: 6c3ebdb996648cac87bcc3f1
+  independent_label: supported
+  evidence: "premisa 'proteccion temporal a millones con alojamiento, escuelas, sanidad, empleo' literal"
+- id: c014d70937a40ae3018d1f82
+  independent_label: supported
+  evidence: "premisa tabla 43/43/40/70/30: Conectar Europa 70 maximo y Global 30 minimo"
+- id: c2cec8835a1c5468a8f0067c
+  independent_label: supported
+  evidence: "premisa 'define objetivos y valora como CED apoyan' = primer paso claim"
+- id: 2560d6dccd24afa66670fefe
+  independent_label: supported
+  evidence: "premisa '20% emisiones, 20% renovables, 20% eficiencia 2020' triple 20%"
+- id: 21b787cdc635f4fb2f08affd
+  independent_label: unsupported
+  evidence: "premisa no pasaporte entre Schengen y restablecimiento excepcional, sin DNI alternativo"
+- id: 258dc9a2549b476f96a620e5
+  independent_label: unsupported
+  evidence: "premisa precios dinamicos y comparadores, sin exigir contador ultima generacion"
+- id: 541b479cffbf1e6b5e4db49e
+  independent_label: supported
+  evidence: "premisa 'puede ser util probar con cohorte' = ensayar con grupo determinado"
+- id: 6404e1d1f427213ee5a3f815
+  independent_label: contradicted
+  evidence: "premisa 'casi 1,5 billones' vs 'casi 2 billones' -> magnitud distinta"
+- id: a7127242d1bac7e3321edde1
+  independent_label: contradicted
+  evidence: "premisa 'estrategia largo plazo al menos 30 anos' vs 'solo diez, no 30'"
+- id: f53f26661d27bca2d3b8b4ae
+  independent_label: supported
+  evidence: "premisa 'crear CED texto, imagenes, video, musica para secuencias y cuestionarios' cubre claim"
+- id: b52c465d45077689bd9bed3d
+  independent_label: contradicted
+  evidence: "premisa 'proximo paso acuerdo objetivo 2040' vs '2035 no 2040'"
+- id: 42217be948f9f5fbc8c119d5
+  independent_label: supported
+  evidence: "premisa 'alfabetizacion IA vinculada a competencia digital por presencia creciente' igual"
+- id: c200331abd088f804069ac0e
+  independent_label: supported
+  evidence: "premisa 'euro Bulgaria 1-ene-2026, vigesimo primer eurozona' fechas y ordinal iguales"
+- id: 7aa6b1fa229cabf10722cd41
+  independent_label: contradicted
+  evidence: "premisa 'aumente apoyo a agricultores locales' vs 'reducir apoyo'"
+- id: 9791cba67e1311c7163706e9
+  independent_label: unsupported
+  evidence: "premisa 150 ciudadanos tres fines semana sin sede; 'Bruselas' no consta"
+- id: 85b6b0b75147e41601f7e635
+  independent_label: unsupported
+  evidence: "premisa placas vidrio y banderas con medidas, sin placas metal"
+- id: 1a11a90b85f237f845936198
+  independent_label: supported
+  evidence: "premisa 'mas de 45M como TikTok deben identificar y evaluar riesgos' igual claim"
+- id: 5ac9c5675237b0b18d21556f
+  independent_label: contradicted
+  evidence: "premisa 'sin cubrir mas de 720 plazas matematicas' vs 'se cubrieron todas'"
+- id: f13955ebf18e6c48a2d3a46b
+  independent_label: unsupported
+  evidence: "premisa educacion gratuita e inclusiva, sin '10% presupuesto UE'"
+- id: b4002f99f7f4231267f00d68
+  independent_label: contradicted
+  evidence: "premisa 'tareas restringidas solo riesgos limitados' vs 'riesgos graves'"
+- id: 0570bc1c9a56d485284f58d2
+  independent_label: unsupported
+  evidence: "premisa clorofila, CO2 y agricultura calidad 80s, sin '20 kilos arbol'"
+- id: 634c2a68e25dbd9f934fed4d
+  independent_label: supported
+  evidence: "premisa 'DSA 2022 aplica Europa y resto mundo accesibles UE' igual claim"
+- id: 515d05e445b4b286e01bfe9c
+  independent_label: supported
+  evidence: "premisa 'compuesto por ministros Estados, un ministro por pais' = Consejo ministros"
+- id: e858ac52e43efbd22d792043
+  independent_label: unsupported
+  evidence: "premisa empleo, banca, euro, sin 'paro juvenil 30% sur'"
+- id: 70542c23cb3b0275c301052a
+  independent_label: contradicted
+  evidence: "premisa Tribunal sede Luxemburgo (Juzgado) vs 'Bruselas'"
+- id: 3e6031ddda34f2d0a1b9cb5a
+  independent_label: contradicted
+  evidence: "premisa 'como muy tarde 2050 primer continente neutro' vs 'no antes 2060'"
+- id: 787d48bb1271c25bb6b97148
+  independent_label: unsupported
+  evidence: "premisa hasta 200.000 EUR transicion sostenible, sin maquinaria diesel"
+- id: 57561eb5896fdad4ac1ef6a1
+  independent_label: contradicted
+  evidence: "premisa DABIS apoya en particular mujeres agricultoras vs 'excluidas'"
+- id: 47f42a302290e3f9ec1b404e
+  independent_label: supported
+  evidence: "premisa 'concluiremos Mercados Capitales para pymes financiacion crecer' literal"
+- id: 8c7f3bfa8ef049c105d31679
+  independent_label: supported
+  evidence: "premisa 'ayudar docentes, apoyo y directivos a decidir sobre CED' cubre destinatarios"
+- id: 64427677e47b15d64ca4a56f
+  independent_label: supported
+  evidence: "premisa 'participacion record encomendo ser valientes y decididos' = valentia pedida"
+- id: fc4861331972a6433e4fabdc
+  independent_label: contradicted
+  evidence: "premisa 'limites garantizan diferencias mas homogeneas' vs 'aumentan diferencias'"
+- id: 6b358511c117ee4f115a1c24
+  independent_label: unsupported
+  evidence: "premisa reforzar asociacion Comision-Parlamento, sin oficina conjunta capitales"
+- id: 614ed71839cfe4776fddf8c6
+  independent_label: supported
+  evidence: "premisa 'al menos 30% gasto 2021-2027 clima' cifra igual"
+- id: afdcd2a1eef04f558e633907
+  independent_label: contradicted
+  evidence: "premisa 'en 2021 extendera a 9 municipios Mosela' vs '19 municipios' -> 9 vs 19"
+- id: 996e450cbca0e7078ba2670b
+  independent_label: unsupported
+  evidence: "premisa Energy@School 40 centros 7 paises y cientos miles proyectos, sin puente 100.000 Polonia"
+- id: 7c457bbae1de6a9143b1f8b3
+  independent_label: supported
+  evidence: "premisa nota 'DSA no aplica a mensajeria como Messenger o Telegram' = fuera ambito"
+- id: 923ab749d2387c9ea267ad9f
+  independent_label: unsupported
+  evidence: "premisa cohesion y transicion justa, sin fondo 10.000M mineras"
+- id: f3bf357358f847bb4fb0d865
+  independent_label: unsupported
+  evidence: "premisa inclusion y diferenciacion por estudiante, sin plan mensual individual"
+- id: 44c35efa8c138ede3c213f09
+  independent_label: contradicted
+  evidence: "premisa 'catorce regiones carbon en siete Estados' vs 'siete regiones total' -> 14 vs 7"
+- id: 72d57e94383201f78cc47764
+  independent_label: supported
+  evidence: "premisa 'reune jefes Estado o Gobierno' igual claim"
+- id: a43351b745f6a2e07c671efb
+  independent_label: supported
+  evidence: "premisa 'mayor precision, pasaporte/DNI e identidad digital, protege privacidad' cubre claim"
+- id: 700b09131967d733aab73da7
+  independent_label: contradicted
+  evidence: "premisa 'si ciudadano 27 tambien ciudadano UE' vs 'no es ciudadana UE'"
+- id: 63f569e8437393b643f5c392
+  independent_label: contradicted
+  evidence: "premisa 'al menos 55% 2030 vs 1990' vs '55% 2040 sin meta 2030'"
+- id: dcff781ab631028b949ccf6a
+  independent_label: supported
+  evidence: "premisa 'anima a duplicar financiacion PAC jovenes' = dupliquen fondos"
+- id: f0068a3305285ebbd2a537aa
+  independent_label: supported
+  evidence: "premisa 'muro simbolo Guerra Fria, este comunista oeste capitalista' replica claim"
+- id: 4ae503d07f0c9b46cd7d3553
+  independent_label: unsupported
+  evidence: "premisa a medida exentos CE/UDI/resumen, sin conservar contrato 10 anos distribuidores"
+- id: 50123f61e4e8b1a5b61c58a9
+  independent_label: unsupported
+  evidence: "premisa 1.300M Europa Digital y Decada Digital 2030, sin ordenador cuantico 2027"
+- id: 8ff8996a1d76af7969c6bbc8
+  independent_label: supported
+  evidence: "premisa 'garantizar educacion gratuita y aprender multiples profesiones toda vida' igual"
+- id: cd4bfa04c4ec6d6d4e15632c
+  independent_label: contradicted
+  evidence: "premisa '3.000 millones arboles a 2030' vs '2.000 millones' -> cifra distinta"
+- id: daa1b283c3805b59c75eba99
+  independent_label: unsupported
+  evidence: "premisa hasta 20% ayuda asociada/algodon/ambiental, sin revision bienal Consejo"
+- id: d6caf0f49f9662ddb732075c
+  independent_label: contradicted
+  evidence: "premisa 'pueden restablecerse excepcionalmente tiempo limitado' vs 'no pueden en ningun caso'"
+- id: c01e27133d65c5ea38e7a809
+  independent_label: unsupported
+  evidence: "premisa reorganizar presupuestos energia limpia y plan largo, sin recorte defensa 5%"
+- id: 23a9ccb37b39304d5381562b
+  independent_label: contradicted
+  evidence: "premisa 'impulsa transiciones ecologica y digital' vs 'frena transiciones'"
+- id: 673403a8bb3e1c50c0f69591
+  independent_label: unsupported
+  evidence: "premisa 'con Estados e instituciones financieras movilizo 120.000M' sin nombrar BEI"
+  doubt: "BEI es institucion financiera pero premisa no lo identifica; no se puede deducir canal concreto"
+- id: 03e9324933b64d97ad8bd64e
+  independent_label: contradicted
+  evidence: "premisa 'impuso severas sanciones contra Rusia' vs 'no ha impuesto ninguna'"
+- id: 1f62d22fd898d17a4b793aeb
+  independent_label: supported
+  evidence: "premisa 'mas de 100 agricultores y mas de 20.000 mediciones' cifras iguales"
+- id: fafbb940e114da321d4957e4
+  independent_label: unsupported
+  evidence: "premisa Banco Descarbonizacion en Fondo Competitividad, sin sede Bruselas ni cien empleados"
+- id: d94730c7980c946231c9ab52
+  independent_label: contradicted
+  evidence: "premisa 'cuatro Faros como centros regionales' vs 'ningun Faro puesto en marcha'"
+- id: 5c880b0ab93de5ad3a911b5e
+  independent_label: unsupported
+  evidence: "premisa centro datos Copernicus Filipinas catastrofes y 5G, sin 200 ingenieros"
+- id: 45ae45ebbe0282205b70445d
+  independent_label: unsupported
+  evidence: "premisa Nobel Paz 2012 y fondos a ninos, sin periodicidad bienal Oslo"
+- id: 39be7b4f5e8ec3c3df2cf8f7
+  independent_label: unsupported
+  evidence: "premisa metas 2030 y reduccion muertes, sin '200.000 muertes anuales UE'"
+- id: 09583330dfdb9f978f209174
+  independent_label: supported
+  evidence: "premisa 'D 2023, B-C 2025, A 2027 IVD' fechas iguales al claim"
+- id: 9a77d3c6d844d280b0a70ae8
+  independent_label: unsupported
+  evidence: "premisa BELLA y Copernicus iniciativas clave, sin becas posgrado IA"
+- id: 381309a8d1d21fdcb25da947
+  independent_label: unsupported
+  evidence: "premisa eliminar combustibles fosiles rusos, sin 'concluira 2027'"
+- id: 018f88163623d69174db615c
+  independent_label: unsupported
+  evidence: "premisa TALIS 14% valora profesion en secundaria, sin docentes portugueses"
+- id: 1822d1dfa7224ea2875a1785
+  independent_label: unsupported
+  evidence: "premisa define operador (fabricante, representante, importador, distribuidor), sin registro previo"
+- id: 3f3862ec752e9030916d805c
+  independent_label: unsupported
+  evidence: "premisa lagunas recogida electronicos y materias criticas, sin 'supera 60%'"
+- id: 31282bb78ed0a4366d21e38a
+  independent_label: supported
+  evidence: "premisa 'mayoria recupera natural y 5-10% replantar retonos' igual claim"
+- id: fee486ed08e3a7926532851f
+  independent_label: unsupported
+  evidence: "premisa 22,47% interinos y rangos autonomicos, sin '15% grandes ciudades'"
+- id: 8475fc892c8520e4718105ba
+  independent_label: supported
+  evidence: "premisa 'todos Estados deben ofrecer pago hasta 3.000 EUR pequenas' universal"
+- id: d448d01c707ff4f6e9e1ee60
+  independent_label: supported
+  evidence: "premisa 'en 100 primeros dias instrumento salario minimo justo todos' igual claim"
+- id: f03e4927f416a29d117d6ec8
+  independent_label: contradicted
+  evidence: "premisa 'menos problemas salud mental' vs 'aumentara problemas'"
+- id: 58d765b0f553f551168290c4
+  independent_label: supported
+  evidence: "premisa 'cuatro categorias: Futuros ecologicos clima...' cubre claim"
+- id: d5ac801de05391e9bf1ca5da
+  independent_label: unsupported
+  evidence: "premisa eleccion justificada con transparencia y participacion, sin votacion claustro"
+- id: 7e929088e325c41822ae10df
+  independent_label: unsupported
+  evidence: "premisa BEI banco climatico 25% y duplicar 2025 y billon, sin sede Francfort"
+- id: eac2723b1ec4d6d84072a051
+  independent_label: supported
+  evidence: "premisa 'salarios competitivos vs profesiones similar cualificacion' literal"
+- id: bba7f62f9b0e5cb823aaff89
+  independent_label: contradicted
+  evidence: "premisa 'no causar perjuicio significativo, no danar clima' vs 'pueden danar sin restriccion'"
+- id: 5fdd5cbc6bb87a9ebe50ec12
+  independent_label: contradicted
+  evidence: "premisa 'prohibido asociar a no etiquetados' vs 'asociarse libremente'"
+- id: dd9caabc192ff73c0e1fa609
+  independent_label: unsupported
+  evidence: "premisa avisar 6 meses a Estados/distribuidores/sanitarios, sin asociaciones pacientes"
+- id: 767632d20fb50b9b188c2d0d
+  independent_label: unsupported
+  evidence: "premisa cohesion y Fondo transicion, sin periodo cinco anos menor renta"
+- id: c3d5e3da98a1967df9e46f52
+  independent_label: supported
+  evidence: "premisa 'abril Plan Continente IA y mas de cien mil procesadores, 77 manifestaciones' cubre"
+- id: a7e87be9796b93251a373536
+  independent_label: supported
+  evidence: "premisa 'mas de 1.000 acciones y mas de 7.700M' cifras iguales"
+- id: c512600318c8ac0424843d1c
+  independent_label: unsupported
+  evidence: "premisa control energia y pobreza energetica 6%/9%, sin ayudas directas factura"
+- id: 9f15f359c7c54397588d03e3
+  independent_label: supported
+  evidence: "premisa 'ampliar comercio emisiones a maritimo y reducir gratuitos aereas' literal"
+- id: b05dc3f05c116ff8bbd16c18
+  independent_label: supported
+  evidence: "premisa '18 abril 1951 seis firman Tratado CECA' fecha y firmantes iguales"
+- id: 1acb7e3a8651156ecea3f71c
+  independent_label: supported
+  evidence: "premisa 'quien viva en pais UE libre circular, residir y trabajar en otro' igual claim"
+- id: 7c43d55f9c2c53a4133bd0bb
+  independent_label: supported
+  evidence: "premisa '2021 hasta 300.000M reuniendo UE, Estados y socios' cifras iguales"
+- id: fed551126dd73c3d9d3809f1
+  independent_label: supported
+  evidence: "premisa 'todos los anos otorga Sajarov a lucha derechos y libertades' anualidad igual"
+- id: ac3dbbfea089272b6afb67dc
+  independent_label: contradicted
+  evidence: "premisa 'segundo pais mas afectado escasez' vs 'pais mas afectado'"
+- id: e2177a51b6d859bf456a987a
+  independent_label: contradicted
+  evidence: "premisa 'obligados a proporcionar tarjeta implante' vs 'solo si solicita'"
+- id: f5cd2fd6c9d3c7ce86171ad2
+  independent_label: supported
+  evidence: "premisa 'sept 2024 Pacto Futuro con necesidades generaciones futuras' fecha igual"
+- id: 44a644bc50c7f0715e36a596
+  independent_label: contradicted
+  evidence: "premisa 'al mostrar logotipo debe aparecer numero (cerca)' vs 'puede omitirse'"
+- id: 4f1c3a1ebc379f5602c07193
+  independent_label: contradicted
+  evidence: "premisa 'futuras sin voz, tener en cuenta sistematicamente' vs 'ya tienen voz'"
+- id: e02ac2e91f18a80e94dfbf40
+  independent_label: contradicted
+  evidence: "premisa 'movilizar 300.000M entre 2021-2027' vs 'solo 2028-2034'"
+- id: 0bf58f86c8a8c1192a1f8c43
+  independent_label: unsupported
+  evidence: "premisa vivienda, natalidad y soledad mayores, sin 'uno de cada tres solo'"
+- id: 2e82e2155d286458451dc539
+  independent_label: supported
+  evidence: "premisa 'DigComp 3.0 quinta edicion cinco areas' igual claim"
+- id: 340f1a492a3dc33be03ea175
+  independent_label: contradicted
+  evidence: "premisa 'RAG reduce alucinaciones y base mas factual' vs 'no mejora base factual'"
+- id: 9a02aed6e8c9fcab97a04de3
+  independent_label: contradicted
+  evidence: "premisa tabla '50-75k reduccion 50%' vs claim '25%' -> porcentaje distinto"
+- id: f973670bdd9c7452503b8a3f
+  independent_label: unsupported
+  evidence: "premisa lista ayuda renta, algodon, zonas, clima, pequenos, sin apicultores montana"
+- id: 6fc397b8fc2c20d2c1f2956d
+  independent_label: contradicted
+  evidence: "premisa 'mejoren o al menos no empeoren vida sucesores' vs 'pueden empeorar sin problema'"
+- id: ca7dbe8f91eb71b46767d680
+  independent_label: contradicted
+  evidence: "premisa 'participacion voluntaria' vs 'obligatoria'"
+- id: fbf1354ed0df12326de4c1f5
+  independent_label: contradicted
+  evidence: "premisa 'raices y hojas disminuyen erosion' vs 'aumenta riesgo'"
+- id: 280d9833c5f72ecd5d5408cc
+  independent_label: supported
+  evidence: "premisa 'aduanas, IVA y contribuciones directas' tres fuentes iguales"
+- id: 1e65c5ca63ebdfaece909a38
+  independent_label: supported
+  evidence: "premisa 'simbolo de epsilon griega, primera Europa' origen igual"
+- id: c6dabc70fb4b99cff6ab5301
+  independent_label: supported
+  evidence: "premisa 'objetivos claros tiempo y reunir investigadores, politicos, partes' igual claim"
+- id: 49bee8a264086d4ad9878129
+  independent_label: supported
+  evidence: "premisa 'respeten dignidad, equidad, integridad segun valores UE' igual claim"
+- id: 0ebc3f43441c19bf12fa1565
+  independent_label: supported
+  evidence: "premisa 'educacion digital clave capital humano en Union Competencias' igual claim"
+- id: 96272ac0bf4a7a43a7bede0d
+  independent_label: unsupported
+  evidence: "premisa estudia permitir LLM con dudas equidad/integridad, sin 'autorizo 2025'"
+- id: 95673d865c14cbcf32575079
+  independent_label: contradicted
+  evidence: "premisa 'empleo mas alto que nunca' vs 'minimos historicos'"
+- id: 735af9d04942622d4966f6f2
+  independent_label: contradicted
+  evidence: "premisa 'Europa debe liderar transicion sana y digital' vs 'seguir a otros'"
+- id: 9a4f46f053fd983c58ff8889
+  independent_label: supported
+  evidence: "premisa 'demas certificado notificado y CE con numero' igual claim"
+- id: e80a697abb261ae9606ca154
+  independent_label: unsupported
+  evidence: "premisa textos oficiales etiqueta sin numero lenguas envase"
+- id: 658d5d5429bba43562db36cf
+  independent_label: unsupported
+  evidence: "premisa 60 empresas 1500 productos y 3000 clientes, sin Austria"
+- id: a048f08fd88ae0acff2ac190
+  independent_label: contradicted
+  evidence: "premisa 'asegurarse agricultores viviesen de tierras' vs 'no habia que asegurarse'"
+- id: 1149040f3cd2f5cd29368e4b
+  independent_label: supported
+  evidence: "premisa 'abril 2017 Parlamento y Consejo adoptaron MDR e IVDR' igual claim"
+- id: 33047578b2672f42bba6fee0
+  independent_label: contradicted
+  evidence: "premisa 'participacion disminuye al subir nivel, 95/77/62/57' vs 'aumenta'"
+- id: 82756a1fe1f44d025d1ca8d7
+  independent_label: unsupported
+  evidence: "premisa reforma grados y acceso 40 anos, LOMLOE 2020, sin prueba nacional 2026"
+- id: dc273b5ba5a2db55fb923ad1
+  independent_label: unsupported
+  evidence: "premisa presupuesto mayor parte paises y proyectos, sin '1% PIB'"
+- id: f3d8ae6e642b1fe0e582319c
+  independent_label: supported
+  evidence: "premisa 'junio restaurar ciclo y agua limpia asequible para todos' igual claim"
+- id: 48616a04cbf5fc4d7927444c
+  independent_label: contradicted
+  evidence: "premisa 'Ley Economia Circular en 2026' vs '2028'"
+- id: 5bcda6559737295c9fdc1381
+  independent_label: contradicted
+  evidence: "premisa '10 comercios y ~20 productores' vs 'mas de 200 comercios'"
+- id: 6632be5dce5889bc8f70e85b
+  independent_label: unsupported
+  evidence: "premisa sanciones y 120.000M, sin congelacion mas de mil personas"
+- id: 6d3bff8ac70c5785cdf180bf
+  independent_label: supported
+  evidence: "premisa lista dignidad, libertad, democracia, igualdad, Estado Derecho, DDHH identica"
+- id: e4c0303cb9fb5a958c6a6568
+  independent_label: supported
+  evidence: "premisa 'vender/recibir implantes III guardar UDI art27.8' igual claim"
+- id: be33c347e03cf158ff2c8bd6
+  independent_label: unsupported
+  evidence: "premisa reformas estructurales y 10.000M inversiones, sin nuevo codigo fiscal"
+- id: aaed79e038c724571861c2bf
+  independent_label: supported
+  evidence: "premisa siete derechos: proteccion, no discriminacion, inclusion, privacidad, info, expresion, participacion"
+- id: dfdf663f7e4be24e59913fd9
+  independent_label: unsupported
+  evidence: "premisa hitos compartidos estrategicos, sin revision trimestral"
+- id: f6c663bcd33fe12bdf69bf3c
+  independent_label: unsupported
+  evidence: "premisa Verdana minimo 7 (4,5 impresos), sin talla 9 congelados"
+- id: f63528051c02b916d823b1f3
+  independent_label: unsupported
+  evidence: "premisa cada pais tiene Coordinador con Comision, sin lista anual sancionadas"
+- id: 94c60137d0019a4a5d1ca325
+  independent_label: supported
+  evidence: "premisa 'desde 2019 RIA 2021 destacan Feader desarrollo rural' igual claim"
+- id: caf3de65c273332eada5cbd5
+  independent_label: supported
+  evidence: "premisa '95% infantil, 77% primaria, 62% primer ciclo, 57% segundo' porcentajes iguales"
+- id: 37c3c5ce744c7630e0aa289e
+  independent_label: supported
+  evidence: "premisa 'estrategias personalizadas, observaciones adaptativas, intervencion temprana' igual claim"
+- id: aa6d30d32fe1bedebe6e6fe0
+  independent_label: supported
+  evidence: "premisa '9 mayo 1950 Schuman: Francia y Alemania Occidental carbon/acero' fecha e idea iguales"
+- id: 76929e4fb183ed5af4ecdefb
+  independent_label: supported
+  evidence: "premisa 'DTO 2022 15M anual a politicos, investigadores, empresas, activistas, ciudadanos' igual"
+- id: 4a88a716e759351750792fa3
+  independent_label: unsupported
+  evidence: "premisa identificar riesgos y soluciones sin mitigar beneficios, sin informe trimestral juego"
+- id: 81007e69f7b2dfab3d8606f9
+  independent_label: supported
+  evidence: "premisa 'mas de 800.000M NextGenerationEU pandemia y revitalizar' cifras y fin iguales"
+- id: d95cd8dd3ecb634f853470e2
+  independent_label: unsupported
+  evidence: "premisa estrategia LGBTIQ 2026-2030 y 75% comodidad, sin campana 2023 como causa"
+- id: 48f440886f05b355d78179b7
+  independent_label: unsupported
+  evidence: "premisa cambios temporales y reconfirmar, sin caducidad 30 dias"
+- id: 441363f8c23d7e950534276d
+  independent_label: contradicted
+  evidence: "premisa 'cuatro clases I, IIa, IIb, III' vs 'tres clases'"
+- id: 93e83839dc334ad70157670e
+  independent_label: contradicted
+  evidence: "premisa 'acceso limitado hasta 2021 por pocas vacantes' vs 'nunca limitado'"
+- id: 025a743bd3dd1b849ff06004
+  independent_label: supported
+  evidence: "premisa 'vinculos sostenibles en cinco sectores' lista identica"
+- id: 811102a5d677f72ae2249341
+  independent_label: unsupported
+  evidence: "premisa panel expertos revisa expedientes alto riesgo, sin informe anual numero"
+- id: 60564825c7545fb5f37c1962
+  independent_label: supported
+  evidence: "premisa 'todos sectores industria, energia, transporte, alimentos, agricultura, construccion' igual"
+- id: ff48120f68b47ee711f91844
+  independent_label: unsupported
+  evidence: "premisa Red Seguridad 6.300M 2028-2034 estabilizar mercados, sin activacion cereales"
+- id: f7e3cec8498c5688d67d57ba
+  independent_label: supported
+  evidence: "premisa 'profesion atractiva sobre todo sector publico' igual claim"
+- id: 260c19400146afae53ad735c
+  independent_label: supported
+  evidence: "premisa 'desde 2022 acogido mas de cuatro millones' cifra igual"
+- id: cf36442417a7ffedc71b7e4c
+  independent_label: supported
+  evidence: "premisa 'XXXX pais, YYY grupo Comision, ZZZZZ solicitud competente' composicion igual"
+- id: 1dab44b2ddd569293abfdc7d
+  independent_label: unsupported
+  evidence: "premisa BeeKing Letonia Leader bienestar abejas, sin extension Estonia 2026"
+- id: 94883aabf76627afc45ccb44
+  independent_label: contradicted
+  evidence: "premisa 'recomendamos remunerar padres y abuelos cuidadores' vs 'no debe remunerarse'"
+- id: b0488fe1cff85c27108fcecd
+  independent_label: contradicted
+  evidence: "premisa 'personas, mercancias, servicios y dinero circulan' vs 'solo mercancias'"
+- id: 22d5ec858f5d524d8ba304f8
+  independent_label: contradicted
+  evidence: "premisa 'primera fabrica hierro cero emisiones Africa' vs 'segunda'"
+- id: b9760693dc15f90fde1868a3
+  independent_label: contradicted
+  evidence: "premisa 'fondo recuperacion tras pandemia' vs 'ampliar defensa, no pospandemia'"
+- id: 96279abad7bcdcc8fc464871
+  independent_label: contradicted
+  evidence: "premisa 'pleno funcionamiento de aqui a 2030' vs 'no antes 2035'"
+- id: f085580eb80efd1a09e1404d
+  independent_label: unsupported
+  evidence: "premisa 2ZERO/CCAM/Batt4EU y 1.000M conduccion/baterias, sin industria naval"
+- id: 943c43cd183e011e5f127eb7
+  independent_label: contradicted
+  evidence: "premisa 'aprox 100 jornadas formacion' vs 'unas 10 jornadas'"
+- id: ef40ab29032aad577c75e315
+  independent_label: contradicted
+  evidence: "premisa 'patrones sin verificar, inventan con confianza' vs 'son hechos verificados'"
+- id: 56307f7bddc188b957a98dfe
+  independent_label: contradicted
+  evidence: "premisa 'mejores no se limitan a hechos, exigen pensar/hacer' vs 'se limitan a hechos'"
+- id: da46e78273266654eda15762
+  independent_label: contradicted
+  evidence: "premisa 'en febrero presento Plan Energia Asequible' vs 'junio'"
+- id: 91ab6d9265ff8e84b341ad3a
+  independent_label: contradicted
+  evidence: "premisa 'limites solo DABIS sin afectar asociadas' vs 'tambien aplican a asociada'"
+- id: b0a1de4de5b46ff0a808f9bb
+  independent_label: contradicted
+  evidence: "premisa 'medida 16 entre 2018-2023' vs '2015-2020'"
+- id: 2eb0c2c8ec899b5bd960fac8
+  independent_label: supported
+  evidence: "premisa 'organo expertos + cuerpo ciudadanos aleatorios' dos elementos iguales"
+- id: 9d0a3d3e1af7c123d210ca84
+  independent_label: supported
+  evidence: "premisa 'al menos 32% renovables 2030 vinculante UE' igual claim"
+- id: b0f52ef91e84f56e0a1de31e
+  independent_label: supported
+  evidence: "premisa 'jovenes ayudan mayores digital y mayores comparten sabiduria' igual claim"
+- id: 0c38ee80dfe2e70d19291a31
+  independent_label: unsupported
+  evidence: "premisa Mosul/Basora y ~5000 empleos, sin indefinidos tiempo completo"
+- id: 6fce3c99300804904d81c28f
+  independent_label: unsupported
+  evidence: "premisa preguntas ayuda, valor, accesibilidad, atencion, sin pruebas externas"
+- id: 8c5de18a61e4665c443839b3
+  independent_label: contradicted
+  evidence: "premisa 'incluso sin educacion agricola posible fundar' vs 'solo con titulo'"
+- id: ebfa02c652a3e15964e5fbc6
+  independent_label: unsupported
+  evidence: "premisa mas de 60 anos paz/prosperidad, sin jornada anual sesenta anos"
+- id: 016c1764e58c668fe6ae0626
+  independent_label: supported
+  evidence: "premisa 'DABIS sustituye combinando basica, redistributiva y jovenes' reemplazo igual"
+- id: 1fb52cdf7150cc0a5e585d71
+  independent_label: contradicted
+  evidence: "premisa 'matriculados supera demanda plazas' vs 'menos universitarios que plazas'"
+- id: f55a20bbac0db2084fd57082
+  independent_label: contradicted
+  evidence: "premisa 'Schengen 29: 25 UE y 4 no UE' vs '20 paises'"
+- id: 57ab8fa41799ae3c08edd666
+  independent_label: unsupported
+  evidence: "premisa IA guiada por objetivos pedagogicos no popularidad, sin revision trimestral"
+- id: 724a2650ebed30db2107438a
+  independent_label: unsupported
+  evidence: "premisa derechos, Sajarov y 14M moviles, sin 50M observacion electoral"

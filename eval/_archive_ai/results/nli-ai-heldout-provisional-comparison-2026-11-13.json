@@ -1,0 +1,165 @@
+{
+  "date": "2026-11-13T08:34:10.536146+00:00",
+  "split": "test",
+  "notice": "Etiquetas IA sin revision humana, NO gold ni aceptacion definitiva. Reserva artificial de 6 documentos test; revision humana final ciega pendiente. Intervalos Wilson solo descriptivos: 296 casos comparten 100 fragmentos y 6 documentos, no son 296 observaciones independientes. No extrapolar a produccion. No cierra fase ni cambia umbrales.",
+  "dataset": {
+    "path": "eval/eu_nli_test_ai_provisional_frozen.yaml",
+    "sha256": "6c5559ac70dc556c584de9bcc1a2469515fd54ca6d699e72b1f76956826a1b11",
+    "cases": 296,
+    "label_counts": {
+      "supported": 100,
+      "contradicted": 100,
+      "unsupported": 96
+    },
+    "unique_premises": 100,
+    "unique_chunks": 100,
+    "per_document_counts": {
+      "06d73220-b88a-11f1-81de-01aa75ed71a1": 49,
+      "110f1996-8159-11f0-9af8-01aa75ed71a1": 15,
+      "3b55834e-bf89-11f0-a612-01aa75ed71a1": 73,
+      "543ccb41-26d3-11ef-a195-01aa75ed71a1": 55,
+      "9cf1c742-2448-11ee-94cb-01aa75ed71a1": 59,
+      "e733191f-5c65-11eb-b487-01aa75ed71a1": 45
+    }
+  },
+  "protocol": {
+    "path": "eval/NLI_AI_EVALUATION_PROTOCOL.md",
+    "sha256": "92635d4cdb50322069b5530ebc68c6ec346a98dbc08b335754cb757ecdb82d74"
+  },
+  "code": {
+    "nli_run_sha256": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+    "nli_py_sha256": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+    "config_sha256": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc"
+  },
+  "model": {
+    "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+    "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+    "device": "cpu",
+    "hardware": {
+      "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+      "cpu": "Intel(R) Core(TM) Ultra 9 285H"
+    },
+    "thread_settings": {
+      "OMP_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null
+    }
+  },
+  "provenance": {
+    "commit": "5397547fd1454467570d6389fa0b8720dc1dea53",
+    "head": "5397547fd1454467570d6389fa0b8720dc1dea53",
+    "git_status_porcelain": " M README.md\n M ROADMAP.md\n M eval/NLI.md\n M eval/nli_run.py\n M eval/nli_thresholds.py\n M tests/eval/test_nli_run.py\n M tests/eval/test_nli_thresholds.py\n?? eval/EU_CORPUS.md\n?? eval/NLI_AI_EVALUATION_PROTOCOL.md\n?? eval/annotation_forms/\n?? eval/eu_manifest.yaml\n?? eval/eu_nli_dev_ai_adjudicated.yaml\n?? eval/eu_nli_dev_ai_adjudication.yaml\n?? eval/eu_nli_dev_ai_audit.yaml\n?? eval/eu_nli_dev_ai_candidates.yaml\n?? eval/eu_nli_dev_ai_corrected.yaml\n?? eval/eu_nli_dev_ai_corrections.yaml\n?? eval/eu_nli_dev_ai_error_label_review.yaml\n?? eval/eu_nli_dev_ai_exploratory.yaml\n?? eval/eu_nli_dev_ai_posthoc.yaml\n?? eval/eu_nli_dev_ai_posthoc_changes.yaml\n?? eval/eu_nli_dev_ai_second_review.yaml\n?? eval/eu_nli_dev_ai_trace.md\n?? eval/eu_nli_test_ai_blind_mapping.yaml\n?? eval/eu_nli_test_ai_blind_review.yaml\n?? eval/eu_nli_test_ai_blind_shuffled_review.yaml\n?? eval/eu_nli_test_ai_draft.yaml\n?? eval/eu_nli_test_ai_provisional_frozen.yaml\n?? eval/eu_nli_test_ai_trace.yaml\n?? eval/eu_numeric_stress_dev_ai.yaml\n?? eval/eu_numeric_stress_dev_ai_final.md\n?? eval/eu_numeric_stress_dev_ai_final.yaml\n?? eval/eu_numeric_stress_dev_ai_review.md\n?? eval/eu_numeric_stress_dev_ai_reviewed.yaml\n?? eval/eu_numeric_stress_dev_ai_trace.md\n?? eval/eu_pilot_ai_proposals.yaml\n?? eval/eu_pilot_candidates.yaml\n?? eval/eu_pilot_dev_ai_reviewed.yaml\n?? eval/eu_pilot_revised.yaml\n?? eval/eu_pilot_revised_ai_proposals.yaml\n?? eval/numeric_signal.py\n?? eval/numeric_signal_eval.py\n?? eval/numeric_signal_stress_eval.py\n?? eval/results/nli-ai-294-dev-threshold-exploration-2026-11-13.json\n?? eval/results/nli-ai-300-dev-2026-11-13.json\n?? eval/results/nli-ai-300-dev-sensitivity-2026-11-13.json\n?? eval/results/nli-ai-300-posthoc-dev-2026-11-13.json\n?? eval/results/nli-ai-300-posthoc-dev-2026-11-13.provenance.json\n?? eval/results/nli-ai-heldout-provisional-2026-11-13.json\n?? eval/results/nli-ai-pilot-dev-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-v2-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-v3-2026-11-13.json\n?? eval/results/numeric-signal-stress-dev-ai-2026-11-13.json\n?? eval/results/numeric-signal-stress-dev-ai-v2-2026-11-13.json\n?? tests/eval/test_numeric_signal.py\n?? tests/eval/test_numeric_signal_stress_eval.py\n",
+    "dataset_sha256": "6c5559ac70dc556c584de9bcc1a2469515fd54ca6d699e72b1f76956826a1b11",
+    "candidate_summary_sha256": "ca9d961ba7ce3164531cb02c7e623d9c9093f540c9cdc64b0eb6e7bc87420fb6",
+    "details_sha256": "d28fbe0ca4d5b4edd999df4934d8d3b44d68894a7d8da52a2ab6958ff758e09f",
+    "details_path": "/tmp/nli-ai-heldout-provisional-details-2026-11-13.json (fuera de Git)",
+    "candidate_summary": "eval/results/nli-ai-heldout-provisional-2026-11-13.json",
+    "single_inference": true,
+    "second_config_without_reinference": true
+  },
+  "candidate_0_97_0_5_0_75": {
+    "thresholds": {
+      "supported": 0.97,
+      "weak": 0.5,
+      "contradicted": 0.75
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 33,
+        "weak": 37,
+        "unsupported": 25,
+        "contradicted": 5
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 0,
+        "weak": 1,
+        "unsupported": 90,
+        "contradicted": 5
+      },
+      "contradicted": {
+        "supported": 1,
+        "weak": 3,
+        "unsupported": 12,
+        "contradicted": 84
+      }
+    },
+    "counts": {
+      "supported": 100,
+      "contradicted": 100,
+      "unsupported": 96
+    },
+    "false_support": {
+      "numerator": 1,
+      "denominator": 196,
+      "rate": 0.00510204081632653,
+      "wilson_95": [
+        0.0009012039505642017,
+        0.028329261315080803
+      ]
+    },
+    "supported_recall": {
+      "numerator": 33,
+      "denominator": 100,
+      "rate": 0.33
+    },
+    "numeric_acceptance": false
+  },
+  "current_0_75_0_5_0_75_descriptive": {
+    "thresholds": {
+      "supported": 0.75,
+      "weak": 0.5,
+      "contradicted": 0.75
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 65,
+        "weak": 5,
+        "unsupported": 25,
+        "contradicted": 5
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 1,
+        "weak": 0,
+        "unsupported": 90,
+        "contradicted": 5
+      },
+      "contradicted": {
+        "supported": 2,
+        "weak": 2,
+        "unsupported": 12,
+        "contradicted": 84
+      }
+    },
+    "counts": {
+      "supported": 100,
+      "contradicted": 100,
+      "unsupported": 96
+    },
+    "false_support": {
+      "numerator": 3,
+      "denominator": 196,
+      "rate": 0.015306122448979591,
+      "wilson_95": [
+        0.005218879779228865,
+        0.04402745218196985
+      ]
+    },
+    "supported_recall": {
+      "numerator": 65,
+      "denominator": 100,
+      "rate": 0.65
+    },
+    "numeric_acceptance": true
+  }
+}

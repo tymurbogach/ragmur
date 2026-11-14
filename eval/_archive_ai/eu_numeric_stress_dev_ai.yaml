@@ -1,0 +1,1099 @@
+# Conjunto de estres numerico dev — propuestas de IA, NO gold
+# gold: false
+# AVISO VISIBLE: 64 casos adversariales de desarrollo creados DESPUES de observar
+# defectos (formato espanol 1.234,50 / 300.000 frente a 300 000; coincidencia de
+# numero sin verificar entidad). Etiquetas PROPUESTAS por IA, NO revisadas por
+# humanos. NO representativo del dominio. NO sirve para aceptacion ni para calibrar
+# o cambiar umbrales. Split dev UNICAMENTE; ningun document_id de test. La senal
+# numerica NO se ha ejecutado sobre este conjunto; queda pendiente de revision
+# humana previa. Ver informe: eval/eu_numeric_stress_dev_ai_trace.md
+# Formato: lista de nivel superior (id, document_id, split, premise_locator,
+# premise, claim, expected_label, label_source, stress_type, justification,
+# review_status). Premisas literales de la extraccion del proyecto sobre PDF dev
+# verificados por SHA-256 del manifiesto y con permiso de reutilizacion.
+- id: euns-001
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 16
+    end: 17
+  premise: Fuentes de financiamiento La estrategia Global Gateway tiene como objetivo movilizar hasta
+    300.000 millones de euros entre 2021 y 2027.
+  claim: La estrategia Global Gateway tiene como objetivo movilizar hasta 300 000 millones de euros entre
+    2021 y 2027.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: Mismo valor con distinto separador de miles (300.000 frente a 300 000); se conserva la
+    cota (hasta) y el periodo.
+  review_status: pending-human-review
+- id: euns-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: '• Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto
+    global, que movilice más de 700 000 millones de euros: ‒ para apoyar los objetivos climáticos y medioambientales,
+    la mitigación del cambio climático, la adaptación a este y la resiliencia, el crecimiento sostenible,
+    la innovación y la independencia estratégica;'
+  claim: El objetivo de gasto climático es del 35 % del presupuesto global y moviliza más de 700.000 millones
+    de euros.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 700 000 equivale a 700.000 en formato español; la afirmacion conserva porcentaje, cota
+    (más de) y destino.
+  review_status: pending-human-review
+- id: euns-003
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: en cifras En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional
+    (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores.
+  claim: Se garantizan al menos 293.700 millones de euros para apoyar la renta de los agricultores.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 293 700 equivale a 293.700; se conserva la cota inclusiva (al menos) y el destino.
+  review_status: pending-human-review
+- id: euns-004
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 3
+    end: 4
+  premise: El límite máximo del importe anual total recibido por un agricultor se fja en 100 000 EUR con
+    el objetivo de
+  claim: El límite máximo anual por agricultor se fija en 100.000 euros.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 100 000 equivale a 100.000; mismo atributo (límite máximo anual por agricultor) y moneda.
+  review_status: pending-human-review
+- id: euns-005
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 2
+    end: 2
+  premise: Como consecuencia de ello, alrededor del 80 % de todos los productos sanitarios para diagnóstico
+    in vitro necesitan ahora la supervisión del organismo notificado en virtud del Reglamento sobre los
+    productos sanitarios para diagnóstico in vitro (artículo 48), frente al 8 % anteriormente en el marco
+    de la Directiva sobre productos sanitarios para diagnóstico in vitro.
+  claim: Alrededor del 80 por ciento de los productos sanitarios para diagnóstico in vitro necesita ahora
+    supervisión del organismo notificado.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 80 % equivale a 80 por ciento; se conserva la aproximación (alrededor) y la entidad supervisada.
+  review_status: pending-human-review
+- id: euns-006
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  premise: El PRR nacional asigna 670,1 millones EUR a la creación, para finales de 2024, de al menos
+    60 000 plazas públicas asequibles de atención y educación de la primera infancia (con especial atención
+    en los ámbitos de mayor riesgo de pobreza o exclusión social y en las zonas rurales, en particular
+    para los niños de entre 0 y 2 años).
+  claim: El PRR asigna 670,10 millones de euros a plazas públicas de atención y educación de la primera
+    infancia.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 670,1 equivale a 670,10 en decimal español con coma; mismo programa y destino.
+  review_status: pending-human-review
+- id: euns-007
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  premise: A finales de 2025, el apoyo prestado por la UE y sus Estados miembros desde el inicio de la
+    guerra ascendía a 193 300 millones de euros.
+  claim: A finales de 2025 el apoyo prestado ascendía a 193.300 millones de euros.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 193 300 equivale a 193.300; misma fecha de corte y mismo agregado de apoyo.
+  review_status: pending-human-review
+- id: euns-008
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  premise: 'Nombre del proyecto Recuperación de los bosques dañados por los desastres naturales y mejora
+    de la viabilidad de los bosques Tipo de beneficiario Asociación de propietarios de bosques; instituciones
+    públicas Período 2016-2020 Financiación • Presupuesto total: 7 345 293 euros • Contribución del Feader:
+    4 647 741 euros • Contribución nacional o regional: 1 549 247 euros • Contribuciones privadas o propias:'
+  claim: El presupuesto total del proyecto de recuperación de bosques es de 7345293 euros.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: equivalente-formato-es
+  justification: 7 345 293 equivale a 7345293 sin separadores; mismo proyecto y moneda.
+  review_status: pending-human-review
+- id: euns-009
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 4
+    end: 4
+  premise: 'Global Gateway es la respuesta de Europa: más de 300.000 millones de euros movilizados para
+    energía limpia y transporte, materias primas críticas, digitalización, educación y salud.'
+  claim: Global Gateway movilizó 250.000 millones de euros para energía limpia y transporte.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: La premisa fija más de 300.000 millones; 250.000 queda por debajo de esa cota y la contradice.
+  review_status: pending-human-review
+- id: euns-010
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: '• Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto
+    global, que movilice más de 700 000 millones de euros: ‒ para apoyar los objetivos climáticos y medioambientales,
+    la mitigación del cambio climático, la adaptación a este y la resiliencia, el crecimiento sostenible,
+    la innovación y la independencia estratégica;'
+  claim: El objetivo de gasto climático es del 53 % del presupuesto global.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 35 % frente a 53 % sobre el mismo objetivo; cantidades incompatibles.
+  review_status: pending-human-review
+- id: euns-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 3
+    end: 4
+  premise: El límite máximo del importe anual total recibido por un agricultor se fja en 100 000 EUR con
+    el objetivo de
+  claim: El límite máximo anual por agricultor se fija en 10 000 euros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 100 000 frente a 10 000 sobre el mismo límite; difieren en un orden de magnitud.
+  review_status: pending-human-review
+- id: euns-012
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 7
+  premise: 'LA ESTRATEGIA GLOBAL GATEWAY 5 Salud República de Moldavia: hospital regional de Bălți El
+    proyecto tiene como objetivo construir y equipar un hospital regional de atención terciaria con una
+    capacidad de 340 camas de hospital y 78 camas en los servicios ambulatorios, en una superficie construida
+    de 38.000 m2.'
+  claim: El hospital regional tendrá 430 camas de hospital.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 340 camas de hospital frente a 430; misma entidad y unidad, valor incompatible.
+  review_status: pending-human-review
+- id: euns-013
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 14
+    end: 15
+  premise: Al menos un 42,5 % de energías renovables en la combinación energética de la UE de aquí a 2030.
+    15 Todos podemos aportar nuestro grano de arena al reducir los residuos alimentarios, reciclando más,
+    usando la bicicleta en lugar del coche e incluso plantando un árbol.
+  claim: El objetivo es al menos un 24,5 % de energías renovables en 2030.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 42,5 % frente a 24,5 % sobre el mismo objetivo de renovables.
+  review_status: pending-human-review
+- id: euns-014
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 15
+    end: 15
+  premise: En 2022, la tasa de titulados en educación superior, entre las personas de veinticinco a treinta
+    y cuatro años, se situó en el 50,5 % (1,8 puntos porcentuales más que en 2021) y muy por encima de
+    la media de la UE (42 %)21 y del objetivo a escala de la UE (45 %).
+  claim: En 2022 la tasa de titulados en educación superior, entre los veinticinco y los treinta y cuatro
+    años, se situó en el 55,5 %.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: La premisa fija 50,5 % para esa tasa; 55,5 % es un valor distinto sobre la misma entidad.
+  review_status: pending-human-review
+- id: euns-015
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 22
+    end: 22
+  premise: Según el informe de situación de la acción por el clima de 2025, las emisiones netas totales
+    de gases de efecto invernadero de la UE disminuyeron un 2,5 % en 2024 respecto de 2023.
+  claim: Las emisiones netas de la UE disminuyeron un 5,2 % en 2024 respecto de 2023.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 2,5 % frente a 5,2 % sobre la misma variación interanual de emisiones.
+  review_status: pending-human-review
+- id: euns-016
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  premise: En el Consejo Europeo de los días 18 y 19 de diciembre, los dirigentes de la UE decidieron
+    movilizar 90 000 millones de euros adicionales de financiación para el período 2026-2027 mediante
+    empréstitos comunes respaldados por el presupuesto de la UE.
+  claim: Los dirigentes decidieron movilizar 19 000 millones de euros adicionales para 2026-2027.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 90 000 frente a 19 000 millones sobre la misma decisión de financiación.
+  review_status: pending-human-review
+- id: euns-017
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 10
+    end: 11
+  premise: Esta guerra horrible, que duró seis años, dejó 20 millones de huérfanos, carreteras completamente
+    destruidas y personas muriendo de hambre que huían de su país.
+  claim: La Segunda Guerra Mundial dejó 2 millones de huérfanos.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: 20 millones frente a 2 millones sobre el mismo hecho histórico del fragmento.
+  review_status: pending-human-review
+- id: euns-018
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 22
+    end: 22
+  premise: Las visitas a los sitios web del geoparque aumentaron de 4 000 visitantes en 2018 a 24 000
+    en 2020.
+  claim: Las visitas a los sitios web del geoparque pasaron de 4 000 visitantes en 2018 a 42 000 en 2020.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: distinta-cantidad
+  justification: El valor final es 24 000, no 42 000; mismo indicador y periodo.
+  review_status: pending-human-review
+- id: euns-019
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: en cifras En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional
+    (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores.
+  claim: La garantía para la renta de los agricultores es de 293 700 millones de euros o más.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: 'Paráfrasis de la cota inferior inclusiva (al menos): 293 700 o más.'
+  review_status: pending-human-review
+- id: euns-020
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: en cifras En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional
+    (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores.
+  claim: La garantía para la renta de los agricultores queda por debajo de los 293 700 millones de euros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: Por debajo de 293 700 viola la cota inferior inclusiva de la premisa.
+  review_status: pending-human-review
+- id: euns-021
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 16
+    end: 17
+  premise: Fuentes de financiamiento La estrategia Global Gateway tiene como objetivo movilizar hasta
+    300.000 millones de euros entre 2021 y 2027.
+  claim: El objetivo de Global Gateway no supera los 300.000 millones de euros entre 2021 y 2027.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: Paráfrasis de la cota superior (hasta) con el mismo periodo.
+  review_status: pending-human-review
+- id: euns-022
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 4
+    end: 4
+  premise: 'Global Gateway es la respuesta de Europa: más de 300.000 millones de euros movilizados para
+    energía limpia y transporte, materias primas críticas, digitalización, educación y salud.'
+  claim: Se movilizaron 310.000 millones de euros exactos para energía limpia y transporte.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: 310.000 es compatible con más de 300.000, pero la premisa no fija ese valor exacto.
+  review_status: pending-human-review
+- id: euns-023
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 40
+    end: 40
+  premise: 'a inversión en defensa La UE intensificó decididamente la inversión en defensa en 2025 a través
+    de Preparación 2030, un plan global para movilizar hasta 800 000 millones de euros para la seguridad
+    y la defensa a través de dos pilares fundamentales: el instrumento SAFE (Acción por la Seguridad de
+    Europa) y la nueva cláusula de salvaguardia nacional.'
+  claim: El plan para la seguridad y la defensa no supera los 800 000 millones de euros.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: Paráfrasis de la cota superior (hasta) sobre el mismo plan.
+  review_status: pending-human-review
+- id: euns-024
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 40
+    end: 40
+  premise: 'a inversión en defensa La UE intensificó decididamente la inversión en defensa en 2025 a través
+    de Preparación 2030, un plan global para movilizar hasta 800 000 millones de euros para la seguridad
+    y la defensa a través de dos pilares fundamentales: el instrumento SAFE (Acción por la Seguridad de
+    Europa) y la nueva cláusula de salvaguardia nacional.'
+  claim: El plan para la seguridad y la defensa moviliza 750 000 millones de euros exactos.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: 750 000 es compatible con hasta 800 000, pero el fragmento no fija esa cifra exacta.
+  review_status: pending-human-review
+- id: euns-025
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 6
+  premise: Los Estados miembros pueden asignar a intervenciones de ayuda a la renta asociada hasta el
+    20 % de las
+  claim: Los Estados miembros pueden asignar como máximo el 20 % a la ayuda a la renta asociada.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: Hasta el 20 % equivale a como máximo el 20 % sobre la misma asignación.
+  review_status: pending-human-review
+- id: euns-026
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 6
+  premise: Eficiencia energética, ante todo Las nuevas normas incluyen el principio de «eficiencia energética
+    ante todo» y establecen el objetivo de que nuestro consumo energético sea casi un tercio más eficiente,
+    al menos el 32,5 %, para 2030.
+  claim: Un 30 % de eficiencia energética basta para cumplir el objetivo de 2030.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: cota-inclusiva
+  justification: 30 % queda por debajo de la cota inferior de al menos el 32,5 %.
+  review_status: pending-human-review
+- id: euns-027
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 113
+    end: 113
+  premise: Como elemento central de NextGenerationEU, el MRR había desembolsado unos 394 000 millones
+    de euros a los Estados miembros a finales de 2025, apoyando la resiliencia económica y social, junto
+    con las transiciones limpia y digital.
+  claim: El MRR había desembolsado unos 394 000 millones de euros a los Estados miembros a finales de
+    2025.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Paráfrasis que conserva la aproximación (unos) y la entidad.
+  review_status: pending-human-review
+- id: euns-028
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 113
+    end: 113
+  premise: Como elemento central de NextGenerationEU, el MRR había desembolsado unos 394 000 millones
+    de euros a los Estados miembros a finales de 2025, apoyando la resiliencia económica y social, junto
+    con las transiciones limpia y digital.
+  claim: El MRR había desembolsado exactamente 394 000 millones de euros a los Estados miembros.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Unos 394 000 no fija un valor exacto; la exactitud no se deriva del fragmento.
+  review_status: pending-human-review
+- id: euns-029
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 113
+    end: 113
+  premise: Como elemento central de NextGenerationEU, el MRR había desembolsado unos 394 000 millones
+    de euros a los Estados miembros a finales de 2025, apoyando la resiliencia económica y social, junto
+    con las transiciones limpia y digital.
+  claim: El MRR había desembolsado 250 000 millones de euros exactos a los Estados miembros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: 250 000 millones queda fuera del margen razonable de unos 394 000 millones.
+  review_status: pending-human-review
+- id: euns-030
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 3
+    end: 4
+  premise: A partir de seis países fundadores (o Estados miembros) en la década de 1950, ha ido creciendo
+    hasta convertirse en una unión de veintisiete países con una población de casi 450 millones de habitantes.
+  claim: La población se acerca a los 450 millones de habitantes.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Paráfrasis de casi como acercamiento sin afirmar exactitud.
+  review_status: pending-human-review
+- id: euns-031
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 8
+    end: 8
+  premise: ustrial sólida y harán de la UE un líder mundial en tecnología Durante la próxima década, Europa
+    necesitará alrededor de 180 000 millones de euros al año en inversiones para mejorar la eficiencia
+    energética y aumentar la producción y el despliegue de energías renovables, a fin de reducir las emisiones
+    de gases de efecto invernadero y cumplir con nuestros compromisos del Acuerdo de París.
+  claim: La inversión anual necesaria es de 180 000 millones de euros exactos al año.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Alrededor de no entails exactitud; el valor exacto no se deriva del fragmento.
+  review_status: pending-human-review
+- id: euns-032
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  premise: La UE y sus Estados miembros han proporcionado alrededor de 66 000 millones de euros en apoyo
+    militar desde el inicio de la agresión militar a gran escala de Rusia contra Ucrania, de los cuales
+    6 400 millones de euros se han canalizado a través del Fondo Europeo de Apoyo a la Paz.
+  claim: La UE y sus Estados miembros aportaron unos 66 000 millones de euros en apoyo militar.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Paráfrasis que conserva la aproximación (alrededor/unos) y la entidad.
+  review_status: pending-human-review
+- id: euns-033
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  premise: Casi 60 kilómetros de vallas protegen estos retoños frente a los daños causados por animales
+    y 130 000 se protegieron con camisas (tubos de protección para impedir que los
+  claim: Hay 60 kilómetros exactos de vallas protectoras.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Casi 60 no fija 60 exactos; la exactitud no se deriva del fragmento.
+  review_status: pending-human-review
+- id: euns-034
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 17
+    end: 17
+  premise: Aproximadamente 60 empresas que ofrecen más de 1 500 productos participan actualmente en HofladenBOX.
+  claim: Unas 60 empresas ofrecen más de 1 500 productos en HofladenBOX.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: aproximacion
+  justification: Paráfrasis que conserva ambas marcas (aproximadamente/unas, más de).
+  review_status: pending-human-review
+- id: euns-035
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: Este nuevo presupuesto ayudará a Europa a alcanzar el objetivo climático que se ha propuesto
+    para 2040 y a lograr la neutralidad climática de aquí a 2050.
+  claim: El objetivo climático intermedio es para 2040 y la neutralidad climática para 2050.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Reproduce la asignación de cada año a su hito sin alterarla.
+  review_status: pending-human-review
+- id: euns-036
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: Este nuevo presupuesto ayudará a Europa a alcanzar el objetivo climático que se ha propuesto
+    para 2040 y a lograr la neutralidad climática de aquí a 2050.
+  claim: La neutralidad climática es para 2040 y el objetivo intermedio para 2050.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Intercambia los años de los dos hitos del fragmento.
+  review_status: pending-human-review
+- id: euns-037
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 16
+    end: 17
+  premise: Fuentes de financiamiento La estrategia Global Gateway tiene como objetivo movilizar hasta
+    300.000 millones de euros entre 2021 y 2027.
+  claim: El periodo del objetivo cubre el año 2024.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: 2024 está contenido en el rango 2021-2027 del fragmento.
+  review_status: pending-human-review
+- id: euns-038
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: EL PRESUPUESTO DE EUROPA Una ayuda a la renta más justa y mejor orientada a los agricultores
+    N O V I E M B R E 2 0 2 5 Explicación de la propuesta de la PAC 2028-2034 La política agrícola común
+    (PAC) es crucial para apoyar y estabilizar la renta de los agricultores, ya que los pagos directos
+    a los agricultores contribuyeron en promedio un 19 % a sus ingresos en 2023.
+  claim: La propuesta descrita corresponde a la PAC 2028-2035.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: El rango del fragmento termina en 2034, no en 2035.
+  review_status: pending-human-review
+- id: euns-039
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 2
+  premise: Una Unión que se esfuerza por lograr más resultados ORIENTACIONES POLÍTICAS PARA LA PRÓXIMA
+    COMISIÓN EUROPEA 2019-2024 Mi agenda para Europa Por la candidata a presidenta de la Comisión Europea
+    Ursula von der Leyen Este documento fue presentado originalmente el 16 de julio de 2019 por Ursula
+    von der Leyen, en su calidad de candidata al cargo de Presidente de la Comisión Europea.
+  claim: Las orientaciones cubren de 2019 a 2024 inclusive.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Paráfrasis del rango 2019-2024 con extremos inclusivos.
+  review_status: pending-human-review
+- id: euns-040
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 3
+    end: 3
+  premise: De aquí a 2032, los agricultores que reciban pensiones ya no podrán optar a la ayuda decreciente
+    a la renta por superfcie.
+  claim: En 2032 los agricultores que reciban pensiones ya no podrán optar a la ayuda decreciente.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: De aquí a 2032 incluye 2032 como fecha en que la exclusión ya rige.
+  review_status: pending-human-review
+- id: euns-041
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 2
+  premise: El Reglamento IVDR entró en vigor el 26 de mayo de 2022. 2 Clasificación del riesgo de los
+    dispositivos y ámbito de aplicación de los Reglamentos Los productos sanitarios se clasifican en cuatro
+    clases (I, IIa, IIb,
+  claim: El Reglamento IVDR entró en vigor el 26 de mayo de 2023.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Mismo día y mes con distinto año sobre la misma entrada en vigor.
+  review_status: pending-human-review
+- id: euns-042
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  premise: La producción de retoños de variedades locales aumentó de 0,5 millones en 2013 a casi 2 millones
+    en 2020.
+  claim: El periodo comparado va de 2013 a 2020.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Reproduce el rango temporal del fragmento sin alterarlo.
+  review_status: pending-human-review
+- id: euns-043
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 7
+  premise: 'LA ESTRATEGIA GLOBAL GATEWAY 5 Salud República de Moldavia: hospital regional de Bălți El
+    proyecto tiene como objetivo construir y equipar un hospital regional de atención terciaria con una
+    capacidad de 340 camas de hospital y 78 camas en los servicios ambulatorios, en una superficie construida
+    de 38.000 m2.'
+  claim: La superficie construida es de 38 000 metros cuadrados.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: 38.000 m2 equivale a 38 000 metros cuadrados; misma magnitud y entidad.
+  review_status: pending-human-review
+- id: euns-044
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 29
+    end: 29
+  premise: Actualmente, el vehículo está reservado 10 medias jornadas a la semana, cubre hasta 30 000
+    kilómetros al año y la mitad de los habitantes se benefician
+  claim: El vehículo cubre hasta 30 000 000 de metros al año.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: 30 000 kilómetros equivalen a 30 000 000 de metros; se conserva la cota (hasta).
+  review_status: pending-human-review
+- id: euns-045
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  premise: Casi 60 kilómetros de vallas protegen estos retoños frente a los daños causados por animales
+    y 130 000 se protegieron con camisas (tubos de protección para impedir que los
+  claim: Hay casi 60 000 metros de vallas.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: Conversión exacta de kilómetros a metros conservando la aproximación (casi).
+  review_status: pending-human-review
+- id: euns-046
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: '• Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto
+    global, que movilice más de 700 000 millones de euros: ‒ para apoyar los objetivos climáticos y medioambientales,
+    la mitigación del cambio climático, la adaptación a este y la resiliencia, el crecimiento sostenible,
+    la innovación y la independencia estratégica;'
+  claim: El objetivo climático es de 35 millones de euros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: Confunde el 35 % del presupuesto con 35 millones de euros; misma cifra, unidad y significado
+    distintos.
+  review_status: pending-human-review
+- id: euns-047
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  premise: • 65 millones de euros para almuerzos escolares gratuitos y saludables para 700 000 estudiantes
+    de primaria en Ucrania.
+  claim: Hay 65 millones de estudiantes de primaria en Ucrania.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: Aplica los 65 millones de euros a los 700 000 estudiantes; cifras y unidades cruzadas.
+  review_status: pending-human-review
+- id: euns-048
+  document_id: b4e46873-7528-11e9-9f05-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  premise: Las ecoindustrias, vinculadas especialmente a la renovación de edificios, representan más de
+    3,4 millones de empleos en Europa.
+  claim: Las ecoindustrias representan más de 3,4 millones de euros en empleo.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: Sustituye la unidad empleos por euros sobre la misma cifra y entidad.
+  review_status: pending-human-review
+- id: euns-049
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  premise: Alrededor de un tercio de todos los niños (alrededor de 1,6 millones en total) asisten a centros
+    privados de atención y educación de la primera infancia, aunque el 71,3 % de ellos están financiados
+    con fondos públicos (MEFP, 2022b).
+  claim: Alrededor de 1,6 millones de euros en total asisten a centros privados.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: El fragmento cuenta niños, no euros; la unidad cambia el significado.
+  review_status: pending-human-review
+- id: euns-050
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 36
+    end: 36
+  premise: ¿Sabías que más de 700 millones de personas en el mundo viven con alrededor de 1,5 euros al
+    día?
+  claim: Más de 700 millones de personas viven con alrededor de 1,5 millones de euros al día.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: unidad-distinta
+  justification: Añade millones a los 1,5 euros diarios; la cantidad resultante es incompatible.
+  review_status: pending-human-review
+- id: euns-051
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: en cifras En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional
+    (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores.
+  claim: El Fondo de Asociación Nacional y Regional es de 293 700 millones de euros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 293 700 millones es la garantía para la renta, no el total del Fondo (865 000 millones).
+  review_status: pending-human-review
+- id: euns-052
+  document_id: a18b60ce-d888-11eb-895a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  premise: 'Nombre del proyecto Recuperación de los bosques dañados por los desastres naturales y mejora
+    de la viabilidad de los bosques Tipo de beneficiario Asociación de propietarios de bosques; instituciones
+    públicas Período 2016-2020 Financiación • Presupuesto total: 7 345 293 euros • Contribución del Feader:
+    4 647 741 euros • Contribución nacional o regional: 1 549 247 euros • Contribuciones privadas o propias:'
+  claim: La contribución nacional o regional al proyecto de bosques fue de 4 647 741 euros.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 4 647 741 euros es la contribución del Feader, no la nacional (1 549 247 euros).
+  review_status: pending-human-review
+- id: euns-053
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  premise: La UE y sus Estados miembros han proporcionado alrededor de 66 000 millones de euros en apoyo
+    militar desde el inicio de la agresión militar a gran escala de Rusia contra Ucrania, de los cuales
+    6 400 millones de euros se han canalizado a través del Fondo Europeo de Apoyo a la Paz.
+  claim: Se canalizaron unos 66 000 millones de euros a través del Fondo Europeo de Apoyo a la Paz.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: Por el Fondo se canalizaron 6 400 millones, no los 66 000 del total militar.
+  review_status: pending-human-review
+- id: euns-054
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  premise: • Se destinaron más de 50 millones de euros a apoyar a los sectores cultural y creativo de
+    Ucrania, incluidos más de 11,5 millones de euros dedicados al patrimonio cultural.
+  claim: Se dedicaron 50 millones de euros al patrimonio cultural de Ucrania.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 50 millones es el total cultural; al patrimonio se dedicaron más de 11,5 millones.
+  review_status: pending-human-review
+- id: euns-055
+  document_id: a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 7
+  premise: 'LA ESTRATEGIA GLOBAL GATEWAY 5 Salud República de Moldavia: hospital regional de Bălți El
+    proyecto tiene como objetivo construir y equipar un hospital regional de atención terciaria con una
+    capacidad de 340 camas de hospital y 78 camas en los servicios ambulatorios, en una superficie construida
+    de 38.000 m2.'
+  claim: El hospital tendrá 340 camas en los servicios ambulatorios.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 340 son camas de hospital; en ambulatorios hay 78.
+  review_status: pending-human-review
+- id: euns-056
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 8
+    end: 8
+  premise: Según el sindicato CSIF, en 2022- 2023 el 22,47 % del total de docentes tiene este tipo de
+    contratos (que oscilan a escala autonómica entre el 4,7 % de Baleares y el 43,4 % del País Vasco)3
+    .
+  claim: En Baleares el 43,4 % de los docentes tiene este tipo de contrato.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 43,4 % corresponde al País Vasco; Baleares tiene el 4,7 % según el fragmento.
+  review_status: pending-human-review
+- id: euns-057
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 100
+    end: 100
+  premise: Hasta la fecha, Global Gateway ha movilizado 306 000 millones de euros en inversión pública
+    y privada, superando el objetivo inicial de 300 000 millones de euros para 2027.
+  claim: El objetivo inicial de Global Gateway era de 306 000 millones de euros para 2027.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 306 000 es lo ya movilizado; el objetivo inicial era 300 000 millones.
+  review_status: pending-human-review
+- id: euns-058
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 6
+  premise: 'Puede acceder a él: — marcando el número gratuito: 00 800 6 7 8 9 10 11 (algunos operadores
+    pueden cobrar por las llamadas);'
+  claim: Llamar al servicio cuesta 800 euros.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: El número es un identificador telefónico gratuito, no un importe; el fragmento no fija
+    ningún precio.
+  review_status: pending-human-review
+- id: euns-059
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  premise: Ficha informativa para los profesionales sanitarios y las instituciones sanitarias En abril
+    de 2017, el Parlamento Europeo y el Consejo adoptaron el Reglamento sobre productos sanitarios (UE)
+    2017/745 (MDR) y el Reglamento sobre productos sanitarios para diagnóstico in vitro (UE) 2017/746
+    (IVDR).
+  claim: El Reglamento de productos sanitarios se aprobó con un presupuesto de 745 millones.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: 745 es parte del identificador del Reglamento (UE) 2017/745, no un presupuesto.
+  review_status: pending-human-review
+- id: euns-060
+  document_id: f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 6
+    end: 7
+  premise: 'Resumen PANEL EUROPEO DE CIUDADANOS: ¿CÓMO FUNCIONA? 450 000 000 SELECCIÓN ALEATORIA 150 CRITERIOS
+    DE SELECCIÓN PARA UN GRUPO QUE REFLEJE LA DIVERSIDAD DE LA UE País de residencia • Ciudadanos de los
+    27 Estados miembros • Garantizar una representación mínima de todos los países Edad • Tres grupos
+    de edad: 16-29/30-54/más de 55 • Un tercio de los participantes tienen entre 16 y 29 años Educación
+    • Educación primaria o sin educación • Educación secundaria • Educación superior Empleo • Asalariado
+    (trabajador por cuenta propia/dirigente/otras'
+  claim: La selección aleatoria abarca 150 millones de personas.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: 150 es el tamaño del grupo de ciudadanos, no 150 millones; 450 000 000 es otra cifra
+    del diagrama.
+  review_status: pending-human-review
+- id: euns-061
+  document_id: f692aa0b-17a7-11f1-8870-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 5
+    end: 5
+  premise: No tiene por objeto proporcionar orientaciones sobre la aplicación del Reglamento de Inteligencia
+    Artificial de la UE [Reglamento (UE) 2024/1689] .
+  claim: El Reglamento de IA destina 1689 millones a la alfabetización en IA.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: 1689 es parte del identificador 2024/1689; el fragmento no asigna ese importe a nada.
+  review_status: pending-human-review
+- id: euns-062
+  document_id: 1fa0183b-dbbe-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  premise: EL APARTADO 2 ofrece una lista de ocho criterios dirigidos a orientar tanto al profesorado
+    como a los equipos directivos de centros educativos sobre cómo elegir, utilizar y revisar los CED
+    de forma crítica y eficaz.
+  claim: Los ocho criterios se revisarán en ocho semanas.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: El fragmento fija ocho criterios, pero no dice nada sobre semanas de revisión.
+  review_status: pending-human-review
+- id: euns-063
+  document_id: 43a17056-ebf1-11e9-9c4e-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 5
+    end: 5
+  premise: Para contribuir a alcanzar nuestros objetivos, en mis primeros 100 días en el cargo propondré
+    un Pacto Verde Europeo.
+  claim: En los primeros 100 días se celebraron 100 reuniones.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: El fragmento fija un plazo de 100 días, pero no menciona reuniones.
+  review_status: pending-human-review
+- id: euns-064
+  document_id: bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  premise: El presupuesto asignado al programa es de 124,7 millones EUR (financiados en el marco del MRR)
+    para crear 1 148 unidades entre 2021 y finales de 2024.
+  claim: Las 1 148 unidades se entregarán en 1 148 días.
+  expected_label: unsupported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: independiente-significado
+  justification: 1 148 es el número de unidades, no un plazo; el fragmento no fija días de entrega.
+  review_status: pending-human-review
+- id: euns-065
+  document_id: 736395fe-fbf9-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 5
+    end: 6
+  premise: Esta guía contiene una gran cantidad de información útil sobre qué es y lo que hace la UE,
+    así como consejos sobre dónde obtener más información. 27 países 450 millones de ciudadanos 24 lenguas
+    oficiales Unida en la diversidad 9 de mayo Día de Europa 358 millones de personas utilizan el euro
+    a diario en 21 países de la Unión Europea 6 UNA UNIÓN DE VALORES Aunque los europeos hablan distintas
+    lenguas y tienen tradiciones diferentes, comparten el mismo conjunto de valores sobre los que se fundó
+    la UE.
+  claim: 450 millones de personas utilizan el euro a diario en la Unión Europea.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: 450 millones son los ciudadanos; el euro lo utilizan 358 millones según el fragmento.
+  review_status: pending-human-review
+- id: euns-066
+  document_id: aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 1
+    end: 2
+  premise: 'La etiqueta ecológica de la UE Orientaciones sobre el logotipo Última actualización del servicio
+    de asistencia de la etiqueta ecológica de la UE: abril de 2025 Medio Ambiente 2La etiqueta ecológica
+    de la UE – Orientaciones sobre el logotipo Ni la Comisión Europea ni nadie que actúe en su nombre
+    se responsabilizarán del uso que pudiera hacerse de esta información.'
+  claim: El servicio de asistencia de la etiqueta ecológica se actualizó por última vez en abril de 2025.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Reproduce la fecha de última actualización del fragmento sin alterarla.
+  review_status: pending-human-review
+- id: euns-067
+  document_id: 33740183-a581-11f0-a7c5-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 2
+    end: 3
+  premise: Para contribuir a hacer de Internet un lugar más seguro, en 2022 la Unión Europea (UE) creó
+    el Reglamento de Servicios Digitales (DSA).
+  claim: La Unión Europea creó el Reglamento de Servicios Digitales en 2022.
+  expected_label: supported
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: ano-rango
+  justification: Reproduce el año de creación del reglamento sin alterarlo.
+  review_status: pending-human-review
+- id: euns-068
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator:
+    type: page
+    start: 3
+    end: 3
+  premise: 'Objetivos de Desarrollo Sostenible de las Naciones Unidas de la Agenda 2030: La misión apoya
+    el ODS 14 mediante la regeneración de nuestros océanos y aguas, y el ODS 6, garantizando la disponibilidad
+    y la gestión sostenible del agua y el'
+  claim: La misión apoya el ODS 6 mediante la regeneración de los océanos y las aguas.
+  expected_label: contradicted
+  label_source: ai-proposal (pending-human-review, no gold)
+  stress_type: entidad-cruzada
+  justification: La regeneración de océanos corresponde al ODS 14; el ODS 6 es agua y saneamiento.
+  review_status: pending-human-review

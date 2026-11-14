@@ -1,0 +1,235 @@
+# Revisión independiente de etiquetas — 25 casos dev (IA, pendiente de humana)
+# Fecha: 2026-11-13
+# Alcance: solo premisa y afirmación visibles de eval/eu_nli_dev_ai_exploratory.yaml.
+# No se consultaron resultados NLI, detalles, predicciones ni contenido de test.
+# Referencias dev previas son propuestas IA, no humanas.
+# Etiquetas posibles: supported / contradicted / unsupported / ambiguous.
+# ambiguous = la premisa no basta para decidir entre unsupported y contradicted/supported
+#   sin supuestos externos (lectura exacta vs mínima, entidad no nombrada, calificativo añadido).
+# Toda revisión en este archivo es IA y está pendiente de validación humana.
+# No modifica datos, umbrales, resultados ni archivos previos. No calibra ni marca roadmap.
+
+- id: eu-dev-002
+  premise: "PROGRAMAS METAS Planes de colaboración nacional y regional 43 % Fondo Europeo de Competitividad 43 % Programa Marco de Investigación e Innovación 40 % Mecanismo «Conectar Europa» 70 % Instrumento Europa Global 30 %"
+  claim: "El Mecanismo «Conectar Europa» tiene la meta más alta de la tabla, un 70 %, frente al 30 % del Instrumento Europa Global."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Premisa fija 70 % para «Conectar Europa» y 30 % para «Europa Global»; 70 % es el máximo entre 43 %, 43 %, 40 %, 70 %, 30 %."
+  reasoning: "La afirmación reproduce cifras literales y añade solo la comparación 'más alta', verificable por orden numérico dentro de la misma tabla. No introduce modalidad ni entidad externa."
+
+- id: eu-dev-032
+  premise: "Los productos sanitarios se clasifican en cuatro clases (I, IIa, IIb, III)."
+  claim: "Los productos sanitarios se clasifican en tres clases de riesgo."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'cuatro clases (I, IIa, IIb, III)' frente a afirmación: 'tres clases'."
+  reasoning: "Mismo atributo y entidad (número de clases). Cuatro es incompatible con tres bajo lectura exacta habitual de conteo. Contradicción directa."
+
+- id: eu-dev-036
+  premise: "Los centros sanitarios y los profesionales sanitarios están obligados a proporcionar la tarjeta de implante al paciente de que se trate (artículo 18, apartado 2, del Reglamento sobre los productos sanitarios)."
+  claim: "Dicha tarjeta de implante solo se entrega al paciente si este la solicita expresamente."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'están obligados a proporcionar'; afirmación: 'solo ... si ... la solicita expresamente'."
+  reasoning: "La premisa impone obligación incondicional; la afirmación la condiciona a solicitud con 'solo'. 'Solo' excluye la entrega sin solicitud, incompatible con la obligación general sobre el mismo hecho."
+
+- id: eu-dev-037
+  premise: "En virtud de los Reglamentos, los productos sanitarios para diagnóstico in vitro se clasifican ahora en cuatro categorías (A, B, C o D, con un nivel de riesgo que aumenta de A a D) y se evalúan con arreglo a un enfoque basado en el riesgo."
+  claim: "En el diagnóstico in vitro, la categoría A es la de mayor riesgo y la D la de menor."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'riesgo que aumenta de A a D'; afirmación invierte el orden: 'A ... mayor ... D ... menor'."
+  reasoning: "Inversión explícita del orden ordinal sobre las mismas categorías. Contradicción directa."
+
+- id: eu-dev-050
+  premise: "Todas las plataformas en línea deben acatar este reglamento y contribuir a la seguridad de los usuarios de la UE."
+  claim: "Solo las plataformas europeas deben acatar el reglamento."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'Todas las plataformas en línea'; afirmación: 'Solo las plataformas europeas'."
+  reasoning: "'Solo' excluye al resto del universo de la premisa (plataformas no europeas). Restricción de alcance incompatible con 'todas'."
+
+- id: eu-dev-053
+  premise: "‣ no incurrir en tácticas de presión como: > temporizadores, > mensajes de «comprar ahora»,"
+  claim: "Las plataformas pueden usar temporizadores y mensajes de «comprar ahora» para animar las compras de los menores."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa prohíbe 'temporizadores' y 'mensajes de comprar ahora'; afirmación permite usarlos."
+  reasoning: "Permiso frente a prohibición sobre los mismos medios. Inversión de polaridad deóntica. El añadido 'de los menores' no cambia la incompatibilidad del núcleo."
+
+- id: eu-dev-060
+  premise: "El plan se puso en marcha en 2021 y ayudará a movilizar hasta 300.000 millones de euros en inversiones, al reunir a la UE, sus Estados miembros y sus socios financieros y de desarrollo para que trabajen de forma coordinada."
+  claim: "El plan, puesto en marcha en 2021, ayudará a movilizar hasta 300 000 millones de euros en inversiones, reuniendo a la UE, sus Estados miembros y sus socios financieros y de desarrollo para trabajar de forma coordinada."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Coinciden fecha 2021, cifra 'hasta 300 000 millones' y actores 'UE, Estados miembros y socios financieros y de desarrollo'."
+  reasoning: "Paráfrasis directa sin cambio de modalidad ni entidad externa. Se evitó identificar el plan como 'Global Gateway' con conocimiento externo."
+
+- id: eu-dev-079
+  premise: "El «0» se añade al código del grupo del producto textil para que el código conste de tres dígitos, a pesar de que en la Decisión de la Comisión dicho código es «16»."
+  claim: "El grupo textil figura como 16 en la Decisión, pero en la licencia aparece como 016 para completar tres dígitos."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Premisa: código '16' en Decisión y '0' añadido para 'tres dígitos'; afirmación: '16' frente a '016 para completar tres dígitos'."
+  reasoning: "La afirmación explicita la inferencia 16 -> 016 contenida en la premisa. Sin cifras enfrentadas ni cambio de modalidad."
+
+- id: eu-dev-081
+  premise: "Si un titular de licencia tiene más de un producto registrado con una licencia, basta con indicar una sola vez el número de licencia junto al logotipo en cualquier material promocional relacionado."
+  claim: "Con varios productos bajo una misma licencia hay que repetir el número junto a cada logotipo."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'basta con indicar una sola vez'; afirmación: 'hay que repetir ... junto a cada logotipo'."
+  reasoning: "Obligación de repetir frente a suficiencia de una sola mención, sobre el mismo supuesto (varios productos, una licencia). Incompatibles."
+
+- id: eu-dev-090
+  premise: "Para reproducir correctamente el número de licencia de la etiqueta ecológica de la UE, debe aplicarse el siguiente formato: → Tipo de letra: Verdana → Tamaño de fuente: 7 como mínimo (4,5 en el caso de productos impresos, como periódicos, prospectos o libros)"
+  claim: "En los envases de productos congelados se exige un tamaño de fuente de 9 para el número de licencia."
+  original_label: unsupported
+  independent_label: unsupported
+  discrepancy: false
+  evidence: "Premisa fija Verdana 7 mínimo (4,5 impresos); no menciona 'envases', 'congelados' ni '9'."
+  reasoning: "La afirmación introduce entidad y cifra nuevas no inferibles. Compatible con la premisa (un 9 cumpliría el mínimo 7) pero no respaldada por ella. Neutralidad clásica: ni respaldo ni contradicción."
+
+- id: eu-dev-097
+  premise: "Si eres ciudadano de uno de los veintisiete países que integran la UE, también eres ciudadano de la UE."
+  claim: "La ciudadanía de la UE solo corresponde a quienes residen en su país de origen."
+  original_label: contradicted
+  independent_label: unsupported
+  discrepancy: true
+  evidence: "Premisa establece condición suficiente por nacionalidad; no menciona residencia. Afirmación añade restricción 'solo ... residen en su país de origen'."
+  reasoning: "La refutación exigiría el supuesto externo de que la nacionalidad se conserva al residir fuera (p. ej. francés en Alemania sigue siendo ciudadano y por tanto ciudadano UE). Solo con premisa visible, la condición de residencia no queda necesariamente refutada: la premisa no dice que la residencia sea irrelevante. Etiqueta estricta: unsupported, no contradicted. Duda pendiente de criterio humano sobre uso de conocimiento general."
+
+- id: eu-dev-108
+  premise: "En enero de 2021 se introdujo una nueva fuente de ingresos: un impuesto sobre los residuos de envases de plástico no reciclados."
+  claim: "Desde enero de 2021 existe un impuesto europeo sobre los residuos de envases plásticos no reciclados."
+  original_label: supported
+  independent_label: unsupported
+  discrepancy: true
+  evidence: "Premisa: 'nueva fuente de ingresos: un impuesto sobre ...'; no contiene 'europeo'. Afirmación añade 'europeo'."
+  reasoning: "El carácter europeo no consta en la premisa visible. Asumirlo requiere contexto externo (recursos propios UE). Estrictamente, la premisa no respalda el calificativo añadido; tampoco lo contradice. Etiqueta estricta: unsupported. Defecto confirmado en etiqueta original si se exige solo premisa."
+
+- id: eu-dev-109
+  premise: "Todos los sectores de la sociedad y la economía deberán aportar su grano de arena, desde la industria, la energía y el transporte hasta la producción de alimentos, la agricultura y la construcción."
+  claim: "La industria, la energía, el transporte, la alimentación, la agricultura y la construcción deben contribuir al esfuerzo climático."
+  original_label: supported
+  independent_label: unsupported
+  discrepancy: true
+  evidence: "Premisa enumera sectores y deber de aportar, sin mencionar 'clima/climático'. Afirmación especifica 'al esfuerzo climático'."
+  reasoning: "El propósito climático no consta en la premisa visible. La lista de sectores sí coincide, pero el fin añadido no es inferible sin contexto externo. Estrictamente: unsupported. Defecto confirmado en etiqueta original bajo alcance premisa-afirmación."
+
+- id: eu-dev-115
+  premise: "Bosques europeos protegidos y recuperados; 3 000 millones de árboles adicionales plantados de aquí a 2030."
+  claim: "Se plantarán 2 000 millones de árboles adicionales de aquí a 2030."
+  original_label: contradicted
+  independent_label: ambiguous
+  discrepancy: true
+  evidence: "Premisa: '3 000 millones ... adicionales ... de aquí a 2030'; afirmación: '2 000 millones ... adicionales ... de aquí a 2030'. Sin 'solo/exactamente'."
+  reasoning: "Bajo lectura exacta (total = 3000 frente a total = 2000) hay contradicción; bajo lectura de mínimo (plantar 3000 incluye haber plantado 2000) no hay contradicción e incluso habría respaldo parcial. La premisa no fija exactitud. Sin esa marca, el alcance exacto no está justificado. Etiqueta estricta: ambiguous, pendiente de criterio humano sobre lectura numérica."
+
+- id: eu-dev-133
+  premise: "También se están preparando reformas en el acceso a la profesión docente, que ha permanecido invariable durante más de cuarenta años."
+  claim: "El acceso a la profesión docente se reforma cada diez años."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'ha permanecido invariable durante más de cuarenta años'; afirmación: 'se reforma cada diez años'."
+  reasoning: "Invariancia durante 40 años es incompatible con reforma periódica decenal sobre el mismo atributo. Contradicción directa."
+
+- id: eu-dev-149
+  premise: "Almacenamiento de electricidad: Europa apoya el desarrollo de una cadena de valor doméstica que produzca baterías «verdes» basadas en celdas de batería de alto rendimiento, seguras y con la menor huella ambiental posible."
+  claim: "Europa apoya baterías domésticas de alto rendimiento sin importar su huella ambiental."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa exige 'la menor huella ambiental posible'; afirmación declara 'sin importar su huella ambiental'."
+  reasoning: "El calificativo ambiental es esencial en la premisa y la afirmación lo declara irrelevante. Contradicción por calificativo."
+
+- id: eu-dev-159
+  premise: "Propondré la ampliación del régimen de comercio de derechos de emisión a fin de cubrir el sector marítimo y reducir los derechos gratuitos asignados a las compañías aéreas."
+  claim: "Se propone ampliar el régimen de comercio de derechos de emisión al sector marítimo y reducir los derechos gratuitos asignados a las compañías aéreas."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Premisa: 'Propondré la ampliación ... cubrir el sector marítimo y reducir los derechos gratuitos ... aéreas'; afirmación conserva modalidad de propuesta y ambos contenidos."
+  reasoning: "Paráfrasis que conserva modalidad ('se propone' frente a 'propondré') y alcance. No lo presenta como hecho consumado. Respaldo."
+
+- id: eu-dev-163
+  premise: "Europa debe liderar la transición hacia un planeta sano y un nuevo mundo digital."
+  claim: "Europa debe seguir a otros continentes en la transición ecológica y digital."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'debe liderar'; afirmación: 'debe seguir a otros continentes'."
+  reasoning: "Liderar es incompatible con seguir a otros sobre la misma transición. Inversión de rol. Contradicción directa."
+
+- id: eu-dev-203
+  premise: "prudencia: nunca comuniques información demasiado personal a tus nuevos «amigos», y todavía menos a los que casi no conoces."
+  claim: "Puedes compartir datos muy personales con desconocidos en internet."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'nunca comuniques información demasiado personal ... y todavía menos a los que casi no conoces'; afirmación: 'Puedes compartir datos muy personales con desconocidos'."
+  reasoning: "Permiso frente a prohibición sobre la misma acción y destinatario (desconocidos). Inversión de polaridad."
+
+- id: eu-dev-207
+  premise: "Había que producir alimentos suficientes para todos y asegurarse de que los agricultores pudiesen vivir de sus tierras."
+  claim: "La PAC busca que los agricultores abandonen sus tierras."
+  original_label: contradicted
+  independent_label: unsupported
+  discrepancy: true
+  evidence: "Premisa no nombra a la PAC; describe necesidad histórica (producir alimentos, vivir de sus tierras). Afirmación atribuye objetivo a 'La PAC'."
+  reasoning: "La identificación premisa = objetivos PAC requiere enlace externo no visible. Solo con premisa, el sujeto 'PAC' no consta, luego no se puede refutar ni respaldar su supuesto objetivo. Estrictamente: unsupported. La contradicción material (vivir de tierras frente a abandonarlas) solo vale si se acepta que la premisa describe a la PAC. Duda de alcance pendiente de criterio humano."
+
+- id: eu-dev-223
+  premise: "Los componentes de transferencia de conocimientos importantes fueron 174 días de formación y visitas de demostración con expertos locales e internacionales."
+  claim: "La transferencia de conocimientos sumó 17 días de formación y visitas."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa: 'fueron 174 días de formación y visitas de demostración'; afirmación: 'sumó 17 días de formación y visitas'. Misma categoría."
+  reasoning: "Ambas cuantifican el mismo tipo de actividad como total ('fueron' / 'sumó'). 174 frente a 17 para el mismo atributo es incompatible. La lectura de subconjunto (17 como parte de 174) no se sostiene porque la afirmación dice 'sumó', totaliza, no parcializa. Se mantiene contradicted; la advertencia de subconjunto exigiría marca explícita ('entre ellos', 'solo una parte') ausente aquí."
+
+- id: eu-dev-241
+  premise: "El acceso a la energía debe reconocerse como un derecho universal y regularse como un bien público."
+  claim: "La energía debe ser un derecho universal regulado como bien público."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Premisa: 'acceso a la energía ... derecho universal ... bien público'; afirmación reproduce ambos predicados."
+  reasoning: "Paráfrasis directa con elisión menor ('acceso a'). Sin cambio de modalidad ni cifras. Respaldo."
+
+- id: eu-dev-243
+  premise: "En muchos sentidos, esta es la prueba de equidad más veraz: que las decisiones adoptadas hoy mejoren o, al menos, no empeoren la vida de quienes nos sucedan y de quienes sucedan a estos."
+  claim: "Las decisiones de hoy pueden empeorar la vida de las generaciones futuras sin problema."
+  original_label: contradicted
+  independent_label: contradicted
+  discrepancy: false
+  evidence: "Premisa exige 'mejoren o, al menos, no empeoren'; afirmación permite 'pueden empeorar ... sin problema'."
+  reasoning: "Permiso indiferente frente a norma que prohíbe empeorar. 'Sin problema' niega la prueba de equidad formulada. Contradicción deóntica."
+
+- id: eu-dev-283
+  premise: "Se espera que estos proyectos produzcan casi 2,2 millones de toneladas de hidrógeno renovable a lo largo de diez años, lo que evitará la emisión de 15 millones de toneladas de dióxido de carbono."
+  claim: "Se espera que esos proyectos produzcan casi 2,2 millones de toneladas de hidrógeno renovable en diez años y eviten 15 millones de toneladas de CO2."
+  original_label: supported
+  independent_label: supported
+  discrepancy: false
+  evidence: "Coinciden modalidad 'Se espera', cifras 'casi 2,2 millones' y '15 millones', horizonte 'diez años', y CO2 como dióxido de carbono."
+  reasoning: "Paráfrasis con restitución correcta de modalidad e igualdad de cifras y plazo. Respaldo."
+
+- id: eu-dev-286
+  premise: "Hasta la fecha, se han asignado 6 900 millones de euros para financiar programas de inversión que benefician directamente a la población de Ucrania: creando nuevos puestos de trabajo, suministrando electricidad, calefacción y agua limpia, apoyando la creación de viviendas asequibles, construyendo refugios para bombas, rehabilitando infraestructuras dañadas por la guerra, etc."
+  claim: "Se han asignado 3 900 millones de euros a programas de inversión para Ucrania."
+  original_label: contradicted
+  independent_label: ambiguous
+  discrepancy: true
+  evidence: "Premisa: 'se han asignado 6 900 millones ... para financiar programas de inversión que benefician directamente a la población de Ucrania'; afirmación: '3 900 millones ... a programas de inversión para Ucrania'. Sin 'solo/exactamente/totalidad'."
+  reasoning: "Bajo lectura de total exacto hay contradicción (6900 frente a 3900 para el mismo agregado). Bajo lectura de mínimo o subconjunto, 6900 asignados incluyen 3900 asignados y no hay contradicción; la afirmación podría describir una parte. La premisa no fija exclusividad. Etiqueta estricta: ambiguous, pendiente de criterio humano sobre lectura numérica y alcance del agregado."

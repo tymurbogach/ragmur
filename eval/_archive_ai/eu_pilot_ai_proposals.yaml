@@ -1,0 +1,183 @@
+# Propuestas de IA para el piloto EU (20 pares, split dev) — fase 1.8.
+# ESTO NO SON ETIQUETAS HUMANAS REVISADAS. No usar para calibrar umbrales
+# ni para puntuar el modelo NLI hasta que la revisión humana concluya.
+# Fuente intacta: eval/eu_pilot_candidates.yaml (NO modificar).
+# Formularios humanos: eval/annotation_forms/ (NO modificar, NO copiar sus contenidos).
+# Método: cada premisa se comprobó contra el PDF verificado por SHA-256
+# (hashes conformes con eval/eu_manifest.yaml; 19/20 coinciden tras
+# normalizar espacios, 1/20 —eu-pilot-008— coincide tras retirar las
+# viñetas "•" de la extracción). La etiqueta propuesta depende SOLO de la
+# premisa visible citada, sin otros documentos, sin split test, sin modelo NLI.
+# Estado de todas las filas: pendiente de revisión humana final.
+proposals:
+- id: eu-pilot-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "La afirmación parafrasea la premisa sin añadir ni cambiar contenido."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: contradicted
+  rationale: "La premisa afirma ambos objetivos (2040 y neutralidad en 2050); la afirmación dice que excluye 2050."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "Reproduce las dos cifras (35 % y más de 700 000 millones); el truncado de la premisa no las altera."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-004
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: contradicted
+  rationale: "La premisa dice que el Fondo financia descarbonización; la afirmación lo niega."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: supported
+  rationale: "El contenido coincide (regiones en el centro, necesidades de cada territorio) una vez resuelto «estos planes»."
+  review_status: pending-human-review
+  doubts:
+  - "contexto-ausente: la premisa aislada no identifica qué planes son; la identidad (planes de colaboración nacional y regional) está solo en la frase anterior de la misma página."
+  suggested_fix: "Ampliar la premisa con la frase anterior («Los planes de colaboración nacional y regional establecerán un vínculo…») o marcar el par como caso de correferencia para adjudicación."
+- id: eu-pilot-006
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "La afirmación resume la enumeración de la premisa sin cambiar ningún reto."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "Protección y restauración de las aguas europeas con horizonte 2030, como dice la premisa."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: contradicted
+  rationale: "La premisa enumera tres objetivos e incluye la contaminación; la afirmación dice que son dos y que no hay mención a la contaminación."
+  review_status: pending-human-review
+  doubts:
+  - "extracción: la premisa del piloto une con comas los tres ítems que en el PDF van con viñetas «•»; el contenido es idéntico, solo cambia el separador."
+- id: eu-pilot-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: supported
+  rationale: "Año 2022, 15 millones anuales y finalidad del conocimiento coinciden; la enumeración parcial de usuarios no niega al resto."
+  review_status: pending-human-review
+  doubts:
+  - "contexto-ausente: la equivalencia «EU DTO = réplica digital europea del océano» está solo en la frase anterior de la misma página; la premisa aislada deja la sigla sin expandir."
+  suggested_fix: "Ampliar la premisa con la frase anterior («La réplica digital del océano europea (EU DTO, por sus siglas en inglés) es la piedra angular…»)."
+- id: eu-pilot-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: contradicted
+  rationale: "«Más de doscientos centros operativos» contradice «ningún centro operativo», con independencia del referente de «estos proyectos»."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "Cifras 19 % y 2023 reproducidas sin cambios."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-012
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: supported
+  rationale: "Ambos importes (865 000 y 293 700 millones) y su relación coinciden."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-013
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  proposed_label: supported
+  rationale: "La premisa fija el máximo en 100 000 EUR anuales para promover la equidad de pequeñas y medianas; «fja» reproduce la ligadura fi de la extracción."
+  review_status: pending-human-review
+  doubts:
+  - "alcance: la frase siguiente del documento restringe estos límites a DABIS sin afectar a otras ayudas; la afirmación universaliza («ningún agricultor puede recibir más de 100 000»), lo que con el documento completo resulta engañoso. Par ambiguo."
+  suggested_fix: "Acotar la afirmación a DABIS («…en concepto de ayuda DABIS…») o ampliar la premisa con la frase de alcance («Es importante señalar que estos límites solo se aplican a DABIS…»); pasar por adjudicación humana."
+- id: eu-pilot-014
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  proposed_label: contradicted
+  rationale: "La premisa fija 25 % en la horquilla 20 000–50 000; la afirmación dice 50 % (porcentaje que corresponde a la horquilla 50 000–75 000)."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 3, end: 3}
+  proposed_label: contradicted
+  rationale: "«Ya no podrán optar» contradice «mantienen el acceso»; «superfcie» reproduce la ligadura fi de la extracción."
+  review_status: pending-human-review
+  doubts:
+  - "matiz-temporal: «de aquí a 2032» frente a «a partir de 2032»; no cambia el veredicto porque la polaridad ya es opuesta."
+- id: eu-pilot-016
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  proposed_label: contradicted
+  rationale: "La premisa dice que los Reglamentos no requieren transposición; la afirmación exige transponerlos como Directivas."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-017
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: supported
+  rationale: "Cuatro clases (I, IIa, IIb, III) coincidentes."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-018
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  proposed_label: supported
+  rationale: "Contraste 80 % frente a 8 % reproducido sin cambios."
+  review_status: pending-human-review
+  doubts: []
+- id: eu-pilot-019
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  proposed_label: contradicted
+  rationale: "La premisa niega que el etiquetado implique inseguridad; la afirmación afirma esa implicación."
+  review_status: pending-human-review
+  doubts:
+  - "contexto-leve: «este requisito» remite al párrafo anterior (etiquetado CMR/alteradores); la afirmación lo explicita, así que el par es autocontenido."
+- id: eu-pilot-020
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  proposed_label: supported
+  rationale: "La transferencia de responsabilidades al reprocesador (art. 17.2) coincide; la afirmación no niega la condición de legislación nacional."
+  review_status: pending-human-review
+  doubts:
+  - "contexto-ausente: «este producto» y la condición («siempre que la legislación nacional lo permita») están en la frase anterior; la premisa aislada no los contiene."
+  suggested_fix: "Ampliar la premisa con la frase anterior («El Reglamento… permite el reprocesamiento… siempre que la legislación nacional lo permita…») o anotar la condición omitida en la revisión humana."

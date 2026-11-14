@@ -1,0 +1,173 @@
+# Referencia provisional dev revisada por IA, PENDIENTE de revisión humana — fase 1.8.
+# gold: false
+# ai_proposals_only: false (pares revisados por IA a partir de eval/eu_pilot_revised.yaml; NO son etiquetas humanas)
+# review_status global: pending-human-review
+# PROHIBIDO usar este archivo para calibrar umbrales, puntuar el modelo NLI o como prueba reservada.
+# Uso permitido: SOLO prueba exploratoria de desarrollo con --split dev --require-document-id.
+# No sustituye la adjudicación humana ni cierra la tarea 1.8.
+# Fuente de pares: eval/eu_pilot_revised.yaml (premisas intactas; r-012 y r-014 con claim corregido por IA).
+# Fuente de etiquetas: eval/eu_pilot_revised_ai_proposals.yaml (propuestas IA 7 supported / 7 contradicted / 6 unsupported).
+# Trazabilidad: id y derives_from identicos a la fuente; document_id identico; premise y claim copiados literales.
+# Canon de literalidad: ver cabecera de eval/eu_pilot_revised.yaml (colapso \s+, ligaduras conservadas).
+# Particion: SOLO split dev. Ningun document_id test.
+# Formato: lista de nivel superior compatible con eval/nli_run.py (cada caso: id, derives_from, document_id, split, premise, claims[{text, label}]).
+- id: eu-pilot-r-001
+  derives_from: eu-pilot-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise: La transición limpia es la estrategia de Europa para avanzar hacia un continente más limpio y competitivo, que beneficie a sus ciudadanos y empresas.
+  claims:
+  - text: La estrategia europea de transición limpia busca un continente más limpio y competitivo en beneficio de ciudadanos y empresas.
+    label: supported
+- id: eu-pilot-r-002
+  derives_from: eu-pilot-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise: Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto global, que movilice más de 700 000 millones de euros
+  claims:
+  - text: El objetivo de gasto climático y medioambiental es del 35 % del presupuesto global y moviliza más de 700 000 millones de euros.
+    label: supported
+- id: eu-pilot-r-003
+  derives_from: eu-pilot-006
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: Las misiones de la UE son iniciativas a gran escala en el marco del programa Horizonte Europa diseñadas para hacer frente a los principales retos mundiales, como el cambio climático, el cáncer, la salud del suelo, la restauración de los océanos y el desarrollo de ciudades inteligentes y climáticamente neutras.
+  claims:
+  - text: Las misiones de la UE, en el marco de Horizonte Europa, abordan retos como el cambio climático, el cáncer, la salud del suelo, los océanos y las ciudades climáticamente neutras.
+    label: supported
+- id: eu-pilot-r-004
+  derives_from: eu-pilot-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: La misión ofrece un enfoque sistémico para la protección y restauración del océano y de los mares y aguas de Europa de aquí a 2030, de manera que se fomente un entorno marino y de agua dulce sostenible.
+  claims:
+  - text: La misión del océano prevé proteger y restaurar las aguas europeas con horizonte 2030.
+    label: supported
+- id: eu-pilot-r-005
+  derives_from: eu-pilot-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise: La política agrícola común (PAC) es crucial para apoyar y estabilizar la renta de los agricultores, ya que los pagos directos a los agricultores contribuyeron en promedio un 19 % a sus ingresos en 2023.
+  claims:
+  - text: Los pagos directos aportaron en promedio un 19 % a los ingresos de los agricultores en 2023.
+    label: supported
+- id: eu-pilot-r-006
+  derives_from: eu-pilot-012
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise: En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores.
+  claims:
+  - text: La propuesta garantiza al menos 293 700 millones de euros para la renta agraria dentro de un fondo de 865 000 millones.
+    label: supported
+- id: eu-pilot-r-007
+  derives_from: eu-pilot-018
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: Como consecuencia de ello, alrededor del 80 % de todos los productos sanitarios para diagnóstico in vitro necesitan ahora la supervisión del organismo notificado en virtud del Reglamento sobre los productos sanitarios para diagnóstico in vitro (artículo 48), frente al 8 % anteriormente en el marco de la Directiva sobre productos sanitarios para diagnóstico in vitro.
+  claims:
+  - text: Con el Reglamento, alrededor del 80 % de los productos de diagnóstico in vitro requiere supervisión del organismo notificado, frente al 8 % con la Directiva anterior.
+    label: supported
+- id: eu-pilot-r-008
+  derives_from: eu-pilot-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise: Este nuevo presupuesto ayudará a Europa a alcanzar el objetivo climático que se ha propuesto para 2040 y a lograr la neutralidad climática de aquí a 2050.
+  claims:
+  - text: Este nuevo presupuesto solo cubre objetivos climáticos hasta 2040 y excluye la neutralidad climática de 2050.
+    label: contradicted
+- id: eu-pilot-r-009
+  derives_from: eu-pilot-004
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise: El Fondo Europeo de Competitividad reforzará la economía de la UE gracias a inversiones, pequeñas y grandes, destinadas a descarbonizar la economía europea.
+  claims:
+  - text: El Fondo Europeo de Competitividad no financia inversiones destinadas a descarbonizar la economía europea.
+    label: contradicted
+- id: eu-pilot-r-010
+  derives_from: eu-pilot-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: 'la misión aborda tres objetivos específicos con metas claras para 2030: proteger y restaurar los ecosistemas marinos y de agua dulce y la biodiversidad, prevenir y eliminar la contaminación de los océanos, los mares y el agua, garantizar una economía azul sostenible, neutra en carbono y circular.'
+  claims:
+  - text: 'La misión tiene dos objetivos para 2030: biodiversidad y economía azul, sin mención a la contaminación.'
+    label: contradicted
+- id: eu-pilot-r-011
+  derives_from: eu-pilot-014
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise: De 20 000 a 50 000 Reducción del 25 % en la horquilla de 20 000 a 50 000 EUR
+  claims:
+  - text: En la horquilla de 20 000 a 50 000 euros por agricultor y año se aplica una reducción del 50 %.
+    label: contradicted
+- id: eu-pilot-r-012
+  derives_from: eu-pilot-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise: De aquí a 2032, los agricultores que reciban pensiones ya no podrán optar a la ayuda decreciente a la renta por superfcie.
+  claims:
+  - text: De aquí a 2032 los agricultores que reciban pensiones mantienen el acceso a la ayuda decreciente a la renta por superficie.
+    label: contradicted
+- id: eu-pilot-r-013
+  derives_from: eu-pilot-016
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: A diferencia de las Directivas, los Reglamentos son directamente aplicables y no es necesario transponerlos a la legislación nacional.
+  claims:
+  - text: Los Reglamentos de productos sanitarios deben transponerse a la legislación nacional como las Directivas.
+    label: contradicted
+- id: eu-pilot-r-014
+  derives_from: eu-pilot-019
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: El Reglamento sobre los productos sanitarios exige que las etiquetas de los productos indiquen la presencia de sustancias CMR o alteradores endocrinos en los productos sanitarios por encima de determinadas concentraciones. Este requisito de etiquetado no significa que un dispositivo no sea seguro.
+  claims:
+  - text: El Reglamento sobre los productos sanitarios no exige que las etiquetas indiquen la presencia de sustancias CMR o alteradores endocrinos por encima de determinadas concentraciones.
+    label: contradicted
+- id: eu-pilot-r-015
+  derives_from: eu-pilot-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise: Los planes de colaboración nacional y regional establecerán un vínculo entre las reformas y las inversiones limpias, apoyando los objetivos climáticos y energéticos de la UE para 2040 y apoyando a las comunidades y empresas locales en la transición limpia. Estos planes ayudarán a tener mejor en cuenta las necesidades de cada territorio, ya que las regiones ocupan un lugar central en la transición.
+  claims:
+  - text: Dichos planes de colaboración nacional y regional se revisan cada dos años en una cumbre de regiones.
+    label: unsupported
+- id: eu-pilot-r-016
+  derives_from: eu-pilot-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: La EU DTO, puesta en marcha en 2022 con una financiación anual de 15 millones de euros, tiene por objeto proporcionar conocimientos sobre los océanos accesibles y de base científica a una gran variedad de usuarios, desde responsables políticos e investigadores hasta empresas, activistas y ciudadanos, a través de un marco digital unificado que transforma los datos en conocimientos prácticos.
+  claims:
+  - text: La EU DTO emplea a más de doscientas personas en su sede central.
+    label: unsupported
+- id: eu-pilot-r-017
+  derives_from: eu-pilot-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: Ya hay más de doscientos centros de demostración operativos en el marco de estos proyectos, a los cuales se prevé que se sumen otros más.
+  claims:
+  - text: Estos centros de demostración no ofrecen visitas guiadas al público general.
+    label: unsupported
+- id: eu-pilot-r-018
+  derives_from: eu-pilot-013
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise: El límite máximo del importe anual total recibido por un agricultor se fja en 100 000 EUR con el objetivo de promover la equidad en la asignación de recursos, en particular para las explotaciones agrícolas pequeñas y medianas.
+  claims:
+  - text: Este límite de 100 000 euros se revisa automáticamente cada tres años.
+    label: unsupported
+- id: eu-pilot-r-019
+  derives_from: eu-pilot-017
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: Los productos sanitarios se clasifican en cuatro clases (I, IIa, IIb, III).
+  claims:
+  - text: Esta clasificación en cuatro clases se adoptó en 2017 y no ha cambiado desde entonces.
+    label: unsupported
+- id: eu-pilot-r-020
+  derives_from: eu-pilot-020
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise: El Reglamento sobre los productos sanitarios permite el reprocesamiento de productos sanitarios de un solo uso para permitir su reutilización segura, siempre que la legislación nacional lo permita y solo de conformidad con el artículo 17 del Reglamento sobre los productos sanitarios. Un reprocesador asume las responsabilidades del fabricante original de este producto (artículo 17, apartado 2, del Reglamento sobre los productos sanitarios)
+  claims:
+  - text: Dicho reprocesador debe tener su domicilio social en el mismo Estado miembro que el fabricante original.
+    label: unsupported

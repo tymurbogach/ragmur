@@ -1,0 +1,129 @@
+# Registro de cambios post-hoc — PENDIENTE de revisión humana — NO es gold
+# AVISO VISIBLE: estas seis reescrituras se hicieron DESPUÉS de observar resultados
+# sobre eval/eu_nli_dev_ai_exploratory.yaml. El conjunto resultante
+# (eval/eu_nli_dev_ai_posthoc.yaml) está contaminado por selección posterior:
+# SOLO sirve para desarrollo exploratorio. NO es prueba independiente, NO sirve
+# para aceptación, NO calibra umbrales y NO sustituye la revisión humana.
+# Fecha: 2026-11-13.
+# Procedencia: revisión IA del orquestador + subagente de implementación, a partir de
+# eval/eu_nli_dev_ai_error_label_review.yaml (25 casos dev, razonamientos incluidos).
+# No se ejecutó el modelo NLI ni se calibró nada en esta tarea.
+# Alcance: SOLO texto de claim (más phenomenon/change_note/note acordes) en 6 IDs.
+# Etiquetas, premisas, document_id, split, locators y los otros 294 casos: intactos.
+# Excluidos: 0 (los seis admiten corrección clara desde la premisa visible).
+# eu-dev-223 (174 frente a 17 días totales) se mantiene contradicted sin cambios.
+- id: eu-dev-097
+  document_id: 736395fe-fbf9-11f0-8da2-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: La ciudadanía de la UE solo corresponde a quienes residen en su país de origen.
+  revised:
+    label: contradicted
+    text: Aunque una persona sea ciudadana de un país miembro de la UE, no es ciudadana
+      de la UE.
+  change: rewrite-claim
+  reason: 'La premisa otorga la ciudadanía UE por ciudadanía de un país miembro; la
+    afirmación anterior añadía una restricción de residencia ausente en lo visible
+    y solo se refutaba con el supuesto externo de que la nacionalidad se conserva al
+    residir fuera. La nueva niega explícitamente la consecuencia para el mismo sujeto,
+    sin residencia ni entidad externa; corresponde a contradicted desde la premisa.'
+  phenomenon:
+    previous: {negation: false, numeric: true, coreference: false}
+    revised: {negation: true, numeric: false, coreference: false}
+  human_review: pending
+- id: eu-dev-108
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: Desde enero de 2021 existe un impuesto europeo sobre los residuos de envases
+      plásticos no reciclados.
+  revised:
+    label: supported
+    text: Desde enero de 2021 existe un impuesto sobre los residuos de envases de plástico
+      no reciclados.
+  change: rewrite-claim
+  reason: 'La premisa visible no contiene «europeo»; asumirlo exige contexto externo
+    (recursos propios UE). Se elimina el adjetivo y se restituye «de plástico» literal;
+    la nueva reproduce fecha, objeto y alcance visibles y corresponde a supported.'
+  phenomenon:
+    previous: {negation: true, numeric: true, coreference: false}
+    revised: {negation: false, numeric: true, coreference: false}
+  human_review: pending
+- id: eu-dev-109
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  previous:
+    label: supported
+    text: La industria, la energía, el transporte, la alimentación, la agricultura y
+      la construcción deben contribuir al esfuerzo climático.
+  revised:
+    label: supported
+    text: La industria, la energía, el transporte, la producción de alimentos, la agricultura
+      y la construcción deberán aportar su grano de arena.
+  change: rewrite-claim
+  reason: 'La premisa enumera sectores y el deber de aportar, sin mencionar propósito
+    climático; el fin añadido no era inferible. Se elimina «esfuerzo climático», se
+    restituye «producción de alimentos» y el verbo literal «deberán aportar su grano
+    de arena»; corresponde a supported.'
+  phenomenon:
+    previous: {negation: false, numeric: false, coreference: true}
+    revised: {negation: false, numeric: false, coreference: false}
+  human_review: pending
+- id: eu-dev-115
+  document_id: 6e83d2c4-e503-11ef-bc1c-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: Se plantarán 2 000 millones de árboles adicionales de aquí a 2030.
+  revised:
+    label: contradicted
+    text: En total se plantarán exactamente 2 000 millones de árboles adicionales de
+      aquí a 2030.
+  change: rewrite-claim
+  reason: 'Sin marca de exactitud, plantar 3000 incluye haber plantado 2000 y la etiqueta
+    quedaba ambigua entre lectura exacta y de mínimo. «En total» y «exactamente» fijan
+    cuantificación total exclusiva del mismo agregado y plazo; 2000 exactos frente a
+    3000 de la premisa contradice inequívocamente. Corresponde a contradicted.'
+  phenomenon:
+    previous: {negation: false, numeric: true, coreference: false}
+    revised: {negation: false, numeric: true, coreference: false}
+  human_review: pending
+- id: eu-dev-207
+  document_id: 7eee7159-da2b-11f0-8da2-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: La PAC busca que los agricultores abandonen sus tierras.
+  revised:
+    label: contradicted
+    text: No había que asegurarse de que los agricultores pudiesen vivir de sus tierras.
+  change: rewrite-claim
+  reason: 'La premisa no nombra a la PAC; identificarla con sus objetivos exigía enlace
+    externo. La nueva formula la oposición en pasado sobre el mismo deber visible (que
+    los agricultores pudiesen vivir de sus tierras), sin nombrar la PAC ni añadir entidad
+    externa; corresponde a contradicted.'
+  phenomenon:
+    previous: {negation: false, numeric: false, coreference: true}
+    revised: {negation: true, numeric: false, coreference: false}
+  human_review: pending
+- id: eu-dev-286
+  document_id: a43004fd-12ef-11f1-8870-01aa75ed71a1
+  split: dev
+  previous:
+    label: contradicted
+    text: Se han asignado 3 900 millones de euros a programas de inversión para Ucrania.
+  revised:
+    label: contradicted
+    text: Hasta la fecha se han asignado en total exactamente 3 900 millones de euros
+      a programas de inversión para Ucrania.
+  change: rewrite-claim
+  reason: 'Sin marca de totalidad, 6900 asignados admiten 3900 como parte y la etiqueta
+    quedaba ambigua entre total exacto y subconjunto. «Hasta la fecha», «en total»
+    y «exactamente» fijan el mismo agregado total de la premisa en 3900 frente a 6900;
+    contradice inequívocamente. Corresponde a contradicted.'
+  phenomenon:
+    previous: {negation: false, numeric: true, coreference: false}
+    revised: {negation: false, numeric: true, coreference: false}
+  human_review: pending

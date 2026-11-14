@@ -1,0 +1,201 @@
+# Propuestas IA para el piloto EU revisado (20 pares, SOLO dev) — fase 1.8.
+# gold: false
+# ai_proposals_only: true
+# ESTO NO SON ETIQUETAS HUMANAS REVISADAS. No usar para calibrar umbrales
+# ni para puntuar el modelo NLI hasta que la revisión humana concluya.
+# Fuente: eval/eu_pilot_revised.yaml (NO modificar el piloto previo
+# eval/eu_pilot_candidates.yaml ni este archivo tras la entrega sin adjudicación).
+# Método: cada premisa se comprobó contra el PDF verificado por SHA-256
+# (hashes conformes con eval/eu_manifest.yaml). La etiqueta propuesta depende
+# SOLO de la premisa visible citada, sin otros documentos, sin split test,
+# sin modelo NLI. Referencia: solo lo que la premisa visible dice.
+# Estado de todas las filas: pending-human-review. La aprobación final
+# corresponde al orquestador. Nada aquí es revisión humana ni cierra la fase.
+# Intención documentada (no prueba de calidad): 7 supported / 7 contradicted /
+# 6 unsupported. Fenómenos mínimos: ≥4 numeric, ≥4 negation, ≥4 coreference.
+gold: false
+ai_proposals_only: true
+review_status: pending-human-review
+allow_only_split: dev
+do_not_use_for: [calibration, scoring]
+proposals:
+- id: eu-pilot-r-001
+  derives_from: eu-pilot-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice que la transición limpia avanza hacia un continente más limpio y competitivo en beneficio de ciudadanos y empresas → claim dice lo mismo con otras palabras → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-002
+  derives_from: eu-pilot-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice 35 % del presupuesto global y más de 700 000 millones → claim reproduce ambas cifras → por eso supported."
+  review_status: pending-human-review
+  doubts: ["truncado: la premisa omite el ':' final del PDF; no altera cifras ni sentido."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-003
+  derives_from: eu-pilot-006
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa enumera retos (clima, cáncer, suelo, océanos, ciudades neutras) en Horizonte Europa → claim resume la misma enumeración → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-004
+  derives_from: eu-pilot-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice protección y restauración de océano, mares y aguas de Europa de aquí a 2030 → claim dice proteger y restaurar aguas europeas con horizonte 2030 → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-005
+  derives_from: eu-pilot-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice pagos directos con 19 % de ingresos en 2023 → claim reproduce 19 % y 2023 → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-006
+  derives_from: eu-pilot-012
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice Fondo con 865 000 millones y al menos 293 700 millones para renta → claim reproduce ambos importes y su relación → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-007
+  derives_from: eu-pilot-018
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: supported
+  rationale: "Premisa dice 80 % con Reglamento frente a 8 % con Directiva → claim reproduce el contraste → por eso supported."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-008
+  derives_from: eu-pilot-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa dice que este presupuesto ayuda a 2040 y a neutralidad en 2050 → claim dice que solo cubre hasta 2040 y excluye 2050 → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["reescritura mínima del claim para fijar el referente al de la premisa visible; polaridad intacta."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-009
+  derives_from: eu-pilot-004
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa dice que el Fondo refuerza con inversiones para descarbonizar → claim dice que no financia descarbonización → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-010
+  derives_from: eu-pilot-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa enumera tres objetivos con 2030 incluyendo contaminación → claim dice que son dos y sin mención a contaminación → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["extracción: el PDF separa los tres ítems con viñetas; aquí van con comas. Contenido idéntico."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-011
+  derives_from: eu-pilot-014
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa fija 25 % en la horquilla 20 000-50 000 → claim dice 50 % en la misma horquilla → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 4}
+- id: eu-pilot-r-012
+  derives_from: eu-pilot-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa dice que de aquí a 2032 quienes reciban pensiones ya no podrán optar a la ayuda decreciente → claim dice que de aquí a 2032 mantienen el acceso a esa ayuda → mismo periodo y polaridad opuesta → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["corrección IA: claim reformulado al mismo periodo de la premisa («de aquí a 2032»); la versión anterior decía «a partir de 2032» y la oposición podía depender del periodo."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 3}
+- id: eu-pilot-r-013
+  derives_from: eu-pilot-016
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa dice que los Reglamentos no necesitan transposición → claim exige transponerlos como Directivas → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["none"]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 1}
+- id: eu-pilot-r-014
+  derives_from: eu-pilot-019
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: contradicted
+  rationale: "Premisa dice que el Reglamento exige etiquetar CMR o alteradores endocrinos por encima de ciertas concentraciones → claim niega directamente esa obligación → por eso contradicted."
+  review_status: pending-human-review
+  doubts: ["corrección IA: claim anterior infería inseguridad de un producto concreto a partir de la advertencia; la premisa solo dice que el etiquetado no demuestra inseguridad, y la falta de implicación no afirma seguridad. Nuevo claim como negación directa de la primera frase sobre la obligación de etiquetar; premisa intacta."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 5}
+- id: eu-pilot-r-015
+  derives_from: eu-pilot-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa habla de vínculo reformas-inversiones y regiones en el centro → claim añade revisión cada dos años en cumbre; la premisa no dice nada de revisiones → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["premisa ampliada con la frase anterior exacta; «dichos planes» queda fijado. La revisión bienal no se puede inferir ni refutar con la premisa."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-016
+  derives_from: eu-pilot-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa dice puesta en marcha 2022, 15 millones y finalidad del conocimiento → claim dice más de doscientas personas en sede; plantilla y sede no aparecen → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["el claim usa la misma sigla EU DTO de la premisa; no introduce equivalencia externa. La plantilla no se puede inferir ni refutar."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-017
+  derives_from: eu-pilot-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa dice más de doscientos centros operativos y más previstos → claim dice que no ofrecen visitas guiadas; visitas no mencionadas → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["«estos centros» remite a los centros de la premisa. La ausencia de visitas no se infiere ni se refuta."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-018
+  derives_from: eu-pilot-013
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa fija el límite en 100 000 EUR por equidad → claim dice que este límite se revisa cada tres años; revisión no mencionada → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["claim acotado con «este límite» para no universalizar a otras ayudas. La revisión no se puede inferir ni refutar. Alcance DABIS queda para adjudicación si se usa el documento completo."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 4}
+- id: eu-pilot-r-019
+  derives_from: eu-pilot-017
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa dice cuatro clases (I, IIa, IIb, III) → claim añade adopción en 2017 sin cambios; fecha no mencionada → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["«esta clasificación» remite a la premisa. La fecha no se infiere ni se refuta solo con la premisa visible."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 2}
+- id: eu-pilot-r-020
+  derives_from: eu-pilot-020
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  proposed_label: unsupported
+  rationale: "Premisa permite reprocesar si la ley nacional lo permite y transfiere responsabilidades → claim exige mismo Estado miembro para el domicilio; domicilio no mencionado → compatible pero no inferible → por eso unsupported."
+  review_status: pending-human-review
+  doubts: ["premisa ampliada con la frase anterior exacta (condición de legislación nacional). El domicilio no se puede inferir ni refutar."]
+  source: {model: opencode-go/muse-spark-1.3-contributor, doc_page: 5}

@@ -1,0 +1,194 @@
+# Piloto de 20 pares candidatos SIN etiqueta para revisión humana (fase 1.8).
+# Protocolo aprobado: dos anotadores independientes (A/B) + adjudicador.
+# Reglas de este artefacto:
+# - SOLO documentos con split=dev de eu_manifest.yaml. NUNCA test.
+# - premise = pasaje EXACTO de la extracción normalizada (pypdfium2, espacios
+#   unidos) del PDF verificado por SHA-256 contra el manifiesto. No parafraseado.
+# - claim = afirmación candidata redactada para este piloto. NO lleva etiqueta.
+# - PROHIBIDO en este archivo: cualquier etiqueta humana o veredicto del modelo.
+# - phenomenon marca solo fenómenos observables en el texto (negación / cifras y
+#   fechas / correferencia), sin anticipar etiqueta.
+# - annotations: casillas vacías para A, B y adjudicación. Se rellenan a mano.
+# - Elementos de terceros (fotos, pies con ©) excluidos: solo cuerpo editorial UE.
+# - No ejecutar el modelo NLI sobre estos pares hasta completar la anotación.
+pairs:
+- id: eu-pilot-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La transición limpia es la estrategia de Europa para avanzar hacia un continente más limpio y competitivo, que beneficie a sus ciudadanos y empresas."
+  claim: "La estrategia europea de transición limpia busca un continente más limpio y competitivo en beneficio de ciudadanos y empresas."
+  phenomenon: {negation: false, numeric: false, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Definición general, sin cifras ni negación."
+- id: eu-pilot-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Este nuevo presupuesto ayudará a Europa a alcanzar el objetivo climático que se ha propuesto para 2040 y a lograr la neutralidad climática de aquí a 2050."
+  claim: "El nuevo presupuesto europeo solo cubre objetivos climáticos hasta 2040 y excluye la neutralidad climática de 2050."
+  phenomenon: {negation: true, numeric: true, coreference: true}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Años 2040 y 2050; «este» se resuelve con la frase anterior del documento."
+- id: eu-pilot-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto global, que movilice más de 700 000 millones de euros"
+  claim: "El objetivo de gasto climático y medioambiental es del 35 % del presupuesto global y moviliza más de 700 000 millones de euros."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Dos cifras deciden la revisión: 35 % y 700 000 millones."
+- id: eu-pilot-004
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "El Fondo Europeo de Competitividad reforzará la economía de la UE gracias a inversiones, pequeñas y grandes, destinadas a descarbonizar la economía europea."
+  claim: "El Fondo Europeo de Competitividad no financia inversiones destinadas a descarbonizar la economía europea."
+  phenomenon: {negation: true, numeric: false, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "La negación está en la afirmación candidata, no en el pasaje."
+- id: eu-pilot-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Estos planes ayudarán a tener mejor en cuenta las necesidades de cada territorio, ya que las regiones ocupan un lugar central en la transición."
+  claim: "Los planes de colaboración nacional y regional sitúan a las regiones en el centro para atender las necesidades de cada territorio."
+  phenomenon: {negation: false, numeric: false, coreference: true}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«Estos planes» exige la frase anterior del documento."
+- id: eu-pilot-006
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Las misiones de la UE son iniciativas a gran escala en el marco del programa Horizonte Europa diseñadas para hacer frente a los principales retos mundiales, como el cambio climático, el cáncer, la salud del suelo, la restauración de los océanos y el desarrollo de ciudades inteligentes y climáticamente neutras."
+  claim: "Las misiones de la UE, en el marco de Horizonte Europa, abordan retos como el cambio climático, el cáncer, la salud del suelo, los océanos y las ciudades climáticamente neutras."
+  phenomenon: {negation: false, numeric: false, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Enumeración; sin cifras, negación ni correferencia."
+- id: eu-pilot-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La misión ofrece un enfoque sistémico para la protección y restauración del océano y de los mares y aguas de Europa de aquí a 2030, de manera que se fomente un entorno marino y de agua dulce sostenible."
+  claim: "La misión del océano prevé proteger y restaurar las aguas europeas con horizonte 2030."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "El año 2030 decide la revisión."
+- id: eu-pilot-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "la misión aborda tres objetivos específicos con metas claras para 2030: proteger y restaurar los ecosistemas marinos y de agua dulce y la biodiversidad, prevenir y eliminar la contaminación de los océanos, los mares y el agua, garantizar una economía azul sostenible, neutra en carbono y circular."
+  claim: "La misión tiene dos objetivos para 2030: biodiversidad y economía azul, sin mención a la contaminación."
+  phenomenon: {negation: true, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Tres objetivos y año 2030; la afirmación omite uno."
+- id: eu-pilot-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "La EU DTO, puesta en marcha en 2022 con una financiación anual de 15 millones de euros, tiene por objeto proporcionar conocimientos sobre los océanos accesibles y de base científica a una gran variedad de usuarios, desde responsables políticos e investigadores hasta empresas, activistas y ciudadanos, a través de un marco digital unificado que transforma los datos en conocimientos prácticos."
+  claim: "La réplica digital europea del océano se lanzó en 2022 con 15 millones de euros anuales para dar conocimiento científico accesible a políticos, investigadores, empresas y ciudadanía."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Cifras 2022 y 15 millones; EU DTO equivale a la réplica digital del océano europea según la frase anterior."
+- id: eu-pilot-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Ya hay más de doscientos centros de demostración operativos en el marco de estos proyectos, a los cuales se prevé que se sumen otros más."
+  claim: "Estos proyectos ya no tienen ningún centro de demostración operativo."
+  phenomenon: {negation: true, numeric: true, coreference: true}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«estos proyectos» exige contexto anterior; «más de doscientos» es la cifra."
+- id: eu-pilot-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La política agrícola común (PAC) es crucial para apoyar y estabilizar la renta de los agricultores, ya que los pagos directos a los agricultores contribuyeron en promedio un 19 % a sus ingresos en 2023."
+  claim: "Los pagos directos aportaron en promedio un 19 % a los ingresos de los agricultores en 2023."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Cifras 19 % y 2023."
+- id: eu-pilot-012
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores."
+  claim: "La propuesta garantiza al menos 293 700 millones de euros para la renta agraria dentro de un fondo de 865 000 millones."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Dos importes deciden la revisión."
+- id: eu-pilot-013
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  premise: "El límite máximo del importe anual total recibido por un agricultor se fja en 100 000 EUR con el objetivo de promover la equidad en la asignación de recursos, en particular para las explotaciones agrícolas pequeñas y medianas."
+  claim: "Ningún agricultor puede recibir más de 100 000 euros anuales para proteger a las explotaciones pequeñas y medianas."
+  phenomenon: {negation: true, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«fja» reproduce la extracción (ligadura fi); solo aplica a DABIS según el párrafo siguiente."
+- id: eu-pilot-014
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  premise: "De 20 000 a 50 000 Reducción del 25 % en la horquilla de 20 000 a 50 000 EUR"
+  claim: "En la horquilla de 20 000 a 50 000 euros por agricultor y año se aplica una reducción del 50 %."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Tabla de horquillas; el porcentaje decide la revisión."
+- id: eu-pilot-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 3, end: 3}
+  premise: "De aquí a 2032, los agricultores que reciban pensiones ya no podrán optar a la ayuda decreciente a la renta por superfcie."
+  claim: "A partir de 2032 los agricultores con pensión mantienen el acceso a la ayuda decreciente por superficie."
+  phenomenon: {negation: true, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«ya no podrán» y año 2032. «superfcie» reproduce la extracción (ligadura fi del PDF)."
+- id: eu-pilot-016
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "A diferencia de las Directivas, los Reglamentos son directamente aplicables y no es necesario transponerlos a la legislación nacional."
+  claim: "Los Reglamentos de productos sanitarios deben transponerse a la legislación nacional como las Directivas."
+  phenomenon: {negation: true, numeric: false, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«no es necesario» en el pasaje."
+- id: eu-pilot-017
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Los productos sanitarios se clasifican en cuatro clases (I, IIa, IIb, III)."
+  claim: "Los productos sanitarios se reparten en cuatro clases de riesgo, de la I a la III."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "El número de clases decide la revisión."
+- id: eu-pilot-018
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Como consecuencia de ello, alrededor del 80 % de todos los productos sanitarios para diagnóstico in vitro necesitan ahora la supervisión del organismo notificado en virtud del Reglamento sobre los productos sanitarios para diagnóstico in vitro (artículo 48), frente al 8 % anteriormente en el marco de la Directiva sobre productos sanitarios para diagnóstico in vitro."
+  claim: "Con el Reglamento, alrededor del 80 % de los productos de diagnóstico in vitro requiere supervisión del organismo notificado, frente al 8 % con la Directiva anterior."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Contraste 80 % frente a 8 %."
+- id: eu-pilot-019
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  premise: "Este requisito de etiquetado no significa que un dispositivo no sea seguro."
+  claim: "Si un producto sanitario lleva la advertencia de sustancias CMR o alteradores endocrinos, el dispositivo no es seguro."
+  phenomenon: {negation: true, numeric: false, coreference: true}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "Doble negación en el pasaje; «este requisito» remite al párrafo anterior."
+- id: eu-pilot-020
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  premise: "Un reprocesador asume las responsabilidades del fabricante original de este producto (artículo 17, apartado 2, del Reglamento sobre los productos sanitarios)"
+  claim: "El reprocesamiento de un producto de un solo uso transfiere al reprocesador las responsabilidades del fabricante original."
+  phenomenon: {negation: false, numeric: true, coreference: true}
+  annotations: {annotator_a: null, annotator_b: null, adjudication: null}
+  note: "«este producto» y artículo 17; el pasaje exige legislación nacional que lo permita según la frase anterior."

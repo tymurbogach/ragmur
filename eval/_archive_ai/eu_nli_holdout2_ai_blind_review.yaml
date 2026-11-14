@@ -1,0 +1,1203 @@
+# Revisión ciega independiente — segunda reserva NLI (holdout2)
+# Fuente: /tmp/eu_nli_holdout2_blind.yaml (SHA-256 e1af92fd6583ce0f42654bd52ac4b6dd7fafa63c1d5a342252f16ff478597f5b verificado antes de leer)
+# Método: solo premisa visible; sin conocimiento externo, sin NLI, sin scores; contradicción solo ante incompatibilidad lógica.
+- id: ccc63d4fdb3d8eed4f9014b5
+  independent_label: contradicted
+  evidence: "Premisa distingue métodos para alumnado más joven y otros para análisis avanzados; claim impone todos únicamente para universitarios, cuantificador incompatible."
+  doubts: ""
+- id: 4e72caaeba9d841f41f60efe
+  independent_label: supported
+  evidence: "Premisa exige emblema al menos tan destacado y visible como el resto; claim reproduce esa exigencia literal."
+  doubts: ""
+- id: 6a59370d8584149d39110106
+  independent_label: unsupported
+  evidence: "Premisa solo describe función del EIT en triángulo conocimiento; claim añade fundación 2008 y sede Budapest, ausentes en premisa."
+  doubts: ""
+- id: 993f6a6b0cd59ee3a949c5ca
+  independent_label: unsupported
+  evidence: "Premisa expone política de competencia en abstracto; claim añade multas 2022 por dos mil millones, cifra ausente."
+  doubts: ""
+- id: 1506a0113a47dbfeefa063b4
+  independent_label: supported
+  evidence: "Premisa cita Decisión 2011/833/UE de 12-12-2011 sobre reutilización; claim la reproduce."
+  doubts: ""
+- id: 4d81006d62779c6177ce4354
+  independent_label: supported
+  evidence: "Premisa da FEADER 2014-2020, presupuesto 38 000 EUR e itinerante 8-10 días cada verano; claim combina esos tres datos."
+  doubts: ""
+- id: c162e37ab01691cf77af9148
+  independent_label: unsupported
+  evidence: "Premisa describe proceso tres pasos sin duraciones; claim añade diez horas lectivas por itinerario, ausente."
+  doubts: ""
+- id: a87ad83c627c07d9b527a207
+  independent_label: contradicted
+  evidence: "Premisa asigna a itinerario 4 la pregunta sobre influencia en vida cotidiana; claim le atribuye la de cómo se toman decisiones, incompatible."
+  doubts: "Fragmento inicia a mitad de frase; la atribución de la primera pregunta al itinerario previo se infiere por orden."
+- id: c55711638b1992b2aead7cde
+  independent_label: contradicted
+  evidence: "Premisa cifra EIC en 10 105 millones; claim lo cifra en 2 000 millones, cantidad incompatible."
+  doubts: ""
+- id: d70c7ae5a603a16be844c09c
+  independent_label: contradicted
+  evidence: "Premisa remite ejemplos a itinerarios 2 y 4; claim niega presencia en ningún itinerario, incompatible."
+  doubts: ""
+- id: da14d07a9aa07c9da49b9c8e
+  independent_label: unsupported
+  evidence: "Premisa trata normas por programa y vigencia 2014-2020/2021-2027; claim añade publicación francés/inglés 2021, ausente."
+  doubts: ""
+- id: e1e90002d3c7b385cc61ccdb
+  independent_label: supported
+  evidence: "Premisa lista EIC 10 105 dentro de Europa innovadora 13 597; claim reproduce la cifra."
+  doubts: ""
+- id: 88b09439ef7f69adf81d04e7
+  independent_label: contradicted
+  evidence: "Premisa regula reutilización autorizada; claim prohíbe reutilizar bajo ninguna circunstancia, incompatible."
+  doubts: ""
+- id: 9331fb0167db3d55bef450e2
+  independent_label: contradicted
+  evidence: "Premisa permite definir objetivos propios y actualizar el plan; claim impone plan único inmodificable idéntico, incompatible."
+  doubts: ""
+- id: 3821ea8f1982fbd89c46aa46
+  independent_label: supported
+  evidence: "Premisa fija plenarias normalmente Estrasburgo y adicionales Bruselas; claim lo reproduce."
+  doubts: ""
+- id: 47854bdebb9c28798ac93859
+  independent_label: contradicted
+  evidence: "Premisa pide normas más sencillas y menor carga; claim afirma aumento con triple documentación, incompatible."
+  doubts: ""
+- id: 9ab789032c1be2fc4269bcba
+  independent_label: contradicted
+  evidence: "Premisa nombra Consejo previa consulta Parlamento, mandato 6 años; claim afirma elección directa ciudadana cada 5 años, incompatible."
+  doubts: ""
+- id: 33470ad451e7920850fd23ff
+  independent_label: unsupported
+  evidence: "Premisa da presupuesto Euratom 1 400M y objetivos; claim añade dos reactores en Francia/Polonia, ausente."
+  doubts: ""
+- id: e553c978f68f8d8bfe3b6749
+  independent_label: supported
+  evidence: "Premisa declara no se necesita ningún material; claim lo reproduce."
+  doubts: ""
+- id: 53008b6dfa3d1e9e83f532cd
+  independent_label: contradicted
+  evidence: "Premisa autoriza legislar nacional si UE no legisla; claim lo prohíbe aunque UE no legisle, incompatible."
+  doubts: ""
+- id: 52914dee1598c13418b818d4
+  independent_label: contradicted
+  evidence: "Premisa es cooperación eslovaco-austriaca diseño-innovación; claim dice Francia-Alemania pesquero, incompatible en países y sector."
+  doubts: ""
+- id: 81613d30c366bf05b6de2368
+  independent_label: unsupported
+  evidence: "Premisa permite modificar detalles y anuncia convocatoria anual sin fecha; claim añade cierre 15 febrero 12h, ausente."
+  doubts: ""
+- id: dbf78306f089839c27426442
+  independent_label: supported
+  evidence: "Premisa divide proyecto en dos partes y primera crea exposición itinerante de oficios; claim lo reproduce."
+  doubts: ""
+- id: 1974526804d5527927946fcf
+  independent_label: contradicted
+  evidence: "Premisa anuncia puesta en marcha de plataforma y cartografía; claim afirma cancelación, incompatible."
+  doubts: ""
+- id: a70a1b4e4a902b233a6b8d70
+  independent_label: contradicted
+  evidence: "Premisa cita China y EE. UU. que persiguen influir; claim dice ningún país salvo UE lo intenta, incompatible."
+  doubts: ""
+- id: 9efa4d7b423647d746a451cc
+  independent_label: supported
+  evidence: "Premisa fija tres pasos exploración, profundización y reflexión; claim los reproduce."
+  doubts: ""
+- id: 4775a8136fd4353dac5d519b
+  independent_label: unsupported
+  evidence: "Premisa visible advierte desde 1960s y crea Grupo 1988 sin cifras; claim añade informe 1990 y 3 grados a 2100, ausentes."
+  doubts: "Premisa truncada con caracteres ilegibles; no se ve previsión numérica."
+- id: dd60422c1fce922104c17736
+  independent_label: contradicted
+  evidence: "Premisa lista Islandia, Noruega y 15 países asociados en H2020; claim dice ningún no-UE pudo participar, incompatible."
+  doubts: ""
+- id: 7a22c95d76afef8f48a2a150
+  independent_label: unsupported
+  evidence: "Premisa pide centrarse en fase imaginativa sin duración; claim fija 45 minutos exactos, ausente."
+  doubts: ""
+- id: 56479e4137d17284df4c10e0
+  independent_label: supported
+  evidence: "Premisa define ciclo siete años marco financiero plurianual; claim lo reproduce."
+  doubts: ""
+- id: 878636ed97c6f208dda9c181
+  independent_label: contradicted
+  evidence: "Premisa exige acto de comunicación para operaciones >10M; claim las exime, incompatible."
+  doubts: ""
+- id: 3e027e2db0c638eb7b8d81d2
+  independent_label: unsupported
+  evidence: "Premisa solo da cifras EIT 2 965 sin sede ni fechas; claim añade sede Budapest desde 2010, ausente."
+  doubts: ""
+- id: da0c6b342e476ded0eb9f3f6
+  independent_label: unsupported
+  evidence: "Premisa trata estadistas 1945-1950 sin congreso; claim añade Congreso La Haya 1948 con 800 delegados, ausente."
+  doubts: ""
+- id: d52ed6bd7d7d69a643787270
+  independent_label: supported
+  evidence: "Premisa permite modificar número, lugar, duración y objetivos; claim reproduce detalles prácticos modificables."
+  doubts: ""
+- id: cf741b79c92f377bb414e44f
+  independent_label: unsupported
+  evidence: "Premisa exige estrategia nacional MRR sin país ni norma concreta; claim añade real decreto español septiembre 2021, ausente."
+  doubts: ""
+- id: 65fad90f992af4d033749f73
+  independent_label: contradicted
+  evidence: "Premisa apoya agentes de todos tipos y tamaños; claim restringe a grandes audiovisuales, incompatible."
+  doubts: ""
+- id: a01d297b59bd9f3bef95c9e9
+  independent_label: unsupported
+  evidence: "Premisa da 4 millones y 16 000M +40%; claim añade 25 000 asociaciones 2019, ausente."
+  doubts: ""
+- id: 6ab70a59fa45c6e8748219ef
+  independent_label: contradicted
+  evidence: "Premisa reforzará ciencia e inversión en vanguardia; claim eliminará vanguardia, incompatible."
+  doubts: ""
+- id: 599beb18c766f9cac11dde6d
+  independent_label: unsupported
+  evidence: "Premisa detalla efectos Right2Water y Directiva sin cifras de firmas; claim añade más de dos millones, ausente en fragmento."
+  doubts: "Fragmento empieza a mitad; el conteo podría estar fuera del chunk."
+- id: 4deaf24a2dd49bbd49fbfcd2
+  independent_label: contradicted
+  evidence: "Premisa atribuye propuestas a presidente Comisión Juncker septiembre 2015; claim a presidente Consejo Europeo 2012, autor y fecha incompatibles."
+  doubts: ""
+- id: f08197522532cb7389193f0a
+  independent_label: supported
+  evidence: "Premisa abre solicitudes a países programa incluidos todos EEMM; claim lo reproduce."
+  doubts: ""
+- id: 609386558b6dc578ac66ed0d
+  independent_label: contradicted
+  evidence: "Premisa orienta a liderazgo en innovación de mercado vía EIC; claim dice subvencionar agricultura tradicional, objeto incompatible."
+  doubts: ""
+- id: 6f68d4f1f9ce227ccaf73894
+  independent_label: unsupported
+  evidence: "Premisa menciona Fondo Defensa sin cifras y da 5 400+4 600M; claim añade 8 000M Defensa, ausente."
+  doubts: ""
+- id: 61cd5048c3a5866f53348dea
+  independent_label: unsupported
+  evidence: "Premisa regula reutilización y créditos sin lenguas ni fechas; claim añade 24 lenguas junio 2021, ausente."
+  doubts: ""
+- id: aed9df19dbce36db160a4069
+  independent_label: supported
+  evidence: "Premisa dirige SEAE por alto representante con personal Consejo, EEMM y Comisión; claim lo reproduce."
+  doubts: ""
+- id: cd07248fdf2d79a29cb6ce90
+  independent_label: supported
+  evidence: "Premisa asigna al JRC datos independientes y apoyo técnico a responsables; claim lo reproduce."
+  doubts: ""
+- id: abcb7ba368c6cf2b397d9da4
+  independent_label: supported
+  evidence: "Premisa mantiene beneficiario propietario y responsable de licencias; claim lo reproduce."
+  doubts: ""
+- id: e2c4961497b03323f2d17892
+  independent_label: supported
+  evidence: "Premisa cita 1945-1950 y Schuman, Adenauer, De Gasperi, Churchill con nuevas estructuras por intereses comunes y tratados; claim lo resume."
+  doubts: ""
+- id: 9b08fa9b1e98c97ef05203f6
+  independent_label: unsupported
+  evidence: "Premisa reproduce considerando 11 sin historial; claim añade reforma 2018, ausente."
+  doubts: ""
+- id: 31af2f3b79367348bca40f15
+  independent_label: supported
+  evidence: "Premisa lista movilidades personal en observación, docencia y cursos; claim lo reproduce."
+  doubts: ""
+- id: 941124a1719b5c9b200bad3d
+  independent_label: unsupported
+  evidence: "Premisa presenta guía CultureEU sin fechas ni periodicidad; claim añade primera publicación 2018 y actualización bienal, ausentes."
+  doubts: ""
+- id: f46d74e09cded6841f241644
+  independent_label: supported
+  evidence: "Premisa describe kit centrado en arte para configurar comunidades e impulsar cambio democrático; claim lo reproduce."
+  doubts: ""
+- id: 12cff686e076507ab22c0840
+  independent_label: unsupported
+  evidence: "Premisa define licencia de uso de material no sensible sin CC; claim añade exigencia Creative Commons, ausente."
+  doubts: ""
+- id: cad6bc77c48ab7810f9ac52f
+  independent_label: supported
+  evidence: "Premisa fecha 9 mayo y propone común carbón-acero Francia-Alemania; claim lo reproduce."
+  doubts: ""
+- id: 7809fe8b8b027289b842c90a
+  independent_label: unsupported
+  evidence: "Premisa permite definir y actualizar objetivos sin formato; claim añade extensión mínima 20 páginas, ausente."
+  doubts: ""
+- id: 17828e3ad6e1739c4acb9605
+  independent_label: contradicted
+  evidence: "Premisa impone máxima apertura y transparencia del gasto; claim declara ejecución confidencial, incompatible."
+  doubts: ""
+- id: 7913e1d2c7e10c4bbd517dd5
+  independent_label: supported
+  evidence: "Premisa fecha septiembre 2015 y atribuye a Juncker propuestas zona euro; claim lo reproduce."
+  doubts: ""
+- id: 6ac1147fa608594781dbd23b
+  independent_label: unsupported
+  evidence: "Premisa solo da contexto JRC/EIT sin cifras EIT; claim añade 500M anuales, ausente."
+  doubts: ""
+- id: a96dd9934ebe15f11f0c36dd
+  independent_label: unsupported
+  evidence: "Premisa explica procedimiento Defensora sin fechas ni reelección; claim añade reelección O'Reilly 2019, ausente."
+  doubts: ""
+- id: ba848e2e0cbcb8085c944d59
+  independent_label: contradicted
+  evidence: "Premisa declara acreditación no obligatoria con vías alternativas; claim la declara obligatoria, incompatible."
+  doubts: ""
+- id: afe5c650ad5536fd7fe07887
+  independent_label: unsupported
+  evidence: "Premisa describe visitas, talleres, HistoriCall e IWalk sin visitantes; claim añade más de un millón anuales, ausente."
+  doubts: ""
+- id: f5b1b7871ab7feb03504ca21
+  independent_label: contradicted
+  evidence: "Premisa define movimiento creativo que une Pacto Verde y vida cotidiana; claim dice ayudas directas a vivienda, objeto incompatible."
+  doubts: ""
+- id: 3ec2e729e4a5462b84b0ecce
+  independent_label: contradicted
+  evidence: "Premisa adopta gran mayoría por ordinario; claim exige unanimidad para toda legislación, incompatible."
+  doubts: ""
+- id: 305fbcefe82f213f8a436441
+  independent_label: unsupported
+  evidence: "Premisa invita al EYE sin periodicidad ni sede ni año; claim añade bienal Estrasburgo desde 2014, ausente."
+  doubts: ""
+- id: 2db79bce4556dc70f70b2b2e
+  independent_label: contradicted
+  evidence: "Premisa gestiona bajo supervisión Tribunal y aprobación Parlamento; claim dice sin supervisión, incompatible."
+  doubts: ""
+- id: 77cdfd7c466069a45ef62f0a
+  independent_label: unsupported
+  evidence: "Premisa es introducción sobre normas vinculantes sin acto; claim añade presentación Bruselas marzo 2022, ausente."
+  doubts: ""
+- id: d2043f145d73ab0a044a1ee4
+  independent_label: unsupported
+  evidence: "Premisa lista sinergias a/b/c sin artículos; claim añade artículo 15 RDC, ausente."
+  doubts: ""
+- id: a3074d8e20ad8481d65b7ee0
+  independent_label: supported
+  evidence: "Premisa lista atraer talento y cooperación/circulación cerebros; claim reproduce ambos beneficios."
+  doubts: ""
+- id: 50f8f376f493e941dc79eb2e
+  independent_label: contradicted
+  evidence: "Premisa incluye conectividad digital entre componentes; claim dice MRR la excluye, incompatible."
+  doubts: ""
+- id: 2ce61ef4b130141a105683b6
+  independent_label: contradicted
+  evidence: "Premisa ordena contar con estrategia nacional MRR; claim prohíbe elaborarla, incompatible."
+  doubts: ""
+- id: cc5f978eb316b91ca8374350
+  independent_label: supported
+  evidence: "Premisa fija pregunta itinerario 4 en influencia UE en vida cotidiana; claim la reproduce."
+  doubts: ""
+- id: e3a1f1e7c6ed908c454a3232
+  independent_label: contradicted
+  evidence: "Premisa pide atraer talento y mayor cooperación; claim dice reducir cooperación y frenar circulación, incompatible."
+  doubts: ""
+- id: e46c270949451ecd7f14a009
+  independent_label: unsupported
+  evidence: "Premisa da 65 000 investigadores y 25 000 doctorandos sin presupuesto; claim añade 1 100M anuales, ausente."
+  doubts: ""
+- id: 9116eec17c4282302cc6fbd7
+  independent_label: supported
+  evidence: "Premisa define movimiento creativo que conecta Pacto Verde con vida cotidiana; claim lo reproduce."
+  doubts: ""
+- id: c765dec8bcc6ad2a451d1886
+  independent_label: unsupported
+  evidence: "Premisa describe procedimiento sin historia; claim añade Lisboa 2009, ausente en fragmento."
+  doubts: ""
+- id: 37640c005887fdb25a424213
+  independent_label: unsupported
+  evidence: "Premisa visible exige millón en siete países sin plazo; claim añade máximo 18 meses, ausente en fragmento."
+  doubts: "Chunk truncado tras requisitos; el plazo podría estar fuera."
+- id: ed0dcf7c1bfce4f55df13f2b
+  independent_label: unsupported
+  evidence: "Premisa celebra mercado único 28 países 500M sin fechas; claim añade 1993 Maastricht, ausente."
+  doubts: ""
+- id: 94eeddcd58fe663f292fff38
+  independent_label: supported
+  evidence: "Premisa permite que ambos cargos recaigan en misma persona; claim lo reproduce."
+  doubts: ""
+- id: aa5ca6bce53757a9667d87d5
+  independent_label: contradicted
+  evidence: "Premisa exime a Comisión de responsabilidad por reutilización; claim le imputa plena responsabilidad, incompatible."
+  doubts: ""
+- id: 95b26b70edcb82bbc71f4235
+  independent_label: unsupported
+  evidence: "Premisa trata influencia comercial sin cuotas; claim añade 15% comercio mercancías, ausente."
+  doubts: ""
+- id: 11c8a5d8da90325a076bf34c
+  independent_label: contradicted
+  evidence: "Premisa pide colocarse de pie en línea según acuerdo; claim dice por escrito sin moverse, incompatible."
+  doubts: ""
+- id: 1a00b284ed413e5b35da2504
+  independent_label: contradicted
+  evidence: "Premisa ordena suprimir datos no verificados tras recogida; claim dice conservar indefinidamente, incompatible."
+  doubts: ""
+- id: 684477db807d30a81ea9d83d
+  independent_label: supported
+  evidence: "Premisa exige actividad de comunicación para estratégicas y >10M; claim lo reproduce."
+  doubts: ""
+- id: facfa0928e7f742794e15d82
+  independent_label: unsupported
+  evidence: "Premisa fija objetivo 11-24 años sin lenguas; claim añade 24 lenguas, ausente."
+  doubts: ""
+- id: 568a7b1d15ae1ca58a67194e
+  independent_label: contradicted
+  evidence: "Premisa financia fronteras, becas, doctorados e infraestructuras; claim dice solo infraestructuras deportivas y culturales, incompatible."
+  doubts: ""
+- id: a0925edf9ef9ec924771f0a5
+  independent_label: supported
+  evidence: "Premisa ejemplifica convertir resultados en oportunidades vía compra pública innovación; claim lo reproduce."
+  doubts: ""
+- id: 05b6427aa2f853e23eefa2fd
+  independent_label: supported
+  evidence: "Premisa identifica Europol La Haya policial-aduanero como avance; claim lo reproduce."
+  doubts: ""
+- id: 41fd6a1a9f35f50dba4aaa31
+  independent_label: supported
+  evidence: "Premisa ofrece familiarizarse con instituciones europeas; claim lo reproduce."
+  doubts: ""
+- id: 8929c82dce2aabe66d3d574c
+  independent_label: supported
+  evidence: "Premisa lanza NextGenerationEU primavera 2021 con narrativa en todas lenguas; claim lo reproduce."
+  doubts: ""
+- id: 569e5807761b21054aa51093
+  independent_label: supported
+  evidence: "Premisa ordena suprimir datos no verificados tras recogida; claim lo reproduce."
+  doubts: ""
+- id: 56ddac8d6c1cddbf12da6c2f
+  independent_label: supported
+  evidence: "Premisa fija objetivo BCE en estabilidad monetaria con inflación baja y estable; claim lo reproduce."
+  doubts: ""
+- id: 7f6ebb8f3ec7953a5cf70e97
+  independent_label: supported
+  evidence: "Premisa permite informe especial si no aceptan recomendaciones; claim lo reproduce."
+  doubts: ""
+- id: e0b77183dd8fbe4f52f9917d
+  independent_label: contradicted
+  evidence: "Premisa lista 38 socios UE y no-UE; claim dice todos de un único Estado, incompatible."
+  doubts: ""
+- id: 7408710ed94b568a68774177
+  independent_label: supported
+  evidence: "Premisa advierte desde 1960s aumento temperatura; claim lo reproduce."
+  doubts: ""
+- id: f25576bc7967e770e2e2a398
+  independent_label: supported
+  evidence: "Premisa estructura en Cultura y MEDIA más intersectorial; claim lo reproduce."
+  doubts: ""
+- id: bc1d717b3bb50d67d54cd58e
+  independent_label: supported
+  evidence: "Premisa sitúa UE entre federalismo pleno EE. UU. y cooperación ONU; claim lo reproduce."
+  doubts: ""
+- id: d473a459c874d6bea8a034a5
+  independent_label: contradicted
+  evidence: "Premisa define ciclo siete años; claim dice tres años, incompatible."
+  doubts: ""
+- id: 896f43bf4f94d02843bf942b
+  independent_label: contradicted
+  evidence: "Premisa centra kit en arte y cambio democrático; claim dice contabilidad juvenil, tema incompatible."
+  doubts: ""
+- id: 8a21144a43a4072bdf976d5b
+  independent_label: contradicted
+  evidence: "Premisa sitúa UE en término medio; claim dice federal pleno idéntico EE. UU., incompatible."
+  doubts: ""
+- id: b76595275303957c5e4cabf9
+  independent_label: supported
+  evidence: "Premisa niega distribución fija y exige excelencia, impacto y eficiencia; claim lo reproduce."
+  doubts: ""
+- id: 31d946de03ecd99198d21068
+  independent_label: contradicted
+  evidence: "Premisa exige sinergias desde diseño a/b/c; claim prohíbe cualquier sinergia, incompatible."
+  doubts: ""
+- id: 5d0c30bb28ad336075e57bb3
+  independent_label: contradicted
+  evidence: "Premisa incluye respuestas de la Comisión en la web; claim dice no las publica, incompatible."
+  doubts: ""
+- id: 057b12e13a71e1817c107172
+  independent_label: contradicted
+  evidence: "Premisa permite nuevas actividades sin solicitud distinta; claim exige nueva acreditación cada vez, incompatible."
+  doubts: ""
+- id: ce58dff79781241ec6810634
+  independent_label: supported
+  evidence: "Premisa permite probar nuevos tipos con socios nuevos sin solicitud distinta; claim lo reproduce."
+  doubts: ""
+- id: f7a1fe4262539dc3a411088c
+  independent_label: contradicted
+  evidence: "Premisa documenta nueva legislación y Directiva agua por Right2Water; claim niega resultado alguno, incompatible."
+  doubts: ""
+- id: 423a3611d61ef2aaaa56fca1
+  independent_label: contradicted
+  evidence: "Premisa ofrece HistoriCall, IWalk y oferta digital ampliada; claim niega recursos digitales, incompatible."
+  doubts: ""
+- id: 6723e5750af4837a39aec84b
+  independent_label: contradicted
+  evidence: "Premisa declara normas jurídicamente vinculantes; claim dice meramente orientativas no vinculantes, incompatible."
+  doubts: ""
+- id: f2eabdb5b81569ae4d0a54b7
+  independent_label: supported
+  evidence: "Premisa adopta gran mayoría por ordinario con Parlamento y Consejo; claim lo reproduce."
+  doubts: ""
+- id: 5b34bcb7303ead1056733b49
+  independent_label: contradicted
+  evidence: "Premisa cifra 80% con descubrimientos o avances; claim dice menos del 10%, incompatible."
+  doubts: ""
+- id: f7c13efd33a96313e9153e40
+  independent_label: contradicted
+  evidence: "Premisa faculta formular recomendaciones; claim niega potestad, incompatible."
+  doubts: ""
+- id: c2c8bbff7034ce2b922d90f5
+  independent_label: unsupported
+  evidence: "Premisa lista actividades apoyadas sin cifras; claim añade millón FP 2022, ausente."
+  doubts: ""
+- id: 31ae10df5016b6510af1fc2f
+  independent_label: supported
+  evidence: "Premisa cifra Euratom 1 400M y total conjunto 96 900M; claim lo reproduce."
+  doubts: ""
+- id: afd378773ad0adfcf9f410ee
+  independent_label: unsupported
+  evidence: "Premisa trata ciclo 7 años y MFP 2014-2020 sin reparto; claim añade 40% cohesión, ausente."
+  doubts: ""
+- id: 1a087b1e5798d2bf5b0b4e01
+  independent_label: unsupported
+  evidence: "Premisa lista componentes y enlaces MRR sin país ni importe; claim añade España abril 2021 70 000M, ausente."
+  doubts: ""
+- id: 372b23aa5802f96ae8ca554d
+  independent_label: contradicted
+  evidence: "Premisa exige millón con mínimo en siete países; claim basta un solo país, incompatible."
+  doubts: ""
+- id: 8b154c66caf8703690e1ed36
+  independent_label: unsupported
+  evidence: "Premisa describe obra y exposición sin estreno ni público; claim añade Atenas 5 000, ausente."
+  doubts: ""
+- id: 6bb231373aa494d6b91eb537
+  independent_label: unsupported
+  evidence: "Premisa trata visibilidad por proyecto sin historia del emblema; claim añade diseño 1955 Heitz, ausente."
+  doubts: ""
+- id: 7b3df20b536f52d9c3412685
+  independent_label: contradicted
+  evidence: "Premisa estructura dos capítulos más intersectorial; claim dice capítulo único audiovisual, incompatible."
+  doubts: ""
+- id: 8019febadf9ecbb5faae40ac
+  independent_label: contradicted
+  evidence: "Premisa instituye Cumbre por TECG; claim dice Maastricht, acto incompatible."
+  doubts: ""
+- id: f05e655f7e4aaa850ea9263e
+  independent_label: contradicted
+  evidence: "Premisa propone sector público primero en desplegar invención; claim dice excluye por principio, incompatible."
+  doubts: ""
+- id: 8471844023c6b21b1a3cc617
+  independent_label: supported
+  evidence: "Premisa anuncia plataforma resultados y cartografía Horizonte-Interreg; claim lo reproduce."
+  doubts: ""
+- id: ade00146889550c1b1556a8a
+  independent_label: unsupported
+  evidence: "Premisa regula apoyo y datos sin sistema central ni fechas; claim añade enero 2020, ausente."
+  doubts: ""
+- id: b2b3e4641dda8265436fec45
+  independent_label: supported
+  evidence: "Premisa crea condiciones marco ajustadas a prioridades Comisión; claim lo reproduce."
+  doubts: ""
+- id: 9d303fa75587707e90b085cf
+  independent_label: unsupported
+  evidence: "Premisa ejemplifica sinergias sin ficha ni fecha; claim añade octubre 2022, ausente."
+  doubts: ""
+- id: 43eb127146ace19d1ef26b64
+  independent_label: unsupported
+  evidence: "Premisa lista Sibiu entre comunicaciones sin asistentes; claim añade 28 jefes, ausente."
+  doubts: ""
+- id: 8badf89809680b626815181c
+  independent_label: unsupported
+  evidence: "Premisa describe pilares y objetivos sin conteo; claim añade 10 000 proyectos 2014-2020, ausente."
+  doubts: ""
+- id: a68a3290971b6bcc8cdb7516
+  independent_label: contradicted
+  evidence: "Premisa refleja normativa favorable PI y ayudas; claim dice eliminar toda normativa PI, incompatible."
+  doubts: ""
+- id: 8624e2ba3fd3323ab23d98f0
+  independent_label: unsupported
+  evidence: "Premisa anuncia red futura sin tamaño; claim añade 500 diseñadores 20 países, ausente."
+  doubts: ""
+- id: 44a8660764e7e3289fdea795
+  independent_label: contradicted
+  evidence: "Premisa totaliza 96 900M ambos programas; claim dice 50 000M, incompatible."
+  doubts: ""
+- id: f101999f2392f68e8d921141
+  independent_label: contradicted
+  evidence: "Premisa deja comunicación PAC a EEMM no Comisión; claim dice Comisión gestiona todo, incompatible."
+  doubts: ""
+- id: 3128ad4e081f0b43c5c7b08f
+  independent_label: unsupported
+  evidence: "Premisa narra propuesta 9 mayo sin lugar ni prensa; claim añade Quai d'Orsay 300 periodistas, ausente."
+  doubts: ""
+- id: 1da7d810c246e739eb9c770f
+  independent_label: contradicted
+  evidence: "Premisa publica miembros y correos en web ICE; claim dice confidencial nunca publicado, incompatible."
+  doubts: ""
+- id: b7ce93c5b5ab60e0d6d32d45
+  independent_label: contradicted
+  evidence: "Premisa prevé reducción financiera por incumplimiento; claim dice sin consecuencia, incompatible."
+  doubts: ""
+- id: aee16908931c898ea503fc57
+  independent_label: unsupported
+  evidence: "Premisa distingue pilares 1/3 beneficiario único y 2 consorcio sin calendario; claim añade bienal en DO, ausente."
+  doubts: ""
+- id: 6afc1cc2ee169e07feac7539
+  independent_label: contradicted
+  evidence: "Premisa busca desarrollar vínculos para sinergias; claim prohíbe colaborar, incompatible."
+  doubts: ""
+- id: a084103d04d57fe963799bc2
+  independent_label: contradicted
+  evidence: "Premisa exime mayoría y 49 pobres salvo armas; claim impone aranceles plenos sin excepción, incompatible."
+  doubts: ""
+- id: 9116cbb8277eedf4987436d7
+  independent_label: unsupported
+  evidence: "Premisa apoya innovación vía EIC/EIT sin historia; claim añade creación 2019 piloto, ausente."
+  doubts: ""
+- id: 8f5dce03fa74abf336046eef
+  independent_label: contradicted
+  evidence: "Premisa integra Consejo, EEMM y Comisión; claim dice solo Comisión, composición incompatible."
+  doubts: ""
+- id: 59b5977c8d8c4e53bc629fbb
+  independent_label: supported
+  evidence: "Premisa condiciona aprobación a informe Tribunal; claim lo reproduce."
+  doubts: ""
+- id: e143f22ae87d3ff3a44a61b2
+  independent_label: unsupported
+  evidence: "Premisa prevé conciliación sin plazo; claim añade máximo 21 días, ausente."
+  doubts: ""
+- id: 0fd7b0d5ae6ab6138c3d8f08
+  independent_label: unsupported
+  evidence: "Premisa trata misiones y simplificación sin dotaciones; claim añade 1 000M por misión, ausente."
+  doubts: ""
+- id: 4b9d978f3f394a7f7ac2a198
+  independent_label: unsupported
+  evidence: "Premisa ofrece vías alternativas sin duraciones; claim añade máximo 6 meses, ausente."
+  doubts: ""
+- id: 898c8dccf7ba09c416907289
+  independent_label: contradicted
+  evidence: "Premisa mantiene disposiciones 2014-2020 aplicables; claim dice derogadas retroactivamente, incompatible."
+  doubts: ""
+- id: 88b36ccc723c7d12458484cd
+  independent_label: supported
+  evidence: "Premisa decide Comisión curso al millón comprobado; claim lo reproduce."
+  doubts: ""
+- id: 1a5afad8d3b206cb87ce97c6
+  independent_label: supported
+  evidence: "Premisa basta una acreditación para 7 años clave 1; claim lo reproduce."
+  doubts: ""
+- id: 23bb6db26f28e5b673806b78
+  independent_label: unsupported
+  evidence: "Premisa traduce gratis sin plazo; claim añade un mes, ausente."
+  doubts: ""
+- id: d0aafb2e68dfc0053d99a146
+  independent_label: supported
+  evidence: "Premisa exige visibilidad cada proyecto con emblema y declaración; claim lo reproduce."
+  doubts: ""
+- id: 8dbaf781b60e39eed41a6174
+  independent_label: unsupported
+  evidence: "Premisa trata talento y cooperación sin empleo; claim añade 95% a 2 años, ausente."
+  doubts: ""
+- id: 920647d7af85ef949dc35e1a
+  independent_label: unsupported
+  evidence: "Premisa da niveles, 10-30 min y 5-30/11-24 sin estudios; claim añade validación 2 000/10, ausente."
+  doubts: ""
+- id: 3e7f57bd8bb3df222c289ff5
+  independent_label: supported
+  evidence: "Premisa incluye 5 400M NGEU y refuerzo 4 600M; claim lo reproduce."
+  doubts: ""
+- id: 836b6f86da8220eb28396626
+  independent_label: unsupported
+  evidence: "Premisa regula uso emblema con otro logotipo sin manual ni fecha; claim añade actualización 2020, ausente."
+  doubts: ""
+- id: d9873d04b8651a58ff87cbc2
+  independent_label: unsupported
+  evidence: "Premisa describe subprograma Cultura sin cifras; claim añade 2 000M 2021-2027, ausente."
+  doubts: ""
+- id: 14424f731b56da737124ec5c
+  independent_label: supported
+  evidence: "Premisa dirige Fondo a RNB inferior 90% media; claim lo reproduce."
+  doubts: ""
+- id: eb4ea4196a9cbf64dbfb0857
+  independent_label: supported
+  evidence: "Premisa autoriza reutilizar con fuente y sin deformar; claim lo reproduce."
+  doubts: ""
+- id: 1797669328fc67316f8a892e
+  independent_label: unsupported
+  evidence: "Premisa da 38 000 EUR y 8-10 días sin visitantes; claim añade 100 000 anuales, ausente."
+  doubts: ""
+- id: 2a8e9ca8aa444a579aa339b4
+  independent_label: contradicted
+  evidence: "Premisa aumenta 30% real sin Reino Unido; claim dice recorte 30%, dirección incompatible."
+  doubts: ""
+- id: d32039689257e642d19cbd48
+  independent_label: unsupported
+  evidence: "Premisa anuncia Kohesio marzo 2022 sin premios; claim añade premio 2023, ausente."
+  doubts: ""
+- id: a81777d13f15eea48d83e18f
+  independent_label: supported
+  evidence: "Premisa exige audiencias y aprobación para nombrar Comisión; claim lo reproduce."
+  doubts: ""
+- id: 52d31c629f318915c241012d
+  independent_label: supported
+  evidence: "Premisa lista expansión, activación, actualización y conectividad; claim reproduce cuatro componentes."
+  doubts: ""
+- id: cfc4a6bf72c5cfdb23439e6a
+  independent_label: contradicted
+  evidence: "Premisa premia Química por edición genoma; claim dice Física por astrofísica, campo y motivo incompatibles."
+  doubts: ""
+- id: a77db9226bc17aef960b369b
+  independent_label: unsupported
+  evidence: "Premisa da ISBN/DOI sin páginas ni lenguas; claim añade 12 páginas 11 lenguas, ausente."
+  doubts: ""
+- id: 860c47133873d0bad9661d5a
+  independent_label: supported
+  evidence: "Premisa prohíbe gestionar pero permite promover/apoyar transparente; claim lo reproduce."
+  doubts: ""
+- id: 52b567496f10b0c0d3520420
+  independent_label: supported
+  evidence: "Premisa aspira a líder innovación mercado vía EIC; claim lo reproduce."
+  doubts: ""
+- id: 5b8372f1bbc40c0eacad8aa3
+  independent_label: unsupported
+  evidence: "Premisa pide vínculos de gobernanza sin informes; claim añade informe anual 100 indicadores, ausente."
+  doubts: ""
+- id: 7723e5bcb494214623177533
+  independent_label: supported
+  evidence: "Premisa propone destacar financiación complementaria en programas y convocatorias; claim lo reproduce."
+  doubts: ""
+- id: 0158b1770f342adcb5062e48
+  independent_label: unsupported
+  evidence: "Premisa prevé orientaciones prácticas sin fecha ni DO; claim añade junio 2023, ausente."
+  doubts: ""
+- id: 83a25f2acb4b806a5cdd53f8
+  independent_label: supported
+  evidence: "Premisa declara no obligatoria y ofrece proyecto breve o consorcio; claim lo reproduce."
+  doubts: ""
+- id: 3288ce13d57a8cfc87b832c4
+  independent_label: supported
+  evidence: "Premisa pide adoptar posición en línea según acuerdo; claim lo reproduce."
+  doubts: ""
+- id: c92e2bfa39e4ed5e1b2ea028
+  independent_label: contradicted
+  evidence: "Premisa abre a países programa incluidos EEMM; claim restringe a terceros no asociados, cobertura incompatible."
+  doubts: ""
+- id: a2d20bed102648eea5917767
+  independent_label: contradicted
+  evidence: "Premisa permite dictamen motivado por subsidiariedad; claim niega toda vía, incompatible."
+  doubts: ""
+- id: f381845e1010f488221b8523
+  independent_label: supported
+  evidence: "Premisa asegura investigación apoya políticas y sostiene transición ecológica-digital; claim lo resume."
+  doubts: ""
+- id: b455aef7bc840445a6bef363
+  independent_label: supported
+  evidence: "Premisa permite dictamen si vulnera subsidiariedad; claim lo reproduce."
+  doubts: ""
+- id: b2c5336fa584701f208c8645
+  independent_label: supported
+  evidence: "Premisa publica nombres y correos representante y sustituto; claim lo reproduce."
+  doubts: ""
+- id: a05265121132d6567bf5ac93
+  independent_label: unsupported
+  evidence: "Premisa ofrece financiación anual sin conteos; claim añade 5 000 acreditadas 2023, ausente."
+  doubts: ""
+- id: 8cee84af10a8af88481fc0b5
+  independent_label: unsupported
+  evidence: "Premisa define elegibilidad <90% RNB sin conteos; claim añade 3 000 transporte 2022, ausente."
+  doubts: ""
+- id: e0550da2c9f01c17a7698481
+  independent_label: contradicted
+  evidence: "Premisa declara no se necesita material; claim exige pizarras y tableta, incompatible."
+  doubts: ""
+- id: d60e1331144e0a374cf0728e
+  independent_label: supported
+  evidence: "Premisa exige saber dónde y con qué fines se gasta por art. 15; claim lo reproduce."
+  doubts: ""
+- id: b8dd63c9408f917a65de039a
+  independent_label: unsupported
+  evidence: "Premisa data Luxemburgo 2021 sin tirada; claim añade febrero 2021 10 000 ejemplares, ausente."
+  doubts: ""
+- id: e92a6125b74af51563f7a90e
+  independent_label: unsupported
+  evidence: "Premisa trata gestión y control sin sede; claim añade sede Luxemburgo, ausente en fragmento."
+  doubts: "Sin conocimiento externo; el fragmento no menciona sedes."
+- id: 520342726df484d36c643e35
+  independent_label: contradicted
+  evidence: "Premisa prohíbe deformar contenido; claim autoriza incluso deformando, incompatible."
+  doubts: ""
+- id: d48336ea707491d7dafe4744
+  independent_label: contradicted
+  evidence: "Premisa exige al menos tan destacado como resto; claim permite menor tamaño, incompatible."
+  doubts: ""
+- id: 3c04380d7e9b78810c09e9e7
+  independent_label: supported
+  evidence: "Premisa remite ejemplos a itinerarios 2 y 4; claim lo reproduce."
+  doubts: ""
+- id: 39a852a1d003b7a92fc2adfb
+  independent_label: supported
+  evidence: "Premisa autoriza legislar nacional si UE no legisla; claim lo reproduce."
+  doubts: ""
+- id: 79ec659a33a4aebe5e2ffb68
+  independent_label: contradicted
+  evidence: "Premisa crea más de 50 infraestructuras paneuropeas; claim niega ninguna, incompatible."
+  doubts: ""
+- id: 9e484d241dbc274a99ae3e77
+  independent_label: contradicted
+  evidence: "Premisa propone destacar financiación complementaria; claim desaconseja mencionarla, incompatible."
+  doubts: ""
+- id: fb1e55baa70673fe9e97832c
+  independent_label: supported
+  evidence: "Premisa prevé reducción financiera por incumplir visibilidad; claim lo reproduce."
+  doubts: ""
+- id: 33f66f78766a83383b04f147
+  independent_label: contradicted
+  evidence: "Premisa advierte desde 1960s; claim sitúa inicio en 2010s, década incompatible."
+  doubts: ""
+- id: 33e252f1572f0e42cd9c92cc
+  independent_label: unsupported
+  evidence: "Premisa menciona taller diciembre 2023 sin asistentes; claim añade 200 participantes, ausente."
+  doubts: ""
+- id: 5888ce97555760a1164fd0aa
+  independent_label: contradicted
+  evidence: "Premisa fija La Haya con policiales-aduaneros; claim dice Lyon con jueces-fiscales, sede y personal incompatibles."
+  doubts: ""
+- id: be774f507bf5cb24d3dd9014
+  independent_label: supported
+  evidence: "Premisa declara inscripción no automática con comprobación; claim lo reproduce."
+  doubts: ""
+- id: a7d7ba76943c212f9e5b21fd
+  independent_label: unsupported
+  evidence: "Premisa fija BCE Fráncfort y objetivo precios sin reuniones; claim añade cada 6 semanas, ausente."
+  doubts: ""
+- id: 3d19a26f592a01407711a074
+  independent_label: contradicted
+  evidence: "Premisa deja a Comisión decidir curso; claim obliga a proponer automáticamente, modalidad incompatible."
+  doubts: ""
+- id: 04e1f690f4f5c3364e561d10
+  independent_label: unsupported
+  evidence: "Premisa supera 50 infraestructuras e inversiones sin ESFRI; claim añade ESFRI 2021 22, ausente."
+  doubts: ""
+- id: 704c7411776c3b888f57a330
+  independent_label: supported
+  evidence: "Premisa ordena estrategia nacional de sensibilización MRR; claim lo reproduce."
+  doubts: ""
+- id: afda924be073dc447f572067
+  independent_label: unsupported
+  evidence: "Premisa prevé moción censura sin mayorías; claim añade dos tercios, ausente."
+  doubts: ""
+- id: 147081b4c3f052ba018aa333
+  independent_label: unsupported
+  evidence: "Premisa ejemplifica flotas e infraestructuras sin importes; claim añade 3 000M Conectar Europa, ausente."
+  doubts: ""
+- id: 58b020abd990b89eb40e15b1
+  independent_label: unsupported
+  evidence: "Premisa divide 8 sectores con icono-color sin autoría; claim añade estudio por concurso, ausente."
+  doubts: ""
+- id: 807939bb8787290e53165d57
+  independent_label: supported
+  evidence: "Premisa prevé 4 millones, +40% hasta 16 000M; claim lo reproduce."
+  doubts: ""
+- id: 3c97f4413a955e0ec7aecb35
+  independent_label: contradicted
+  evidence: "Premisa es itinerante en barco 8-10 días lago Peipus; claim dice certamen cine sede única, formato incompatible."
+  doubts: ""
+- id: e2ac682da3d4c71718353e1c
+  independent_label: supported
+  evidence: "Premisa deja comunicación PAC a EEMM no Comisión; claim lo reproduce."
+  doubts: ""
+- id: eefa7d20bba2a09816a2d786
+  independent_label: supported
+  evidence: "Premisa promete normas sencillas con seguridad y menor carga; claim lo reproduce."
+  doubts: ""
+- id: fae616e2e6873551ac189aad
+  independent_label: unsupported
+  evidence: "Premisa anuncia amplio abanico sin número; claim añade más de 50 métodos, ausente."
+  doubts: ""
+- id: 37778717ec6fbb0d08146f93
+  independent_label: supported
+  evidence: "Premisa reserva al menos 3,3% a ampliación y excelencia; claim lo reproduce."
+  doubts: ""
+- id: 6d8546ded8400c795c6f7a23
+  independent_label: contradicted
+  evidence: "Premisa invita a debatir democracia y derechos; claim prohíbe debatirlos, incompatible."
+  doubts: ""
+- id: 52a6c2e2a870e47499df00ee
+  independent_label: supported
+  evidence: "Premisa ofrece en web todas las iniciativas por etapa con respuestas; claim lo reproduce."
+  doubts: ""
+- id: 6ece60ec8a4bea760ae0bf01
+  independent_label: supported
+  evidence: "Premisa reúne 38 socios UE y no-UE listando Colombia, Islandia, Noruega, Turquía y Reino Unido; claim lo reproduce."
+  doubts: ""
+- id: 17e6b0223ef648b5ed6a0282
+  independent_label: unsupported
+  evidence: "Premisa regula nombramiento Cumbre Euro sin calendario; claim añade 4 veces año Bruselas, ausente."
+  doubts: ""
+- id: 3383647ee1ac4da3b8102239
+  independent_label: unsupported
+  evidence: "Premisa detalla niveles política y programación sin tercer nivel; claim añade proyectos con conjuntas anuales, ausente."
+  doubts: ""
+- id: 21d5aa83a1d363a4c9223278
+  independent_label: supported
+  evidence: "Premisa mantiene disposiciones 2014-2020 aplicables; claim lo reproduce."
+  doubts: ""
+- id: aadc3bf03fea4f2c9a4d29ae
+  independent_label: contradicted
+  evidence: "Premisa exige RNB inferior 90% media; claim dice solo superior a media, umbral incompatible."
+  doubts: ""
+- id: 3ed1b16bbb7422ae315d6481
+  independent_label: supported
+  evidence: "Premisa detalla cooperación eslovaco-austriaca diseño 2018-2020; claim lo reproduce."
+  doubts: ""
+- id: 766554b378175a1ac2524ba2
+  independent_label: supported
+  evidence: "Premisa ofrece HistoriCall e IWalk hasta Bruselas; claim lo reproduce."
+  doubts: ""
+- id: 2c9f9a6cc703e40c2f0126ff
+  independent_label: contradicted
+  evidence: "Premisa busca evitar cárteles y monopolios; claim dice permite que falseen, incompatible."
+  doubts: ""
+- id: 88287343088f47855f36de04
+  independent_label: supported
+  evidence: "Premisa apoya a todo tipo y tamaño cultural-creativo; claim lo reproduce."
+  doubts: ""
+- id: 8de25bc052667cd517cbf7d1
+  independent_label: unsupported
+  evidence: "Premisa abre elegibilidad sin cifras; claim añade 4 000M Mercado Único, ausente."
+  doubts: ""
+- id: ba90cfeede1b887e4d6c5c28
+  independent_label: unsupported
+  evidence: "Premisa define ICE y Reglamento 2019/788 sin historial; claim añade Fraternité 2020 2012, ausente."
+  doubts: ""
+- id: d87a37ff624d1aedccb7618e
+  independent_label: unsupported
+  evidence: "Premisa fija 3 meses para presentar verificación sin plazo de certificación; claim añade 6 meses autoridades, ausente."
+  doubts: ""
+- id: d99b117e949edda9724dced8
+  independent_label: contradicted
+  evidence: "Premisa concede 2 meses para revisar y re-presentar; claim dice denegación definitiva sin revisión, incompatible."
+  doubts: ""
+- id: edc27e253be65d847d613f74
+  independent_label: contradicted
+  evidence: "Premisa apoya movilidades personal con observación, docencia y cursos; claim excluye toda movilidad docente, incompatible."
+  doubts: ""
+- id: 6faf205586d3265d948fc8fe
+  independent_label: unsupported
+  evidence: "Premisa lista herramientas sin conteos; claim añade 20 000 proyectos, ausente."
+  doubts: ""
+- id: 4b78a45444aa7c07d7c8c983
+  independent_label: unsupported
+  evidence: "Premisa fija 3,3% ampliación y proporcionalidad sin cuota pyme pilar 2; claim añade 20% pymes, ausente."
+  doubts: ""
+- id: ef74446e72f87c9c9900f3e1
+  independent_label: unsupported
+  evidence: "Premisa exige cartel A3 o pantalla sin materiales; claim añade todo color y reciclado, ausente."
+  doubts: ""
+- id: 592f97677abeed26c1284295
+  independent_label: contradicted
+  evidence: "Premisa fija 3 meses para verificación; claim dice ningún plazo, incompatible."
+  doubts: ""
+- id: da79572d3e0898cc75cc68cf
+  independent_label: unsupported
+  evidence: "Premisa da 7 Nobel, 4 Fields, 9 Wolf y 80% avances sin convocatorias; claim añade 400 starter anuales, ausente."
+  doubts: ""
+- id: 4fa48b051126a718cd47c393
+  independent_label: supported
+  evidence: "Premisa cifra 80% con descubrimientos o avances; claim lo reproduce."
+  doubts: ""
+- id: e24f1e8c1b42975a1ea207ca
+  independent_label: supported
+  evidence: "Premisa nombra Consejo previa consulta Parlamento por 6 años; claim lo reproduce."
+  doubts: ""
+- id: 57bacf401d5137e78f0f35e3
+  independent_label: unsupported
+  evidence: "Premisa expone SPG sin revisiones; claim añade revisión 2023 servicios digitales, ausente."
+  doubts: ""
+- id: 4e74b68829b3f5f9a76c179f
+  independent_label: supported
+  evidence: "Premisa simplifica asociaciones y fomenta participación pública-privada; claim lo reproduce."
+  doubts: ""
+- id: e7a007be27505d72efba62af
+  independent_label: supported
+  evidence: "Premisa aumenta 30% real excluido Reino Unido; claim lo reproduce."
+  doubts: ""
+- id: 8daed7b988f43314abfdd490
+  independent_label: contradicted
+  evidence: "Premisa exige audiencias y aprobación para nombrar; claim dice sin aprobación, incompatible."
+  doubts: ""
+- id: 5678477387619c41cb5febbb
+  independent_label: supported
+  evidence: "Premisa abre a organizaciones UE o internacionales; claim reproduce esa apertura."
+  doubts: "Fragmento truncado tras aplicabilidad a terceros; no se juzga resto."
+- id: ae4aa7f2010790ab0cf5aabc
+  independent_label: contradicted
+  evidence: "Premisa abre organización a demás países Europa; claim dice alianza militar cerrada, incompatible."
+  doubts: ""
+- id: b2b2e4dd774bc71cc362b813
+  independent_label: contradicted
+  evidence: "Premisa aumenta 40% hasta 16 000M; claim dice reduce 40%, dirección incompatible."
+  doubts: ""
+- id: 52df620228129c637fc8a24f
+  independent_label: unsupported
+  evidence: "Premisa cifra 16 000/6 600/2 400M sin historia; claim añade creación 1996 FP4, ausente."
+  doubts: ""
+- id: e8cb44c9611fe08e33a12496
+  independent_label: unsupported
+  evidence: "Premisa lista cometidos Europol sin plantilla; claim añade 1 500 personas 40 nacionalidades, ausente."
+  doubts: ""
+- id: 9a63b9f1cffc332e1b18415d
+  independent_label: supported
+  evidence: "Premisa cita China/EE. UU. y masa crítica UE; claim lo reproduce."
+  doubts: ""
+- id: a156de00aacef02a9f5a84c1
+  independent_label: contradicted
+  evidence: "Premisa abre a cualquier organización UE/internacional/asociada; claim reserva a administraciones, cobertura incompatible."
+  doubts: ""
+- id: dbc4e3a4ddf0fe80479c090b
+  independent_label: supported
+  evidence: "Premisa dirige oferta a 11-24 años; claim lo reproduce."
+  doubts: ""
+- id: 1c3cf179536642f1ff0b6a4d
+  independent_label: contradicted
+  evidence: "Premisa exige al menos 3,3%; claim pone máximo 1%, umbral incompatible."
+  doubts: ""
+- id: 158b8df39c4943a84c73c355
+  independent_label: contradicted
+  evidence: "Premisa pide solo información básica de participantes y actividades; claim exige auditoría externa, requisito incompatible."
+  doubts: ""
+- id: 46021860b69b516e29dc889a
+  independent_label: unsupported
+  evidence: "Premisa tabla PM1 3 271 sin años ni ecus; claim añade 1984 y 3 750 ecus, ausente."
+  doubts: ""
+- id: 704809f81ff30dcabf70d752
+  independent_label: contradicted
+  evidence: "Premisa permite apoyar una vez; claim dice tres veces, número incompatible."
+  doubts: ""
+- id: d1e33df2c17bfc36ffcd1d46
+  independent_label: unsupported
+  evidence: "Premisa lista Islandia/Noruega y asociados sin Reino Unido ni importes; claim añade 2023 y 2 600M, ausente."
+  doubts: ""
+- id: 91a55e1c6a9a1ae7c7725b57
+  independent_label: contradicted
+  evidence: "Premisa decide presupuesto conjuntamente Consejo y Parlamento; claim dice solo Consejo, incompatible."
+  doubts: ""
+- id: 7e99891abfd4a4494b23453b
+  independent_label: supported
+  evidence: "Premisa fija 3 meses desde fin recogida; claim lo reproduce."
+  doubts: ""
+- id: 6ecf7fee4be477227f7d599a
+  independent_label: contradicted
+  evidence: "Premisa prevé cero adhesiones 2014-2019; claim anuncia diez, número incompatible."
+  doubts: ""
+- id: 1977900cfab5e8eadfc1fabf
+  independent_label: unsupported
+  evidence: "Premisa remite a guía anual sin mes; claim añade octubre, ausente."
+  doubts: ""
+- id: 9108dd6854f2d85db05c43dd
+  independent_label: contradicted
+  evidence: "Premisa fija plenarias Estrasburgo y adicionales Bruselas; claim dice exclusivamente Luxemburgo, sede incompatible."
+  doubts: ""
+- id: d2b9b06c8df2df0e10ab0035
+  independent_label: supported
+  evidence: "Premisa declara competencia libre y equitativa; claim lo reproduce."
+  doubts: ""
+- id: 2dfb42a2793b03c5fa35d6f1
+  independent_label: contradicted
+  evidence: "Premisa permite modificar detalles y objetivos; claim prohíbe modificar nada, incompatible."
+  doubts: ""
+- id: dd5458f45024fa63fbce21b2
+  independent_label: supported
+  evidence: "Premisa divide en 8 sectores con icono y color; claim lo reproduce."
+  doubts: ""
+- id: cb41e631a202de409577e7d5
+  independent_label: contradicted
+  evidence: "Premisa sitúa BCE en Fráncfort Alemania; claim dice Países Bajos, país incompatible."
+  doubts: ""
+- id: 0bedd66e138a90385aef5bcf
+  independent_label: unsupported
+  evidence: "Premisa reparte competencias UE/EEMM sin agencias; claim añade ESA París por delegación, ausente."
+  doubts: ""
+- id: 0f3e79c286c07f26f3b7459d
+  independent_label: supported
+  evidence: "Premisa premia Charpentier-Doudna Química 2020 por edición genoma; claim lo reproduce."
+  doubts: ""
+- id: 531e9b2e83f1d9a6a4bfc616
+  independent_label: contradicted
+  evidence: "Premisa ofrece materiales en todas lenguas UE; claim dice solo inglés y francés, cobertura incompatible."
+  doubts: ""
+- id: 4ea8c50f54b74e6f9e7fe4cc
+  independent_label: contradicted
+  evidence: "Premisa suma 5 400M NGEU y 4 600M refuerzo; claim dice solo MFP sin NGEU, fuente incompatible."
+  doubts: ""
+- id: 52155ebf9d4c20c589035421
+  independent_label: unsupported
+  evidence: "Premisa da HAP4MARBLE 2015-2018 244 269 EUR sin premios; claim añade Europa Nostra 2021, ausente."
+  doubts: ""
+- id: 06716f7bcfc06bd92d4798ee
+  independent_label: supported
+  evidence: "Premisa adopta propuesta revisión Directiva agua por Right2Water; claim lo reproduce."
+  doubts: ""
+- id: 4492563f5c5a1486371ad908
+  independent_label: unsupported
+  evidence: "Premisa lista InvestEU entre sinergias sin importes; claim añade 400 000M 2021-2027, ausente."
+  doubts: ""
+- id: 875f72494467e1a36c331fb8
+  independent_label: supported
+  evidence: "Premisa adapta unos a jóvenes y otros a análisis avanzados; claim lo reproduce."
+  doubts: ""
+- id: 53784b76ef11782f5e172618
+  independent_label: contradicted
+  evidence: "Premisa niega distribución fija por país; claim asigna cuota fija por población, incompatible."
+  doubts: ""
+- id: 4567fa306351fd788c16c3b0
+  independent_label: contradicted
+  evidence: "Premisa fija tres pasos; claim dice único paso final, número incompatible."
+  doubts: ""
+- id: 44050341c4104120efaefe71
+  independent_label: supported
+  evidence: "Premisa exime salvo armas a 49 más pobres; claim lo reproduce."
+  doubts: ""
+- id: ad0efa189cd1339483b9d293
+  independent_label: unsupported
+  evidence: "Premisa trata absorción y 2014-2019 sin adhesiones concretas; claim añade Croacia 28º julio 2013, ausente."
+  doubts: ""
+- id: 5b63a1858a202b4fedc2ea46
+  independent_label: supported
+  evidence: "Premisa prevé ninguna adhesión 2014-2019 por foco económico; claim lo reproduce."
+  doubts: ""
+- id: dca45a64b9d32b61767135f3
+  independent_label: supported
+  evidence: "Premisa pide solo participantes y tipo actividades; claim lo reproduce."
+  doubts: ""
+- id: cba4ab0c063b59f0afcbb2f5
+  independent_label: unsupported
+  evidence: "Premisa posee delegaciones mundiales sin número; claim añade 140, ausente."
+  doubts: ""
+- id: cfd811dccc66a3c0458035eb
+  independent_label: supported
+  evidence: "Premisa aspira a desarrollar vínculos de sinergia; claim lo reproduce."
+  doubts: ""
+- id: 0f080140cb5ff1b1863d00de
+  independent_label: supported
+  evidence: "Premisa concede 2 meses para revisar y re-presentar; claim lo reproduce."
+  doubts: ""
+- id: afd1c46931dbee9652215d8c
+  independent_label: supported
+  evidence: "Premisa cita Decisión 2011/833/UE 12-12-2011; claim la reproduce."
+  doubts: ""
+- id: dbe4e991f5d525cf0f4d14c7
+  independent_label: unsupported
+  evidence: "Premisa explica tarjeta amarilla/naranja sin casos; claim añade estreno 2016 desplazamientos, ausente."
+  doubts: ""
+- id: 083002df3b7afe45cc1f7eaa
+  independent_label: contradicted
+  evidence: "Premisa exige visibilidad cada proyecto con emblema; claim exime a subvencionados, incompatible."
+  doubts: ""
+- id: 0a4907b25976c46f28074d06
+  independent_label: unsupported
+  evidence: "Premisa remite a lista web sin periodicidad; claim añade mensual, ausente."
+  doubts: ""
+- id: 0e1dd0772f299bf72324c14a
+  independent_label: unsupported
+  evidence: "Premisa recomienda método 3-2-1 sin autoría; claim añade universidad finlandesa 2019, ausente."
+  doubts: ""
+- id: 5fc3a624e0c465c40639a771
+  independent_label: supported
+  evidence: "Premisa sigue conciliación hasta aprobar; claim lo reproduce."
+  doubts: ""
+- id: 2a765f86593c1b59eac2a800
+  independent_label: supported
+  evidence: "Premisa crea más de 50 infraestructuras europeas; claim lo reproduce."
+  doubts: ""
+- id: ebf15aac7373f875cfd1d5e3
+  independent_label: unsupported
+  evidence: "Premisa propone garantía depósitos sin fechas ni fondo; claim añade 2019 y 50 000M, ausente."
+  doubts: ""
+- id: 8ab34d0d8e6635cafe55b1a7
+  independent_label: supported
+  evidence: "Premisa incluye Islandia/Noruega EEE y lista Albania, Serbia, Suiza, Turquía o Ucrania; claim lo reproduce."
+  doubts: ""
+- id: 7902a414b050d6a68b57d0ad
+  independent_label: contradicted
+  evidence: "Premisa ofrece datos a responsables políticos UE/nacionales; claim dice vende solo a privadas, destinatario incompatible."
+  doubts: ""
+- id: bbe5a1270b612d2d33b484e4
+  independent_label: contradicted
+  evidence: "Premisa divide 8 sectores con icono-color; claim dice 5 sin iconos, número y formato incompatibles."
+  doubts: ""
+- id: 9cfe1441ac33acc92343c169
+  independent_label: supported
+  evidence: "Premisa estructura tres pilares con Pilar 1 Ciencia excelente; claim lo reproduce."
+  doubts: ""
+- id: 7b922bb38a0fed6b393ed314
+  independent_label: contradicted
+  evidence: "Premisa estructura tres pilares; claim dice pilar único de mercado, número incompatible."
+  doubts: ""
+- id: 6ae34fa79282dbae3280bf4a
+  independent_label: unsupported
+  evidence: "Premisa regula apoyo y verificación sin edades; claim añade 16 años todos EEMM, ausente."
+  doubts: ""
+- id: 5d0c07220b85f8ee513630db
+  independent_label: supported
+  evidence: "Premisa permite definir objetivos y ritmo propios; claim lo reproduce."
+  doubts: ""
+- id: 72619101f0768f1a60cb9c09
+  independent_label: supported
+  evidence: "Premisa reforzará ciencia con inversión en capacidades y vanguardia; claim lo reproduce."
+  doubts: ""
+- id: 05048b4be2fb7493365528cd
+  independent_label: unsupported
+  evidence: "Premisa centra itinerario 5 en alfabetización sin fechas; claim añade lanzamiento 2024, ausente."
+  doubts: ""
+- id: 892b4862c36725128d992df3
+  independent_label: contradicted
+  evidence: "Premisa fomenta amplia participación pública-privada; claim prohíbe socios privados, incompatible."
+  doubts: ""
+- id: 948716e6c71147aa44d655a7
+  independent_label: unsupported
+  evidence: "Premisa define niveles educativos sin cifras; claim añade 26 000M 2021-2027, ausente."
+  doubts: ""
+- id: 2a644a4e952207aee4c40e96
+  independent_label: supported
+  evidence: "Premisa apoya fronteras, becas, doctorados e infraestructuras; claim lo reproduce."
+  doubts: ""
+- id: 78e9ede2ba205d5cbf32c659
+  independent_label: unsupported
+  evidence: "Premisa lanza fase entrega tras codiseño sin fecha ni número; claim añade enero 2022 50 pilotos, ausente."
+  doubts: ""
+- id: 1b2c6136f3be7decaea012b2
+  independent_label: unsupported
+  evidence: "Premisa describe colegiado 28 y mandato 6/3 sin producción; claim añade 50 informes anuales, ausente."
+  doubts: ""
+- id: 34b8ea6daf8bdb248e656455
+  independent_label: contradicted
+  evidence: "Premisa busca fin odio y rivalidad con paz duradera; claim dice defendieron retorno a rivalidad, fin incompatible."
+  doubts: ""
+- id: 4049a212f445adf219d14edf
+  independent_label: contradicted
+  evidence: "Premisa divide en dos con exposición itinerante; claim dice única representación sin exposición, estructura incompatible."
+  doubts: ""
+- id: 141061688dd7e1e62e7fcb0d
+  independent_label: contradicted
+  evidence: "Premisa basta una vez para 7 años; claim exige renovar cada año, frecuencia incompatible."
+  doubts: ""
+- id: ae9f37c86f18cd5c3d3b7287
+  independent_label: unsupported
+  evidence: "Premisa detalla kit avanzado flexible 10-30/16-24 sin descargas; claim añade 50 000, ausente."
+  doubts: ""
+- id: d94b3d2de7258e48c40571a0
+  independent_label: unsupported
+  evidence: "Premisa remite a foro con orientación sin cursos; claim añade curso anual Bruselas, ausente."
+  doubts: ""
+- id: 2f0545ec962c1c9e08c924c9
+  independent_label: supported
+  evidence: "Premisa ayuda a concienciar sobre normas vinculantes; claim lo reproduce."
+  doubts: ""
+- id: 465280360caee1dff7cf42f1
+  independent_label: contradicted
+  evidence: "Premisa mantiene beneficiario propietario; claim transfiere propiedad a Comisión, titular incompatible."
+  doubts: ""
+- id: 1c517090ce346d16a98e97ef
+  independent_label: unsupported
+  evidence: "Premisa fija sedes y comisiones sin escaños; claim añade 720 desde 2024, ausente."
+  doubts: ""
+- id: 6f9cfc1e2ffb0a43a2b326b6
+  independent_label: contradicted
+  evidence: "Premisa dirige a 11-24 años; claim dice solo mayores 65, edad incompatible."
+  doubts: ""

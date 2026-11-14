@@ -1,0 +1,260 @@
+# Piloto EU revisado (20 pares, SOLO dev) — fase 1.8, preparación IA.
+# gold: false
+# ai_proposals_only: false (pares revisados por IA, NO etiquetas humanas)
+# review_status global: pending-human-review
+# PROHIBIDO usar este archivo para calibrar umbrales o puntuar el modelo NLI
+# hasta que la revisión humana concluya (ver eval/EU_CORPUS.md).
+# Fuente intacta: eval/eu_pilot_candidates.yaml (NO modificar).
+# Trazabilidad: derives_from apunta al id original eu-pilot-XXX.
+# change_note: keep | expand-premise | rewrite-claim | replace-pair.
+# Canon de literalidad: extracción pypdfium2 de los PDF verificados por SHA-256
+# contra eval/eu_manifest.yaml; colapso \s+ -> un espacio; se conservan
+# ligaduras tal cual aparecen (fja, superfcie, fnanciero); no se normalizan.
+# Normalizaciones NO literales documentadas:
+# - eu-pilot-008/r-010: el PDF usa viñetas "•" para los tres objetivos; aquí se
+#   unen con comas. Contenido idéntico, solo cambia el separador.
+# - eu-pilot-003/r-002: la premisa es el prefijo literal del ítem con viñeta;
+#   se omite el ":" final del PDF. No cambia cifras ni sentido.
+# - r-015, r-014, r-020: premisa ampliada con la frase anterior EXACTA y contigua
+#   del mismo PDF y página (corre-contexto). El texto añadido es literal.
+# - r-008: claim reescrito mínimamente ("Este nuevo presupuesto...") para fijar
+#   el referente al de la premisa visible, sin cambiar la polaridad.
+# Elementos de terceros excluidos: solo cuerpo editorial UE; fotos/pies con © fuera.
+# Partición: SOLO split dev. Ningún document_id test.
+gold: false
+review_status: pending-human-review
+allow_only_split: dev
+do_not_use_for: [calibration, scoring]
+pairs:
+- id: eu-pilot-r-001
+  derives_from: eu-pilot-001
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La transición limpia es la estrategia de Europa para avanzar hacia un continente más limpio y competitivo, que beneficie a sus ciudadanos y empresas."
+  claim: "La estrategia europea de transición limpia busca un continente más limpio y competitivo en beneficio de ciudadanos y empresas."
+  phenomenon: {negation: false, numeric: false, coreference: false}
+  phenomenon_primary: none
+  change_note: keep
+  note: "Definición general, sin cifras ni negación."
+- id: eu-pilot-r-002
+  derives_from: eu-pilot-003
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Un objetivo de gasto en el ámbito del clima y el medio ambiente del 35 % del presupuesto global, que movilice más de 700 000 millones de euros"
+  claim: "El objetivo de gasto climático y medioambiental es del 35 % del presupuesto global y moviliza más de 700 000 millones de euros."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "Dos cifras deciden la revisión: 35 % y 700 000 millones. Premisa sin ':' final (ver cabecera)."
+- id: eu-pilot-r-003
+  derives_from: eu-pilot-006
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Las misiones de la UE son iniciativas a gran escala en el marco del programa Horizonte Europa diseñadas para hacer frente a los principales retos mundiales, como el cambio climático, el cáncer, la salud del suelo, la restauración de los océanos y el desarrollo de ciudades inteligentes y climáticamente neutras."
+  claim: "Las misiones de la UE, en el marco de Horizonte Europa, abordan retos como el cambio climático, el cáncer, la salud del suelo, los océanos y las ciudades climáticamente neutras."
+  phenomenon: {negation: false, numeric: false, coreference: false}
+  phenomenon_primary: none
+  change_note: keep
+  note: "Enumeración; sin cifras, negación ni correferencia."
+- id: eu-pilot-r-004
+  derives_from: eu-pilot-007
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La misión ofrece un enfoque sistémico para la protección y restauración del océano y de los mares y aguas de Europa de aquí a 2030, de manera que se fomente un entorno marino y de agua dulce sostenible."
+  claim: "La misión del océano prevé proteger y restaurar las aguas europeas con horizonte 2030."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "El año 2030 decide la revisión."
+- id: eu-pilot-r-005
+  derives_from: eu-pilot-011
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "La política agrícola común (PAC) es crucial para apoyar y estabilizar la renta de los agricultores, ya que los pagos directos a los agricultores contribuyeron en promedio un 19 % a sus ingresos en 2023."
+  claim: "Los pagos directos aportaron en promedio un 19 % a los ingresos de los agricultores en 2023."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "Cifras 19 % y 2023."
+- id: eu-pilot-r-006
+  derives_from: eu-pilot-012
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "En virtud de la propuesta de la Comisión para el Fondo de Asociación Nacional y Regional (865 000 millones EUR), se garantizan al menos 293 700 millones EUR para apoyar la renta de los agricultores."
+  claim: "La propuesta garantiza al menos 293 700 millones de euros para la renta agraria dentro de un fondo de 865 000 millones."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "Dos importes deciden la revisión."
+- id: eu-pilot-r-007
+  derives_from: eu-pilot-018
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Como consecuencia de ello, alrededor del 80 % de todos los productos sanitarios para diagnóstico in vitro necesitan ahora la supervisión del organismo notificado en virtud del Reglamento sobre los productos sanitarios para diagnóstico in vitro (artículo 48), frente al 8 % anteriormente en el marco de la Directiva sobre productos sanitarios para diagnóstico in vitro."
+  claim: "Con el Reglamento, alrededor del 80 % de los productos de diagnóstico in vitro requiere supervisión del organismo notificado, frente al 8 % con la Directiva anterior."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "Contraste 80 % frente a 8 %."
+- id: eu-pilot-r-008
+  derives_from: eu-pilot-002
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "Este nuevo presupuesto ayudará a Europa a alcanzar el objetivo climático que se ha propuesto para 2040 y a lograr la neutralidad climática de aquí a 2050."
+  claim: "Este nuevo presupuesto solo cubre objetivos climáticos hasta 2040 y excluye la neutralidad climática de 2050."
+  phenomenon: {negation: true, numeric: true, coreference: true}
+  phenomenon_primary: negation
+  change_note: rewrite-claim
+  superseded_claim: "El nuevo presupuesto europeo solo cubre objetivos climáticos hasta 2040 y excluye la neutralidad climática de 2050."
+  note: "Años 2040 y 2050; «este» queda fijado al de la premisa visible. Reescritura mínima sin cambio de polaridad."
+- id: eu-pilot-r-009
+  derives_from: eu-pilot-004
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "El Fondo Europeo de Competitividad reforzará la economía de la UE gracias a inversiones, pequeñas y grandes, destinadas a descarbonizar la economía europea."
+  claim: "El Fondo Europeo de Competitividad no financia inversiones destinadas a descarbonizar la economía europea."
+  phenomenon: {negation: true, numeric: false, coreference: false}
+  phenomenon_primary: negation
+  change_note: keep
+  note: "La negación está en la afirmación candidata, no en el pasaje."
+- id: eu-pilot-r-010
+  derives_from: eu-pilot-008
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "la misión aborda tres objetivos específicos con metas claras para 2030: proteger y restaurar los ecosistemas marinos y de agua dulce y la biodiversidad, prevenir y eliminar la contaminación de los océanos, los mares y el agua, garantizar una economía azul sostenible, neutra en carbono y circular."
+  claim: "La misión tiene dos objetivos para 2030: biodiversidad y economía azul, sin mención a la contaminación."
+  phenomenon: {negation: true, numeric: true, coreference: false}
+  phenomenon_primary: negation
+  change_note: keep
+  note: "Tres objetivos y año 2030; la afirmación omite uno. Viñetas del PDF unidas con comas (ver cabecera)."
+- id: eu-pilot-r-011
+  derives_from: eu-pilot-014
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  premise: "De 20 000 a 50 000 Reducción del 25 % en la horquilla de 20 000 a 50 000 EUR"
+  claim: "En la horquilla de 20 000 a 50 000 euros por agricultor y año se aplica una reducción del 50 %."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: keep
+  note: "Tabla de horquillas; el porcentaje decide la revisión."
+- id: eu-pilot-r-012
+  derives_from: eu-pilot-015
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 3, end: 3}
+  premise: "De aquí a 2032, los agricultores que reciban pensiones ya no podrán optar a la ayuda decreciente a la renta por superfcie."
+  claim: "De aquí a 2032 los agricultores que reciban pensiones mantienen el acceso a la ayuda decreciente a la renta por superficie."
+  phenomenon: {negation: true, numeric: true, coreference: false}
+  phenomenon_primary: negation
+  change_note: rewrite-claim
+  superseded_claim: "A partir de 2032 los agricultores con pensión mantienen el acceso a la ayuda decreciente por superficie."
+  note: "«ya no podrán» y año 2032. «superfcie» reproduce la ligadura fi de la extracción. Corrección IA: claim reformulado al mismo periodo de la premisa («de aquí a 2032») para que la oposición no dependa del periodo; polaridad opuesta inequívoca."
+- id: eu-pilot-r-013
+  derives_from: eu-pilot-016
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 1, end: 1}
+  premise: "A diferencia de las Directivas, los Reglamentos son directamente aplicables y no es necesario transponerlos a la legislación nacional."
+  claim: "Los Reglamentos de productos sanitarios deben transponerse a la legislación nacional como las Directivas."
+  phenomenon: {negation: true, numeric: false, coreference: false}
+  phenomenon_primary: negation
+  change_note: keep
+  note: "«no es necesario» en el pasaje."
+- id: eu-pilot-r-014
+  derives_from: eu-pilot-019
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  premise: "El Reglamento sobre los productos sanitarios exige que las etiquetas de los productos indiquen la presencia de sustancias CMR o alteradores endocrinos en los productos sanitarios por encima de determinadas concentraciones. Este requisito de etiquetado no significa que un dispositivo no sea seguro."
+  claim: "El Reglamento sobre los productos sanitarios no exige que las etiquetas indiquen la presencia de sustancias CMR o alteradores endocrinos por encima de determinadas concentraciones."
+  phenomenon: {negation: true, numeric: false, coreference: false}
+  phenomenon_primary: negation
+  change_note: rewrite-claim
+  superseded_premise: "Este requisito de etiquetado no significa que un dispositivo no sea seguro."
+  superseded_claim: "Si un producto sanitario lleva la advertencia de sustancias CMR o alteradores endocrinos, el dispositivo no es seguro."
+  note: "Corrección IA: claim sustituido por la negación directa de la primera frase de la premisa sobre la obligación de etiquetar, para una contradicción inequívoca. La premisa ampliada con la frase anterior exacta se conserva (ver superseded_premise); la falta de implicación no afirma seguridad de ningún producto concreto."
+- id: eu-pilot-r-015
+  derives_from: eu-pilot-005
+  document_id: 186d5adb-d5d7-11f0-8da2-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Los planes de colaboración nacional y regional establecerán un vínculo entre las reformas y las inversiones limpias, apoyando los objetivos climáticos y energéticos de la UE para 2040 y apoyando a las comunidades y empresas locales en la transición limpia. Estos planes ayudarán a tener mejor en cuenta las necesidades de cada territorio, ya que las regiones ocupan un lugar central en la transición."
+  claim: "Dichos planes de colaboración nacional y regional se revisan cada dos años en una cumbre de regiones."
+  phenomenon: {negation: false, numeric: true, coreference: true}
+  phenomenon_primary: coreference
+  change_note: replace-pair
+  superseded_premise: "Estos planes ayudarán a tener mejor en cuenta las necesidades de cada territorio, ya que las regiones ocupan un lugar central en la transición."
+  superseded_claim: "Los planes de colaboración nacional y regional sitúan a las regiones en el centro para atender las necesidades de cada territorio."
+  note: "Premisa ampliada con la frase anterior exacta («dichos planes» queda fijado). Claim nuevo: revisión bienal no mencionada; compatible pero no inferible."
+- id: eu-pilot-r-016
+  derives_from: eu-pilot-009
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "La EU DTO, puesta en marcha en 2022 con una financiación anual de 15 millones de euros, tiene por objeto proporcionar conocimientos sobre los océanos accesibles y de base científica a una gran variedad de usuarios, desde responsables políticos e investigadores hasta empresas, activistas y ciudadanos, a través de un marco digital unificado que transforma los datos en conocimientos prácticos."
+  claim: "La EU DTO emplea a más de doscientas personas en su sede central."
+  phenomenon: {negation: false, numeric: true, coreference: false}
+  phenomenon_primary: numeric
+  change_note: replace-pair
+  superseded_claim: "La réplica digital europea del océano se lanzó en 2022 con 15 millones de euros anuales para dar conocimiento científico accesible a políticos, investigadores, empresas y ciudadanía."
+  note: "Claim nuevo con la misma sigla de la premisa (sin equivalencia externa). Plantilla y sede no mencionadas; compatible pero no inferible."
+- id: eu-pilot-r-017
+  derives_from: eu-pilot-010
+  document_id: 06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Ya hay más de doscientos centros de demostración operativos en el marco de estos proyectos, a los cuales se prevé que se sumen otros más."
+  claim: "Estos centros de demostración no ofrecen visitas guiadas al público general."
+  phenomenon: {negation: true, numeric: true, coreference: true}
+  phenomenon_primary: negation
+  change_note: replace-pair
+  superseded_claim: "Estos proyectos ya no tienen ningún centro de demostración operativo."
+  note: "Claim nuevo: visitas no mencionadas; compatible pero no inferible. «Estos centros» remite a los centros de la premisa."
+- id: eu-pilot-r-018
+  derives_from: eu-pilot-013
+  document_id: 2acad822-fe54-11f0-8da5-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 4, end: 4}
+  premise: "El límite máximo del importe anual total recibido por un agricultor se fja en 100 000 EUR con el objetivo de promover la equidad en la asignación de recursos, en particular para las explotaciones agrícolas pequeñas y medianas."
+  claim: "Este límite de 100 000 euros se revisa automáticamente cada tres años."
+  phenomenon: {negation: false, numeric: true, coreference: true}
+  phenomenon_primary: numeric
+  change_note: replace-pair
+  superseded_claim: "Ningún agricultor puede recibir más de 100 000 euros anuales para proteger a las explotaciones pequeñas y medianas."
+  note: "Claim nuevo acotado con «este límite» (evita universalizar a otras ayudas). Revisión no mencionada; compatible pero no inferible. «fja» conserva la ligadura."
+- id: eu-pilot-r-019
+  derives_from: eu-pilot-017
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 2, end: 2}
+  premise: "Los productos sanitarios se clasifican en cuatro clases (I, IIa, IIb, III)."
+  claim: "Esta clasificación en cuatro clases se adoptó en 2017 y no ha cambiado desde entonces."
+  phenomenon: {negation: true, numeric: true, coreference: true}
+  phenomenon_primary: numeric
+  change_note: replace-pair
+  superseded_claim: "Los productos sanitarios se reparten en cuatro clases de riesgo, de la I a la III."
+  note: "Claim nuevo: fecha de adopción no mencionada; compatible pero no inferible. «Esta clasificación» remite a la premisa."
+- id: eu-pilot-r-020
+  derives_from: eu-pilot-020
+  document_id: 9af3bbaf-5559-11f0-a9d0-01aa75ed71a1
+  split: dev
+  premise_locator: {type: page, start: 5, end: 5}
+  premise: "El Reglamento sobre los productos sanitarios permite el reprocesamiento de productos sanitarios de un solo uso para permitir su reutilización segura, siempre que la legislación nacional lo permita y solo de conformidad con el artículo 17 del Reglamento sobre los productos sanitarios. Un reprocesador asume las responsabilidades del fabricante original de este producto (artículo 17, apartado 2, del Reglamento sobre los productos sanitarios)"
+  claim: "Dicho reprocesador debe tener su domicilio social en el mismo Estado miembro que el fabricante original."
+  phenomenon: {negation: false, numeric: true, coreference: true}
+  phenomenon_primary: coreference
+  change_note: replace-pair
+  superseded_premise: "Un reprocesador asume las responsabilidades del fabricante original de este producto (artículo 17, apartado 2, del Reglamento sobre los productos sanitarios)"
+  superseded_claim: "El reprocesamiento de un producto de un solo uso transfiere al reprocesador las responsabilidades del fabricante original."
+  note: "Premisa ampliada con la frase anterior exacta (condición de legislación nacional). Claim nuevo: domicilio no mencionado; compatible pero no inferible."

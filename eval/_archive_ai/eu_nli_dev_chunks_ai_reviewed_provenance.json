@@ -1,0 +1,20 @@
+{
+  "status": "ai-reviewed-pending-human",
+  "n": 276,
+  "labels": {
+    "supported": 94,
+    "contradicted": 91,
+    "unsupported": 91
+  },
+  "documents": 18,
+  "chunks": 247,
+  "excluded": {
+    "eu-dev-232": "desacuerdo ambiguo sobre alcance del número de comercios"
+  },
+  "draft_sha256": "94e557391b09130265c7419a45bde67e710c0bf92f6adb5991d3ad5615f30b8c",
+  "blind_input_sha256": "146fd92478a0faa4fbef577252852a3cfc596aefd2b3210249fa985be338b2ca",
+  "blind_review_sha256": "a3e9ae10f0a0c4f1b90d7505847ca39e580a405b5f26dcd5db84f30f0c25643d",
+  "blind_mapping_sha256": "a5095ed504e5d6110ec36c79a5a5f9930965f691b7b0416f01233c4d3ae4ad89",
+  "reviewed_sha256": "01bba6d40a1ad929ca17013b2e9284620be2d1f3cd504a98079afc9abb0b9e3d",
+  "limitations": "Propuestas IA y revisión IA, pendientes de revisión humana; desarrollo derivado de datos corregidos tras observar resultados. No es prueba independiente."
+}

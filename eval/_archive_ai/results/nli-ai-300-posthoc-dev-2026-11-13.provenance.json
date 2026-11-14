@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-13",
+  "purpose": "Provenance for post-hoc dev diagnostic only. Contaminated by post-result rewriting; NOT independent, NOT acceptance, does NOT calibrate thresholds.",
+  "split": "dev",
+  "command": "API_KEY_HMAC_SECRET=dummy-test-only uv run python -m eval.nli_run --dataset eval/eu_nli_dev_ai_posthoc.yaml --split dev --require-document-id --output eval/results/nli-ai-300-posthoc-dev-2026-11-13.json --details /tmp/nli-ai-300-posthoc-dev-details-2026-11-13.json",
+  "dataset": {
+    "path": "eval/eu_nli_dev_ai_posthoc.yaml",
+    "sha256": "f0b81f8ce18b1d1765f10c188537bc64036b37183f5fae03183d1d9504f5d1b4",
+    "source_path": "eval/eu_nli_dev_ai_exploratory.yaml",
+    "source_sha256": "5b0481a91bbae5a46d5a6be016defc7b6f31977f03ac08d3bd28278705e5044d",
+    "changed_ids": ["eu-dev-097", "eu-dev-108", "eu-dev-109", "eu-dev-115", "eu-dev-207", "eu-dev-286"],
+    "labels_unchanged": true,
+    "other_cases_identical": true,
+    "change_record": "eval/eu_nli_dev_ai_posthoc_changes.yaml"
+  },
+  "runner": {
+    "path": "eval/nli_run.py",
+    "sha256": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d"
+  },
+  "result_summary": {
+    "path": "eval/results/nli-ai-300-posthoc-dev-2026-11-13.json",
+    "sha256": "f396a1d5497a525835d44abef69a81148e88c9d5fc6559ba1d3ac15fdcd13179"
+  },
+  "first_run_summary": {
+    "path": "eval/results/nli-ai-300-dev-2026-11-13.json",
+    "sha256": "488a6dd15d845730f980114aa398172db99d70b5e55adf5143d156da2928eb25"
+  },
+  "per_claim_details": {
+    "path": "/tmp/nli-ai-300-posthoc-dev-details-2026-11-13.json",
+    "versioned": false,
+    "note": "Per-query dump kept out of Git per AGENTS.md; summaries per run are versioned."
+  },
+  "git": {
+    "HEAD": "5397547fd1454467570d6389fa0b8720dc1dea53",
+    "dirty_tree": true,
+    "modified_tracked": ["README.md", "ROADMAP.md", "eval/NLI.md", "eval/nli_run.py", "eval/nli_thresholds.py", "tests/eval/test_nli_run.py", "tests/eval/test_nli_thresholds.py"],
+    "untracked_in_scope": ["eval/EU_CORPUS.md", "eval/annotation_forms/", "eval/eu_manifest.yaml", "eval/eu_nli_dev_ai_adjudicated.yaml", "eval/eu_nli_dev_ai_adjudication.yaml", "eval/eu_nli_dev_ai_audit.yaml", "eval/eu_nli_dev_ai_candidates.yaml", "eval/eu_nli_dev_ai_corrected.yaml", "eval/eu_nli_dev_ai_corrections.yaml", "eval/eu_nli_dev_ai_error_label_review.yaml", "eval/eu_nli_dev_ai_exploratory.yaml", "eval/eu_nli_dev_ai_posthoc.yaml", "eval/eu_nli_dev_ai_posthoc_changes.yaml", "eval/eu_nli_dev_ai_second_review.yaml", "eval/eu_nli_dev_ai_trace.md", "eval/eu_pilot_ai_proposals.yaml", "eval/eu_pilot_candidates.yaml", "eval/eu_pilot_dev_ai_reviewed.yaml", "eval/eu_pilot_revised.yaml", "eval/eu_pilot_revised_ai_proposals.yaml", "eval/results/nli-ai-300-dev-2026-11-13.json", "eval/results/nli-ai-300-dev-sensitivity-2026-11-13.json", "eval/results/nli-ai-300-posthoc-dev-2026-11-13.json", "eval/results/nli-ai-pilot-dev-2026-11-13.json"],
+    "note": "Local changes preserved; no commit made by test sub-agent."
+  },
+  "validation": {
+    "require_document_id": true,
+    "all_cases_dev": true,
+    "all_document_ids_in_manifest_dev": true,
+    "no_test_documents": true,
+    "thresholds": {"supported": 0.75, "weak": 0.5, "contradicted": 0.75},
+    "thresholds_unchanged": true,
+    "test_split_not_executed": true,
+    "code_not_modified": true
+  }
+}

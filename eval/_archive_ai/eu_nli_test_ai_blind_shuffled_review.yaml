@@ -1,0 +1,906 @@
+# Revisión independiente ciega IA — NO GOLD — sin revisión humana — sin modelo NLI
+# Fuente ciega: /tmp/eu_nli_test_ai_blind_shuffled.yaml
+# SHA-256 fuente: e8f5a917016d007e1101f0a934506707223f48fffe28e2cfbbfa62f6ca0606e5
+# Método: cada referencia decidida solo por la premisa visible del par.
+# Etiquetas: supported | contradicted | unsupported | ambiguous
+# Total filas: 300
+- id: f93017b9525726433f07fc16
+  independent_label: contradicted
+  evidence: "Premisa reparte capturas: Francia 68%, España 11%, Dinamarca 8%, Bélgica 6%, Italia 3%, Grecia 2% (98% cubierto); claim da 5% a Portugal, incompatible con el 2% restante y ausente del reparto."
+- id: eccadbfd5853dca53715822c
+  independent_label: contradicted
+  evidence: "Premisa dice el plan apoyó integrar 50 centros y apoyará convertir 1253 aulas; claim dice cerró centros y eliminó aulas, lo contrario."
+- id: 460ff04dbb92fd9aa4068ea0
+  independent_label: supported
+  evidence: "Premisa afirma España necesita más de 1,39 millones de especialistas TIC para el objetivo del 10% en 2030; claim reproduce esa misma necesidad y objetivo."
+- id: ce9cf4de16e7197b230cb960
+  independent_label: supported
+  evidence: "Premisa propone 175 000 millones EUR y cuatro pilares; claim reproduce presupuesto y pilares."
+- id: 01a8393ddb24a59bb1d53452
+  independent_label: contradicted
+  evidence: "Premisa da 498 en matemáticas frente a UE 514 y 504 en ciencias frente a 513, por debajo; claim dice España supera la media."
+- id: 606d116b48b9fdf6b9344b23
+  independent_label: supported
+  evidence: "Premisa dice propagadores recurren a manipulación emocional para suscitar sentimientos fuertes y desviar la atención de la verdad; claim lo reproduce."
+- id: 4c7ae218856342cfaf902d6e
+  independent_label: unsupported
+  evidence: "Premisa solo lista el futuro colisionador circular entre moonshots; no da ubicación; claim añade frontera franco-suiza sin apoyo."
+- id: d90ef46ee853a5c7755e6896
+  independent_label: supported
+  evidence: "Premisa dice especies disponibles todo el año aunque en primavera los volúmenes son mayores; claim lo reproduce."
+- id: 6efc6f718191086074ed56fa
+  independent_label: supported
+  evidence: "Premisa lista sobrepesca, sobreexplotación y captura accesoria en redes; claim dice ambas figuran entre formas de explotación."
+- id: 0e66a29fc9839781b80992e7
+  independent_label: unsupported
+  evidence: "Premisa cita EUvsDisinfo.eu y cuentas separadas de Comisión y Parlamento; no declara dependencia orgánica; claim añade dependencia del Parlamento."
+- id: 072a0de16e2c85280817a7df
+  independent_label: supported
+  evidence: "Premisa da 11,2% de mujeres en EFP medio frente a UE 15,4% y objetivo 25%; claim reproduce esas tres cifras."
+- id: 9dd617214a2c782976384366
+  independent_label: contradicted
+  evidence: "Premisa da 24,7% CTIM por debajo de media UE 26,9% y lejos del objetivo 32%; claim dice supera la media con 32%."
+- id: c6b4baba8f3e1e9641b820c7
+  independent_label: unsupported
+  evidence: "Premisa explica el mayor precio de talla 2 por posible cola más larga y no menciona Japón; claim atribuye subida a demanda japonesa sin apoyo."
+- id: 40060400b9b7d8f2e0c50e59
+  independent_label: supported
+  evidence: "Premisa da 81% deficiente o malo y máximo 15% bueno; claim reproduce ambos porcentajes."
+- id: e3ce60ddb361a089562fc054
+  independent_label: contradicted
+  evidence: "Premisa exige más que frenar el declive y garantizar recuperación suficiente; claim dice basta con frenar y la recuperación no es necesaria."
+- id: d320335b615f975ea8dd0728
+  independent_label: supported
+  evidence: "Premisa da 34,1% de adultos en formación frente a media UE 39,5%; claim reproduce ambas cifras."
+- id: f333630425945fd1f48fbd3d
+  independent_label: unsupported
+  evidence: "Premisa habla de necesitar más de 1,39 millones de especialistas; no prevé crear medio millón antes de 2027; claim añade cifra y plazo."
+- id: 31f362599264c38953a791fc
+  independent_label: supported
+  evidence: "Premisa dice desde 2018 los aspirantes al MTC II acuerdan hoja de ruta con cooperación estrecha con supervisión del BCE; claim lo reproduce."
+- id: 43aac1d4e0bc6d3437538699
+  independent_label: contradicted
+  evidence: "Premisa da 47% buen estado y 39% deficiente o malo; claim dice mayoría del 60% en buen estado."
+- id: 1a6fcd7787d710ff183cfe3e
+  independent_label: unsupported
+  evidence: "Premisa dice turberas y dunas se beneficiaron de Natura 2000; no compara carbono con bosques tropicales; claim añade comparación."
+- id: 82680c1d45d9cd4e35dae50a
+  independent_label: contradicted
+  evidence: "Premisa asigna el rape al género Lophius; claim lo asigna a Thunnus como el atún."
+- id: 344c1cbd590da97e50338a40
+  independent_label: supported
+  evidence: "Premisa da solo 8% de mejora y 45% en deterioro en hábitats agrícolas; claim reproduce ambas cifras."
+- id: f09ef0a16c4491932f78b842
+  independent_label: supported
+  evidence: "Premisa define información errónea como falsa difundida sin intención de inducir a error; claim reproduce la definición."
+- id: 185a556e8471db43e6b1dd87
+  independent_label: supported
+  evidence: "Premisa lista abandono, intensificación y eliminación de pequeñas características del paisaje; claim reproduce las tres presiones."
+- id: 8018067f355f7f0f3fbb792f
+  independent_label: contradicted
+  evidence: "Premisa ordena España 35.382 t, Francia 24.239 t e Italia 11.321 t; claim pone a Italia por delante."
+- id: 90e34d66cbffc623cbfcacdb
+  independent_label: unsupported
+  evidence: "Premisa recoge propuesta de julio 2025; no menciona aprobación parlamentaria en marzo 2026; claim añade evento."
+- id: 09cba26c8bba60a269bca1b0
+  independent_label: unsupported
+  evidence: "Premisa da rango 200 000 a 300 000 millones y datos LIFE hasta la fecha; no cifra el próximo LIFE; claim añade diez mil millones."
+- id: ab4986c7e5d96d03bb6331c9
+  independent_label: supported
+  evidence: "Premisa sitúa en Informe Werner de octubre de 1970 el proyecto en tres fases; claim lo reproduce."
+- id: 7bb70e48eed252d96b14b0c6
+  independent_label: unsupported
+  evidence: "Premisa describe educadores y alfabetización sin examen; no menciona examen de 50 preguntas; claim añade prueba."
+- id: 273d359497b56611ebe01b7a
+  independent_label: unsupported
+  evidence: "Premisa describe convergencia y mapa sin compras de deuda; no da 2 billones 2010-2012; claim añade cifra."
+- id: 8ba0b42843b6860a54fe098c
+  independent_label: unsupported
+  evidence: "Premisa crea el Fondo en 1973 sin préstamos; no da mil millones de ecus en 1975; claim añade préstamo."
+- id: 259a58220f37363f5c7fd75a
+  independent_label: contradicted
+  evidence: "Premisa da adultos hasta 58 kg y grandes en torno a 40 kg; claim dice ninguno supera 10 kg."
+- id: 1e3b47e1ac78ff0af4bdb5ce
+  independent_label: unsupported
+  evidence: "Premisa define UEM y sus dos elementos sin presupuesto propio; claim añade financiación anual del Parlamento."
+- id: 86f785055a936833bb4b9aa6
+  independent_label: unsupported
+  evidence: "Premisa da ofertas por trabajador 52% y 212% por encima; no recomienda subir salarios 10%; claim añade recomendación OCDE."
+- id: 9312dd7c1c2263472a407abc
+  independent_label: supported
+  evidence: "Premisa fija el 1 de enero de 1999 con once Estados y tipos irrevocables; claim lo reproduce."
+- id: 3639036db75cd681596c4b14
+  independent_label: unsupported
+  evidence: "Premisa no identifica presidencia luxemburguesa; solo cita petición de dirigentes e iniciativa de la Comisión; claim añade autoría."
+- id: 5223a385ba2d09e63e013e51
+  independent_label: supported
+  evidence: "Premisa dice con más de tres cuartas partes en la red suelen estar mejor que los parciales; claim lo reproduce."
+- id: 9c4697ec5074447f5aafcfc0
+  independent_label: unsupported
+  evidence: "Premisa detalla 600 EUR por estudiante sin gestor; no atribuye gestión a ayuntamientos; claim añade gestor."
+- id: 6f156cfb52a081d96e459596
+  independent_label: supported
+  evidence: "Premisa dota Plan #DigEdu con más de 1 660 millones y 300 000 portátiles; claim reproduce dotación y portátiles."
+- id: ea4066d3f806775e0f2bc62b
+  independent_label: unsupported
+  evidence: "Premisa no nombra organizador de TIMSS; solo expande siglas en inglés; claim atribuye organización a UNESCO."
+- id: 531a1f0a2ae48646f9b14663
+  independent_label: supported
+  evidence: "Premisa dice alrededor de la mitad adoptaron prohibiciones generales; claim lo reproduce."
+- id: 284d935eb99e27a965499b92
+  independent_label: contradicted
+  evidence: "Premisa sitúa 97,7% entre tres años y edad obligatoria y 55% de cero a dos; claim declara obligatoria la etapa de cero a dos desde 2020."
+- id: 84068d756fae59647cfe0a91
+  independent_label: supported
+  evidence: "Premisa dice la política monetaria la define el BCE, institución independiente; claim lo reproduce."
+- id: 9a7e8fffbc9a4a15503f3eb1
+  independent_label: unsupported
+  evidence: "Premisa da totales 28 000 lugares sin ranking por país; no declara a España primera; claim añade liderazgo."
+- id: 495edb38fab573c276447078
+  independent_label: supported
+  evidence: "Premisa lista rape blanco, americano y negro como mayor importancia; claim los reproduce."
+- id: 2d931f6c4c6188678094d72e
+  independent_label: contradicted
+  evidence: "Premisa dice LIFE cofinanció unos 1 800 proyectos; claim dice menos de quinientos."
+- id: fafc7357e8c911124556cef7
+  independent_label: supported
+  evidence: "Premisa dice bajos costes y tipos convergentes tras el euro; claim reproduce convergencia y bajos costes."
+- id: bcfdf0883c0d83f562572bd2
+  independent_label: supported
+  evidence: "Premisa apoya 50 centros y conversión de 1 253 aulas; claim reproduce ambas cifras."
+- id: ca801b091c9de0b60ae124b8
+  independent_label: contradicted
+  evidence: "Premisa prevé una o dos clases; claim exige mínimo de diez clases."
+- id: 6b66d06fec5a096611fa26b4
+  independent_label: unsupported
+  evidence: "Premisa enumera secciones y base SWD(2025) 700 sin páginas; no da cuatrocientas páginas; claim añade extensión."
+- id: 3d9c6f9060a53fcde5a4c2b2
+  independent_label: supported
+  evidence: "Premisa da 68,6% de empleo en EFP medio frente a 80,0% UE; claim reproduce ambas cifras."
+- id: 79be0fcb10a675d65493b096
+  independent_label: contradicted
+  evidence: "Premisa da mayor precio a talla 2 con 6,92 y menor a talla 5 con 5,38; claim invierte el máximo a talla 5."
+- id: 92c2be352a2102cd7ecc9caf
+  independent_label: unsupported
+  evidence: "Premisa desaconseja fake news sin datar el término; no da origen en 2016 ni elecciones; claim añade origen."
+- id: ac84017fd238bc9f96f8f2de
+  independent_label: unsupported
+  evidence: "Premisa declara datos marinos incompletos incluso en cetáceos; no avala buen estado ni moratoria; claim añade estado y causa."
+- id: 13b911ff2e6a245c09e84fb3
+  independent_label: unsupported
+  evidence: "Premisa crea itinerario sin votación; no da votos de grupos; claim añade unanimidad."
+- id: ab560ef42e241145f5bf177b
+  independent_label: contradicted
+  evidence: "Premisa exige convergencia suficiente para adoptar el euro; claim dice cualquier Estado puede adoptarlo sin convergencia."
+- id: c5b7489bdb6f63920c93d232
+  independent_label: unsupported
+  evidence: "Premisa habla de desajuste y sobrecualificación sin paro juvenil; no da 28%; claim añade tasa."
+- id: f3b4e9b2890fdf8c3a78f18b
+  independent_label: supported
+  evidence: "Premisa da 97,7% frente a 94,6% y objetivo 96%; claim reproduce 97,7% por encima del objetivo."
+- id: 4d67b2a9aadec2167523e312
+  independent_label: supported
+  evidence: "Premisa da 28,6% mujeres en CTIM frente a 32,2% UE y objetivo 40%; claim reproduce las tres cifras."
+- id: 19e0b99d7cf176ffec14b7d8
+  independent_label: contradicted
+  evidence: "Premisa sitúa monedas y billetes el 1 de enero de 2002 con doce Estados; claim los sitúa en 1999 con once."
+- id: 679c7f7280abe1aae5085245
+  independent_label: unsupported
+  evidence: "Premisa solo nombra la conspiración de Bielefeld sin contenido; no dice que afirme que la ciudad no existe; claim añade contenido."
+- id: 5f1f24e3da2cf43d7a690376
+  independent_label: unsupported
+  evidence: "Premisa da hábitat y madurez sin esperanza de vida; no da treinta años; claim añade longevidad."
+- id: d7d9d3ab7a7bf636ff5e3375
+  independent_label: supported
+  evidence: "Premisa atribuye a Estados sus políticas de trabajo, pensiones y capitales; claim lo reproduce."
+- id: ab2ac5393b18461166c2320a
+  independent_label: supported
+  evidence: "Premisa exige CINE 6 en educación infantil para responsable pedagógico; claim lo reproduce."
+- id: 8b9ad236b601cc31915f66b5
+  independent_label: supported
+  evidence: "Premisa asigna al Pilar II 75 876 millones; claim reproduce la cifra."
+- id: 690ab18b0850e463191e1873
+  independent_label: unsupported
+  evidence: "Premisa da reparto CTIM sin paro por titulación; no menciona informática ni paro; claim añade ranking."
+- id: 277a99789a0f7b420a28dd57
+  independent_label: contradicted
+  evidence: "Premisa dice España no cuenta con estrategia específica en CTIM; claim dice cuenta con una aprobada en 2020."
+- id: eb031f77bd9b0caf08ef5487
+  independent_label: unsupported
+  evidence: "Premisa describe reformas sin financiación; no da doscientos millones del FSE+; claim añade fondos."
+- id: 5323a1783a4af1c040a72b75
+  independent_label: supported
+  evidence: "Premisa sitúa Acuerdo de Basilea en abril de 1972 e introduce la serpiente en el túnel; claim lo reproduce."
+- id: 19ed30319206e32a9d2c612f
+  independent_label: supported
+  evidence: "Premisa pide grupos de cinco o seis alumnos como máximo; claim reproduce el tamaño máximo."
+- id: 337093ec08ab679789feaedf
+  independent_label: supported
+  evidence: "Premisa dice el descenso fue menos pronunciado en España que en la mayoría de la UE; claim lo reproduce."
+- id: ecd6528b48e412135b0c4b2b
+  independent_label: unsupported
+  evidence: "Premisa cita Comunicación de marzo de 2025 sin votación; no declara unanimidad de veintisiete; claim añade votación."
+- id: 935f44357cab5ec55750d756
+  independent_label: unsupported
+  evidence: "Premisa lista adopción por miembros sin Andorra ni Mónaco; no menciona acuerdos monetarios; claim añade terceros."
+- id: 0c4a9a2bdb5692af62dc39dc
+  independent_label: contradicted
+  evidence: "Premisa dice solo una proporción cuenta con planes; claim dice todos cuentan con planes aprobados."
+- id: 5937f4b0b1d940581977cc15
+  independent_label: supported
+  evidence: "Premisa dice sin comisiones ni gastos al comprar en otros Estados de la zona; claim lo reproduce."
+- id: a7b38d4977a291f9d47b3def
+  independent_label: supported
+  evidence: "Premisa declara la agricultura la presión más mencionada; claim lo reproduce."
+- id: 6635c8a1629fb897ee8ea781
+  independent_label: supported
+  evidence: "Premisa da 21% con tendencia desconocida; claim reproduce ese 21%."
+- id: 02a0ef50e8885e457123a8a5
+  independent_label: unsupported
+  evidence: "Premisa fija 15-18 años sin descargas; no da diez mil centros; claim añade descargas."
+- id: df20a2b722ca9c4135669b18
+  independent_label: contradicted
+  evidence: "Premisa tiene en cuenta los objetivos 2030 de marzo de 2025; claim dice los ignora y solo usa 2020."
+- id: dafaa40530d8bec1a58de23e
+  independent_label: unsupported
+  evidence: "Premisa lista Pilar III sin empresas por año; no da quinientas; claim añade cifra."
+- id: fd521469011e15f5aabfca15
+  independent_label: unsupported
+  evidence: "Premisa presenta el medicamento X como ejemplo de publicidad engañosa; no dice que sea antibiótico francés; claim añade fármaco."
+- id: 4581f33d3de4b420af1a2a2d
+  independent_label: supported
+  evidence: "Premisa dice escuelas entre las más seguras y ordenadas; claim lo reproduce."
+- id: 738a3733ea070e75ec0c9cb8
+  independent_label: contradicted
+  evidence: "Premisa da 34,1% en España frente a 39,5% UE por debajo; claim dice supera la media."
+- id: 024d887597b980668f6961a3
+  independent_label: contradicted
+  evidence: "Premisa fija madurez a los 6 o 7 años con 70 cm; claim la adelanta al primer año."
+- id: ed72efc84060a9a9c300ce8b
+  independent_label: unsupported
+  evidence: "Premisa atribuye el informe a Estados miembros; no cita quinientas oenegés; claim añade fuente."
+- id: 4ccade036079f9882763dccc
+  independent_label: unsupported
+  evidence: "Premisa enumera cuatro grupos sin composición; no dice que sean solo inspectores; claim añade composición."
+- id: f5c2e0296f7e9ef6cc62336e
+  independent_label: contradicted
+  evidence: "Premisa dice moviliza inversiones privadas; claim dice renuncia a movilizarlas y solo usa fondos públicos."
+- id: 1af8d0bdb961b8b5f0ba75aa
+  independent_label: unsupported
+  evidence: "Premisa menciona rondas PISA 2018 y 2022 sin primera participación; no dice debut en 2018; claim añade estreno."
+- id: 307fa706d5853665c489c986
+  independent_label: contradicted
+  evidence: "Premisa da importaciones totales 22.619 t frente a exportaciones de 823 t; claim dice exportaciones superaron a importaciones."
+- id: ad0bb3e6ba1008946daae601
+  independent_label: supported
+  evidence: "Premisa dice ante incertidumbre o miedo es fácil dejarse engañar; claim reproduce esa facilidad."
+- id: 96902a25f564dfc582e69990
+  independent_label: contradicted
+  evidence: "Premisa obliga a informar cada seis años; claim dice una única vez sin obligación de actualizar."
+- id: 518ee988d45da8b2ae6e4c74
+  independent_label: contradicted
+  evidence: "Premisa dice la demanda supera la oferta; claim dice la oferta supera ampliamente la demanda."
+- id: d484259e0566e5a5d2ea6e1c
+  independent_label: unsupported
+  evidence: "Premisa explica caída por cuotas reducidas sin Reino Unido ni 2028; no menciona renegociación británica; claim añade fecha."
+- id: 6dfcd6722e1cdb111f81dc13
+  independent_label: contradicted
+  evidence: "Premisa concede 600 EUR por estudiante; claim da seis mil euros por estudiante."
+- id: 07b0706de22264f7a9178c3e
+  independent_label: contradicted
+  evidence: "Premisa da 97,7% por encima del objetivo 96%; claim dice no alcanza el objetivo."
+- id: 9c887b7b31cf74f8d38c3096
+  independent_label: supported
+  evidence: "Premisa dice la Ley 3/2022 creó itinerario de IA y datos; claim lo reproduce."
+- id: 941ea125cd1a57ae522ae23b
+  independent_label: contradicted
+  evidence: "Premisa da 98% a fresco y 2% a congelado; claim da 98% a congelado."
+- id: 3444784b3898e55a085dc1cd
+  independent_label: contradicted
+  evidence: "Premisa asigna más de 1 660 millones; claim reduce a solo dieciséis millones."
+- id: 7c24d7c98af393ca95cbf896
+  independent_label: unsupported
+  evidence: "Premisa define criterios sin balance de 1997; no dice que solo tres cumplían; claim añade balance."
+- id: 479c1b4d8057dac00c284ecf
+  independent_label: contradicted
+  evidence: "Premisa exige CINE 6 en educación infantil; claim dice no se necesita ninguna cualificación."
+- id: 06067a419ca2d99aa5a6576f
+  independent_label: supported
+  evidence: "Premisa da 70 a 200 cm y 4 a 8 kg; claim reproduce talla y peso."
+- id: 66bd6e4cbe7ffce9bd63f556
+  independent_label: contradicted
+  evidence: "Premisa propone 175 000 millones; claim reduce a 175 millones."
+- id: eaccc580d8fee288465fcc8a
+  independent_label: supported
+  evidence: "Premisa da unos 1 800 proyectos con casi 3 000 millones; claim reproduce ambas cifras."
+- id: 2f8942dae141413efd2d5b01
+  independent_label: unsupported
+  evidence: "Premisa habla de rape y Brexit sin merluza; no da 15%; claim añade especie y cifra."
+- id: 6fad6d89ede626304507fe54
+  independent_label: unsupported
+  evidence: "Premisa da mujeres en España sin Finlandia; no da 45% finlandés; claim añade país y cifra."
+- id: fc79266806bf1951d98e7130
+  independent_label: supported
+  evidence: "Premisa da producción mundial de 52.935 toneladas en 2024; claim reproduce la cifra."
+- id: 7c59e65a7fae6928797e4aa4
+  independent_label: supported
+  evidence: "Premisa da 35,0% en empleos poco cualificados frente a 21,9% UE como mayor tasa; claim lo reproduce."
+- id: 59b512b8f168a0ce1861acc3
+  independent_label: unsupported
+  evidence: "Premisa detalla fresco y congelado sin ahumado; no da 5% ahumado; claim añade categoría."
+- id: e60611b494aed286f856fca1
+  independent_label: contradicted
+  evidence: "Premisa dice costes bajos con tipos convergentes; claim dice divergieron inmediata y permanentemente."
+- id: 53638195e231fe30dc1bd209
+  independent_label: contradicted
+  evidence: "Premisa llama a educadores interlocutores clave; claim dice no tienen ningún papel."
+- id: b6b8cdfffb87b097e17361c7
+  independent_label: contradicted
+  evidence: "Premisa pone en marcha la UEM en Maastricht en diciembre de 1991; claim la adelanta a 1957 con Roma."
+- id: 028cde89156b1554a3cdca44
+  independent_label: unsupported
+  evidence: "Premisa exige CINE 6 sin salarios; no da mil ochocientos euros; claim añade salario."
+- id: 191cae9b33d7869d30ba91ea
+  independent_label: supported
+  evidence: "Premisa da casi 28 000 lugares y 18% terrestre; claim reproduce lugares y porcentaje."
+- id: 40d0ecb0df59b368663a1cf0
+  independent_label: contradicted
+  evidence: "Premisa limita la deuda al 60% del PIB; claim permite 120% con déficit bajo."
+- id: 501fa1ae62b6c4a17770f1d1
+  independent_label: unsupported
+  evidence: "Premisa declara BCE independiente sin sede ni plantilla; no da Fráncfort ni 3 500; claim añade sede y cifra."
+- id: ac2150205701c9b7afe61232
+  independent_label: supported
+  evidence: "Premisa limita a 1,5 puntos sobre los tres mejores; claim reproduce el umbral."
+- id: 3e30698119024b48f8cb4c2d
+  independent_label: contradicted
+  evidence: "Premisa da crecimiento de 14,9% y 10,3% en 2024; claim dice el empleo cayó."
+- id: 569316c72634ac1f115d0f7b
+  independent_label: unsupported
+  evidence: "Premisa crea el MEDE en 2012 sin calendario; no da cuatro reuniones en Luxemburgo; claim añade calendario."
+- id: ce4431868db0c959f4343637
+  independent_label: supported
+  evidence: "Premisa dice las actividades de Russia Today se prohibieron en la UE; claim reproduce la prohibición."
+- id: 7399c74803cd656f2674e3c4
+  independent_label: contradicted
+  evidence: "Premisa fija once Estados en 1999; claim eleva a veinte."
+- id: 1ca3d790645af173ec3e28fc
+  independent_label: contradicted
+  evidence: "Premisa dice la UE se redujo un 26%; claim dice aumentó un 26%."
+- id: 0a9c492dbb09fb0738c5adc2
+  independent_label: supported
+  evidence: "Premisa sitúa QAnon en 4chan y 8chan en 2017; claim lo reproduce."
+- id: 1690d7d69c7505f117b6f08b
+  independent_label: unsupported
+  evidence: "Premisa solo distingue desinformación e información errónea; no crea categoría de propaganda; claim añade tercera categoría."
+- id: d5023e47841614b9e44bb0b5
+  independent_label: unsupported
+  evidence: "Premisa da 823 t y 4,4 millones sin Suiza; no da doce euros ni Suiza; claim añade mercado y precio."
+- id: 990da4bc734bf2ed61da6e71
+  independent_label: contradicted
+  evidence: "Premisa dice alrededor de la mitad adoptó prohibiciones; claim extiende a todas sin excepción."
+- id: 5868eaab1e54960535fdca2e
+  independent_label: contradicted
+  evidence: "Premisa fija brecha de dos años y medio; claim dice no existe ninguna brecha."
+- id: 7d2cc16621da96b9f06db074
+  independent_label: unsupported
+  evidence: "Premisa lista especies y hábitats sin año; no da 1992; claim añade fecha de la Directiva."
+- id: 079be580c266e23e39246a1f
+  independent_label: supported
+  evidence: "Premisa atribuye a propagadores inundar el espacio para no saber a quién creer; claim lo reproduce."
+- id: 442b2668a6502c0de95cee65
+  independent_label: contradicted
+  evidence: "Premisa pide respiro y verificar sin contestar de inmediato; claim pide responder de inmediato sin verificar."
+- id: 5378a592c193999f673a2cb9
+  independent_label: contradicted
+  evidence: "Premisa da dos elementos, económico y monetario; claim deja solo el monetario."
+- id: efd4c9e81c4d798a42702aee
+  independent_label: contradicted
+  evidence: "Premisa dice el Consejo de Innovación apoya emergentes de tecnología profunda; claim dice el de Investigación solo financia grandes consolidadas."
+- id: af58bb07846ad5d041432db0
+  independent_label: contradicted
+  evidence: "Premisa da 8% de mejora y 45% en deterioro; claim invierte a 45% de mejora y 8% en deterioro."
+- id: 4766f7d6183f998432f3a9ca
+  independent_label: contradicted
+  evidence: "Premisa dirige a adolescentes de quince a dieciocho; claim lo restringe a primaria."
+- id: 465904a500cb8b5aee6d19e8
+  independent_label: contradicted
+  evidence: "Premisa dice con más de tres cuartas partes están mejor que los parciales; claim invierte la comparación."
+- id: 79b63183067ae6f2c1fc8a9f
+  independent_label: supported
+  evidence: "Premisa propone asignación del 5,5% del PIB; claim reproduce la propuesta."
+- id: a8d53afe6c1dc5787bb1181c
+  independent_label: contradicted
+  evidence: "Premisa fija límites de 15% en MTC II; claim los reduce a 2,25%."
+- id: b804af19396f86178d85d249
+  independent_label: supported
+  evidence: "Premisa aprueba 600 000 EUR totales y 600 EUR por estudiante; claim reproduce ambas cifras."
+- id: c3b8f6ed193be4f2e90505cb
+  independent_label: supported
+  evidence: "Premisa no recomienda usar fake news por criticar a independientes; claim reproduce la recomendación."
+- id: e912cae046230207f821173b
+  independent_label: unsupported
+  evidence: "Premisa crea el MEDE sin capital; no da setecientos mil millones; claim añade capital."
+- id: bb0151359332c3841c75df77
+  independent_label: supported
+  evidence: "Premisa fija grupo de quince a dieciocho años; claim reproduce el rango."
+- id: aa0da4a55a4f23312ebc29ce
+  independent_label: contradicted
+  evidence: "Premisa atribuye la política monetaria al BCE; claim la atribuye a gobiernos sin BCE."
+- id: d347f2ca046bdf205fdd315b
+  independent_label: unsupported
+  evidence: "Premisa lista Reino Unido, Namibia, Noruega y China sin MSC; no da 40% certificado; claim añade certificación."
+- id: a0108386a8898138ba2b5819
+  independent_label: contradicted
+  evidence: "Premisa baja de 20,0% a 13,0%; claim sube hasta 25%."
+- id: eabd998af35524838c035eee
+  independent_label: supported
+  evidence: "Premisa dice solo una proporción cuenta con planes; claim lo reproduce."
+- id: 666785193e892a67c90f49b0
+  independent_label: contradicted
+  evidence: "Premisa incluye IA de próxima generación e informática cuántica; claim dice los excluye."
+- id: 6ff2e940d7fe0f155bc5f526
+  independent_label: unsupported
+  evidence: "Premisa fija tipos y MTC II sin publicación mensual; no da publicación mensual; claim añade publicación."
+- id: eb31a2b89e4cc2a20f57eff7
+  independent_label: supported
+  evidence: "Premisa declara la primera venta española la más afectada con 47% menos volumen; claim lo reproduce."
+- id: 45816007bd24d0c0801f02db
+  independent_label: supported
+  evidence: "Premisa lista aviación limpia, cuántica y fusión; claim reproduce los tres moonshots."
+- id: 2081a0e5027f09d050bca579
+  independent_label: supported
+  evidence: "Premisa lista Vigo, A Coruña y Ondárroa como principales puntos españoles; claim los reproduce."
+- id: aa7af92cc3303e14795d4de9
+  independent_label: unsupported
+  evidence: "Premisa dice millones sin cifra exacta; no da exactamente dos millones; claim precisa número exacto."
+- id: 4be76c9255cbd5aa756649c6
+  independent_label: contradicted
+  evidence: "Premisa dice el objetivo no es enseñar qué está permitido decir; claim dice es enseñar qué tienen prohibido."
+- id: ef75a8028272c80373a89f41
+  independent_label: supported
+  evidence: "Premisa fija garantizar recuperación para sobrevivir a largo plazo; claim lo reproduce."
+- id: d482eb1ca90e792bb13a3c75
+  independent_label: unsupported
+  evidence: "Premisa expone compromisos sin votación; no da unanimidad de octubre de 2020; claim añade votación."
+- id: 30269410e8a771c686043213
+  independent_label: unsupported
+  evidence: "Premisa describe género y distribución sin longevidad; no da veinticinco años; claim añade edad."
+- id: 18782d5dc07dbcc85e7da06c
+  independent_label: supported
+  evidence: "Premisa da 25.150 toneladas y 165 millones en 2025; claim reproduce volumen y valor."
+- id: 4f41d5f8a8f85c2a27a127df
+  independent_label: supported
+  evidence: "Premisa da coordinación económica y política monetaria con euro; claim reproduce los dos elementos."
+- id: 736028ed42a16311a498ddf6
+  independent_label: contradicted
+  evidence: "Premisa sitúa a España entre las más seguras según TIMSS; claim la declara la más insegura."
+- id: 905d4d87d36e666c6ac8c0da
+  independent_label: unsupported
+  evidence: "Premisa describe Q sin detención; no da detención del FBI en 2021; claim añade detención."
+- id: 06c3ccd09d693fa3f6499dce
+  independent_label: supported
+  evidence: "Premisa da al Reino Unido 38% del valor fuera de la UE; claim reproduce proveedor y porcentaje."
+- id: 0228019a21ae908efccfa64b
+  independent_label: supported
+  evidence: "Premisa llama a educadores interlocutores clave; claim lo reproduce."
+- id: 4a18cbbc1f2ba7f04b8b53f1
+  independent_label: contradicted
+  evidence: "Premisa da la mayor tasa de sobrecualificación; claim da la menor."
+- id: c8089a67ce325d4de49a0d2a
+  independent_label: contradicted
+  evidence: "Premisa limita a 1,5 puntos; claim amplía a cinco puntos."
+- id: 7577763968f81c90c62ee0bd
+  independent_label: supported
+  evidence: "Premisa fija 15% por encima o por debajo del tipo central; claim reproduce la banda."
+- id: 8bb8ea1a54d184f9f9ed45c6
+  independent_label: supported
+  evidence: "Premisa triplica con creces las capturas noruegas con 331%; claim reproduce aumento y cifra."
+- id: 8748165661c47ed24ac69fa0
+  independent_label: unsupported
+  evidence: "Premisa no cita Oxford; solo describe sociedad abierta y técnicas; claim añade estudio."
+- id: 4114e79713f17db072cd6292
+  independent_label: contradicted
+  evidence: "Premisa da 28,6% de mujeres en CTIM; claim da más de la mitad."
+- id: eda82e8532c0495db49423d7
+  independent_label: supported
+  evidence: "Premisa obliga a informar cada seis años; claim reproduce la obligación."
+- id: efabb3fdd7cd669d7112171b
+  independent_label: contradicted
+  evidence: "Premisa incluye la agricultura como primera presión; claim dice no figura."
+- id: e9cdf9506d7df9c58e4160b1
+  independent_label: contradicted
+  evidence: "Premisa cubre casi una quinta parte con 18%; claim cubre más de la mitad."
+- id: 138b81d6ae2cfaa6b17b73e2
+  independent_label: unsupported
+  evidence: "Premisa diferencia normas por comunidades sin prohibición nacional ni fecha; claim añade prohibición nacional de 2024."
+- id: c7bbd740ac82fe43dca1966b
+  independent_label: contradicted
+  evidence: "Premisa declara la agricultura la más frecuente; claim pone a la urbanización muy por encima."
+- id: 08632593d08130e77f3404fb
+  independent_label: supported
+  evidence: "Premisa reúne BCE y bancos centrales hayan o no adoptado el euro; claim lo reproduce."
+- id: 3fa2e4abbeee845be1042401
+  independent_label: unsupported
+  evidence: "Premisa lista presiones sin superficie ecológica; no da 25%; claim añade cuota."
+- id: 3f17011b20cb81a094463eaf
+  independent_label: contradicted
+  evidence: "Premisa asigna sección 4 a formación profesional y 5 a superior; claim las intercambia."
+- id: 1dfc68988f71fc9355e6982a
+  independent_label: supported
+  evidence: "Premisa advierte que no todos son desinformación pero sirven para navegar información poco fiable; claim lo reproduce."
+- id: 99baea61398171579241f2a3
+  independent_label: contradicted
+  evidence: "Premisa da a Vigo 20% del total; claim lo baja a menos del 5%."
+- id: acdc07b29e20badd467f0704
+  independent_label: supported
+  evidence: "Premisa lleva la coordinación al Semestre con etapas en el primer semestre; claim lo reproduce."
+- id: da25e3833f8f0ef06f011d5e
+  independent_label: unsupported
+  evidence: "Premisa solo nombra el Área 51 como ejemplo sin estado; no sitúa en Nevada; claim añade localización."
+- id: 0c14247ffe5941a0cce4b185
+  independent_label: unsupported
+  evidence: "Premisa no fija mayorías ni todos los ámbitos; solo dice que adoptan legislación en el Consejo; claim añade regla general."
+- id: 5def38b44027568f4e74be9b
+  independent_label: unsupported
+  evidence: "Premisa da 68,6% sin momento de medición; no da nueve meses; claim añade momento."
+- id: 8601d2f466cbf810bb238e62
+  independent_label: supported
+  evidence: "Premisa prevé una o dos clases para secundaria media; claim lo reproduce."
+- id: 81f37f54f1e3653dbb6ea736
+  independent_label: supported
+  evidence: "Premisa da 27,3% sin nivel básico en matemáticas; claim reproduce la cifra."
+- id: 622896f164b84fc13d05da8b
+  independent_label: contradicted
+  evidence: "Premisa da a Francia 68% como principal; claim traslada ese 68% a España."
+- id: b8e72314764dec07e9c412f8
+  independent_label: contradicted
+  evidence: "Premisa da 75 876 al Pilar II y 16 262 al IV; claim asigna 75 876 al IV como mayor."
+- id: fec6b5f1762cea6438639922
+  independent_label: unsupported
+  evidence: "Premisa anuncia planes de aumentar el permiso sin ocho años; no da disfrute hasta los ocho; claim añade edad."
+- id: 1fe9f67cc270b665653e93ae
+  independent_label: contradicted
+  evidence: "Premisa da a la UE-27 el 51% como principal; claim traslada ese 51% a China."
+- id: cdcf28925b768cad9817f2cd
+  independent_label: unsupported
+  evidence: "Premisa cita alondra en disminución sin desaparición por países; no da cinco Estados; claim añade extinción."
+- id: 56ea651559c8a7101ce05a62
+  independent_label: contradicted
+  evidence: "Premisa da 68,6% en EFP medio frente a 83,9% en superior; claim invierte la ventaja."
+- id: e5c1f5eaf1e9d449aa7986ca
+  independent_label: contradicted
+  evidence: "Premisa declara Russia Today estatal rusa prohibida; claim la declara independiente promovida."
+- id: d687e42b6fdf51d2af3dcf09
+  independent_label: unsupported
+  evidence: "Premisa lista España, Francia e Italia sin Alemania; no da ocho mil toneladas; claim añade mercado."
+- id: 49b2b900d4029b77d6e78eb6
+  independent_label: unsupported
+  evidence: "Premisa lista sectores sin FSE+ ni 1 300 millones; no aporta a Horizonte; claim añade fondos."
+- id: f24808ecccb0ab93299524d3
+  independent_label: contradicted
+  evidence: "Premisa forma el Eurogrupo con ministros de Hacienda; claim lo forma con jefes de Estado o Gobierno."
+- id: 1ff67cdf975eb95b85e058ce
+  independent_label: contradicted
+  evidence: "Premisa da vídeos en inglés o ruso con transcripciones; claim da doblaje español sin transcripción."
+- id: 0862b1ed2c706aad634a47fb
+  independent_label: unsupported
+  evidence: "Premisa define Eurogrupo sin reuniones ni sede; no da doce reuniones en Bruselas; claim añade frecuencia."
+- id: e963b6b81be441d8d94319cb
+  independent_label: unsupported
+  evidence: "Premisa describe el Semestre sin tratado ni año; no cita Lisboa 2009; claim añade origen."
+- id: a64327cf74c4af621aba3e8c
+  independent_label: contradicted
+  evidence: "Premisa da más de una cuarta parte con 27,3%; claim baja a menos del 10%."
+- id: 4ed7d7085892d1c67074ffed
+  independent_label: unsupported
+  evidence: "Premisa no da seguidores; solo describe carácter participativo desde 2019; claim añade millón en Europa."
+- id: b8f8e4b219e47023f5239eda
+  independent_label: supported
+  evidence: "Premisa da a España 35.382 t como principal mercado; claim reproduce mercado y cifra."
+- id: 6db12317b3fd2f6e32e29f09
+  independent_label: unsupported
+  evidence: "Premisa lista ciberanzuelos, bots y ultrafalsificaciones sin TikTok; no nombra red principal; claim añade TikTok."
+- id: 4f5dcb8225202da9cdeed094
+  independent_label: contradicted
+  evidence: "Premisa dice todos deben adoptar excepto Dinamarca; claim otorga a Suecia exención equivalente."
+- id: e896377736d41216a9ce99e7
+  independent_label: unsupported
+  evidence: "Premisa dota microcredenciales con 50 millones sin gestor; no cita SEPE; claim añade gestor."
+- id: 3c8c1a183e1f5e3773f9c3a2
+  independent_label: contradicted
+  evidence: "Premisa introduce la serpiente en 1972 con Basilea; claim la traslada a 1985 sin relación."
+- id: ff9ca20e622af4b8fe5edf5f
+  independent_label: supported
+  evidence: "Premisa afirma exterminio entre 1959 y 1971 y sustitución por drones; claim reproduce fechas y sustitución."
+- id: 3cc265dd914efb6464aae4e9
+  independent_label: supported
+  evidence: "Premisa da 27% en buen estado como cuarta parte; claim reproduce porcentaje y fracción."
+- id: 61745f8a12d8f00e8e11f941
+  independent_label: unsupported
+  evidence: "Premisa da 21% desconocida sin causa; no menciona satélites; claim añade causa."
+- id: 135a261209b0a38df2575c6b
+  independent_label: contradicted
+  evidence: "Premisa limita a cinco o seis como máximo; claim exige mínimo de quince."
+- id: 3e06c29f8c9705aed4684774
+  independent_label: supported
+  evidence: "Premisa da 14,9% en electricidad y gas y 10,3% en TIC en 2024; claim reproduce ambos."
+- id: db1d5732f70689abf8529704
+  independent_label: unsupported
+  evidence: "Premisa habla de verificadores sin lista ni teléfonos; no da diez ni teléfonos; claim añade lista."
+- id: 33e37ac3a1627ea38db3b630
+  independent_label: supported
+  evidence: "Premisa da 24,7% CTIM por debajo de 26,9% UE; claim reproduce ambas cifras."
+- id: dac224abefb9ea408a13e844
+  independent_label: supported
+  evidence: "Premisa dice la producción de la UE se redujo un 26%; claim reproduce la caída."
+- id: 0b969835be3e684452e917c0
+  independent_label: unsupported
+  evidence: "Premisa cuantifica caída sin veda; no menciona veda de 2023; claim añade causa."
+- id: 575d922a133039aeb533b34a
+  independent_label: unsupported
+  evidence: "Premisa exige convergencia sin plazo exacto; no da dos años desde solicitud; claim añade duración."
+- id: 829311e8d9b94e93d7f269c8
+  independent_label: unsupported
+  evidence: "Premisa pone en marcha el Plan en 2021 sin prórroga; no prorroga hasta 2030; claim añade prórroga."
+- id: 6ae9ac9817884f7449224c88
+  independent_label: contradicted
+  evidence: "Premisa define desinformación con fin lucrativo o engaño deliberado; claim la define sin intención."
+- id: ffb22a391e39a5cabe58a12e
+  independent_label: contradicted
+  evidence: "Premisa dice el descenso fue menos pronunciado en España; claim dice donde más cayó."
+- id: d6db5376f6fe216d41f41800
+  independent_label: unsupported
+  evidence: "Premisa reparte primera venta sin Alemania; no da 15% alemán; claim añade cuota."
+- id: cc6d7ee066e2a7d3623e19ab
+  independent_label: supported
+  evidence: "Premisa da Francia 68%, España 11% y Dinamarca 8%; claim reproduce el reparto."
+- id: f8daa3ab46f664b4eec0d0e5
+  independent_label: supported
+  evidence: "Premisa da 47% en buen estado como casi la mitad; claim reproduce porcentaje y fracción."
+- id: e433478a3f859d2f63b5fec0
+  independent_label: supported
+  evidence: "Premisa crea el MEDE en septiembre de 2012 los Estados de la zona; claim lo reproduce."
+- id: dee75160e2257773fd2a8d53
+  independent_label: supported
+  evidence: "Premisa forma el Consejo con ministros de Hacienda de la zona; claim reproduce la composición."
+- id: dbf2ed18b7c456b7a4ec1672
+  independent_label: supported
+  evidence: "Premisa prevé asociaciones más específicas según sectores estratégicos; claim lo reproduce."
+- id: d327b1dbf6a4a689015bbbb9
+  independent_label: contradicted
+  evidence: "Premisa fija exterminio entre 1959 y 1971; claim lo traslada a 1990-2000."
+- id: 9595d089ebd2b769ba067435
+  independent_label: contradicted
+  evidence: "Premisa dice buscan inundar para no saber a quién creer; claim dice buscan reducir volumen para verificar."
+- id: 4d0ebf3b5b32abca1ef6c2de
+  independent_label: unsupported
+  evidence: "Premisa no da fecha croata; solo exige MTC II salvo Dinamarca; claim añade julio de 2020."
+- id: d90a73ad98313650b58dd37d
+  independent_label: contradicted
+  evidence: "Premisa exime a Dinamarca con opt-out; claim la obliga sin exención."
+- id: 1c3cdd4c8253c1263be1d4d9
+  independent_label: contradicted
+  evidence: "Premisa sitúa a España en 4,4% con improbable cumplimiento; claim declara superado el 10%."
+- id: bc8a6dfd4dee2543557b0dfd
+  independent_label: contradicted
+  evidence: "Premisa advierte que no todos son desinformación; claim dice todos son confirmados."
+- id: 378fb750abcb565daf86fecd
+  independent_label: contradicted
+  evidence: "Premisa da mayoría de 63% en deficiente o malo; claim da mayoría en buen estado."
+- id: 0092860e0acf9a03c9fc1986
+  independent_label: unsupported
+  evidence: "Premisa lista exóticas sin vector; no menciona agua de lastre; claim añade vía."
+- id: f3d2f412a2a908b534ef98b0
+  independent_label: unsupported
+  evidence: "Premisa no da conversión de peseta; solo fija once y doce Estados; claim añade 166,386."
+- id: fdb06c34fbf266e1df5edd03
+  independent_label: supported
+  evidence: "Premisa da vídeos en inglés o ruso con transcripciones traducidas; claim lo reproduce."
+- id: 6fb989a0b2ca6f6fea25487e
+  independent_label: contradicted
+  evidence: "Premisa da 9% en alza entre los desfavorables, no 9% de mal estado; el mal estado es 81%; claim confunde tendencia con estado."
+- id: a8f2c27c5a5bd85528f7e3bf
+  independent_label: contradicted
+  evidence: "Premisa dice disponible todo el año con pico en primavera; claim lo restringe al invierno."
+- id: 9bd1cd494b5dfb8b7df511c0
+  independent_label: supported
+  evidence: "Premisa da 498 en matemáticas frente a 514 de la UE; claim reproduce ambas cifras."
+- id: 7413901d72b8387711055296
+  independent_label: contradicted
+  evidence: "Premisa lista Eslovenia 2007 y Eslovaquia 2009; claim adelanta Eslovenia a 2004."
+- id: 2d53852bbddf4d6a127e5064
+  independent_label: unsupported
+  evidence: "Premisa usa 5G como ejemplo de miedo sin afirmar daño; no declara efectos nocivos; claim añade daño."
+- id: f2df0645aab6aad0cf4bd5fa
+  independent_label: unsupported
+  evidence: "Premisa da 0,13 kg en 2023; no da 0,20 en 2024; claim añade año y cifra."
+- id: 901685a87ab77210fd1889ea
+  independent_label: supported
+  evidence: "Premisa dice demanda supera oferta con matrícula inferior y decreciente; claim lo reproduce."
+- id: 2b957bbcd5092e67797ad73b
+  independent_label: supported
+  evidence: "Premisa tiene en cuenta objetivos 2030 de marzo de 2025; claim lo reproduce."
+- id: 72e4989bce3d79d21d8a4b7d
+  independent_label: supported
+  evidence: "Premisa atribuye la teoría a Q anónimo alto cargo con habilitación; claim lo reproduce."
+- id: 9717f6a46a8affdbe07862e2
+  independent_label: contradicted
+  evidence: "Premisa sitúa etapas clave en el primer semestre; claim las traslada al segundo."
+- id: ccaf54e1a80732016971de0a
+  independent_label: unsupported
+  evidence: "Premisa da 52.935 t en 2024 y pico de 66.224 en 2017; no da 2025 sobre sesenta mil; claim añade año y cifra."
+- id: dc5a577e00eba3e1de75123f
+  independent_label: supported
+  evidence: "Premisa pone en marcha la UEM en Maastricht en diciembre de 1991; claim lo reproduce."
+- id: da23f12e5c3cddac219c8938
+  independent_label: supported
+  evidence: "Premisa remite a EUvsDisinfo en web, YouTube, Facebook y X; claim reproduce el recurso y canales."
+- id: 1f4a7f4f6c3a0c61cb9fdf61
+  independent_label: supported
+  evidence: "Premisa dice tres años como unidad de cuenta solo pagos electrónicos; claim lo reproduce."
+- id: e2833801a0148eba0c3e506c
+  independent_label: contradicted
+  evidence: "Premisa mantiene Q anónimo alto cargo; claim revela identidad como periodista."
+- id: 25e6cfeb1828846cab47aef5
+  independent_label: supported
+  evidence: "Premisa dice no enseñar qué está permitido decir sino pensamiento crítico; claim lo reproduce."
+- id: 2e447d89ec3d3cf558ad5b2e
+  independent_label: unsupported
+  evidence: "Premisa lista PPT y casos sin contar diapositivas; no da veintitrés; claim añade número."
+- id: 0119d31a0c005c1196109566
+  independent_label: supported
+  evidence: "Premisa da 823 toneladas por 4,4 millones; claim reproduce volumen y valor."
+- id: 247cab98c2eacccec7e6b611
+  independent_label: unsupported
+  evidence: "Premisa no describe billetes; solo fija once y doce Estados; claim añade estilos."
+- id: d57720b17240ad2e855bc4d5
+  independent_label: supported
+  evidence: "Premisa exige niveles comparables presupuestarios, financieros, monetarios y de precios; claim lo reproduce."
+- id: 3132ce167466982cfdd9857c
+  independent_label: unsupported
+  evidence: "Premisa da 13,0% en 2024 sin meta; no fija 5% en 2030; claim añade objetivo."
+- id: ba550afaad13668fc8774d05
+  independent_label: supported
+  evidence: "Premisa asigna sección 4 a formación profesional; claim lo reproduce."
+- id: e1a2b421bc71d0ff7f0c60a2
+  independent_label: contradicted
+  evidence: "Premisa aumenta danesas y belgas 32% y 39%; claim las hace descender."
+- id: 42ea2054e3998bb4de03ccc9
+  independent_label: unsupported
+  evidence: "Premisa no nombra quebrantahuesos; solo da 47/39 y tendencias; claim añade especie."
+- id: 991598480f77b8a1bf9210db
+  independent_label: supported
+  evidence: "Premisa apoya emergentes de cuántica, biotecnología y limpias; claim reproduce sectores."
+- id: 21476d00ff7b46278cedee62
+  independent_label: contradicted
+  evidence: "Premisa presenta el proyecto en tres fases; claim lo hace de una sola vez sin fases."
+- id: aa6e0e34376468717b25f308
+  independent_label: contradicted
+  evidence: "Premisa invita a descubrir el bulo en EUvsDisinfo; claim dice desaconseja consultarlo."
+- id: fe16966c6240226959aa9e23
+  independent_label: contradicted
+  evidence: "Premisa reduce 47% el volumen español; claim lo aumenta 47%."
+- id: f1a5239e95f11b5189b5ec7d
+  independent_label: contradicted
+  evidence: "Premisa da 25.150 toneladas; claim dice no superó diez mil."
+- id: 619565c14ede61af3cc65b86
+  independent_label: unsupported
+  evidence: "Premisa usa actor como ejemplo sin pago; no da quinientos euros; claim añade pago."
+- id: d9dcb35a42e54199ba3bab2d
+  independent_label: contradicted
+  evidence: "Premisa pide 30% total con 10% estricto dentro; claim limita toda la protección al 10%."
+- id: 5656f8e338ec1996e77a1b78
+  independent_label: unsupported
+  evidence: "Premisa describe sátira sin prohibición; no da prohibición de 2023; claim añade prohibición."
+- id: ca1f798f13dadbf09c4802f9
+  independent_label: supported
+  evidence: "Premisa fija madurez a 6 o 7 años con 70 cm; claim reproduce edad y talla."
+- id: d43bdd5df97b462507d9e334
+  independent_label: supported
+  evidence: "Premisa obliga a todos salvo Dinamarca con opt-out; claim reproduce excepción danesa."
+- id: 9ec667e4ea3fa6534fd98f73
+  independent_label: contradicted
+  evidence: "Premisa deja 21% con tendencia desconocida; claim dice se conoce la totalidad."
+- id: 965df90a02d81c17de1d5681
+  independent_label: unsupported
+  evidence: "Premisa prevé una o dos clases sin tamaño; no da 250 MB; claim añade peso."
+- id: 0119f96d711c39bdb6b38113
+  independent_label: contradicted
+  evidence: "Premisa propone 5,5% del PIB; claim fija 2%."
+- id: 0b7211eb09ab910cca1deef6
+  independent_label: supported
+  evidence: "Premisa da a España 28% del valor de frescas dentro de la UE; claim reproduce mercado y cuota."
+- id: c9b468cf73a23f6e6413b0e7
+  independent_label: unsupported
+  evidence: "Premisa prevé 300 000 dispositivos sin marca; no dice misma marca; claim añade marca única."
+- id: 98953102cca8f9715e70ff8e
+  independent_label: supported
+  evidence: "Premisa fija brecha de dos años y medio; claim reproduce la brecha."
+- id: fff0036370fe0c9b6d5abd0c
+  independent_label: supported
+  evidence: "Premisa baja de 20,0% a 13,0% como mínimo registrado; claim reproduce caída y mínimo."
+- id: 0f6f13d917e195d1cdf03828
+  independent_label: contradicted
+  evidence: "Premisa expande volumen 51% y valor 92%; claim reduce a la mitad."
+- id: ee0e612a22b21510d93515f4
+  independent_label: supported
+  evidence: "Premisa da a talla 2 de 4 a 8 kg 6,92 EUR/kg como mayor; claim reproduce talla, peso y precio."
+- id: 8611e358318e7445c9a8e5f3
+  independent_label: contradicted
+  evidence: "Premisa sigue por debajo del 60% para 2030; claim declara objetivo cumplido en 2024."
+- id: 5e81149f3df5bdab1bb6c7b0
+  independent_label: unsupported
+  evidence: "Premisa no prevé multas; solo dice proporción con planes; claim añade multa de la Comisión."
+- id: e473208488504f68dee77f2b
+  independent_label: contradicted
+  evidence: "Premisa dice en ciertos casos se difunden intencionadamente; claim dice ninguna se difunde así."
+- id: bcaf20f0c783a97f5f2d52f5
+  independent_label: unsupported
+  evidence: "Premisa no cuenta asistentes; solo sitúa Maastricht en diciembre de 1991; claim añade doce jefes."
+- id: f6ed8dd2a87f2c2e14ad026c
+  independent_label: contradicted
+  evidence: "Premisa crea el MEDE en septiembre de 2012; claim lo adelanta a 1999."
+- id: ad3c35981ee96009b6231ddd
+  independent_label: contradicted
+  evidence: "Premisa sitúa QAnon en 2017 en foros; claim lo sitúa en 2005 en televisión."
+- id: 931ff65bbc5529e7f7b7b5fc
+  independent_label: contradicted
+  evidence: "Premisa declara el MTC II requisito indispensable; claim lo declara voluntario sin condición."
+- id: 52a5e489f327b44c880c2a1f
+  independent_label: supported
+  evidence: "Premisa pide respiro sin contestar de inmediato; claim reproduce el consejo."
+- id: 1bdfa830f82120b56a8b9963
+  independent_label: unsupported
+  evidence: "Premisa lista ChicaSTEM sin financiador; no cita fundación estadounidense; claim añade financiador."
+- id: 23b8c2a25a37480d6a37b097
+  independent_label: supported
+  evidence: "Premisa pide 30% con 10% estricto; claim reproduce ambos porcentajes."
+- id: 6c37f41e3befc12fdd6efc20
+  independent_label: unsupported
+  evidence: "Premisa fija banda del 15% sin intervención; no declara intervención automática; claim añade automatismo."
+- id: 426a56e4824b357936e10976
+  independent_label: unsupported
+  evidence: "Premisa habla de entorno escolar sin ordenadores propios; no da 90%; claim añade dotación."
+- id: 46bc8c9802469210c6501c47
+  independent_label: contradicted
+  evidence: "Premisa no recomienda usar fake news contra independientes; claim dice recomienda llamarles así."
+- id: 4708ecf26ac4d521337f0031
+  independent_label: unsupported
+  evidence: "Premisa no da costes; solo fija informes cada seis años; claim añade doce millones."
+- id: 48940ba2d94d8c1b168fc9d2
+  independent_label: unsupported
+  evidence: "Premisa no jerarquiza hábitats costeros; solo da 81% malo y 15% bueno; claim añade ranking."
+- id: 3f0e4ff08d5459632ab1ab9f
+  independent_label: unsupported
+  evidence: "Premisa promueve Elige Europa sin presupuesto; no da dos mil millones; claim añade dotación."
+- id: 1f56450c5dc85b44ac6cd1b9
+  independent_label: contradicted
+  evidence: "Premisa concede ayuda bajo ciertas condiciones a zona amenazada; claim la da sin condiciones a cualquiera."
+- id: e11d73636a9f8ff4e8507179
+  independent_label: supported
+  evidence: "Premisa da 98% fresco y 2% congelado; claim reproduce el reparto."
+- id: d82e448e6589db0dd0c942d8
+  independent_label: supported
+  evidence: "Premisa limita la deuda al 60% del PIB; claim reproduce el tope."
+- id: 55c14475fcc543ef6262c6da
+  independent_label: contradicted
+  evidence: "Premisa da al Reino Unido 38% como principal; claim traslada ese 38% a China."
+- id: 24cf8e6648b0b5557ae7106c
+  independent_label: contradicted
+  evidence: "Premisa dice incorporó módulos digitales en todos; claim dice los eliminó."
+- id: 2e64400372af7ed65fad7752
+  independent_label: contradicted
+  evidence: "Premisa deja pensiones y trabajo a Estados; claim los fija la Comisión sin margen."
+- id: d3f56c2f13130d9d2787bf80
+  independent_label: unsupported
+  evidence: "Premisa no cita TEDH; solo habla de libertad y pensamiento crítico; claim añade revisor."
+- id: 4d298f17f05f739851b62c93
+  independent_label: contradicted
+  evidence: "Premisa dice ante incertidumbre es fácil dejarse engañar; claim dice nadie se deja engañar."
+- id: 4eaf7098dc896803b5b88702
+  independent_label: contradicted
+  evidence: "Premisa lista el cambio climático como presión; claim dice no supone ninguna presión."
+- id: 9385de17b411cdcf31ffd76f
+  independent_label: unsupported
+  evidence: "Premisa lista Kilmore Quay como principal irlandés sin exclusividad; no dice único punto; claim añade unicidad."

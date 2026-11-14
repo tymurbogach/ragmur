@@ -1,0 +1,229 @@
+# Segunda reserva NLI (holdout2) — BORRADOR pendiente de referencias IA y revisión humana.
+# No contiene etiquetas, puntuaciones ni predicciones. No autoriza cambios ni aceptación.
+# Protocolo preregistrado: eval/NLI_AI_EVALUATION_PROTOCOL_V2.md SHA-256 9687d3acaeb9d63fe6aa3a756bf4b6b72ed1cf432cebff1af4c24e7d4619dd24
+# Orden temporal: el protocolo se escribió ANTES de explorar o descargar estas fuentes
+# (protocolo 2026-11-13 10:21 +0100; descargas 2026-11-13 a partir de 10:24 +0100).
+# Configuración primaria a evaluar: verificador vigente full-chunk 0.75/0.5/0.75.
+# Disyunción verificada contra eval/eu_manifest.yaml: 24 documentos previos, sin solape de ID, URL canónica ni SHA-256;
+# similitud máxima de 5-gramas nuevo-vs-previo 0.0183 (descriptivo, sin copia sustancial).
+- document_id: af9be9f9-6093-4c34-9c7a-0e8df3ccb583
+  title: Guía de publicaciones gratuitas de la Unión Europea
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/af9be9f9-6093-4c34-9c7a-0e8df3ccb583/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=af9be9f9-6093-4c34-9c7a-0e8df3ccb583&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Guía de publicaciones gratuitas de la Unión Europea.
+    Oficina de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reproducción autorizada con indicación (fines no comerciales)
+  rights_page: 2
+  sha256: 5305576f7e8190e16e5e84d8f7d9b9083532a3c1750bf375f4ea17e4c4a7e2eb
+  bytes: 79624909
+  pages: 60
+  extracted_chars: 111407
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+  potential_chunks_800_120: 168
+- document_id: 9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae
+  title: Cómo funciona la Unión Europea
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=9a6a89dc-4ed7-4bb9-a9f7-53d7f1fb1dae&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Cómo funciona la Unión Europea. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reproducción autorizada
+  rights_page: 2
+  sha256: df5ceb6f7483dae01432fe79ce0850f664ec985980fe34ab02c3e2938e436050
+  bytes: 2973288
+  pages: 44
+  extracted_chars: 124893
+  extraction_warnings: []
+  potential_chunks_800_120: 187
+- document_id: 68170c3d-38ed-11ef-b441-01aa75ed71a1
+  title: Guía de la Iniciativa Ciudadana Europea
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/68170c3d-38ed-11ef-b441-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=68170c3d-38ed-11ef-b441-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Guía de la Iniciativa Ciudadana Europea. Oficina de
+    Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reproducción autorizada
+  rights_page: 2
+  sha256: 4b59f00bc32784e1360586575ce1bec8fc9c5d303be8e4e1738c3b736adffb40
+  bytes: 335213
+  pages: 16
+  extracted_chars: 22611
+  extraction_warnings: []
+  potential_chunks_800_120: 34
+- document_id: 0f15700a-3365-11ed-975d-01aa75ed71a1
+  title: Guía de financiación CultureEU
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/0f15700a-3365-11ed-975d-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=0f15700a-3365-11ed-975d-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Guía de financiación CultureEU. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: ae9b64125253e8fb100a4cf2adde6dac4bacab361cbac3a1624cf6af5cffa1c8
+  bytes: 21733425
+  pages: 96
+  extracted_chars: 157107
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+  potential_chunks_800_120: 239
+- document_id: d1d3df9b-03e9-11ed-acce-01aa75ed71a1
+  title: Normas de comunicación y visibilidad
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/d1d3df9b-03e9-11ed-acce-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=d1d3df9b-03e9-11ed-acce-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Normas de comunicación y visibilidad. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 4
+  sha256: b6e23ed740916839d111c386e1f53df4c7356e2a556ed5e641228c3dfa5af5e7
+  bytes: 922426
+  pages: 49
+  extracted_chars: 115116
+  extraction_warnings: []
+  potential_chunks_800_120: 178
+- document_id: fe4eb1b7-a252-11eb-b85c-01aa75ed71a1
+  title: Acreditación Erasmus
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/fe4eb1b7-a252-11eb-b85c-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=fe4eb1b7-a252-11eb-b85c-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Acreditación Erasmus. Oficina de Publicaciones de la
+    Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada con indicación de la fuente
+  rights_page: 8
+  sha256: 6a8461fbb50a1befdc5cf17371be2130a60816c9d9f4eef962160ed607c2261c
+  bytes: 1181031
+  pages: 8
+  extracted_chars: 10875
+  extraction_warnings: []
+  potential_chunks_800_120: 16
+- document_id: 834e4a84-d459-11f1-9458-01aa75ed71a1
+  title: Oferta educativa del Parlamento europeo. Manual del docente
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/834e4a84-d459-11f1-9458-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=834e4a84-d459-11f1-9458-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: 'Unión Europea. Oferta educativa del Parlamento europeo. Manual del
+    docente. Fuente: Parlamento Europeo.'
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: CC BY 4.0
+  rights_page: 2
+  sha256: af54530a697e9aa69f4ff590be4c6f746a55120790c77edddf07bf1829899ef9
+  bytes: 25816174
+  pages: 57
+  extracted_chars: 77805
+  extraction_warnings:
+  - 2 páginas contienen poco o ningún texto
+  potential_chunks_800_120: 118
+- document_id: 009305e8-2a43-11e7-ab65-01aa75ed71a1
+  title: 12 lecciones sobre Europa
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/009305e8-2a43-11e7-ab65-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=009305e8-2a43-11e7-ab65-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. 12 lecciones sobre Europa. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada si se indica la fuente
+  rights_page: 2
+  sha256: 3c84e635b267b3b54e0762fe5b2211bd61b7ea597a05b983d4347ae2f98fdf7d
+  bytes: 6481152
+  pages: 116
+  extracted_chars: 187835
+  extraction_warnings:
+  - 1 páginas contienen poco o ningún texto
+  potential_chunks_800_120: 293
+- document_id: 1f107d76-acbe-11eb-9767-01aa75ed71a1
+  title: Horizon Europe, presupuesto
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/1f107d76-acbe-11eb-9767-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=1f107d76-acbe-11eb-9767-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Horizon Europe, presupuesto. Oficina de Publicaciones
+    de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada con indicación de la fuente
+  rights_page: 4
+  sha256: 328ac3195c1de9357f5630f0ccb68344070a1bf75b1f42f4e310d7d1b121eacf
+  bytes: 1415317
+  pages: 4
+  extracted_chars: 9992
+  extraction_warnings: []
+  potential_chunks_800_120: 16
+- document_id: 93de16a0-821d-11eb-9ac9-01aa75ed71a1
+  title: Horizon Europe, el programa de investigación e innovación de la Unión Europea
+    (2021-2027)
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/93de16a0-821d-11eb-9ac9-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=93de16a0-821d-11eb-9ac9-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Horizon Europe, el programa de investigación e innovación
+    de la Unión Europea (2021-2027). Oficina de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada con indicación de la fuente
+  rights_page: 4
+  sha256: c29aceea454fe8d3c525caefcf550d515e9c2303585572f43b84628500d70b29
+  bytes: 2497385
+  pages: 4
+  extracted_chars: 10818
+  extraction_warnings: []
+  potential_chunks_800_120: 16
+- document_id: 27473ee8-ce53-11eb-ac72-01aa75ed71a1
+  title: Horizon Europe, pilar I - Ciencia excelente
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/27473ee8-ce53-11eb-ac72-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=27473ee8-ce53-11eb-ac72-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Horizon Europe, pilar I - Ciencia excelente. Oficina
+    de Publicaciones de la Unión Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada con indicación de la fuente
+  rights_page: 4
+  sha256: 4aca2a5b92fd38e571491b5739f0840dcd51cdcda485e5bbfb1fce9cbe7e7163
+  bytes: 5415112
+  pages: 4
+  extracted_chars: 9751
+  extraction_warnings: []
+  potential_chunks_800_120: 15
+- document_id: 605317ff-3aea-11ed-9c68-01aa75ed71a1
+  title: Horizon Europe
+  split: holdout2
+  source_url: https://op.europa.eu/es/publication-detail/-/publication/605317ff-3aea-11ed-9c68-01aa75ed71a1/language-es
+  pdf_url: https://op.europa.eu/o/opportal-service/download-handler?identifier=605317ff-3aea-11ed-9c68-01aa75ed71a1&format=pdf&language=es&productionSystem=cellar&part=
+  version: PDF descargado el 2026-11-13
+  attribution: Unión Europea. Horizon Europe. Oficina de Publicaciones de la Unión
+    Europea.
+  rights: Permiso de reutilización con atribución indicado en el PDF; excluir elementos
+    de terceros.
+  license: Reutilización autorizada con indicación de la fuente
+  rights_page: 3
+  sha256: e0545793ec2dbd50940613b8bfad5fa34efc252f4a7cca690e19473e26921b2b
+  bytes: 357245
+  pages: 3
+  extracted_chars: 9879
+  extraction_warnings: []
+  potential_chunks_800_120: 15

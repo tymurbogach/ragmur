@@ -1,0 +1,831 @@
+{
+  "task": "nli-ai-dev-realchunks-analysis",
+  "date": "2026-11-13",
+  "split": "dev",
+  "method": {
+    "description": "Análisis sin inferencia nueva: relectura de scores dev existentes, recómputo de umbrales con eval/nli_thresholds.py, pliegues por documento con la misma política, comparación pareada con premisa corta solo si ID+claim+etiqueta coinciden, y revisión offline de 7 falsos respaldos con eval/numeric_signal.py sin alterar veredictos. Sin NLI nuevo, sin reservas, sin test, sin cambios de código/datasets/umbrales.",
+    "thresholds_current": {
+      "supported": 0.75,
+      "weak": 0.5,
+      "contradicted": 0.75
+    },
+    "sensitivity_candidates": [
+      0.75,
+      0.85,
+      0.9,
+      0.95,
+      0.97,
+      0.99
+    ],
+    "policy": "eval/nli_thresholds.py::select_support_threshold con minimum_recall 0.5: menor false_support_rate, desempate mayor recall, luego mayor S; precedencia contradiction>=C",
+    "folds": "6 pliegues deterministas por document_id ordenado, 3 documentos por pliegue; selección de S solo en los otros 15 documentos, medición en los 3 restantes con scores conservados",
+    "paired_rule": "solo IDs con mismo claim (texto exacto) y misma etiqueta en dev premisa corta y dev chunks; 276/276 coinciden; sin afirmación causal",
+    "numeric_prototype": "eval/numeric_signal.py offline, stdlib, nunca afirma contradicción; needs_review como máximo; no cambia veredictos",
+    "per_case_file": "/tmp/nli-ai-dev-realchunks-false-supports-2026-11-13.json (solo /tmp, con textos y razones específicas DEV; no versionado)"
+  },
+  "inputs": {
+    "dataset": {
+      "path": "eval/eu_nli_dev_chunks_ai_reviewed.yaml",
+      "sha256": "01bba6d40a1ad929ca17013b2e9284620be2d1f3cd504a98079afc9abb0b9e3d",
+      "cases": 276,
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91,
+      "documents": 18,
+      "chunks": 247,
+      "chunking": "800/120",
+      "labels": "ai-proposal-pending-blind-review, sin revisión humana"
+    },
+    "scores": {
+      "path": "/tmp/nli-ai-dev-realchunks-details-2026-11-13.json",
+      "sha256": "2fc363df2813cc1bc9d96ee3a2f680ed663105fdccb84bed6e96ce9cf7e368a6",
+      "note": "volcado por afirmación fuera de Git"
+    },
+    "summary": {
+      "path": "eval/results/nli-ai-dev-realchunks-2026-11-13.json",
+      "sha256": "809a9bf9e4b513c4d6361d7c663aa80777b469ca3f7360ecd8ea1dcfe153026e"
+    },
+    "paired_short_premise": {
+      "dataset": "eval/eu_nli_dev_ai_posthoc.yaml",
+      "sha256": "f0b81f8ce18b1d1765f10c188537bc64036b37183f5fae03183d1d9504f5d1b4",
+      "scores": "/tmp/nli-ai-300-posthoc-dev-details-2026-11-13.json",
+      "summary": "eval/results/nli-ai-300-posthoc-dev-2026-11-13.json",
+      "summary_sha256": "f396a1d5497a525835d44abef69a81148e88c9d5fc6559ba1d3ac15fdcd13179"
+    },
+    "code": {
+      "eval/nli_thresholds.py": "6413151dff59cbab8b5e5fb08713744fdbbda788c73c648bfb7bec21ca252264",
+      "eval/numeric_signal.py": "e5eb9b6f2b0dd294c94e679596ec570cf8b7342dd9f9be2127a221fd1b725163",
+      "eval/nli_run.py": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+      "src/ragmur/verification/nli.py": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+      "src/ragmur/core/config.py": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc"
+    },
+    "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+    "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+    "commit": "5397547fd1454467570d6389fa0b8720dc1dea53"
+  },
+  "headline_current_thresholds": {
+    "counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 68,
+        "weak": 7,
+        "unsupported": 18,
+        "contradicted": 1
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 2,
+        "weak": 0,
+        "unsupported": 86,
+        "contradicted": 3
+      },
+      "contradicted": {
+        "supported": 5,
+        "weak": 3,
+        "unsupported": 7,
+        "contradicted": 76
+      }
+    },
+    "supported_recall": {
+      "numerator": 68,
+      "denominator": 94,
+      "rate": 0.723404255319149
+    },
+    "false_support": {
+      "numerator": 7,
+      "denominator": 182,
+      "rate": 0.038461538461538464,
+      "wilson_95": [
+        0.018753523279298877,
+        0.07725012915601775
+      ]
+    },
+    "contradiction_capture": {
+      "detected": 76,
+      "total": 91,
+      "rate": 0.8351648351648352,
+      "missed_as_supported": 5,
+      "missed_as_weak": 3,
+      "missed_as_unsupported": 7
+    },
+    "false_support_breakdown": {
+      "contradicted_as_supported": 5,
+      "unsupported_as_supported": 2
+    }
+  },
+  "full_dev_policy_selection_reference": {
+    "selected_support": 0.97,
+    "recall": 0.5212765957446809,
+    "false_rate": 0.0,
+    "note": "referencia descriptiva en dev; no es elección de producción ni cambio de umbral"
+  },
+  "folds_by_document": [
+    {
+      "fold": 0,
+      "held_documents": [
+        "06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1",
+        "186d5adb-d5d7-11f0-8da2-01aa75ed71a1",
+        "1fa0183b-dbbe-11f0-8da2-01aa75ed71a1"
+      ],
+      "held_claims": 31,
+      "train_claims": 245,
+      "train_label_counts": {
+        "contradicted": 80,
+        "supported": 83,
+        "unsupported": 82
+      },
+      "held_label_counts": {
+        "supported": 11,
+        "contradicted": 11,
+        "unsupported": 9
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.97,
+        "supported_recall_train": 0.5180722891566265,
+        "false_support_rate_train": 0.0
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.7108433734939759,
+          "false_rate": 0.043209876543209874,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6746987951807228,
+          "false_rate": 0.030864197530864196,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.6506024096385542,
+          "false_rate": 0.030864197530864196,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.5903614457831325,
+          "false_rate": 0.012345679012345678,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.5180722891566265,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.99,
+          "recall": 0.3253012048192771,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 6,
+        "false_supported": 0,
+        "expected_supported": 11,
+        "expected_not_supported": 20,
+        "supported_recall": 0.5454545454545454,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 11,
+        "contradicted_total": 11,
+        "contradiction_recall": 1.0
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 9,
+        "false_supported": 0,
+        "expected_supported": 11,
+        "expected_not_supported": 20,
+        "supported_recall": 0.8181818181818182,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 11,
+        "contradicted_total": 11,
+        "contradiction_recall": 1.0
+      }
+    },
+    {
+      "fold": 1,
+      "held_documents": [
+        "2acad822-fe54-11f0-8da5-01aa75ed71a1",
+        "33740183-a581-11f0-a7c5-01aa75ed71a1",
+        "43a17056-ebf1-11e9-9c4e-01aa75ed71a1"
+      ],
+      "held_claims": 45,
+      "train_claims": 231,
+      "train_label_counts": {
+        "supported": 78,
+        "contradicted": 76,
+        "unsupported": 77
+      },
+      "held_label_counts": {
+        "contradicted": 15,
+        "supported": 16,
+        "unsupported": 14
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.95,
+        "supported_recall_train": 0.5641025641025641,
+        "false_support_rate_train": 0.013071895424836602
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.6923076923076923,
+          "false_rate": 0.0392156862745098,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6538461538461539,
+          "false_rate": 0.026143790849673203,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.6282051282051282,
+          "false_rate": 0.026143790849673203,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.5641025641025641,
+          "false_rate": 0.013071895424836602,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.47435897435897434,
+          "false_rate": 0.0,
+          "eligible": false
+        },
+        {
+          "support": 0.99,
+          "recall": 0.2692307692307692,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 12,
+        "false_supported": 0,
+        "expected_supported": 16,
+        "expected_not_supported": 29,
+        "supported_recall": 0.75,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 11,
+        "contradicted_total": 15,
+        "contradiction_recall": 0.7333333333333333
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 14,
+        "false_supported": 1,
+        "expected_supported": 16,
+        "expected_not_supported": 29,
+        "supported_recall": 0.875,
+        "false_support_rate": 0.034482758620689655,
+        "contradicted_detected": 11,
+        "contradicted_total": 15,
+        "contradiction_recall": 0.7333333333333333
+      }
+    },
+    {
+      "fold": 2,
+      "held_documents": [
+        "6e83d2c4-e503-11ef-bc1c-01aa75ed71a1",
+        "736395fe-fbf9-11f0-8da5-01aa75ed71a1",
+        "7eee7159-da2b-11f0-8da2-01aa75ed71a1"
+      ],
+      "held_claims": 49,
+      "train_claims": 227,
+      "train_label_counts": {
+        "supported": 76,
+        "contradicted": 74,
+        "unsupported": 77
+      },
+      "held_label_counts": {
+        "supported": 18,
+        "contradicted": 17,
+        "unsupported": 14
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.95,
+        "supported_recall_train": 0.5789473684210527,
+        "false_support_rate_train": 0.0
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.7105263157894737,
+          "false_rate": 0.026490066225165563,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6447368421052632,
+          "false_rate": 0.013245033112582781,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.618421052631579,
+          "false_rate": 0.013245033112582781,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.5789473684210527,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.5131578947368421,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.99,
+          "recall": 0.2894736842105263,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 12,
+        "false_supported": 2,
+        "expected_supported": 18,
+        "expected_not_supported": 31,
+        "supported_recall": 0.6666666666666666,
+        "false_support_rate": 0.06451612903225806,
+        "contradicted_detected": 14,
+        "contradicted_total": 17,
+        "contradiction_recall": 0.8235294117647058
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 14,
+        "false_supported": 3,
+        "expected_supported": 18,
+        "expected_not_supported": 31,
+        "supported_recall": 0.7777777777777778,
+        "false_support_rate": 0.0967741935483871,
+        "contradicted_detected": 14,
+        "contradicted_total": 17,
+        "contradiction_recall": 0.8235294117647058
+      }
+    },
+    {
+      "fold": 3,
+      "held_documents": [
+        "9af3bbaf-5559-11f0-a9d0-01aa75ed71a1",
+        "a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1",
+        "a18b60ce-d888-11eb-895a-01aa75ed71a1"
+      ],
+      "held_claims": 47,
+      "train_claims": 229,
+      "train_label_counts": {
+        "supported": 79,
+        "contradicted": 76,
+        "unsupported": 74
+      },
+      "held_label_counts": {
+        "supported": 15,
+        "contradicted": 15,
+        "unsupported": 17
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.97,
+        "supported_recall_train": 0.5443037974683544,
+        "false_support_rate_train": 0.0
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.7341772151898734,
+          "false_rate": 0.04,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6835443037974683,
+          "false_rate": 0.03333333333333333,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.6708860759493671,
+          "false_rate": 0.03333333333333333,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.620253164556962,
+          "false_rate": 0.013333333333333334,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.5443037974683544,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.99,
+          "recall": 0.2911392405063291,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 6,
+        "false_supported": 0,
+        "expected_supported": 15,
+        "expected_not_supported": 32,
+        "supported_recall": 0.4,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 12,
+        "contradicted_total": 15,
+        "contradiction_recall": 0.8
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 10,
+        "false_supported": 1,
+        "expected_supported": 15,
+        "expected_not_supported": 32,
+        "supported_recall": 0.6666666666666666,
+        "false_support_rate": 0.03125,
+        "contradicted_detected": 12,
+        "contradicted_total": 15,
+        "contradiction_recall": 0.8
+      }
+    },
+    {
+      "fold": 4,
+      "held_documents": [
+        "a43004fd-12ef-11f1-8870-01aa75ed71a1",
+        "aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1",
+        "b4e46873-7528-11e9-9f05-01aa75ed71a1"
+      ],
+      "held_claims": 50,
+      "train_claims": 226,
+      "train_label_counts": {
+        "supported": 78,
+        "contradicted": 75,
+        "unsupported": 73
+      },
+      "held_label_counts": {
+        "supported": 16,
+        "contradicted": 16,
+        "unsupported": 18
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.97,
+        "supported_recall_train": 0.5256410256410257,
+        "false_support_rate_train": 0.0
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.7307692307692307,
+          "false_rate": 0.033783783783783786,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6666666666666666,
+          "false_rate": 0.02702702702702703,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.6538461538461539,
+          "false_rate": 0.02702702702702703,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.6025641025641025,
+          "false_rate": 0.013513513513513514,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.5256410256410257,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.99,
+          "recall": 0.28205128205128205,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 8,
+        "false_supported": 0,
+        "expected_supported": 16,
+        "expected_not_supported": 34,
+        "supported_recall": 0.5,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 14,
+        "contradicted_total": 16,
+        "contradiction_recall": 0.875
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 11,
+        "false_supported": 2,
+        "expected_supported": 16,
+        "expected_not_supported": 34,
+        "supported_recall": 0.6875,
+        "false_support_rate": 0.058823529411764705,
+        "contradicted_detected": 14,
+        "contradicted_total": 16,
+        "contradiction_recall": 0.875
+      }
+    },
+    {
+      "fold": 5,
+      "held_documents": [
+        "bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1",
+        "f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1",
+        "f692aa0b-17a7-11f1-8870-01aa75ed71a1"
+      ],
+      "held_claims": 54,
+      "train_claims": 222,
+      "train_label_counts": {
+        "supported": 76,
+        "contradicted": 74,
+        "unsupported": 72
+      },
+      "held_label_counts": {
+        "supported": 18,
+        "contradicted": 17,
+        "unsupported": 19
+      },
+      "train_has_all_classes_for_selection": true,
+      "train_missing_note": null,
+      "held_missing_classes": null,
+      "selection": {
+        "supported_threshold": 0.97,
+        "supported_recall_train": 0.5526315789473685,
+        "false_support_rate_train": 0.0
+      },
+      "candidates_train": [
+        {
+          "support": 0.75,
+          "recall": 0.7631578947368421,
+          "false_rate": 0.04794520547945205,
+          "eligible": true
+        },
+        {
+          "support": 0.85,
+          "recall": 0.6973684210526315,
+          "false_rate": 0.03424657534246575,
+          "eligible": true
+        },
+        {
+          "support": 0.9,
+          "recall": 0.6710526315789473,
+          "false_rate": 0.03424657534246575,
+          "eligible": true
+        },
+        {
+          "support": 0.95,
+          "recall": 0.618421052631579,
+          "false_rate": 0.0136986301369863,
+          "eligible": true
+        },
+        {
+          "support": 0.97,
+          "recall": 0.5526315789473685,
+          "false_rate": 0.0,
+          "eligible": true
+        },
+        {
+          "support": 0.99,
+          "recall": 0.32894736842105265,
+          "false_rate": 0.0,
+          "eligible": false
+        }
+      ],
+      "held_measurement_selected": {
+        "true_supported": 7,
+        "false_supported": 0,
+        "expected_supported": 18,
+        "expected_not_supported": 36,
+        "supported_recall": 0.3888888888888889,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 14,
+        "contradicted_total": 17,
+        "contradiction_recall": 0.8235294117647058
+      },
+      "held_measurement_current_S075": {
+        "true_supported": 10,
+        "false_supported": 0,
+        "expected_supported": 18,
+        "expected_not_supported": 36,
+        "supported_recall": 0.5555555555555556,
+        "false_support_rate": 0.0,
+        "contradicted_detected": 14,
+        "contradicted_total": 17,
+        "contradiction_recall": 0.8235294117647058
+      }
+    }
+  ],
+  "fold_stability_note": "Selección por pliegue: 0.97 en 4/6 pliegues, 0.95 en 2/6 (pliegues 1 y 2). Medición en 3 documentos restantes varía (recall selected 0.39-0.75, false_rate selected 0.0-0.065). Muestras por pliegue pequeñas (31-54 casos) y correlación por documento/chunk; no hay ajuste mínimamente estable para producción.",
+  "paired_context_expansion": {
+    "matched": 276,
+    "match_rule": "ID + texto de claim exacto + etiqueta iguales en ambas variantes dev",
+    "post_short_agg_S075": {
+      "true_supported": 88,
+      "false_supported": 1,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.9361702127659575,
+      "false_support_rate": 0.005494505494505495,
+      "contradicted_detected": 80,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8791208791208791
+    },
+    "real_chunks_agg_S075": {
+      "true_supported": 68,
+      "false_supported": 7,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.723404255319149,
+      "false_support_rate": 0.038461538461538464,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    "contingency_short_to_chunks": {
+      "supported->supported": 66,
+      "unsupported->unsupported": 91,
+      "contradicted->contradicted": 74,
+      "contradicted->supported": 2,
+      "supported->weak": 6,
+      "supported->unsupported": 16,
+      "unsupported->contradicted": 5,
+      "contradicted->weak": 2,
+      "contradicted->unsupported": 3,
+      "weak->unsupported": 1,
+      "weak->supported": 2,
+      "unsupported->supported": 5,
+      "supported->contradicted": 1,
+      "weak->weak": 1,
+      "unsupported->weak": 1
+    },
+    "changed_verdicts": 44,
+    "note": "Con mismos umbrales 0.75/0.5/0.75 sobre los 276 pares: premisa corta 88/94 respaldos y 1/182 falsos; chunks 68/94 y 7/182. Contradicciones 80/91 vs 76/91. Cambio descriptivo al ampliar a 800/120 en dev IA; sin causalidad general: etiquetas IA post hoc, correlación por documento/chunk, sin weak gold."
+  },
+  "false_support_review_aggregated": {
+    "n": 7,
+    "denominator": 182,
+    "per_case_evidence": "/tmp/nli-ai-dev-realchunks-false-supports-2026-11-13.json",
+    "taxonomy_counts": {
+      "numerico_con_digitos": 3,
+      "numerico_en_palabras": 1,
+      "negacion_modal_exclusiva": 3,
+      "alcance_categoria_no_mencionada_o_relativo_vs_absoluto": 3,
+      "correferencia_explicita": 0,
+      "etiqueta_ia_posiblemente_ambigua_sin_cambio": 1
+    },
+    "numeric_prototype_flagged": {
+      "needs_review_true": 1,
+      "unknown": 6,
+      "flagged_ids_count": 1,
+      "note": "solo 1/7 marcado (mismatch de días); 6/7 unknown por diseño conservador: sin dígitos en claim, sin unidad común, múltiples candidatos sin atribución, o numerales en palabras"
+    },
+    "labels_changed": 0
+  },
+  "conclusions": {
+    "no_production_threshold": "No se elige umbral de producción; no se modifican umbrales vigentes.",
+    "stable_adjustment": false,
+    "reason": "S=0.97 elimina 7→0 falsos en dev completo pero cuesta 68→49 respaldos (recall 0.72→0.52); por pliegues la selección oscila 0.95/0.97 y el recall medido oscila ampliamente con n pequeño; etiquetas IA sin revisión humana y derivación post hoc impiden generalizar.",
+    "paired": "Ampliar a chunks coincide con más falsos y menos recall en estos 276 pares dev, pero es descriptivo y no causal.",
+    "numeric": "El prototipo no sustituye verificación ni cambia veredictos; marcó 1/7 y quedó unknown en 6/7 por diseño."
+  },
+  "limitations": [
+    "Etiquetas propuestas y revisadas por IA, sin revisión humana; no son gold ni base de aceptación.",
+    "Dataset dev derivado parcialmente post hoc tras observar resultados (exclusión eu-dev-232 previa a inferir; resto post hoc conocido).",
+    "276 afirmaciones de 247 chunks y 18 documentos (5-21 por documento, varias comparten chunk): no independientes; intervalos de Wilson solo descriptivos.",
+    "Sin weak gold: la fila weak de referencia está vacía; W=0.5 no calibrado aquí.",
+    "Correlación por documento/chunk no modelada; pliegues por documento exploratorios con n pequeño por pliegue.",
+    "Comparación pareada solo dev-dev con mismas etiquetas IA; no generaliza a otros dominios ni a test.",
+    "Reserva ya usada no leída, puntuada ni reevaluada; test no tocado.",
+    "Sin inferencia NLI nueva; sin cambios de código, modelos, umbrales, datasets ni roadmap."
+  ],
+  "reserve_untouched": true,
+  "sensitivity_support_C075_W05": [
+    {
+      "support": 0.75,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 68,
+      "false_supported": 7,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.723404255319149,
+      "false_support_rate": 0.038461538461538464,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    {
+      "support": 0.85,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 63,
+      "false_supported": 5,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.6702127659574468,
+      "false_support_rate": 0.027472527472527472,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    {
+      "support": 0.9,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 61,
+      "false_supported": 5,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.648936170212766,
+      "false_support_rate": 0.027472527472527472,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    {
+      "support": 0.95,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 56,
+      "false_supported": 2,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.5957446808510638,
+      "false_support_rate": 0.01098901098901099,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    {
+      "support": 0.97,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 49,
+      "false_supported": 0,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.5212765957446809,
+      "false_support_rate": 0.0,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    },
+    {
+      "support": 0.99,
+      "contradiction": 0.75,
+      "weak": 0.5,
+      "true_supported": 28,
+      "false_supported": 0,
+      "expected_supported": 94,
+      "expected_not_supported": 182,
+      "supported_recall": 0.2978723404255319,
+      "false_support_rate": 0.0,
+      "contradicted_detected": 76,
+      "contradicted_total": 91,
+      "contradiction_recall": 0.8351648351648352
+    }
+  ]
+}

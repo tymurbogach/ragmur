@@ -106,6 +106,8 @@ La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son pr
 La evaluación NLI inicial usa pocos ejemplos manuales. No demuestra la calidad sobre documentos reales.
 En la prueba reservada detectó dos de tres contradicciones; una quedó como no respaldada.
 Consulta los detalles y el hardware en `eval/results/nli-test-2026-11-11.json`.
+El [corpus español de 24 publicaciones](eval/EU_CORPUS.md) ya tiene fuentes y particiones fijadas.
+Faltan 300 etiquetas revisadas antes de calibrar o abrir la reserva; los umbrales siguen provisionales.
 Devuelve `supported`, `weak`, `unsupported` o `contradicted` con score y mejor evidencia.
 Los identificadores ajenos se ignoran; sin evidencia válida todo queda `unsupported`.
 

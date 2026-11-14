@@ -2,7 +2,7 @@
 # Solo dev. Reglas deterministas sobre chunks reales 800/120 + splitter.
 # supported verbatim por contención (single + doble consecutiva);
 # contradicted por mutación cerrada (negación/cifra/fecha/entidad);
-# unsupported cross-doc mismo idioma con guarda léxica (Jaccard<0.2, sin dígitos comunes).
+# unsupported cross-doc mismo idioma con guarda léxica (Jaccard<0.3, sin dígitos comunes).
 # Etiquetas gold:false, status:auto_rule_v1, nunca weak como referencia.
 # No calibrar, no cerrar 1.8. Umbrales provisionales 0.75/0.5/0.75 intactos.
 # Solo CPU local. Optimismo sintético declarado: verbatim infla recall,

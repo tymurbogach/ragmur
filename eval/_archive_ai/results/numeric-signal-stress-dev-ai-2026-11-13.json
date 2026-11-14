@@ -1,0 +1,187 @@
+{
+  "header": "DIAGNÓSTICO dev con etiquetas IA sin revisión humana. Datos de estrés construidos tras observar defectos; NO representativo, NO aceptación, NO prueba independiente, NO revisión humana completada. Umbrales NLI 0.75/0.5/0.75 sin cambios. match indica solo coincidencia numérica, no apoyo semántico. Una alerta no es necesariamente falsa porque la referencia sea unsupported.",
+  "date": "2026-11-13T07:54:32.095873+00:00",
+  "dataset": {
+    "path": "eval/eu_numeric_stress_dev_ai_final.yaml",
+    "sha256": "bd803c2acb3de928b6168527d43e86bfce9ab22175de850c6cebbd2c4cae96e5",
+    "n_cases": 62,
+    "n_claims": 62
+  },
+  "code": {
+    "path": "eval/numeric_signal.py",
+    "sha256": "52b123d05c27409e7f8f8382a38741e4363d9275eea2f7483fa8e58f8e96ff74"
+  },
+  "script": {
+    "path": "eval/numeric_signal_stress_eval.py",
+    "sha256": "fd0179f627d186b941aef07131ea69c34aa74ba5b2f7606778f36abf6a873f0a"
+  },
+  "commit": "5397547fd1454467570d6389fa0b8720dc1dea53",
+  "dirty": true,
+  "git_status_short": " M README.md\n M ROADMAP.md\n M eval/NLI.md\n M eval/nli_run.py\n M eval/nli_thresholds.py\n M tests/eval/test_nli_run.py\n M tests/eval/test_nli_thresholds.py\n?? eval/EU_CORPUS.md\n?? eval/annotation_forms/\n?? eval/eu_manifest.yaml\n?? eval/eu_nli_dev_ai_adjudicated.yaml\n?? eval/eu_nli_dev_ai_adjudication.yaml\n?? eval/eu_nli_dev_ai_audit.yaml\n?? eval/eu_nli_dev_ai_candidates.yaml\n?? eval/eu_nli_dev_ai_corrected.yaml\n?? eval/eu_nli_dev_ai_corrections.yaml\n?? eval/eu_nli_dev_ai_error_label_review.yaml\n?? eval/eu_nli_dev_ai_exploratory.yaml\n?? eval/eu_nli_dev_ai_posthoc.yaml\n?? eval/eu_nli_dev_ai_posthoc_changes.yaml\n?? eval/eu_nli_dev_ai_second_review.yaml\n?? eval/eu_nli_dev_ai_trace.md\n?? eval/eu_numeric_stress_dev_ai.yaml\n?? eval/eu_numeric_stress_dev_ai_final.md\n?? eval/eu_numeric_stress_dev_ai_final.yaml\n?? eval/eu_numeric_stress_dev_ai_review.md\n?? eval/eu_numeric_stress_dev_ai_reviewed.yaml\n?? eval/eu_numeric_stress_dev_ai_trace.md\n?? eval/eu_pilot_ai_proposals.yaml\n?? eval/eu_pilot_candidates.yaml\n?? eval/eu_pilot_dev_ai_reviewed.yaml\n?? eval/eu_pilot_revised.yaml\n?? eval/eu_pilot_revised_ai_proposals.yaml\n?? eval/numeric_signal.py\n?? eval/numeric_signal_eval.py\n?? eval/numeric_signal_stress_eval.py\n?? eval/results/nli-ai-300-dev-2026-11-13.json\n?? eval/results/nli-ai-300-dev-sensitivity-2026-11-13.json\n?? eval/results/nli-ai-300-posthoc-dev-2026-11-13.json\n?? eval/results/nli-ai-300-posthoc-dev-2026-11-13.provenance.json\n?? eval/results/nli-ai-pilot-dev-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-v2-2026-11-13.json\n?? eval/results/numeric-signal-dev-posthoc-v3-2026-11-13.json\n?? tests/eval/test_numeric_signal.py\n?? tests/eval/test_numeric_signal_stress_eval.py\n",
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44"
+  },
+  "counts": {
+    "cases": 62,
+    "claims": 62,
+    "flagged": 18,
+    "unknown": 31,
+    "supported": 24,
+    "contradicted": 21,
+    "unsupported": 17,
+    "numeric_claims": 0
+  },
+  "coverage": {
+    "comparable": 0.5,
+    "unknown": 0.5,
+    "comparable_count": 31,
+    "unknown_count": 31,
+    "total": 62
+  },
+  "signal_flag_rate": {
+    "all": 0.2903225806451613,
+    "supported": 0.125,
+    "contradicted": 0.5238095238095238,
+    "unsupported": 0.23529411764705882
+  },
+  "signal_flag_counts": {
+    "all": {
+      "flagged": 18,
+      "total": 62
+    },
+    "supported": {
+      "flagged": 3,
+      "total": 24
+    },
+    "contradicted": {
+      "flagged": 11,
+      "total": 21
+    },
+    "unsupported": {
+      "flagged": 4,
+      "total": 17
+    }
+  },
+  "baseline_flag_rate": {
+    "all": 0.24193548387096775,
+    "supported": 0.125
+  },
+  "baseline_flag_counts": {
+    "all": {
+      "flagged": 15,
+      "total": 62
+    },
+    "supported": {
+      "flagged": 3,
+      "total": 24
+    }
+  },
+  "numeric_subset_flag_rate": {
+    "supported": null,
+    "contradicted": null,
+    "unsupported": null
+  },
+  "numeric_subset_flag_counts": {
+    "supported": {
+      "flagged": 0,
+      "total": 0
+    },
+    "contradicted": {
+      "flagged": 0,
+      "total": 0
+    },
+    "unsupported": {
+      "flagged": 0,
+      "total": 0
+    }
+  },
+  "by_label": {
+    "supported": {
+      "False": 21,
+      "True": 3
+    },
+    "unsupported": {
+      "True": 4,
+      "False": 13
+    },
+    "contradicted": {
+      "True": 11,
+      "False": 10
+    }
+  },
+  "by_stress_type": {
+    "ano-rango": {
+      "total": 8,
+      "flagged": 3,
+      "flag_rate": 0.375,
+      "by_label": {
+        "supported": 5,
+        "contradicted": 3
+      }
+    },
+    "aproximacion": {
+      "total": 7,
+      "flagged": 0,
+      "flag_rate": 0.0,
+      "by_label": {
+        "supported": 4,
+        "unsupported": 3
+      }
+    },
+    "cota-inclusiva": {
+      "total": 8,
+      "flagged": 4,
+      "flag_rate": 0.5,
+      "by_label": {
+        "supported": 4,
+        "contradicted": 2,
+        "unsupported": 2
+      }
+    },
+    "distinta-cantidad": {
+      "total": 9,
+      "flagged": 7,
+      "flag_rate": 0.7777777777777778,
+      "by_label": {
+        "unsupported": 1,
+        "contradicted": 8
+      }
+    },
+    "entidad-cruzada": {
+      "total": 9,
+      "flagged": 2,
+      "flag_rate": 0.2222222222222222,
+      "by_label": {
+        "contradicted": 7,
+        "unsupported": 2
+      }
+    },
+    "equivalente-formato-es": {
+      "total": 8,
+      "flagged": 0,
+      "flag_rate": 0.0,
+      "by_label": {
+        "supported": 8
+      }
+    },
+    "independiente-significado": {
+      "total": 6,
+      "flagged": 0,
+      "flag_rate": 0.0,
+      "by_label": {
+        "unsupported": 6
+      }
+    },
+    "unidad-distinta": {
+      "total": 7,
+      "flagged": 2,
+      "flag_rate": 0.2857142857142857,
+      "by_label": {
+        "supported": 3,
+        "unsupported": 3,
+        "contradicted": 1
+      }
+    }
+  },
+  "limitations": "Numerales en palabras no analizados; unidades distintas no comparables; aproximadores nunca avisan. Baseline ingenuo solo para contraste. needs_review=true es aviso de revisión, no error ni veredicto; una alerta sobre referencia unsupported puede ser esperada. match indica solo coincidencia numérica; no verifica entidad ni significado."
+}

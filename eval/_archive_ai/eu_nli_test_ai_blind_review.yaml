@@ -1,0 +1,1205 @@
+# Revisión ciega por IA: no es revisión humana, no es gold, no fija etiquetas de referencia.
+# Método: juicio del revisor IA sin modelo NLI, sin umbrales y sin acceso a etiquetas originales ni a predicciones.
+# Origen ciego: /tmp/eu_nli_test_ai_blind_review.yaml SHA-256 86298a60cbb49cb1fd9fa6f0d0a63c092618fa03270f88d10741006289f67ebb (300 registros, split=test).
+# Cada independent_label se decide solo con la premisa visible del chunk citado; evidence cita los términos decisivos.
+- id: eut-001
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa enumera como dos elementos principales la política económica (coordinación de las políticas económicas y presupuestarias) y la política monetaria alrededor del euro; la afirmación reproduce esa dupla'
+- id: eut-002
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa afirma dos elementos principales, incluida la coordinación de políticas económicas; la afirmación reduce la UEM a un único elemento y niega esa coordinación'
+- id: eut-003
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa describe composición y fines de la UEM sin mencionar presupuesto propio ni aprobación anual del Parlamento Europeo'
+- id: eut-004
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa sitúa la coordinación en el Semestre Europeo y ubica sus etapas clave, evaluación y recomendaciones, en el primer semestre de cada año'
+- id: eut-005
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa fija las etapas clave en el primer semestre; la afirmación las traslada al segundo semestre'
+- id: eut-006
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fecha la creación del Semestre Europeo ni menciona el Tratado de Lisboa de 2009'
+- id: eut-007
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa exige convergencia suficiente con niveles de estabilidad presupuestaria, financiera, monetaria y de precios comparables a la zona del euro'
+- id: eut-008
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa condiciona la adopción a un grado de convergencia suficiente; la afirmación elimina toda convergencia previa'
+- id: eut-009
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fija duración alguna de dos años ni describe un procedimiento de solicitud con plazo'
+- id: eut-010
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa atribuye la definición de la política monetaria al BCE, descrito como institución independiente de la UE'
+- id: eut-011
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa asigna la política monetaria al BCE; la afirmación la pone en manos conjuntas de los gobiernos sin intervención del BCE'
+- id: eut-012
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da sede del BCE ni cifra de plantilla; Fráncfort y tres mil quinientas personas no aparecen'
+- id: eut-013
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa presenta al Eurogrupo como foro informal formado por los ministros de Hacienda de la zona del euro, que es exactamente lo que la afirmación enuncia'
+- id: eut-014
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reserva a la Cumbre del Euro la reunión de jefes de Estado o de Gobierno; la afirmación atribuye esa composición al Eurogrupo'
+- id: eut-015
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no indica frecuencia de reuniones del Eurogrupo ni menciona Bruselas ni doce citas anuales'
+- id: eut-016
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa asigna a los Estados miembros sus propias políticas estructurales de mercado de trabajo, pensiones y mercados de capitales'
+- id: eut-017
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa deja esas políticas en manos de los Estados; la afirmación las traslada a la Comisión sin margen nacional'
+- id: eut-018
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa menciona que los Estados adoptan la legislación en el Consejo, sin regla de voto ni mayoría cualificada en todos los ámbitos'
+- id: eut-019
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fecha la creación del MEDE en septiembre de 2012 por los Estados de la zona del euro'
+- id: eut-020
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa data el MEDE en septiembre de 2012; la afirmación lo adelanta a 1999, antes del euro físico'
+- id: eut-021
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa del MEDE no incluye cifra alguna de capital autorizado; los setecientos mil millones no constan'
+- id: eut-022
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa define el SEBC como el BCE más los bancos centrales nacionales de todos los Estados miembros, hayan adoptado el euro o no'
+- id: eut-023
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa condiciona la ayuda del MEDE al cumplimiento de condiciones; la afirmación promete ayuda sin condiciones a quien la pida'
+- id: eut-024
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa del MEDE no fija sede, calendario ni cuatro reuniones anuales en Luxemburgo'
+- id: eut-025
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa pone en marcha formalmente la UEM en la reunión del Consejo Europeo de Maastricht de diciembre de 1991'
+- id: eut-026
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa sitúa el arranque formal en Maastricht en 1991 y el Tratado en 1992; la afirmación lo retrotrae a Roma en 1957'
+- id: eut-027
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no cifra asistentes a la reunión de Maastricht; los doce jefes no aparecen'
+- id: eut-028
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa presenta el Informe Werner de octubre de 1970 con el proyecto inicial de UEM en tres fases'
+- id: eut-029
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa estructura el proyecto Werner en tres fases; la afirmación niega las fases y exige creación de una sola vez'
+- id: eut-030
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no dice quién redactó el Informe Werner ni menciona presidencia luxemburguesa alguna'
+- id: eut-031
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa atribuye al Acuerdo de Basilea de abril de 1972 la introducción del sistema de la serpiente en el túnel'
+- id: eut-032
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa fecha ese sistema en abril de 1972 ligado a Basilea; la afirmación lo desplaza a 1985 y rompe el vínculo'
+- id: eut-033
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa crea el Fondo en 1973 sin mencionar préstamos, ecus ni operaciones de 1975'
+- id: eut-034
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa topa la inflación en 1,5 puntos porcentuales sobre los tres mejores Estados miembros'
+- id: eut-035
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa permite 1,5 puntos de exceso; la afirmación eleva el margen a cinco puntos'
+- id: eut-036
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa enuncia los criterios sin recuento de cumplidores en 1997; solo tres Estados no consta'
+- id: eut-037
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa topa la deuda pública en el 60 % del PIB'
+- id: eut-038
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa excluye deuda superior al 60 % del PIB; la afirmación admite un 120 % con déficit bajo'
+- id: eut-039
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no encarga a la Comisión ninguna publicación mensual de tipos de referencia'
+- id: eut-040
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa obliga a todos los Estados a adoptar el euro salvo Dinamarca, con su opción de no participar'
+- id: eut-041
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reconoce a Dinamarca la opción de no participar; la afirmación le impone adopción obligatoria al cumplir criterios'
+- id: eut-042
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa solo nombra la exención danesa; de Suecia y de una cláusula equivalente no hay mención'
+- id: eut-043
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija los límites normalizados del MTC II en el 15 % por encima o por debajo del tipo central'
+- id: eut-044
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa autoriza el 15 % de fluctuación; la afirmación lo recorta al 2,25 %'
+- id: eut-045
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa regula márgenes y participación en el MTC II sin prever intervención automática del BCE al tocar los límites'
+- id: eut-046
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa recoge que desde 2018 el ingreso en el MTC II incluye hoja de ruta con cooperación estrecha con la supervisión bancaria del BCE'
+- id: eut-047
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa declara la participación en el MTC II requisito indispensable para el euro; la afirmación la presenta como voluntaria e irrelevante'
+- id: eut-048
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no nombra a Croacia ni fecha su ingreso en julio de 2020'
+- id: eut-049
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa limita el euro de 1999 a unidad de cuenta solo para pagos electrónicos durante sus tres primeros años'
+- id: eut-050
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa retrasa monedas y billetes al 1 de enero de 2002 con doce Estados; la afirmación los adelanta a 1999 con once'
+- id: eut-051
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no describe estilos arquitectónicos de billetes, puentes ni ventanas'
+- id: eut-052
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa exime de comisiones de cambio y gastos por operación al comprar en otros Estados de la zona'
+- id: eut-053
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la cronología lista Eslovenia 2007 y Eslovaquia 2009; la afirmación adelanta Eslovenia a 2004'
+- id: eut-054
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona a Andorra ni a Mónaco ni acuerdos monetarios con terceros'
+- id: eut-055
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija el 1 de enero de 1999 con once Estados fijando tipos irrevocables y adoptando el euro'
+- id: eut-056
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa cuenta once Estados en 1999; la afirmación eleva la cifra a veinte'
+- id: eut-057
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da el tipo de conversión de la peseta; 166,386 no aparece'
+- id: eut-058
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa registra bajos costes de financiación con tipos convergentes de la deuda soberana tras el euro'
+- id: eut-059
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa describe convergencia y bajos costes; la afirmación impone divergencia inmediata y permanente'
+- id: eut-060
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona compras de deuda por el BCE ni dos billones entre 2010 y 2012'
+- id: eut-061
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija como objetivo la recuperación suficiente para sobrevivir a largo plazo en toda el área natural'
+- id: eut-062
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa exige más que frenar el declive; la afirmación declara suficiente el freno y niega la recuperación'
+- id: eut-063
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fecha la Directiva sobre hábitats; 1992 no aparece en el fragmento'
+- id: eut-064
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa impone informar a la Comisión cada seis años sobre especies y hábitats protegidos del territorio'
+- id: eut-065
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa obliga a informar cada seis años; la afirmación reduce todo a un informe único sin actualización'
+- id: eut-066
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da coste del informe 2013-2018; doce millones no consta'
+- id: eut-067
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cifra en 47 % las aves silvestres con buen estado poblacional, casi la mitad'
+- id: eut-068
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa da 47 % con buen estado; la afirmación sube a 60 % como mayoría'
+- id: eut-069
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no nombra al quebrantahuesos ni su evolución desde 2010'
+- id: eut-070
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cifra en 27 % las especies de la Directiva de hábitats con buen estado, una cuarta parte'
+- id: eut-071
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa deja el buen estado en 27 % frente a 63 % deficiente o malo; la afirmación invierte la mayoría'
+- id: eut-072
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa declara incompletos los datos marinos aun en cetáceos y tortugas, sin pronunciarse sobre su estado ni moratorias'
+- id: eut-073
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja el 81 % de hábitats en estado deficiente o malo y como máximo el 15 % en buen estado'
+- id: eut-074
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reserva el 9 % a la tendencia al alza dentro del mal estado, con 81 % deficiente o malo; la afirmación convierte ese 9 % en la cuota del mal estado'
+- id: eut-075
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no desglosa por hábitats costeros ni corona a ninguno como el mejor de la UE'
+- id: eut-076
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja en desconocida la tendencia del 21 % de los hábitats en mal estado'
+- id: eut-077
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa desconoce la tendencia del 21 %; la afirmación declara conocida la totalidad'
+- id: eut-078
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no explica la causa del 21 % desconocido; los satélites no se mencionan'
+- id: eut-079
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa lista en agricultura el abandono de tierras, la intensificación y la eliminación de pequeñas características del paisaje'
+- id: eut-080
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa abre las presiones con la agricultura; la afirmación la excluye de ellas'
+- id: eut-081
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da cuota de agricultura ecológica; el 25 % no aparece'
+- id: eut-082
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa incluye sobrepesca, sobreexplotación y captura accesoria en redes dentro de la explotación de especies'
+- id: eut-083
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa dedica un apartado al cambio climático con sequías y subida del mar; la afirmación niega que presione a las especies'
+- id: eut-084
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita especies exóticas problemáticas por competencia, sin vía de llegada ni agua de lastre'
+- id: eut-085
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa declara a la agricultura la presión mencionada con mayor frecuencia sobre hábitats y especies'
+- id: eut-086
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa corona a la agricultura como presión más frecuente; la afirmación pone a la urbanización muy por encima'
+- id: eut-087
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa atribuye el informe a los Estados miembros, sin quinientas organizaciones ecologistas aportantes'
+- id: eut-088
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja solo el 8 % de hábitats agrícolas en mejora frente al 45 % en deterioro'
+- id: eut-089
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reparte 8 % en mejora y 45 % en deterioro; la afirmación intercambia ambas cuotas'
+- id: eut-090
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa registra declive de la alondra común sin extinciones por país; cinco Estados no constan'
+- id: eut-091
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cuenta casi 28 000 lugares Natura 2000 con casi una quinta parte terrestre, el 18 %'
+- id: eut-092
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa cubre el 18 % terrestre; la afirmación supera la mitad de Europa'
+- id: eut-093
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no reparte lugares por país; el liderazgo español no aparece'
+- id: eut-094
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja en mejores condiciones a quienes tienen más de tres cuartas partes en la red frente a los parciales'
+- id: eut-095
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa favorece a los de más de tres cuartas partes; la afirmación invierte la ventaja hacia los parciales'
+- id: eut-096
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita turberas y dunas como beneficiadas por la red, sin comparar carbono con bosques tropicales'
+- id: eut-097
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa limita los planes de gestión a solo una proporción de los espacios Natura 2000'
+- id: eut-098
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa restringe los planes a una proporción; la afirmación los extiende a todos los espacios'
+- id: eut-099
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona multas de la Comisión por falta de planes'
+- id: eut-100
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa acredita unos 1 800 proyectos LIFE con casi 3 000 millones de euros'
+- id: eut-101
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa cuenta unos 1 800 proyectos; la afirmación los rebaja a menos de quinientos'
+- id: eut-102
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa da cifras pasadas de LIFE sin dotación del próximo programa; diez mil millones no consta'
+- id: eut-103
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa pide protección jurídica de al menos el 30 % terrestre y marítimo con un 10 % estricto'
+- id: eut-104
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa exige al menos el 30 % con un 10 % estricto dentro; la afirmación reduce todo al 10 %'
+- id: eut-105
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa publica la estrategia en mayo de 2020 sin votación del Consejo ni unanimidad de octubre'
+- id: eut-106
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa califica a los educadores de interlocutores clave en la conversación sobre desinformación'
+- id: eut-107
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa les asigna un papel clave; la afirmación les niega todo papel según el material'
+- id: eut-108
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no incluye examen final ni cincuenta preguntas tipo test'
+- id: eut-109
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa avisa de vídeos en inglés o ruso con transcripciones traducidas'
+- id: eut-110
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa mantiene inglés o ruso con transcripciones; la afirmación impone doblaje español sin transcripción'
+- id: eut-111
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no cuenta diapositivas; veintitrés no aparece'
+- id: eut-112
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija el destinatario principal en adolescentes de entre quince y dieciocho años'
+- id: eut-113
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa apunta a adolescentes de 15 a 18; la afirmación la encierra en primaria'
+- id: eut-114
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da descargas ni diez mil centros escolares'
+- id: eut-115
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa dimensiona el material en una o dos clases de secundaria de nivel medio'
+- id: eut-116
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa prevé una o dos clases; la afirmación exige un mínimo de diez'
+- id: eut-117
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da peso del PowerPoint; doscientos cincuenta megabytes no consta'
+- id: eut-118
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa define la información errónea como la falsa que se difunde sin intención de inducir a error'
+- id: eut-119
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reserva la intención de engañar a la desinformación; la afirmación extiende la falta de intención a toda falsedad'
+- id: eut-120
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa define dos categorías sin mencionar la propaganda como tercera diferenciada'
+- id: eut-121
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa niega que las clases enseñen qué está permitido decir y las orienta al pensamiento crítico'
+- id: eut-122
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa rechaza enseñar qué opiniones están prohibidas; la afirmación convierte eso en el objetivo'
+- id: eut-123
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no cita revisión del Tribunal Europeo de Derechos Humanos'
+- id: eut-124
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa desaconseja noticias falsas o fake news por usarse contra medios independientes'
+- id: eut-125
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa pide no usar el término; la afirmación recomienda aplicarlo a medios independientes'
+- id: eut-126
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fecha el origen de fake news; 2016 y Estados Unidos no aparecen'
+- id: eut-127
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa atribuye a los propagadores la manipulación emocional para desviar de la verdad'
+- id: eut-128
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa admite difusión intencionada en ciertos casos; la afirmación niega toda intencionalidad'
+- id: eut-129
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa ilustra actores fingiendo víctimas sin caché; quinientos euros no consta'
+- id: eut-130
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija como finalidad inundar el espacio informativo hasta no saber a quién creer'
+- id: eut-131
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa ordena inundar de información; la afirmación invierte el objetivo a reducir el volumen'
+- id: eut-132
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no cita estudio de Oxford sobre tolerancia social'
+- id: eut-133
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa identifica a Russia Today como plataforma estatal rusa prohibida en la UE'
+- id: eut-134
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa la declara estatal rusa y prohibida; la afirmación la presenta como independiente promovida por la UE'
+- id: eut-135
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa habla de redes sociales en general sin nombrar TikTok ni coronarla'
+- id: eut-136
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa aconseja tomarse un respiro y no ceder al impulso de contestar de inmediato'
+- id: eut-137
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa frena la respuesta inmediata y pide verificar; la afirmación ordena responder sin verificar'
+- id: eut-138
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa remite a verificadores profesionales sin lista de diez ni teléfonos'
+- id: eut-139
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa limita los grupos a cinco o seis alumnos como máximo'
+- id: eut-140
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa topa en cinco o seis; la afirmación impone un mínimo de quince'
+- id: eut-141
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa usa el medicamento X como caso ficticio de publicidad engañosa, sin antibiótico real francés'
+- id: eut-142
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa advierte de que no todos los casos son desinformación pero todos entrenan la navegación'
+- id: eut-143
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa excluye a parte de los casos de la desinformación; la afirmación los confirma todos'
+- id: eut-144
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa nombra el Área 51 como ejemplo sin situarla en Nevada'
+- id: eut-145
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa describe al usuario Q como anónimo que dice ser alto cargo estadounidense'
+- id: eut-146
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa mantiene el anonimato de Q; la afirmación le atribuye identidad pública de periodista'
+- id: eut-147
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona detención del usuario Q por el FBI en 2021'
+- id: eut-148
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa sitúa el origen de QAnon en 4chan y 8chan en 2017'
+- id: eut-149
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa nace en foros marginales en 2017; la afirmación la traslada a televisiones en 2005'
+- id: eut-150
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa registra expansión europea sin censo de seguidores; el millón no aparece'
+- id: eut-151
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa reconoce que ante incertidumbre o miedo por tecnologías o salud es fácil ser engañado'
+- id: eut-152
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa declara fácil el engaño bajo incertidumbre; la afirmación convierte esa circunstancia en protección total'
+- id: eut-153
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita 5G/6G y COVID como ejemplos de incertidumbre, sin atribuir daños a la salud'
+- id: eut-154
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa remite a EUvsDisinfo.eu y sus cuentas de YouTube, Facebook y X para el último bulo'
+- id: eut-155
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa recomienda EUvsDisinfo para el último bulo; la afirmación lo desaconseja por difundirlos'
+- id: eut-156
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no asigna EUvsDisinfo al Parlamento Europeo'
+- id: eut-157
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa data el exterminio y sustitución por drones entre 1959 y 1971 por el Gobierno federal'
+- id: eut-158
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa fija 1959-1971; la afirmación desplaza los hechos a 1990-2000'
+- id: eut-159
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa solo invita a buscar información sobre Bielefeld, sin enunciar qué afirma esa conspiración'
+- id: eut-160
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa trata la campaña como sátira con preguntas de debate, sin prohibición gubernamental de 2023'
+- id: eut-161
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa mantiene el rape disponible todo el año con mayores volúmenes en primavera'
+- id: eut-162
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa lo declara disponible todo el año; la afirmación lo confina al invierno'
+- id: eut-163
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa da 0,13 kg per cápita en 2023; el 0,20 de 2024 no aparece'
+- id: eut-164
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa enumera como principales el rape blanco o común, el americano y el negro con sus nombres científicos'
+- id: eut-165
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa lo adscribe al género Lophius; la afirmación lo traslada a Thunnus, el del atún'
+- id: eut-166
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da longevidad del rape común; veinticinco años no consta'
+- id: eut-167
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa sitúa el rape habitual entre 70 y 200 cm y 4 a 8 kg'
+- id: eut-168
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa documenta máximos en torno a 40 y hasta 58 kg; la afirmación topa en 10 kg'
+- id: eut-169
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da esperanza de vida; treinta años en profundidad no aparece'
+- id: eut-170
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija la madurez a los 6 o 7 años con unos 70 cm'
+- id: eut-171
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa retrasa la madurez a 6 o 7 años; la afirmación la adelanta al primer año'
+- id: eut-172
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa habla de millones de huevos sin cifra exacta; los dos millones exactos no constan'
+- id: eut-173
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cifra la producción mundial de 2024 en 52.935 toneladas'
+- id: eut-174
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reparte el 51 % a la UE-27; la afirmación se lo asigna a China'
+- id: eut-175
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cubre hasta 2024 con 52.935 toneladas; superar sesenta mil en 2025 no aparece'
+- id: eut-176
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa triplica con creces las capturas noruegas con un 331 % en el periodo'
+- id: eut-177
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa recorta la UE un 26 % por el Brexit; la afirmación convierte la caída en subida del 26 %'
+- id: eut-178
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona la merluza ni un 15 % ligado al Brexit'
+- id: eut-179
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa reparte Francia 68 %, España 11 % y Dinamarca 8 % de las capturas de la UE'
+- id: eut-180
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa lidera con Francia al 68 %; la afirmación corona a España con ese 68 %'
+- id: eut-181
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa reparte Francia, España, Dinamarca, Bélgica, Italia y Grecia sin Portugal ni su 5 %'
+- id: eut-182
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa reduce la producción de la UE un 26 % en la década 2015-2024'
+- id: eut-183
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa sube capturas danesas y belgas un 32 % y un 39 %; la afirmación las baja en esos porcentajes'
+- id: eut-184
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona renegociación de cuotas británicas en 2028'
+- id: eut-185
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cifra la primera venta de 2025 en 25.150 toneladas y 165 millones de euros'
+- id: eut-186
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa registra 25.150 toneladas; la afirmación la deja bajo diez mil'
+- id: eut-187
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa reparte volumen y valor entre España, Francia, Dinamarca e Irlanda sin Alemania ni su 15 %'
+- id: eut-188
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja el fresco en el 98 % y el congelado en el 2 % de la primera venta'
+- id: eut-189
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa asigna el 98 % al fresco; la afirmación se lo da al congelado'
+- id: eut-190
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa desglosa fresco y congelado sin rape ahumado ni su 5 %'
+- id: eut-191
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa corona la talla 2 de 4 a 8 kg a 6,92 EUR/kg como mayor precio'
+- id: eut-192
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa da a la talla 5 el menor precio, 5,38; la afirmación le otorga el mayor'
+- id: eut-193
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa explica el precio de la talla 2 por la cola larga, sin demanda japonesa'
+- id: eut-194
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa hunde la primera venta española un 47 % en volumen en la década, la más afectada'
+- id: eut-195
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa registra un descenso del 47 %; la afirmación lo convierte en aumento del 47 %'
+- id: eut-196
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da causa del descenso español; la veda cantábrica de 2023 no aparece'
+- id: eut-197
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cita Vigo, A Coruña y Ondárroa como principales puntos españoles en volumen'
+- id: eut-198
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa asigna a Vigo el 20 %; la afirmación lo rebaja a menos del 5 %'
+- id: eut-199
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa lista Kilmore Quay entre los principales sin declarar si es el único irlandés'
+- id: eut-200
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja al Reino Unido como primer proveedor con el 38 % del valor extracomunitario'
+- id: eut-201
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa lidera con el Reino Unido al 38 %; la afirmación corona a China con ese 38 %'
+- id: eut-202
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona certificación MSC ni su subida del 40 % en 2025'
+- id: eut-203
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa limita las exportaciones a 823 toneladas por 4,4 millones de euros'
+- id: eut-204
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa enfrenta 823 toneladas exportadas a 22.619 importadas; la afirmación invierte el balance'
+- id: eut-205
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da precio de exportación a Suiza; doce euros no consta'
+- id: eut-206
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa absorbe España el 28 % del valor fresco intra-UE como principal destino'
+- id: eut-207
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa expande el comercio con +51 % en volumen y +92 % en valor; la afirmación lo reduce a la mitad'
+- id: eut-208
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja a España primera con 35.382 toneladas EPV en 2023'
+- id: eut-209
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa encabeza con España seguida de Francia e Italia; la afirmación pone primera a Italia'
+- id: eut-210
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa solo cuantifica España, Francia e Italia; Alemania con ocho mil toneladas no aparece'
+- id: eut-211
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa incorpora los objetivos de educación y competencias para 2030 de la Comunicación de 2025'
+- id: eut-212
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa tiene en cuenta los objetivos 2030; la afirmación los declara ignorados en favor de 2020'
+- id: eut-213
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no describe adopción ni unanimidad de la Comunicación de Competencias'
+- id: eut-214
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa asigna la sección 4 a la educación y formación profesionales'
+- id: eut-215
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa dedica la 4 a profesional y la 5 a superior; la afirmación intercambia ambas'
+- id: eut-216
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita el documento SWD(2025) 700 sin paginación; cuatrocientas no consta'
+- id: eut-217
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa suaviza la caída española de competencias frente a la mayoría de la UE'
+- id: eut-218
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa la declara menos pronunciada que en la mayoría; la afirmación la convierte en la mayor caída'
+- id: eut-219
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no financia las reformas docentes; doscientos millones del FSE+ no aparecen'
+- id: eut-220
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa enfrenta demanda CTIM superior a la oferta con matrícula terciaria bajo la media y en descenso'
+- id: eut-221
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa declara la demanda superior a la oferta; la afirmación invierte el excedente'
+- id: eut-222
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da paro juvenil; el veintiocho por ciento no aparece'
+- id: eut-223
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa exige más de 1,39 millones de especialistas TIC para el 10 % del empleo en 2030'
+- id: eut-224
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa sitúa a España en 4,4 % y lejos del 10 %; la afirmación declara superado el objetivo'
+- id: eut-225
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita al SEPE para el déficit sin previsión de medio millón de empleos antes de 2027'
+- id: eut-226
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa crece el empleo en electricidad y gas un 14,9 % y en TIC un 10,3 % en 2024'
+- id: eut-227
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa registra crecimiento en ambos sectores; la afirmación declara caída'
+- id: eut-228
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa cita a la OCDE para ofertas por trabajador, sin recomendar subidas salariales del diez por ciento'
+- id: eut-229
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja CTIM en 24,7 % en 2023 bajo la media UE del 26,9 %'
+- id: eut-230
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa deja España en 24,7 % bajo la media y el objetivo del 32 %; la afirmación le otorga ese 32 %'
+- id: eut-231
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no clasifica titulaciones por paro; la informática con más paro no aparece'
+- id: eut-232
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa cifra mujeres CTIM en 28,6 %, bajo la media del 32,2 % y el objetivo del 40 %'
+- id: eut-233
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa cuenta 28,6 % de mujeres; la afirmación les da más de la mitad'
+- id: eut-234
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa habla de España sin Finlandia ni su 45 %'
+- id: eut-235
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja EFP medio en 11,2 % de mujeres frente al objetivo UE del 25 %'
+- id: eut-236
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa niega estrategia específica de CTIM; la afirmación aprueba una en 2020'
+- id: eut-237
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa lanza el Plan en 2021 sin prórroga a 2030'
+- id: eut-238
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa crea con la LO 3/2022 el itinerario de EFP en IA y datos'
+- id: eut-239
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa incorpora módulos digitales y de sostenibilidad; la afirmación los declara eliminados'
+- id: eut-240
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no describe la votación de la ley; unanimidad de grupos no consta'
+- id: eut-241
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa integra cincuenta centros de excelencia y convierte 1 253 aulas en tecnológicas'
+- id: eut-242
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa integra cincuenta centros y convierte 1 253 aulas; la afirmación los cierra y elimina'
+- id: eut-243
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa presenta ChicaSTEM sin financiador; la fundación estadounidense no aparece'
+- id: eut-244
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa supera el objetivo del 96 % con 97,7 % en 2023'
+- id: eut-245
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa supera el 96 % con 97,7 %; la afirmación declara el objetivo incumplido'
+- id: eut-246
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa da participación de cero a dos años sin obligatoriedad desde 2020'
+- id: eut-247
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa fija la brecha EIAI en dos años y medio'
+- id: eut-248
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa mide la brecha en dos años y medio; la afirmación niega toda brecha'
+- id: eut-249
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa anuncia planes de ampliar el permiso sin tope de ocho años'
+- id: eut-250
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa exige en EIAI un miembro con cualificación CINE 6 en educación infantil'
+- id: eut-251
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa exige personal especializado con CINE 6; la afirmación exime de toda cualificación'
+- id: eut-252
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da salarios del personal EIAI; mil ochocientos euros no consta'
+- id: eut-253
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja sin nivel básico de matemáticas al 27,3 % de los quinceañeros'
+- id: eut-254
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa cuenta 27,3 % bajo el básico; la afirmación lo rebaja a menos del 10 %'
+- id: eut-255
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa compara rondas PISA 2018 y 2022 sin debut español en 2018'
+- id: eut-256
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa da 498 puntos en matemáticas frente a 514 de la UE en TIMSS 2023'
+- id: eut-257
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa deja a España bajo la media en ambas materias; la afirmación la pone por encima'
+- id: eut-258
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa da resultados TIMSS 2023 sin nombrar organizador; la UNESCO no aparece'
+- id: eut-259
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa sitúa las escuelas españolas entre las más seguras y ordenadas'
+- id: eut-260
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa las cuenta entre las más seguras; la afirmación las declara las más inseguras'
+- id: eut-261
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da portátiles por alumno; el noventa por ciento no aparece'
+- id: eut-262
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa dota #DigEdu con más de 1 660 millones y 300 000 portátiles'
+- id: eut-263
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa asigna más de 1 660 millones; la afirmación la deja en dieciséis'
+- id: eut-264
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa reparte 300 000 dispositivos por comunidades sin marca única'
+- id: eut-265
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja prohibiciones generales en alrededor de la mitad de las comunidades'
+- id: eut-266
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa reparte prohibiciones y normas flexibles por regiones; la afirmación impone ban total sin excepción'
+- id: eut-267
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fecha prohibición nacional del móvil; septiembre de 2024 no aparece'
+- id: eut-268
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa baja el abandono del 20,0 % en 2015 al 13,0 % en 2024, mínimo histórico'
+- id: eut-269
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa registra caída al 13 %; la afirmación impone subida al 25 %'
+- id: eut-270
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no fija meta nacional del 5 % para 2030'
+- id: eut-271
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa propone asignar el 5,5 % del PIB al gasto educativo'
+- id: eut-272
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa propone 5,5 % del PIB; la afirmación lo deja en 2 %'
+- id: eut-273
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa enumera los cuatro grupos por temas sin composición de inspectores'
+- id: eut-274
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa aprueba 600 000 EUR totales con 600 EUR por estudiante para libros y material'
+- id: eut-275
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa concede 600 EUR por estudiante; la afirmación multiplica a seis mil'
+- id: eut-276
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no designa gestor de las ayudas; los ayuntamientos no aparecen'
+- id: eut-277
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja el empleo de EFP medio en 68,6 %, lejos del 80,0 % europeo'
+- id: eut-278
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa da 68,6 % a EFP medio frente a 83,9 % superior; la afirmación invierte la jerarquía'
+- id: eut-279
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no da el momento de medición; nueve meses no consta'
+- id: eut-280
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja el 35,0 % de titulados en empleos poco cualificados, la mayor tasa de la UE'
+- id: eut-281
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa la declara la mayor de la UE; la afirmación la convierte en la menor'
+- id: eut-282
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa dota microcredenciales con 50 millones sin encomendarlas al SEPE'
+- id: eut-283
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa deja formación adulta en 34,1 % frente al 39,5 % de la UE en 2022'
+- id: eut-284
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa sitúa España bajo la media europea; la afirmación la pone por encima'
+- id: eut-285
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa marca el 60 % como objetivo nacional para 2030 sin cumplimiento en 2024'
+- id: eut-286
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa presupuesta 175 000 millones EUR en cuatro pilares'
+- id: eut-287
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa propone 175 000 millones; la afirmación la deja en 175 millones'
+- id: eut-288
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa es propuesta de julio de 2025 sin aprobación parlamentaria de marzo de 2026'
+- id: eut-289
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa dota el Pilar II con 75 876 millones EUR'
+- id: eut-290
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa asigna 75 876 al Pilar II y 16 262 al IV; la afirmación corona al IV con la mayor dotación'
+- id: eut-291
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no cifra empresas anuales del Pilar III; quinientas no aparece'
+- id: eut-292
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa apoya desde el Consejo de Innovación a emergentes de cuántica, biotecnología y limpias'
+- id: eut-293
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa apoya a emergentes de tecnología profunda; la afirmación lo limita a grandes consolidadas'
+- id: eut-294
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa promueve Elige Europa sin presupuesto propio de dos mil millones'
+- id: eut-295
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa orienta las asociaciones a sectores estratégicos de competitividad, seguridad y resiliencia'
+- id: eut-296
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa ordena movilizar inversión privada; la afirmación renuncia a ella'
+- id: eut-297
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa no menciona al FSE+ ni mil trescientos millones para Horizonte Europa'
+- id: eut-298
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: supported
+  evidence: 'la premisa lista entre moonshots aviación limpia, cuántica y fusión'
+- id: eut-299
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: contradicted
+  evidence: 'la premisa incluye IA de próxima generación y cuántica; la afirmación las excluye'
+- id: eut-300
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  independent_label: unsupported
+  evidence: 'la premisa nombra el colisionador como moonshot sin ubicación en la frontera franco-suiza'
+

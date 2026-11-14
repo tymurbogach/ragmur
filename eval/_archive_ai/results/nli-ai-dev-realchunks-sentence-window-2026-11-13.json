@@ -1,0 +1,200 @@
+{
+  "task": "nli-ai-dev-realchunks-sentence-window",
+  "date": "2026-11-13T09:10:13.009802+00:00",
+  "split": "dev",
+  "dataset": {
+    "path": "eval/eu_nli_dev_chunks_ai_reviewed.yaml",
+    "sha256": "01bba6d40a1ad929ca17013b2e9284620be2d1f3cd504a98079afc9abb0b9e3d",
+    "cases": 276,
+    "claims": 276,
+    "label_counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "documents_distinct": 18
+  },
+  "code_hashes": {
+    "eval_sentence_windows_py": "acfe1acceaf7e942e01da56dfca599b7f5fc8fedf4da58b5dd956404017ce34f",
+    "eval_nli_sentence_window_run_py": "85017156699431535f5353336a6e241caab3d09e2b16713e0bb955f560712afc",
+    "eval_nli_run_py": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+    "src_ragmur_verification_nli_py": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+    "src_ragmur_core_config_py": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc"
+  },
+  "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+  "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+  "device": "cpu",
+  "batch_size": 8,
+  "pair_batch_size": 256,
+  "thresholds": {
+    "supported": 0.75,
+    "weak": 0.5,
+    "contradicted": 0.75
+  },
+  "thresholds_modified": false,
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H"
+  },
+  "thread_settings": {
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2"
+  },
+  "timing": {
+    "model_load_seconds": 1.9636055850023695,
+    "inference_seconds": 469.7197392119997,
+    "total_seconds": 471.73688482500074,
+    "per_claim_ms": 1701.8831130869553
+  },
+  "windows": {
+    "total_pairs": 1502,
+    "claims_scored": 276,
+    "per_premise_min": 1,
+    "per_premise_max": 13,
+    "per_premise_mean": 5.442028985507246,
+    "score_batches": 6
+  },
+  "baseline": {
+    "summary": "eval/results/nli-ai-dev-realchunks-2026-11-13.json",
+    "summary_sha256": "809a9bf9e4b513c4d6361d7c663aa80777b469ca3f7360ecd8ea1dcfe153026e",
+    "counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 68,
+        "weak": 7,
+        "unsupported": 18,
+        "contradicted": 1
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 2,
+        "weak": 0,
+        "unsupported": 86,
+        "contradicted": 3
+      },
+      "contradicted": {
+        "supported": 5,
+        "weak": 3,
+        "unsupported": 7,
+        "contradicted": 76
+      }
+    },
+    "false_support": {
+      "numerator": 7,
+      "denominator": 182,
+      "rate": 0.038461538461538464,
+      "wilson_95": [
+        0.018753523279298877,
+        0.07725012915601775
+      ]
+    },
+    "supported_recall": {
+      "numerator": 68,
+      "denominator": 94,
+      "rate": 0.723404255319149
+    }
+  },
+  "variant": {
+    "counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 81,
+        "weak": 2,
+        "unsupported": 3,
+        "contradicted": 8
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 0,
+        "weak": 3,
+        "unsupported": 84,
+        "contradicted": 4
+      },
+      "contradicted": {
+        "supported": 5,
+        "weak": 1,
+        "unsupported": 6,
+        "contradicted": 79
+      }
+    },
+    "false_support": {
+      "numerator": 5,
+      "denominator": 182,
+      "rate": 0.027472527472527472,
+      "wilson_95": [
+        0.011790482343053021,
+        0.06268944753119972
+      ]
+    },
+    "supported_recall": {
+      "numerator": 81,
+      "denominator": 94,
+      "rate": 0.8617021276595744
+    }
+  },
+  "paired": {
+    "compared_claims": 276,
+    "agreements": 236,
+    "changed": 40,
+    "transitions_baseline_to_variant": {
+      "supported": {
+        "supported": 67,
+        "weak": 2,
+        "unsupported": 1,
+        "contradicted": 5
+      },
+      "weak": {
+        "supported": 5,
+        "weak": 1,
+        "unsupported": 1,
+        "contradicted": 3
+      },
+      "unsupported": {
+        "supported": 13,
+        "weak": 3,
+        "unsupported": 90,
+        "contradicted": 5
+      },
+      "contradicted": {
+        "supported": 1,
+        "weak": 0,
+        "unsupported": 1,
+        "contradicted": 78
+      }
+    },
+    "recall_delta_variant_minus_baseline": 0.13829787234042545,
+    "false_support_delta_variant_minus_baseline": -0.010989010989010992,
+    "warning": "Las 276 afirmaciones comparten 247 chunks y 18 documentos; las metricas pareadas describen este desarrollo correlacionado y no demuestran una mejora general."
+  },
+  "exclusions": [],
+  "complete": true,
+  "commit": "5397547fd1454467570d6389fa0b8720dc1dea53",
+  "dirty": true,
+  "limitations": [
+    "Etiquetas generadas por IA con revision ciega, sin revision humana.",
+    "Dataset de desarrollo parcialmente post hoc; no es conjunto dorado.",
+    "276 afirmaciones de 247 chunks y 18 documentos: no son muestras independientes.",
+    "Solo particion dev; la reserva no se abrio, leyo ni reevaluo.",
+    "Umbrales vigentes sin modificar; sin declaracion de aceptacion ni marca de roadmap.",
+    "La variante no se integra en src/ ni cambia el chunking de ingesta."
+  ],
+  "reserve_untouched": true
+}

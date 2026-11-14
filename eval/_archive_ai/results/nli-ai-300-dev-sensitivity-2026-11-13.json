@@ -1,0 +1,917 @@
+{
+  "date": "2026-11-13T07:15:24.435116+00:00",
+  "purpose": "Exploratory sensitivity of NLI thresholds on existing dev scores; no inference, no calibration, no configuration change.",
+  "split": "dev",
+  "base_result": "eval/results/nli-ai-300-dev-2026-11-13.json",
+  "dataset": {
+    "path": "eval/eu_nli_dev_ai_exploratory.yaml",
+    "sha256": "5b0481a91bbae5a46d5a6be016defc7b6f31977f03ac08d3bd28278705e5044d",
+    "matches_base_result": true
+  },
+  "details_scores": {
+    "path": "/tmp/nli-ai-300-dev-details-2026-11-13.json (not versioned)",
+    "sha256": "b55ce7b7416171f90474f8a7cdfc340f8d475586a7879cb453240de8a2638340",
+    "n": 300
+  },
+  "decision_rule": "contradiction >= C -> contradicted; else entailment >= S -> supported; else entailment >= W -> weak; else unsupported. Matches eval/nli_run.py. Code precedence preserved.",
+  "label_provenance": "Labels proposed and reviewed by AI only (eu_nli_dev_ai_exploratory); no human review. Suspected erroneous labels. All analysis is exploratory, not accepted calibration.",
+  "code_hashes": {
+    "eval/nli_run.py": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+    "eval/nli_thresholds.py": "6413151dff59cbab8b5e5fb08713744fdbbda788c73c648bfb7bec21ca252264",
+    "src/ragmur/verification/nli.py": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+    "src/ragmur/core/config.py": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc"
+  },
+  "thresholds_in_code": {
+    "supported": 0.75,
+    "weak": 0.5,
+    "contradicted": 0.75
+  },
+  "current_thresholds": {
+    "thresholds": {
+      "supported": 0.75,
+      "contradiction": 0.75,
+      "weak": 0.5
+    },
+    "weak_lt_support": true,
+    "confusion_matrix": {
+      "supported": {
+        "supported": 92,
+        "weak": 3,
+        "unsupported": 5,
+        "contradicted": 0
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 100,
+        "contradicted": 1
+      },
+      "contradicted": {
+        "supported": 1,
+        "weak": 2,
+        "unsupported": 13,
+        "contradicted": 83
+      }
+    },
+    "false_support": {
+      "numerator": 1,
+      "denominator": 200,
+      "rate": 0.005,
+      "wilson_95": [
+        0.0008831687156009814,
+        0.02777370439789293
+      ]
+    },
+    "supported_recall": {
+      "numerator": 92,
+      "denominator": 100,
+      "rate": 0.92,
+      "wilson_95": [
+        0.8500189229905127,
+        0.9589065385156194
+      ]
+    },
+    "contradicted_recall": {
+      "numerator": 83,
+      "denominator": 99,
+      "rate": 0.8383838383838383,
+      "wilson_95": [
+        0.7534877137077101,
+        0.8980005165090128
+      ]
+    },
+    "false_contradiction": {
+      "numerator": 1,
+      "denominator": 201,
+      "rate": 0.004975124378109453,
+      "wilson_95": [
+        0.0008787721354006576,
+        0.027638203160149186
+      ],
+      "unsupported_as_contradicted": 1,
+      "supported_as_contradicted": 0
+    }
+  },
+  "scenarios": [
+    {
+      "thresholds": {
+        "supported": 0.75,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 3,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.8,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 3,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.85,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 91,
+          "weak": 4,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 91,
+        "denominator": 100,
+        "rate": 0.91,
+        "wilson_95": [
+          0.837737871472837,
+          0.9519274599974348
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.9,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 90,
+          "weak": 5,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 90,
+        "denominator": 100,
+        "rate": 0.9,
+        "wilson_95": [
+          0.8256343384950865,
+          0.9447708629393249
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.95,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 78,
+          "weak": 17,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 78,
+        "denominator": 100,
+        "rate": 0.78,
+        "wilson_95": [
+          0.6892964648501421,
+          0.8499871761539459
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.97,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 74,
+          "weak": 21,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 0,
+          "weak": 3,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 0,
+        "denominator": 200,
+        "rate": 0.0,
+        "wilson_95": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "supported_recall": {
+        "numerator": 74,
+        "denominator": 100,
+        "rate": 0.74,
+        "wilson_95": [
+          0.6462901055081282,
+          0.8159530153525186
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.99,
+        "contradiction": 0.75,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 56,
+          "weak": 39,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 0,
+          "weak": 3,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 0,
+        "denominator": 200,
+        "rate": 0.0,
+        "wilson_95": [
+          1.734723475976807e-18,
+          0.018845326377266575
+        ]
+      },
+      "supported_recall": {
+        "numerator": 56,
+        "denominator": 100,
+        "rate": 0.56,
+        "wilson_95": [
+          0.4622810465167699,
+          0.6532797336983921
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.75,
+        "contradiction": 0.6,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 3,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 12,
+          "contradicted": 84
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 84,
+        "denominator": 99,
+        "rate": 0.8484848484848485,
+        "wilson_95": [
+          0.7649588925157853,
+          0.9059767475581533
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.75,
+        "contradiction": 0.9,
+        "weak": 0.5
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 3,
+          "unsupported": 5,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 21,
+          "contradicted": 75
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 75,
+        "denominator": 99,
+        "rate": 0.7575757575757576,
+        "wilson_95": [
+          0.6645718449402054,
+          0.8313371064187927
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.75,
+        "contradiction": 0.75,
+        "weak": 0.3
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 5,
+          "unsupported": 3,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 4,
+          "unsupported": 11,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    },
+    {
+      "thresholds": {
+        "supported": 0.75,
+        "contradiction": 0.75,
+        "weak": 0.6
+      },
+      "weak_lt_support": true,
+      "confusion_matrix": {
+        "supported": {
+          "supported": 92,
+          "weak": 2,
+          "unsupported": 6,
+          "contradicted": 0
+        },
+        "weak": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 0,
+          "contradicted": 0
+        },
+        "unsupported": {
+          "supported": 0,
+          "weak": 0,
+          "unsupported": 100,
+          "contradicted": 1
+        },
+        "contradicted": {
+          "supported": 1,
+          "weak": 2,
+          "unsupported": 13,
+          "contradicted": 83
+        }
+      },
+      "false_support": {
+        "numerator": 1,
+        "denominator": 200,
+        "rate": 0.005,
+        "wilson_95": [
+          0.0008831687156009814,
+          0.02777370439789293
+        ]
+      },
+      "supported_recall": {
+        "numerator": 92,
+        "denominator": 100,
+        "rate": 0.92,
+        "wilson_95": [
+          0.8500189229905127,
+          0.9589065385156194
+        ]
+      },
+      "contradicted_recall": {
+        "numerator": 83,
+        "denominator": 99,
+        "rate": 0.8383838383838383,
+        "wilson_95": [
+          0.7534877137077101,
+          0.8980005165090128
+        ]
+      },
+      "false_contradiction": {
+        "numerator": 1,
+        "denominator": 201,
+        "rate": 0.004975124378109453,
+        "wilson_95": [
+          0.0008787721354006576,
+          0.027638203160149186
+        ],
+        "unsupported_as_contradicted": 1,
+        "supported_as_contradicted": 0
+      }
+    }
+  ],
+  "eu_dev_223": {
+    "entailment": 0.9609375,
+    "contradiction": 0.03460693359375,
+    "expected_ai_label": "contradicted",
+    "verdict_at_current": "supported",
+    "support_threshold_needed_to_stop_false_support": ">0.9609375 (first grid point achieving it: 0.97)",
+    "effect_at_0_97_vs_current": "false_support 1/200 -> 0/200; supported_recall 92/100 (0.92) -> 74/100 (0.74), loss of 18 supported cases to weak; contradicted_recall unchanged 83/99 (0.838); false_contradiction unchanged 1/201",
+    "at_0_99": "false_support stays 0/200 but supported_recall falls to 56/100 (0.56); loss too large to be a correction",
+    "caveat": "Correcting the verdict assumes the AI label 'contradicted' is right; the label itself is suspect and unreviewed, so no threshold change is justified by this case alone."
+  },
+  "validation": "All explored scenarios satisfy weak < support.",
+  "commit": "5397547fd1454467570d6389fa0b8720dc1dea53",
+  "tree_dirty": " M README.md\n M ROADMAP.md\n M eval/NLI.md\n M eval/nli_run.py\n M eval/nli_thresholds.py\n M tests/eval/test_nli_run.py\n M tests/eval/test_nli_thresholds.py\n?? eval/EU_CORPUS.md\n?? eval/annotation_forms/\n?? eval/eu_manifest.yaml\n?? eval/eu_nli_dev_ai_adjudicated.yaml\n?? eval/eu_nli_dev_ai_adjudication.yaml\n?? eval/eu_nli_dev_ai_audit.yaml\n?? eval/eu_nli_dev_ai_candidates.yaml\n?? eval/eu_nli_dev_ai_corrected.yaml\n?? eval/eu_nli_dev_ai_corrections.yaml\n?? eval/eu_nli_dev_ai_exploratory.yaml\n?? eval/eu_nli_dev_ai_second_review.yaml\n?? eval/eu_nli_dev_ai_trace.md\n?? eval/eu_pilot_ai_proposals.yaml\n?? eval/eu_pilot_candidates.yaml\n?? eval/eu_pilot_dev_ai_reviewed.yaml\n?? eval/eu_pilot_revised.yaml\n?? eval/eu_pilot_revised_ai_proposals.yaml\n?? eval/results/nli-ai-300-dev-2026-11-13.json\n?? eval/results/nli-ai-pilot-dev-2026-11-13.json\n",
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H",
+    "device": "cpu",
+    "memory": "MemTotal:       65234968 kB"
+  },
+  "test_split": "Not used or opened.",
+  "changes_made": "None to thresholds, code, or data. Only this summary file created.",
+  "limitations": "Dev-only, n=300 with AI-only labels and suspected errors; proportions do not describe production; Wilson intervals assume independence which shared documents/topics may violate; scores reused without new inference; no test split consulted; not an acceptance result and selects no production configuration."
+}

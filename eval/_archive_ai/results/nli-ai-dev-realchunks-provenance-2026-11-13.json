@@ -1,0 +1,251 @@
+{
+  "task": "nli-ai-dev-realchunks-provenance",
+  "date": "2026-11-13",
+  "split": "dev",
+  "dataset": {
+    "path": "eval/eu_nli_dev_chunks_ai_reviewed.yaml",
+    "sha256_expected": "01bba6d40a1ad929ca17013b2e9284620be2d1f3cd504a98079afc9abb0b9e3d",
+    "sha256_observed": "01bba6d40a1ad929ca17013b2e9284620be2d1f3cd504a98079afc9abb0b9e3d",
+    "hash_match": true,
+    "cases": 276,
+    "claims": 276,
+    "label_counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "splits": {
+      "dev": 276
+    },
+    "documents_distinct": 18,
+    "premise_chunk_distinct": 247,
+    "premise_text_distinct": 246,
+    "claims_per_case": 1,
+    "document_ids_all_in_manifest_dev": true,
+    "manifest_dev_documents": 18,
+    "chunking": {
+      "size": 800,
+      "overlap": 120
+    },
+    "locator_types": "page/page en los 276 casos",
+    "label_provenance": "ai-proposal-pending-blind-review en los 276 casos",
+    "prior_exclusion": {
+      "eu-dev-232": "desacuerdo ambiguo sobre alcance del numero de comercios, excluido antes de inferir"
+    }
+  },
+  "inference": {
+    "command": "uv run python -m eval.nli_run --dataset eval/eu_nli_dev_chunks_ai_reviewed.yaml --split dev --require-document-id --output eval/results/nli-ai-dev-realchunks-2026-11-13.json --details /tmp/nli-ai-dev-realchunks-details-2026-11-13.json",
+    "single_run": true,
+    "require_document_id": true,
+    "thresholds_vigentes": {
+      "supported": 0.75,
+      "weak": 0.5,
+      "contradicted": 0.75
+    },
+    "thresholds_source": "valores por defecto de src/ragmur/core/config.py; .env no define VERIFY_* ni NLI_*; efectivos confirmados en proceso",
+    "thresholds_modified": false,
+    "hmac": "variable ausente en entorno; solo se inyecto API_KEY_HMAC_SECRET=dummy-test-only en el proceso de inferencia, sin tocar configuracion ni ficheros",
+    "threads": {
+      "OMP_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    },
+    "model": "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7",
+    "revision": "b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+    "device": "cpu",
+    "batch_size": 8,
+    "hardware": {
+      "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+      "cpu": "Intel(R) Core(TM) Ultra 9 285H",
+      "gpu": "sin driver NVIDIA operativo en este equipo durante la inferencia",
+      "ram_gb_total": 62
+    }
+  },
+  "code_hashes": {
+    "eval_nli_run_py": "cbebf5d7dd476bd3c3bd54483dc4c50e22211c4ac32cad91e4b3c27d623c5e6d",
+    "src_ragmur_verification_nli_py": "fdae7fce5f322183261455fc5d019c11f7017e91991225295684524ce0096880",
+    "src_ragmur_core_config_py": "76418354b5701b0cd0f2a4d15e84771ff354ce31c6b1a546504f74b739607cbc"
+  },
+  "outputs": {
+    "summary": "eval/results/nli-ai-dev-realchunks-2026-11-13.json",
+    "summary_sha256": "809a9bf9e4b513c4d6361d7c663aa80777b469ca3f7360ecd8ea1dcfe153026e",
+    "details": "/tmp/nli-ai-dev-realchunks-details-2026-11-13.json",
+    "details_sha256": "2fc363df2813cc1bc9d96ee3a2f680ed663105fdccb84bed6e96ce9cf7e368a6",
+    "details_note": "volcado por afirmacion (identificadores, etiquetas, veredictos y puntuaciones, sin textos) solo fuera de Git"
+  },
+  "git": {
+    "head": "5397547fd1454467570d6389fa0b8720dc1dea53",
+    "dirty": true,
+    "dirty_note": "cambios sin commit en README, ROADMAP, eval/NLI, eval/nli_run, eval/nli_thresholds y tests; multiples ficheros EU e InferES sin seguimiento, incluido el resumen nuevo de esta tarea"
+  },
+  "results": {
+    "counts": {
+      "supported": 94,
+      "contradicted": 91,
+      "unsupported": 91
+    },
+    "confusion_matrix": {
+      "supported": {
+        "supported": 68,
+        "weak": 7,
+        "unsupported": 18,
+        "contradicted": 1
+      },
+      "weak": {
+        "supported": 0,
+        "weak": 0,
+        "unsupported": 0,
+        "contradicted": 0
+      },
+      "unsupported": {
+        "supported": 2,
+        "weak": 0,
+        "unsupported": 86,
+        "contradicted": 3
+      },
+      "contradicted": {
+        "supported": 5,
+        "weak": 3,
+        "unsupported": 7,
+        "contradicted": 76
+      }
+    },
+    "supported_recall": {
+      "numerator": 68,
+      "denominator": 94,
+      "rate": 0.723404255319149
+    },
+    "false_support": {
+      "numerator": 7,
+      "denominator": 182,
+      "rate": 0.038461538461538464,
+      "wilson_95": [
+        0.018753523279298877,
+        0.07725012915601775
+      ],
+      "breakdown": {
+        "contradicted_as_supported": 5,
+        "unsupported_as_supported": 2
+      }
+    },
+    "contradiction_capture": {
+      "contradicted_correct": 76,
+      "contradicted_total": 91,
+      "rate": 0.8351648351648352,
+      "missed_as_unsupported": 7,
+      "missed_as_weak": 3,
+      "missed_as_supported": 5
+    },
+    "supported_misses": {
+      "supported_as_unsupported": 18,
+      "supported_as_weak": 7,
+      "supported_as_contradicted": 1
+    },
+    "false_contradiction_alarms": {
+      "total": 4,
+      "from_unsupported": 3,
+      "from_supported": 1
+    },
+    "numeric_acceptance": null
+  },
+  "by_document": [
+    {
+      "document_id": "06b9b2a8-5ba5-11f0-a9d0-01aa75ed71a1",
+      "claims": 8,
+      "errors": 0
+    },
+    {
+      "document_id": "186d5adb-d5d7-11f0-8da2-01aa75ed71a1",
+      "claims": 5,
+      "errors": 1
+    },
+    {
+      "document_id": "1fa0183b-dbbe-11f0-8da2-01aa75ed71a1",
+      "claims": 18,
+      "errors": 1
+    },
+    {
+      "document_id": "2acad822-fe54-11f0-8da5-01aa75ed71a1",
+      "claims": 13,
+      "errors": 1
+    },
+    {
+      "document_id": "33740183-a581-11f0-a7c5-01aa75ed71a1",
+      "claims": 14,
+      "errors": 4
+    },
+    {
+      "document_id": "43a17056-ebf1-11e9-9c4e-01aa75ed71a1",
+      "claims": 18,
+      "errors": 1
+    },
+    {
+      "document_id": "6e83d2c4-e503-11ef-bc1c-01aa75ed71a1",
+      "claims": 14,
+      "errors": 2
+    },
+    {
+      "document_id": "736395fe-fbf9-11f0-8da5-01aa75ed71a1",
+      "claims": 16,
+      "errors": 3
+    },
+    {
+      "document_id": "7eee7159-da2b-11f0-8da2-01aa75ed71a1",
+      "claims": 19,
+      "errors": 3
+    },
+    {
+      "document_id": "9af3bbaf-5559-11f0-a9d0-01aa75ed71a1",
+      "claims": 15,
+      "errors": 4
+    },
+    {
+      "document_id": "a0d2cd8c-1cf9-11f1-8c3a-01aa75ed71a1",
+      "claims": 14,
+      "errors": 2
+    },
+    {
+      "document_id": "a18b60ce-d888-11eb-895a-01aa75ed71a1",
+      "claims": 18,
+      "errors": 3
+    },
+    {
+      "document_id": "a43004fd-12ef-11f1-8870-01aa75ed71a1",
+      "claims": 21,
+      "errors": 4
+    },
+    {
+      "document_id": "aaf2a1b7-466e-11f0-b9f2-01aa75ed71a1",
+      "claims": 12,
+      "errors": 4
+    },
+    {
+      "document_id": "b4e46873-7528-11e9-9f05-01aa75ed71a1",
+      "claims": 17,
+      "errors": 2
+    },
+    {
+      "document_id": "bc11dbbe-8cda-11ee-8aa6-01aa75ed71a1",
+      "claims": 15,
+      "errors": 4
+    },
+    {
+      "document_id": "f12b6c43-a8ce-11f1-b9e5-01aa75ed71a1",
+      "claims": 19,
+      "errors": 1
+    },
+    {
+      "document_id": "f692aa0b-17a7-11f1-8870-01aa75ed71a1",
+      "claims": 20,
+      "errors": 6
+    }
+  ],
+  "phenomenon_breakdown": "no disponible: el dataset no incluye campo de fenomeno, categoria o tipo por afirmacion; solo se agregan por documento y por par etiqueta-veredicto",
+  "limitations": [
+    "Etiquetas generadas por IA con revision ciega de orden e identificadores opacos, sin revision humana; referencias no verificadas de forma independiente.",
+    "Dataset derivado de desarrollo parcialmente post hoc tras observar resultados; no es conjunto dorado ni base de aceptacion.",
+    "276 afirmaciones proceden de 247 chunks y 18 documentos: varias afirmaciones comparten premisa y chunk, y los documentos concentran entre 5 y 21 afirmaciones; no son 276 muestras independientes y el intervalo de Wilson presupone independencia que este agrupamiento vulnera.",
+    "Solo particion dev con --require-document-id; la reserva ya utilizada no se abrio, leyo ni reevaluo.",
+    "Umbrales vigentes sin modificar ni seleccionar en esta tarea; sin declaracion de aceptacion y sin marca de roadmap."
+  ],
+  "reserve_untouched": true
+}

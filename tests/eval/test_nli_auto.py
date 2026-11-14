@@ -1,6 +1,7 @@
 """Diagnóstico sintético F07 solo dev local, sin inferencia real."""
 
 import hashlib
+import json
 import re
 from pathlib import Path
 from typing import Any
@@ -8,8 +9,10 @@ from uuid import NAMESPACE_URL, uuid5
 
 import yaml  # type: ignore[import-untyped]
 from eval.check_nli_leak import (
+    LEXICAL_JACCARD_THRESHOLD,
     auto_dataset_errors,
     auto_manifest_map,
+    auto_test_execution_errors,
     collect_burnt_ids,
     run_auto_checks,
 )
@@ -218,7 +221,24 @@ def test_auto_rejects_burnt_and_weak() -> None:
         }
     ]
     errors = auto_dataset_errors("auto", weak, manifest, set(), {})
-    assert any("inválida" in error or "weak" in error.lower() for error in errors)
+    assert any("nunca usa weak" in error for error in errors)
+    invalid = [
+        {
+            "id": "eua-es-003",
+            "document_id": "eua-es-amazon-0",
+            "split": "dev",
+            "premise": "fuente con contenido suficiente para la prueba",
+            "premise_locator": {"type": "offset", "start": 0, "end": 10},
+            "lang": "es",
+            "gold": False,
+            "status": "auto_rule_v1",
+            "rule": "supported_verbatim",
+            "claims": [{"text": "afirmación", "label": "bogus"}],
+        }
+    ]
+    errors = auto_dataset_errors("auto", invalid, manifest, set(), {})
+    assert any("inválida" in error for error in errors)
+    assert not any("nunca usa weak" in error for error in errors)
 
 
 def test_auto_manifest_rejects_wrong_counts() -> None:
@@ -261,3 +281,51 @@ def test_auto_manifest_hashes_match_corpus() -> None:
         assert isinstance(entry, dict)
         digest = hashlib.sha256((Path("eval") / str(entry["path"])).read_bytes()).hexdigest()
         assert digest == entry["sha256"]
+
+
+def _unsupported_case(case_id: str, premise: str, claim_text: str) -> dict[str, Any]:
+    return {
+        "id": case_id,
+        "document_id": "eua-es-amazon-0",
+        "split": "dev",
+        "premise": premise,
+        "premise_locator": {"type": "offset", "start": 0, "end": len(premise)},
+        "lang": "es",
+        "gold": False,
+        "status": "auto_rule_v1",
+        "rule": "unsupported_crossdoc",
+        "claims": [{"text": claim_text, "label": "unsupported"}],
+    }
+
+
+def test_auto_lexical_guard_threshold_is_0_3() -> None:
+    assert LEXICAL_JACCARD_THRESHOLD == 0.3
+    manifest = {"eua-es-amazon-0": {"split": "dev", "lang": "es"}}
+    premise = "alpha beta gamma delta epsilon zeta eta theta iota kappa"
+    below = _unsupported_case("eua-es-101", premise, "alpha beta gamma lorem ipsum dolor")
+    assert auto_dataset_errors("auto", [below], manifest, set(), {}) == []
+    above = _unsupported_case("eua-es-102", premise, "alpha beta gamma delta lorem ipsum")
+    errors = auto_dataset_errors("auto", [above], manifest, set(), {})
+    assert any("guarda léxica" in error for error in errors)
+
+
+def test_auto_test_detection_robust_to_spacing(tmp_path: Path) -> None:
+    auto_sha = "a" * 64
+    payload_test = {
+        "auto_marker": True,
+        "split": "test",
+        "dataset_sha256": auto_sha,
+    }
+    target = tmp_path / "nli-auto-dev-2026-11-13.json"
+    target.write_text(json.dumps(payload_test, separators=(",", ":")), encoding="utf-8")
+    assert "auto" in target.read_text(encoding="utf-8").lower()
+    assert '"split": "test"' not in target.read_text(encoding="utf-8")
+    errors = auto_test_execution_errors(tmp_path, {auto_sha})
+    assert any("split test" in error for error in errors)
+    payload_dev = {
+        "auto_marker": True,
+        "split": "dev",
+        "dataset_sha256": auto_sha,
+    }
+    target.write_text(json.dumps(payload_dev), encoding="utf-8")
+    assert auto_test_execution_errors(tmp_path, {auto_sha}) == []
