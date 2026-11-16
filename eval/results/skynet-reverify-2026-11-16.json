@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-16",
+  "commit": "7950c1bf43c9d98100642a6841fb0df2a48d0148",
+  "mode": "native",
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "cpu": "Intel(R) Core(TM) Ultra 9 285H",
+    "device": "cpu"
+  },
+  "skynet": {
+    "project": "ragmur_deploy",
+    "containers": 3,
+    "health": "ok",
+    "ready": {
+      "postgres": "17.11",
+      "qdrant": "1.19.0",
+      "models": "dense-1024+nli"
+    },
+    "select_status": {
+      "indexed": 88,
+      "other": 0
+    },
+    "tenants": 4,
+    "active_keys": 24,
+    "db_bytes": 8066739
+  },
+  "copy": {
+    "dump_bytes": 17277,
+    "dump_catalog_entries": 32,
+    "dump_sha256": "bde50318089af8350d44f8e3403f1c073ce2b1b0b9f2af61dae849d289b9c21",
+    "tar_bytes": 73717760,
+    "tar_entries": 90,
+    "tar_uuid_files": 88,
+    "tar_sha256": "67f192644e2a92586c11633b32ad53a4bcb2395da32d1ef148e04105e4196482",
+    "transfer": "BatchMode scp, sha256sum -c OK"
+  },
+  "isolated": {
+    "project": "ragmur-skyreverify-20261116",
+    "postgres": "127.0.0.1:15434",
+    "qdrant_http": "127.0.0.1:16335",
+    "qdrant_grpc": "127.0.0.1:16336",
+    "images": [
+      "postgres:17-alpine",
+      "qdrant/qdrant:v1.19.0"
+    ],
+    "api_started": false,
+    "restore": {
+      "indexed": 88,
+      "tenants": 4,
+      "active_keys": 24,
+      "db_bytes": 8017587,
+      "note": "pg_restore --clean --if-exists; documented --if-not-exists does not exist"
+    },
+    "content_sha256": {
+      "match": 88,
+      "diff": 0,
+      "missing": 0
+    },
+    "basename_ok": 88,
+    "ue_publico_docs": 10,
+    "storage_path_repaired": 88,
+    "origin_intact": true
+  },
+  "qdrant": {
+    "points": 1712,
+    "dense": "1024 cosine",
+    "sparse_modifier": "idf",
+    "indexes": [
+      "tenant_id(is_tenant=true)",
+      "owner_id",
+      "document_id"
+    ],
+    "public_tenant_points": 1395
+  },
+  "hybrid_search": {
+    "tenant": "cbc8c3fe-1cdb-4e0d-9a7d-a3296884e08a",
+    "owner_id": "ue-publico",
+    "candidates": 30,
+    "returned": 30,
+    "top5_same_document": true,
+    "top5_document": "3ac08a72-ea0d-4656-8917-2f08721b17bf",
+    "top1_locator": {
+      "type": "page",
+      "start": 15,
+      "end": 16
+    },
+    "top1_dense_rank": 1,
+    "top1_sparse_rank": 3,
+    "http": false
+  },
+  "tests": {
+    "pytest_isolation_tenant_owner": "13 passed, 1 skipped",
+    "grep_isolated_compose": 0,
+    "secret_scan": 0
+  },
+  "limits": "no NLI, no thresholds, no reserve eval, no proxy, no TLS, no DNS, no publish, no push, CPU quality only"
+}

@@ -100,7 +100,7 @@ Verificar antes de arrancar que el fichero no mencione `ragmur_deploy`,
 
 ```bash
 docker compose -p ragmur-skyrestore-20261113 -f "$AISLADO_YML" up -d postgres qdrant
-pg_restore --clean --if-not-exists \
+pg_restore --clean --if-exists \
   -h 127.0.0.1 -p 15433 -U ragmur -d ragmur \
   /tmp/opencode/ragmur-skynet-restore-2026-11-13/postgres-20261113.dump
 psql -h 127.0.0.1 -p 15433 -U ragmur -d ragmur \

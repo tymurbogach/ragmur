@@ -54,7 +54,7 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 | F01 | Protocolo NLI y congelación de dataset | Completed |
 | F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
-| F04 | Corpus real y runbook copia/restore/reindex | Pending |
+| F04 | Corpus real y runbook copia/restore/reindex | Completed |
 | F05 | Diseño proxy demo y endurecimiento | Pending |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
@@ -94,18 +94,18 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 - Objective: dejar datos y recuperación repetibles sin secretos en Git.
 - Non-objectives: no calibrar NLI ni tocar umbrales `0.75/0.50/0.75`; no `nli_run`/`nli_thresholds`/`eval/run.py` sobre reserva; no proxy/BFF, TLS, firewall, DNS, `publish` ni demo; no marcar 1.9 cerrado ni abrir F05.
 - Tasks:
-  - [ ] Manifiesto `eval/eu_manifest.yaml` + tabla 10 PDF dev CC BY 4.0 con título, autor, `source_url`, licencia, `sha256` completo, bytes, páginas, caracteres, `rights_page`. Excluye 6 test y holdouts.
-  - [ ] Versionar `eval/skynet_public_corpus_2026-11-13.md` y `eval/skynet_restore_check_2026-11-13.md` redactados, sin secretos.
-  - [ ] Triar `eval/`: allow `eu_manifest.yaml`, `eu_auto_manifest.yaml`, scripts, formularios, `NLI.md`/`SCIFACT.md`/`EU_CORPUS.md`, resúmenes `eval/results/*.json`; deny `*.dump`, `*.tar`, PDF originales, `.key`, `.env`, volcados por consulta a `/tmp`. Resolver deuda F01: inventario verificable de citas NLI a SHAs AI o purga.
-  - [ ] Runbook en `docs/runbook-backup-restore.md`: `SELECT status,count(*)` previo, `pg_dump -Fc` + `tar -C /app/storage` + `docker cp` solo lectura, `scp` BatchMode, `sha256sum` origen=destino, `pg_restore --clean --if-not-exists` en proyecto aislado, reparación `storage_path` solo en copia, `reindex --all` con API detenida.
-  - [ ] Verificar equivalencia documentada a nivel `hybrid_search`, sin HTTP sobre copia.
+  - [x] Manifiesto `eval/eu_manifest.yaml` + tabla 10 PDF dev CC BY 4.0 con título, autor, `source_url`, licencia, `sha256` completo, bytes, páginas, caracteres, `rights_page`. Excluye 6 test y holdouts.
+  - [x] Versionar `eval/skynet_public_corpus_2026-11-13.md` y `eval/skynet_restore_check_2026-11-13.md` redactados, sin secretos.
+  - [x] Triar `eval/`: allow `eu_manifest.yaml`, `eu_auto_manifest.yaml`, scripts, formularios, `NLI.md`/`SCIFACT.md`/`EU_CORPUS.md`, resúmenes `eval/results/*.json`; deny `*.dump`, `*.tar`, PDF originales, `.key`, `.env`, volcados por consulta a `/tmp`. Deuda F01 resuelta como inventario verificable de citas NLI a SHAs AI.
+  - [x] Runbook en `docs/runbook-backup-restore.md` (flag corregido a `--if-exists`; pre-vuelo PowerShell).
+  - [x] Verificar equivalencia documentada a nivel `hybrid_search`, sin HTTP sobre copia.
 - Dependencies: F01 (trazabilidad); ejecución técnica independiente de F02/F03 pero cierre global espera a F03.
 - Acceptance criteria: `indexed|88` con 0 en otros estados antes de copiar; origen=destino `88 indexed`, `4 tenants`, `24 claves`; `88/88 content_sha256`; `1712` puntos `ragmur_chunks` (`dense-1024 cosine`, `sparse modifier=idf`, índices `tenant_id(is_tenant=true)/owner_id/document_id`); `hybrid_search` tenant corpus + `owner_id=ue-publico` 30 candidatos top-5 `La etiqueta ecológica`, top-1 págs `15-16`; volúmenes/puertos originales intactos; sin HTTP sobre copia.
 - Required tests: `SELECT status,count(*)` → `indexed|88`; `pg_restore -l` → 32 entradas; `tar -tf` → 90 entradas/88 ficheros; `sha256sum -c` origen=destino; `reindex --all` CPU API detenida → `Reindexed 88`, 0 `failed/unsupported`; Qdrant collection info 1712 puntos + `idf` + 3 índices; `hybrid_search` top-5 idéntico; `pytest -q -k "isolation or tenant or owner"` verde; `grep ragmur_deploy <compose.aislado>` → 0; secret-scan `rgm_|hmac|password|BEGIN PRIVATE` en `eval/skynet_*.md` → 0.
-- Test evidence: parcial 2026-11-16. Escritor native `backend`: secret-scan 0, deny 0 en Git, manifiesto 10/10 dev CC BY, inventario SHA IA verificable, `check_nli_leak` verde, `pytest -k isolation` 13 passed 1 skipped, Skynet `ssh` timeout exit 255 (criterios Skynet no verificados, sin mock). Lead integrado: `ruff check` pass, `ruff format --check` 153 formatted, `mypy` 124 files OK, `pytest -k isolation` 13 passed 1 skipped, secret/deny 0, `check_nli_leak` verde, Skynet timeout 255 confirmado. Revisión 1: B1 hash truncado + B2 formato; reparación acotada aplicada. Revisión 2: B1/B2 cerrados, sin bloqueos para parcial, fase sigue Pending. Reintento 2026-11-16: SSH OK pero Docker Desktop detenido en Skynet (servicio parado tras reinicio 13:30Z, daemon caído, API cerrada); ningún paso de copia ejecutado, árbol limpio; reintentar cuando el dueño levante Docker Desktop con despliegue sano.
+- Test evidence: verificado 2026-11-16 en vivo. Escritor native `backend`: `SELECT indexed|88` estable x2, 4 tenants, 24 claves; dump 17277 B 32 entradas, tar 73717760 B 90 entradas 88 UUIDs, `sha256sum -c` OK; restore aislado `indexed|88` 4/24; `content_sha256` 88/88/0, `storage_path` 88/88 solo copia, origen intacto; `reindex --all` → `Reindexed 88`; colección 1712 pts `dense-1024 cosine` `sparse modifier=idf` 3 índices, tenant público 1395 pts; `hybrid_search` 30 candidatos top-5 mismo doc top-1 págs 15-16 idéntico GPU, sin HTTP; `pytest -k isolation` 13 passed 1 skipped; secret-scan 0; compose aislado fuera de Git sin API. Lead integrado: `ruff check` pass, `format --check` 154 formatted, `mypy` 124 files OK, `pytest` 235 passed 4 skipped, secret/deny 0 en Git, `check_nli_leak` verde. Revisión final: sin bloqueantes; fase verificada, cierre global a F03.
 - Files changed: allow `eval/skynet_*.md`, `eval/eu_manifest.yaml`, `docs/runbook-backup-restore.md`, `eval/results/*` solo resúmenes; deny `*.dump`, `*.tar`, PDF, `.key`, `.env`, detalles en `/tmp`.
-- Risks: pre-vuelo anti-colisión obligatorio; `pg_restore --clean` con env erróneo restaura sobre original; copia sin snapshot consistente no es atómica; reparar `storage_path` en origen destruye despliegue; CPU válida para calidad, nunca para latencia; caché `model_data` compartida contamina; reutilizar nombre/volumen/puerto `ragmur_deploy` destruye original. Bloqueo vigente: Skynet inaccesible 2026-11-16 (timeout `100.92.24.54:22`); re-ejecutar `SELECT`, copia, hashes, `reindex --all` y `hybrid_search` cuando vuelva.
-- Status: Pending (parcial: runbook creado y verificado estáticamente; re-verificación Skynet pendiente).
+- Risks: pre-vuelo anti-colisión obligatorio; `pg_restore --clean` con env erróneo restaura sobre original; copia sin snapshot consistente no es atómica; reparar `storage_path` en origen destruye despliegue; CPU válida para calidad, nunca para latencia; caché `model_data` compartida contamina; reutilizar nombre/volumen/puerto `ragmur_deploy` destruye original. Notas: `Get-Service Stopped` no implica Docker caído si `desktop-linux` responde; el `tar` incluye `.ragmur.lock` (contar UUIDs); Skynet cayó y volvió el 2026-11-16 (Docker detenido, luego sano).
+- Status: Completed 2026-11-16.
 
 ### F05: Diseño proxy demo y endurecimiento
 
@@ -148,7 +148,7 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 
 ## 8. Recommended next action
 
-- Next phase: F02 sigue BLOCKED hasta 300 humanos; F04 pendiente.
-- Resume command: `run F04` para corpus/runbook, o esperar humanos para `run F02`.
+- Next phase: F04 Completed 2026-11-16; F02 sigue BLOCKED hasta 300 humanos; siguiente técnico F05.
+- Resume command: `run F05` para diseño proxy demo y endurecimiento, o esperar humanos para `run F02` (desbloquea F03 y cierre global).
 - Suggested effort: medium.
 - Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
