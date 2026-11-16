@@ -92,18 +92,20 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 ### F04: Corpus real y runbook copia/restore/reindex
 
 - Objective: dejar datos y recuperación repetibles sin secretos en Git.
+- Non-objectives: no calibrar NLI ni tocar umbrales `0.75/0.50/0.75`; no `nli_run`/`nli_thresholds`/`eval/run.py` sobre reserva; no proxy/BFF, TLS, firewall, DNS, `publish` ni demo; no marcar 1.9 cerrado ni abrir F05.
 - Tasks:
-  - [ ] Versionar informes Skynet 2026-11-13 redactados (sin secretos) y manifiesto 10 PDF CC BY con atribución, SHA, páginas/caracteres.
-  - [ ] Triar `eval/`: versionar manifiestos, scripts, formularios y resúmenes; ignorar volcados por consulta y archivar borradores AI no revisados.
-  - [ ] Runbook `pg_dump` custom + `tar -C /app/storage` + `scp` BatchMode + `pg_restore --clean` en proyecto aislado + `reindex --all` con API detenida + reparación `storage_path`.
-  - [ ] Verificar 88 `indexed`, 4 tenants, 24 claves, 88/88 `content_sha256`, 1712 puntos (`dense-1024 cosine`, `sparse modifier=idf`, índices `tenant_id(is_tenant)/owner_id/document_id`), búsqueda híbrida tenant+`ue-publico` top-5 mismo doc (págs 15-16 etiqueta ecológica).
+  - [ ] Manifiesto `eval/eu_manifest.yaml` + tabla 10 PDF dev CC BY 4.0 con título, autor, `source_url`, licencia, `sha256` completo, bytes, páginas, caracteres, `rights_page`. Excluye 6 test y holdouts.
+  - [ ] Versionar `eval/skynet_public_corpus_2026-11-13.md` y `eval/skynet_restore_check_2026-11-13.md` redactados, sin secretos.
+  - [ ] Triar `eval/`: allow `eu_manifest.yaml`, `eu_auto_manifest.yaml`, scripts, formularios, `NLI.md`/`SCIFACT.md`/`EU_CORPUS.md`, resúmenes `eval/results/*.json`; deny `*.dump`, `*.tar`, PDF originales, `.key`, `.env`, volcados por consulta a `/tmp`. Resolver deuda F01: inventario verificable de citas NLI a SHAs AI o purga.
+  - [ ] Runbook en `docs/runbook-backup-restore.md`: `SELECT status,count(*)` previo, `pg_dump -Fc` + `tar -C /app/storage` + `docker cp` solo lectura, `scp` BatchMode, `sha256sum` origen=destino, `pg_restore --clean --if-not-exists` en proyecto aislado, reparación `storage_path` solo en copia, `reindex --all` con API detenida.
+  - [ ] Verificar equivalencia documentada a nivel `hybrid_search`, sin HTTP sobre copia.
 - Dependencies: F01 (trazabilidad); ejecución técnica independiente de F02/F03 pero cierre global espera a F03.
-- Acceptance criteria: conteos origen=destino, hashes origen=destino, búsqueda equivalente documentada; sin tocar volúmenes/puertos originales; sin HTTP sobre copia salvo HMAC propio.
-- Required tests: `pg_restore -l`, `tar -tf`, `sha256sum`, `reindex --all` en aislado, `hybrid_search` 30 candidatos, `pytest -q -k "isolation or tenant or owner"`.
+- Acceptance criteria: `indexed|88` con 0 en otros estados antes de copiar; origen=destino `88 indexed`, `4 tenants`, `24 claves`; `88/88 content_sha256`; `1712` puntos `ragmur_chunks` (`dense-1024 cosine`, `sparse modifier=idf`, índices `tenant_id(is_tenant=true)/owner_id/document_id`); `hybrid_search` tenant corpus + `owner_id=ue-publico` 30 candidatos top-5 `La etiqueta ecológica`, top-1 págs `15-16`; volúmenes/puertos originales intactos; sin HTTP sobre copia.
+- Required tests: `SELECT status,count(*)` → `indexed|88`; `pg_restore -l` → 32 entradas; `tar -tf` → 90 entradas/88 ficheros; `sha256sum -c` origen=destino; `reindex --all` CPU API detenida → `Reindexed 88`, 0 `failed/unsupported`; Qdrant collection info 1712 puntos + `idf` + 3 índices; `hybrid_search` top-5 idéntico; `pytest -q -k "isolation or tenant or owner"` verde; `grep ragmur_deploy <compose.aislado>` → 0; secret-scan `rgm_|hmac|password|BEGIN PRIVATE` en `eval/skynet_*.md` → 0.
 - Test evidence: no run.
-- Files changed: `eval/skynet_public_corpus_*.md`, `eval/skynet_restore_check_*.md`, runbook docs, `eval/results/*` resúmenes.
-- Risks: reutilizar nombre/volumen/puerto `ragmur_deploy` destruye original; CPU válida para calidad, no para latencia GPU.
-- Status: Pending
+- Files changed: allow `eval/skynet_*.md`, `eval/eu_manifest.yaml`, `docs/runbook-backup-restore.md`, `eval/results/*` solo resúmenes; deny `*.dump`, `*.tar`, PDF, `.key`, `.env`, detalles en `/tmp`.
+- Risks: pre-vuelo anti-colisión obligatorio; `pg_restore --clean` con env erróneo restaura sobre original; copia sin snapshot consistente no es atómica; reparar `storage_path` en origen destruye despliegue; CPU válida para calidad, nunca para latencia; caché `model_data` compartida contamina; reutilizar nombre/volumen/puerto `ragmur_deploy` destruye original.
+- Status: Pending (plan actualizado con arquitectura + crítica, pendiente de tu aprobación explícita para `run F04`).
 
 ### F05: Diseño proxy demo y endurecimiento
 
