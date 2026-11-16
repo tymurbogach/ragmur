@@ -1,6 +1,6 @@
 # TASKS.md
 
-> Plan único de taskflow. Resúmenes breves; Git guarda el detalle.
+> Plan único de taskflow. Trabajo en curso aquí; fases completadas resumidas. Git guarda el detalle.
 
 ## 1. Objective
 
@@ -9,45 +9,74 @@
 
 ## 2. Current state
 
-- What works: 1.1-1.6 completadas. 1.7 línea base en desarrollo. F01 protocolo congelado. F07 diagnóstico auto dev-local: manifiesto 35 docs (26 dev/9 test, IDs `eua-*`), 300 ES + 300 EN dev (100/100/100, `gold:false`), anti-fuga verde, NLI CPU ES recall 0.18 / EN 0.26, falso respaldo 0.03 Wilson [0.0138,0.0639]. Umbrales siguen provisionales 0.75/0.5/0.75; nada calibra ni cierra 1.8.
-- Broken or pending work: faltan 300 pares humanos (0/300); F02 sigue BLOCKED. 1.9 sin corpus versionado, sin demo pública, sin endurecimiento, sin runbook versionado.
-- Git branch: `main`, ahead 59 sobre `origin/main` (sin push autorizado).
-- Last review: revisión F07 2026-11-13: 16 tests en fichero (12 ejecutan comportamiento, 2 estáticos); sin bloqueos para diagnóstico; 3 hallazgos bajos (umbral guarda 0.2/0.3, código muerto weak, anti-test frágil) anotados sin reparar en fase.
-- Existing local changes tras F07: quedan `M README.md, ROADMAP.md` ajenos y `??` viejos en `eval/` (se trian en F04).
-- Required test capabilities and unavailable gates: solo CPU local Intel Core Ultra 9 285H para este ciclo; nada de Skynet/5080. Docker PG+Qdrant locales, modelos fijados (bge-m3, reranker `953dc6f`, NLI `b5113eb`). Sin exposición pública autorizada. Sin autorización de push/demo/DNS/firewall.
+- What works: ROADMAP 1.1-1.6 completadas; 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
+- Broken or pending work: F02 BLOCKED por 0/300 pares humanos; F03 depende de F02. Umbrales NLI provisionales 0.75/0.50/0.75. Sin demo pública ni endurecimiento de exposición (F05). Fase 1 abierta.
+- Documentación desfasada detectada (se corrige por D7): `ROADMAP.md` 1.9 aún dice que Skynet no tiene corpus real y que falta probar su restauración, y no marca esas dos casillas; `HANDOFF.md` repite ambas afirmaciones. Ver decisión D7.
+- Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
+- Git branch: `main`, sincronizada con `origin/main` según la referencia local (0/0); no se hizo `fetch`. Último commit `6cd23b2`.
+- Last review: revisión final de F04 sin bloqueantes (2026-11-16). Hallazgos bajos de F07 anotados sin reparar.
+- Existing local changes: ninguno al inspeccionar.
+- Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
+- Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
 ## 3. Architecture and technology
 
-- Languages and frameworks: Python 3.12 `uv`, FastAPI, Pydantic v2, SQLAlchemy 2.0 `asyncpg`, Alembic, `pydantic-settings`.
-- Relevant structure: `api/` -> `ingestion/`, `retrieval/`, `verification/`, `llm/` (fase 2); `retrieval/store.py` único acceso Qdrant (`tenant_id` primero salvo `create_client`/`ping`); `llm/provider.py` único acceso LLM (fase 2).
-- Important dependencies: `pypdfium2`, `python-docx`, `langchain-text-splitters` (utilidad), torch 2.12 CPU/CUDA13, `sentence-transformers`, `FastEmbed` BM25 (`language` explícito), Qdrant 1.19 (`sparse modifier=IDF`, IDF acotado por tenant+owner), bge-reranker-v2-m3, `mDeBERTa-v3-base-xnli-multilingual-nli-2mil7`.
+- Languages and frameworks: Python 3.12 con `uv`, FastAPI, Pydantic v2, SQLAlchemy 2.0 sobre `asyncpg`, Alembic, `pydantic-settings`.
+- Relevant structure: `api/` importa de `ingestion/`, `retrieval/`, `verification/` y `llm/` (fase 2). `retrieval/store.py` es el único acceso a Qdrant. `llm/provider.py` será el único acceso a LLM.
+- Important dependencies: `pypdfium2`, `python-docx`, `langchain-text-splitters` (utilidad), torch 2.12 CPU/CUDA 13, `sentence-transformers`, FastEmbed BM25, Qdrant 1.19 (`sparse modifier=IDF`, IDF acotado por tenant y `owner_id`), bge-m3, bge-reranker-v2-m3, mDeBERTa NLI `b5113eb`.
+- Despliegue: `docker-compose.deploy.yml` publica solo la API en `127.0.0.1:8000`; `docker-compose.cuda.yml` añade GPU. Una sola instancia uvicorn; los limitadores no se comparten entre procesos.
 
 ## 4. Required rules
 
-- Follow `AGENTS.md`, `ARCHITECTURE.md`, `DECISIONS.md`; no abrir fase 2 hasta cerrar 1.1-1.8 más suite, despliegue con corpus real, demo y README con cifras.
-- Fase 1 sin LLM. `tenant_id` en toda consulta Qdrant; `owner_id` subdivide. Aislamiento probado por tenant y por `owner_id`.
-- Execution modes create one commit per verified phase. No push, PR, publicación, despliegue ni apertura de puertos sin petición explícita.
-- `eval/results/` solo resúmenes versionados con fecha, commit, corpus, split, revisiones, config, hardware/concurrencia. Volcados por consulta a `/tmp`, fuera de Git.
-- Do not commit failing required tests.
+- Follow `AGENTS.md`, `ARCHITECTURE.md` and `DECISIONS.md`. No abrir fase 2 hasta cumplir el cierre de 1.9.
+- Fase 1 sin LLM. `tenant_id` en toda consulta a Qdrant. Probar aislamiento por tenant y por `owner_id`.
+- Only the orchestrator edits this file. Workers report through report files.
+- Execution modes create one commit per verified phase.
+- Remote operations require an explicit user request: push, PR, Skynet, DNS, firewall, túnel y puertos.
+- `eval/results/` versiona solo resúmenes con fecha, commit, corpus, split, revisiones, configuración y hardware. Volcados por consulta fuera de Git.
+- Do not commit failing required tests or force-push without authorization.
 
 ## 5. Commands
 
 ```sh
+# install
 uv sync --locked
 docker compose up -d
 uv run alembic upgrade head
-uv run uvicorn ragmur.main:app --reload
-# shared phase gate (lead, árbol integrado, antes de cada commit de fase):
+# shared phase gate, run by the orchestrator before every phase commit
 uv run ruff check . && uv run ruff format --check .
 uv run mypy
 uv run pytest -q
-# focused phase checks: ver cada fase
-# delivery gate: shared gate + eval/run.py 4 configs + nli_run/nli_thresholds dev+test + comprobaciones Skynet BatchMode
+uv run python -m eval.check_nli_leak
+# focused phase checks: see each phase
+# delivery gate: shared gate + eval/run.py 4 configuraciones + nli_run dev/test congelados + smoke de despliegue
+# run the app
+uv run uvicorn ragmur.main:app --reload
 ```
 
-Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. Requiere Docker PG+Qdrant reales; inferencia real (no mocks) para aceptación.
+- Medido el 2026-11-16 en CPU Intel Core Ultra 9 285H: `ruff check` pasa, `format --check` 154 ficheros, `mypy` 124 ficheros en 1.2 s con caché.
+- `pytest` recoge 239 tests. No se ejecutó en esta planificación para no levantar contenedores con puertos. Última ejecución registrada (F04): 235 passed, 4 skipped. Tiempo sin medir.
 
-## 6. Phase plan
+## 6. Plan debate
+
+- Rounds: boceto ciego más dos rondas con `critica`. Parada: la ronda 2 no añadió hallazgos bloqueantes ni mayores.
+- Cambio adoptado: el tenant público dedicado es el control principal; fijar `owner_id` pasa a defensa en profundidad.
+- Cambio adoptado: proxy inverso simple con lista permitida de método y ruta, sin servicio Python BFF ni reescritura de JSON.
+- Cambio adoptado: tras el proxy, los limitadores de la app actúan como tope global; el límite por IP vive solo en nginx.
+- Cambio adoptado: nginx y el conector de túnel son dependencias nuevas (regla 9); F05a los justifica y fija versiones.
+- Cambio adoptado: dos perfiles de smoke, externo vía proxy e interno en `127.0.0.1:8000`.
+- Cambio adoptado: revisar `diagnostic`, declarar CORS cerrado y usar solo consultas del split dev en la carga.
+- Corrección a la crítica: la restauración de Skynet ya está verificada (F04, `6cd23b2`); el riesgo se retiró.
+- Decisiones del usuario (2026-11-16): aprobadas D1-D7 según la recomendación.
+  - D1: tenant público dedicado y proxy simple; sin alcance por clave ni migración.
+  - D2: nginx con versión fijada.
+  - D3: túnel saliente sin puerto entrante. F05a compara Cloudflare Tunnel y Tailscale Funnel; el proveedor se confirma al aprobar el diseño.
+  - D4: demo solo API con ejemplos `curl`.
+  - D5: `/docs`, `/redoc`, `/openapi.json` y `/ready` se bloquean solo en el proxy; sin cambios de código.
+  - D6: F05a propone un objetivo p95 de `/v1/search` con rerank en RTX 5080 a partir de `benchmarks/gpu-rtx5080-2026-11-10.md`; el valor se confirma al aprobar el diseño y se mide en F05d.
+  - D7: corregir `ROADMAP.md` 1.9 y `HANDOFF.md` en un commit `docs:` antes del commit de F05a.
+
+## 7. Phase plan
 
 | Phase | Title | Status |
 |-------|-------|--------|
@@ -55,7 +84,11 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 | F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
-| F05 | Diseño proxy demo y endurecimiento | Pending |
+| F05a | Diseño de exposición pública | In progress |
+| F05b | Endurecimiento local del despliegue | Pending |
+| F05c | Arnés de carga y abuso en CPU local | Pending |
+| F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
+| F05e | Exposición pública de la demo | Pending (autorización B) |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 
@@ -63,92 +96,156 @@ Shared gate runtime aún no medido en este plan; registrar tiempo al ejecutar. R
 
 - Objective: fijar `supported/weak/contradiction` solo con dev.
 - Tasks:
-  - [ ] Ejecutar `nli_run` solo dev con chunks reales e inferencia real.
-  - [ ] Explorar umbrales con `nli_thresholds.py`, publicar matriz dev y tasa respaldo falso + Wilson.
-  - [ ] Congelar umbrales; no modificar config de Ragmur salvo decisión registrada.
-- Dependencies: F01.
-- Acceptance criteria: umbrales congelados con informe dev versionado (matriz 3x3, `recall_supported>=0.5`, hardware, revisión `b5113eb`, commit, hash corpus).
+  - [ ] Ejecutar `nli_run` solo en dev con chunks reales e inferencia real.
+  - [ ] Explorar umbrales con `nli_thresholds.py`; publicar matriz dev y tasa de respaldo falso con Wilson.
+  - [ ] Congelar umbrales; no modificar la configuración sin decisión registrada.
+- Dependencies: F01 y 300 pares humanos (100/100/100) con doble anotación y adjudicación.
+- Acceptance criteria: umbrales congelados con informe dev versionado (matriz 3x3, `recall_supported>=0.5`, hardware, revisión `b5113eb`, commit, hash del corpus).
 - Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_dev.yaml --split dev`, `uv run python -m eval.nli_thresholds ...`, unitarios NLI.
-- Test evidence: no run. Bloqueo verificado por el lead en F01: `eval/eu_nli_dev.yaml` contiene `[]` con `PENDING HUMAN REVIEW` (0 pares); `check_nli_leak` avisa "sin pares todavía". Ejecutar calibración ahora violaría la regla de no calibrar sin verdad humana.
-- Files changed: ninguno en F02.
-- Risks: n pequeña -> Wilson ancho; InferES/SciFact solo diagnóstico. Riesgo principal: anotación humana de 300 pares fuera del alcance de agentes.
-- Status: BLOCKED — faltan 300 pares humanos (100/100/100) con doble anotación + adjudicación. No lanzar escritor hasta que existan.
+- Test evidence: no run. `eval/eu_nli_dev.yaml` contiene 0 pares; `check_nli_leak` avisa "sin pares todavía".
+- Review verdict: none.
+- Files changed: none.
+- Risks: n pequeña da Wilson ancho. La anotación humana queda fuera del alcance de los agentes.
+- Status: BLOCKED. No lanzar escritor hasta que existan los 300 pares humanos.
 
 ### F03: Evaluación ciega única en reserva (cierra 1.8)
 
-- Objective: medir una vez con parámetros congelados y cerrar verificación.
+- Objective: medir una vez con parámetros congelados y cerrar la verificación.
 - Tasks:
-  - [ ] Una sola ejecución `nli_run` sobre test; `nli_run` debe rechazar segunda ejecución.
-  - [ ] Publicar matriz test, tasa respaldo falso + Wilson, `recall_supported`, hardware/revisión/commit.
-  - [ ] Solo resúmenes en Git; `--details` con texto a `/tmp`.
+  - [ ] Una sola ejecución de `nli_run` sobre test; `nli_run` rechaza una segunda ejecución.
+  - [ ] Publicar matriz test, respaldo falso con Wilson, `recall_supported`, hardware, revisión y commit.
+  - [ ] Versionar solo resúmenes; `--details` con texto va a `/tmp`.
 - Dependencies: F02.
 - Acceptance criteria: informe test versionado; casillas 1.8 listas para marcar en F06.
-- Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_test.yaml --split test` (una vez), `pytest -q` con Docker.
+- Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_test.yaml --split test` una vez; gate compartido.
 - Test evidence: no run.
+- Review verdict: none.
 - Files changed: `eval/results/nli-eu-test-*.json`, `eval/NLI.md`.
 - Risks: reabrir test para otro umbral quema la reserva.
 - Status: Pending
 
-### F04: Corpus real y runbook copia/restore/reindex
+### F05a: Diseño de exposición pública
 
-- Objective: dejar datos y recuperación repetibles sin secretos en Git.
-- Non-objectives: no calibrar NLI ni tocar umbrales `0.75/0.50/0.75`; no `nli_run`/`nli_thresholds`/`eval/run.py` sobre reserva; no proxy/BFF, TLS, firewall, DNS, `publish` ni demo; no marcar 1.9 cerrado ni abrir F05.
+- Objective: fijar qué se expone, cómo y con qué límites antes de tocar código o Skynet. El usuario aprueba el diseño.
 - Tasks:
-  - [x] Manifiesto `eval/eu_manifest.yaml` + tabla 10 PDF dev CC BY 4.0 con título, autor, `source_url`, licencia, `sha256` completo, bytes, páginas, caracteres, `rights_page`. Excluye 6 test y holdouts.
-  - [x] Versionar `eval/skynet_public_corpus_2026-11-13.md` y `eval/skynet_restore_check_2026-11-13.md` redactados, sin secretos.
-  - [x] Triar `eval/`: allow `eu_manifest.yaml`, `eu_auto_manifest.yaml`, scripts, formularios, `NLI.md`/`SCIFACT.md`/`EU_CORPUS.md`, resúmenes `eval/results/*.json`; deny `*.dump`, `*.tar`, PDF originales, `.key`, `.env`, volcados por consulta a `/tmp`. Deuda F01 resuelta como inventario verificable de citas NLI a SHAs AI.
-  - [x] Runbook en `docs/runbook-backup-restore.md` (flag corregido a `--if-exists`; pre-vuelo PowerShell).
-  - [x] Verificar equivalencia documentada a nivel `hybrid_search`, sin HTTP sobre copia.
-- Dependencies: F01 (trazabilidad); ejecución técnica independiente de F02/F03 pero cierre global espera a F03.
-- Acceptance criteria: `indexed|88` con 0 en otros estados antes de copiar; origen=destino `88 indexed`, `4 tenants`, `24 claves`; `88/88 content_sha256`; `1712` puntos `ragmur_chunks` (`dense-1024 cosine`, `sparse modifier=idf`, índices `tenant_id(is_tenant=true)/owner_id/document_id`); `hybrid_search` tenant corpus + `owner_id=ue-publico` 30 candidatos top-5 `La etiqueta ecológica`, top-1 págs `15-16`; volúmenes/puertos originales intactos; sin HTTP sobre copia.
-- Required tests: `SELECT status,count(*)` → `indexed|88`; `pg_restore -l` → 32 entradas; `tar -tf` → 90 entradas/88 ficheros; `sha256sum -c` origen=destino; `reindex --all` CPU API detenida → `Reindexed 88`, 0 `failed/unsupported`; Qdrant collection info 1712 puntos + `idf` + 3 índices; `hybrid_search` top-5 idéntico; `pytest -q -k "isolation or tenant or owner"` verde; `grep ragmur_deploy <compose.aislado>` → 0; secret-scan `rgm_|hmac|password|BEGIN PRIVATE` en `eval/skynet_*.md` → 0.
-- Test evidence: verificado 2026-11-16 en vivo. Escritor native `backend`: `SELECT indexed|88` estable x2, 4 tenants, 24 claves; dump 17277 B 32 entradas, tar 73717760 B 90 entradas 88 UUIDs, `sha256sum -c` OK; restore aislado `indexed|88` 4/24; `content_sha256` 88/88/0, `storage_path` 88/88 solo copia, origen intacto; `reindex --all` → `Reindexed 88`; colección 1712 pts `dense-1024 cosine` `sparse modifier=idf` 3 índices, tenant público 1395 pts; `hybrid_search` 30 candidatos top-5 mismo doc top-1 págs 15-16 idéntico GPU, sin HTTP; `pytest -k isolation` 13 passed 1 skipped; secret-scan 0; compose aislado fuera de Git sin API. Lead integrado: `ruff check` pass, `format --check` 154 formatted, `mypy` 124 files OK, `pytest` 235 passed 4 skipped, secret/deny 0 en Git, `check_nli_leak` verde. Revisión final: sin bloqueantes; fase verificada, cierre global a F03.
-- Files changed: allow `eval/skynet_*.md`, `eval/eu_manifest.yaml`, `docs/runbook-backup-restore.md`, `eval/results/*` solo resúmenes; deny `*.dump`, `*.tar`, PDF, `.key`, `.env`, detalles en `/tmp`.
-- Risks: pre-vuelo anti-colisión obligatorio; `pg_restore --clean` con env erróneo restaura sobre original; copia sin snapshot consistente no es atómica; reparar `storage_path` en origen destruye despliegue; CPU válida para calidad, nunca para latencia; caché `model_data` compartida contamina; reutilizar nombre/volumen/puerto `ragmur_deploy` destruye original. Notas: `Get-Service Stopped` no implica Docker caído si `desktop-linux` responde; el `tar` incluye `.ragmur.lock` (contar UUIDs); Skynet cayó y volvió el 2026-11-16 (Docker detenido, luego sano).
-- Status: Completed 2026-11-16.
-
-### F05: Diseño proxy demo y endurecimiento
-
-- Objective: definir y endurecer demo sin fuga antes de cualquier exposición.
-- Tasks:
-  - [ ] Diseño: allowlist (`GET /health`, `GET /ready` limitado, `POST /v1/search`, `POST /v1/verify`) y denylist (`POST/DELETE /v1/documents`), proxy/BFF que inyecta `X-API-Key`, `owner_id=ue-publico` fijo, `document_ids` ajenos sin fuga.
-  - [ ] Endurecimiento: TLS, firewall, PG/Qdrant solo `127.0.0.1` sin publicar, secretos propios fuera de Git, logs sin contenido privado/secretos, `diagnostic` sin texto privado, `docker-compose.deploy.yml` + overlay CUDA verificados.
-  - [ ] Carga/abuso: valores `rate_limit`, `INFERENCE_MAX_REQUESTS`, 429 con `Retry-After` y 503, prueba concurrencia 1 + calentamiento.
-- Dependencies: F04.
-- Acceptance criteria: diseño aprobado; `curl` localhost health/ready; 401 sin clave/falsa; `owner` inexistente 0 resultados; `compose config` sin `publish` de datos; sin apertura pública hasta autorización escrita separada (DNS/firewall/demo).
-- Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`, `curl /health /ready`, `pytest -q -k isolation`, `docker compose config | grep -i publish`, pruebas 429/503.
+  - [ ] Escribir `docs/demo-design.md`: modelo de amenazas, matriz de rutas y autenticación, topología y plan de vuelta atrás con interruptor de corte.
+  - [ ] Rutas públicas: `GET /health`, `POST /v1/search`, `POST /v1/verify`. El proxy devuelve 404 para el resto, incluidos `/ready`, `/docs`, `/redoc`, `/openapi.json` y `/v1/documents*`.
+  - [ ] Invariante: la clave de demo pertenece a un tenant que solo contiene documentos del manifiesto. Definir su comprobación SQL.
+  - [ ] Clave: secreto en fichero del servidor fuera de Git; el proxy elimina `X-API-Key` del cliente e inyecta la suya. Rotación y revocación con la CLI.
+  - [ ] Límites: por IP en nginx (`limit_req`, `limit_conn`, `client_max_body_size`); límite por clave e `INFERENCE_MAX_REQUESTS` como tope global. Sin `X-Forwarded-For` ni `ProxyHeaders`. Valores provisionales hasta F05d.
+  - [ ] Logs: sin cuerpos, consultas ni claves; política de retención de IP. Revisar productores de `diagnostic`.
+  - [ ] CORS: API sin middleware CORS; una página estática, si se elige, se sirve en el mismo origen.
+  - [ ] Justificar nginx y el conector de túnel frente a alternativas (regla 9) con versiones fijadas.
+  - [ ] Comparar Cloudflare Tunnel y Tailscale Funnel (D3) y proponer el objetivo p95 (D6).
+  - [ ] Añadir `DECISIONS.md` 3.32 y una sección de despliegue público en `ARCHITECTURE.md`.
+- Dependencies: F04. Independiente de F02 y F03.
+- Acceptance criteria: diseño coherente con D1-D6; proveedor de túnel (D3) y objetivo p95 (D6) propuestos con su compromiso; el commit no cambia código. La aprobación del usuario se registra aquí con fecha antes de F05b.
+- Required tests: revisión del documento contra `ARCHITECTURE.md` y `DECISIONS.md`; `uv run ruff check .` sin cambios de código.
 - Test evidence: no run.
-- Files changed: diseño docs, `docker-compose.deploy.yml`, config rate-limit (si cambia, con migración si toca DB).
-- Risks: ocultar botones no es control; clave en navegador rompe modelo `owner_id`. Sin diseño no abrir puertos/DNS.
+- Review verdict: none.
+- Files changed: `docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`, `TASKS.md`.
+- Risks: ocultar botones no es un control. Si la clave llega al navegador, el modelo `owner_id` deja de proteger.
+- Status: Pending. Requiere aprobación escrita del usuario para pasar a F05b.
+
+### F05b: Endurecimiento local del despliegue
+
+- Objective: aplicar el diseño aprobado en el repositorio y probarlo solo en local, sin Skynet.
+- Tasks:
+  - [ ] `Dockerfile`: usuario no root con UID fijo y versión fijada de la imagen `uv`; conservar `HEALTHCHECK`.
+  - [ ] `docker-compose.yml` de desarrollo: PostgreSQL y Qdrant solo en `127.0.0.1`.
+  - [ ] `docker-compose.demo.yml` con nginx en `127.0.0.1`; configuración en `deploy/nginx/`; clave desde un fichero de entorno fuera de Git.
+  - [ ] Cambios de código solo si F05a los decide (D5).
+  - [ ] Test de `diagnostic`: los avisos de extracción no contienen texto del documento.
+  - [ ] Smoke externo vía proxy: rutas permitidas 200; rutas denegadas 404; `X-API-Key` del cliente ignorada; `document_ids` ajenos dan 0 resultados; cuerpo grande 413; ráfaga por IP 429 de nginx con `Retry-After` antes del tope de la app; ningún 5xx.
+  - [ ] Smoke interno en `127.0.0.1:8000`: `/health` 200 y `/ready` 200.
+- Dependencies: F05a aprobada.
+- Acceptance criteria: gate compartido verde; `docker compose -f docker-compose.deploy.yml -f docker-compose.demo.yml config` solo publica en `127.0.0.1`; secret scan `rgm_|hmac|password|BEGIN PRIVATE` 0 en Git; invariante del tenant de demo verde en datos locales; logs del smoke sin consultas, respuestas ni claves.
+- Required tests: gate compartido; smoke externo e interno; `nginx -t` en el contenedor; `pytest -q -k "isolation or tenant or owner"`.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: `Dockerfile`, `docker-compose.yml`, `docker-compose.demo.yml`, `deploy/nginx/`, tests o script de smoke.
+- Risks: el UID no root cambia la propiedad de los volúmenes existentes de Skynet; F05d planifica `chown`. Las pruebas locales levantan contenedores solo en `127.0.0.1`.
 - Status: Pending
+
+### F05c: Arnés de carga y abuso en CPU local
+
+- Objective: disponer de un arnés reproducible y comprobar el comportamiento ante abuso, sin fijar límites.
+- Tasks:
+  - [ ] `benchmarks/load.py` con asyncio y `httpx` (ya en el grupo dev); sin dependencia nueva.
+  - [ ] Consultas solo del split dev de recuperación; el arnés rechaza consultas reservadas.
+  - [ ] Calentamiento y barrido de concurrencia; registrar p50, p95, códigos, `Retry-After`, RSS, hardware, commit y configuración.
+  - [ ] Ejecución local en CPU a través del proxy: 429 y 503 separados, recuperación tras saturación, ningún 500, aislamiento intacto.
+- Dependencies: F05b.
+- Acceptance criteria: tests unitarios del arnés (percentiles, esquema del resumen, rechazo de reserva); resumen CPU en `benchmarks/` etiquetado con hardware; ningún límite cambiado.
+- Required tests: gate compartido; `uv run python -m benchmarks.load` contra la pila local.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: `benchmarks/load.py`, tests del arnés, resumen en `benchmarks/`.
+- Risks: la latencia en CPU no vale para cifras públicas. La muestra dev es pequeña.
+- Status: Pending
+
+### F05d: Despliegue privado en Skynet y medición GPU
+
+- Objective: llevar el endurecimiento a `ragmur_deploy` y fijar límites con datos de RTX 5080, sin exposición pública.
+- Tasks:
+  - [ ] Copia previa según `docs/runbook-backup-restore.md` y punto de restauración registrado.
+  - [ ] Actualizar `ragmur_deploy` con la imagen endurecida; `chown` de volúmenes al UID nuevo; overlay de demo en `127.0.0.1`.
+  - [ ] Smoke externo e interno desde Skynet; `pytest -k "isolation or tenant or owner"`; invariante del tenant de demo.
+  - [ ] Barrido GPU con el arnés de F05c; fijar `INFERENCE_MAX_REQUESTS`, límite por clave y tasas de nginx en el entorno de despliegue según los datos. Los valores por defecto del código no cambian.
+- Dependencies: F05c y autorización escrita A (acceso a Skynet y actualización de `ragmur_deploy`).
+- Acceptance criteria: smoke verde en Skynet; p50 y p95 por concurrencia en RTX 5080 con hardware; límites justificados por la tabla; restauración posible desde la copia previa.
+- Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`; smoke externo e interno; barrido de carga.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: resumen en `benchmarks/`, `docs/demo-design.md` con valores finales, `README.md` si cambia el uso.
+- Risks: actualizar con un nombre de proyecto o volumen erróneo destruye datos; pre-vuelo obligatorio del runbook.
+- Status: Pending. Sin autorización A no se ejecuta.
+
+### F05e: Exposición pública de la demo
+
+- Objective: abrir la demo por la vía aprobada y comprobarla desde fuera.
+- Tasks:
+  - [ ] Aplicar la vía de exposición de D3 (túnel saliente o reenvío de puerto con TLS).
+  - [ ] Smoke externo desde fuera de la red; probar el interruptor de corte.
+  - [ ] Vigilar 429, 503 y errores durante 24 h.
+- Dependencies: F05d y autorización escrita B (DNS, TLS, túnel o firewall).
+- Acceptance criteria: la URL pública solo responde las rutas permitidas; un escaneo externo solo muestra 443; corte comprobado; casillas de demo de 1.9 listas para F06.
+- Required tests: smoke externo; escaneo de puertos externo; prueba de corte.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: `docs/demo-design.md`, `README.md`.
+- Risks: una exposición sin límites medidos permite agotar la GPU.
+- Status: Pending. Sin autorización B no se ejecuta.
 
 ### F06: Cierre fase 1: suite, README y marcas
 
-- Objective: declarar fase 1 cerrada solo si todo lo anterior está verde.
+- Objective: declarar la fase 1 cerrada solo si todo lo anterior está verde.
 - Tasks:
-  - [ ] Shared gate completo en árbol integrado + `alembic upgrade head`.
-  - [ ] `eval/run.py` 4 configs (densa, BM25, híbrida, híbrida+rerank) sobre dev+reserva con resúmenes versionados.
-  - [ ] README tabla final: recall@10 x4, MRR/nDCG híbrida con/sin rerank, latencias p50/p95 con hardware, matriz NLI + respaldo falso con N y Wilson, fecha/commit/corpus/split.
-  - [ ] Marcar casillas 1.8/1.9 en `ROADMAP.md` en el mismo commit de cierre.
-- Dependencies: F03+F04+F05.
-- Acceptance criteria: se cumplen a la vez criterios 1.1-1.8, suite con aislamiento tenant+`owner_id` en verde, servicio con corpus real, demo accesible (tras autorización), README con cifras fechadas. Hasta entonces no se abre fase 2.
-- Required tests: shared gate + delivery gate (full `pytest`, `eval/run.py`, `nli_run` dev/test ya congelados, checks Skynet).
+  - [ ] Gate compartido completo en el árbol integrado más `alembic upgrade head`.
+  - [ ] `eval/run.py` con 4 configuraciones (densa, BM25, híbrida, híbrida con rerank) sobre dev y reserva, con resúmenes versionados.
+  - [ ] Tabla final en README: recall@10 x4, MRR/nDCG híbrida con y sin rerank, latencias p50/p95 con hardware, matriz NLI y respaldo falso con N y Wilson, fecha, commit, corpus y split.
+  - [ ] Marcar las casillas de 1.8 y 1.9 en `ROADMAP.md` en el commit de cierre.
+- Dependencies: F03, F04 y F05e.
+- Acceptance criteria: criterios 1.1-1.8 cumplidos; suite con aislamiento por tenant y `owner_id` verde; corpus real desplegado; demo accesible; README con cifras fechadas.
+- Required tests: gate compartido y gate de entrega.
 - Test evidence: no run.
+- Review verdict: none.
 - Files changed: `README.md`, `ROADMAP.md`, `TASKS.md`, `eval/results/*` resúmenes.
-- Risks: muestra poco discriminativa (recall 1.0) debe declararse; no afirmar significación sin incertidumbre.
+- Risks: la muestra de 1.7 es poco discriminativa (recall 1.0); declararlo y no afirmar significación sin incertidumbre.
 - Status: Pending
 
-## 7. Completed phases
+## 8. Completed phases
 
 | Phase | Outcome | Verification | Commit |
 |-------|---------|--------------|--------|
-| — | 1.1-1.6 + 1.7 línea base heredadas de ROADMAP | Ver ROADMAP/DECISIONS | — |
-| F01 | Protocolo congelado, reservas quemadas declaradas, dev/test vacíos, anti-fuga verde | Lead: `ruff check` pass, `mypy` 123 files OK, `pytest tests/eval/test_nli_run+thresholds+check_nli_leak` 20 passed, `check_nli_leak` verde (1200 IDs quemados locales, dev/test 0 pares). Escritor coincide. Sin `nli_run` en fase. Decisión: citas NLI a SHAs AI son declarativas; inventario verificable o purga en F04. Riesgo residual: 6 docs test inspeccionados a nivel borrador. | F01: freeze NLI dataset protocol and anti-leak checks |
-| F07 | Diagnóstico auto 300 ES + 300 EN solo dev local, sin calibrar ni cerrar 1.8 | Lead árbol integrado: `ruff check` pass, `format --check` 151 formatted, `mypy` 124 files OK, `pytest tests/eval/` exit 0 verde (134 passed escritor), `check_nli_leak` verde. NLI CPU dev: ES recall 18/100=0.18, EN 26/100=0.26, falso respaldo 6/200=0.03 Wilson [0.0138,0.0639], umbrales intactos, detalles solo scores en /tmp. Revisión: 12 tests ejecutan comportamiento, 2 estáticos; 3 hallazgos bajos no bloqueantes. | F07: add local EN-ES diagnostic NLI datasets |
+| — | ROADMAP 1.1-1.6 y línea base de 1.7 | Ver `ROADMAP.md` y `DECISIONS.md` | — |
+| F01 | Protocolo NLI congelado; reservas quemadas declaradas; dev y test vacíos | `ruff` pass, `mypy` 123 OK, 20 tests NLI passed, `check_nli_leak` verde | F01: freeze NLI dataset protocol and anti-leak checks |
+| F07 | Diagnóstico automático 300 ES + 300 EN solo dev; no calibra | `ruff` pass, `mypy` 124 OK, `pytest tests/eval/` verde; ES recall 0.18, EN 0.26, respaldo falso 0.03 Wilson [0.0138, 0.0639] | F07: add local EN-ES diagnostic NLI datasets |
+| F04 | Manifiesto del corpus, triage de `eval/`, runbook y copia/restore/reindex de Skynet en entorno aislado | Skynet: `indexed\|88`, `sha256sum -c` OK, `Reindexed 88`, 1712 puntos, `hybrid_search` top-5 idéntico, isolation 13 passed 1 skipped. Lead: `ruff` pass, `mypy` 124 OK, `pytest` 235 passed 4 skipped, secret scan 0 | F04: verify corpus backup restore reindex against Skynet |
 
-## 8. Recommended next action
+## 9. Recommended next action
 
-- Next phase: F04 Completed 2026-11-16; F02 sigue BLOCKED hasta 300 humanos; siguiente técnico F05.
-- Resume command: `run F05` para diseño proxy demo y endurecimiento, o esperar humanos para `run F02` (desbloquea F03 y cierre global).
-- Suggested effort: medium.
-- Autorizaciones pendientes: exponer Skynet (firewall/DNS/TLS); hacer `push`/publicar demo y corpus.
+- Next phase: F05a. Plan y decisiones D1-D7 aprobados el 2026-11-16.
+- Resume command: `/taskflow run F05a`
+- Recommended effort: medium
+- Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
