@@ -13,8 +13,7 @@ Comprueba el estado actual antes de administrar el despliegue.
 - `/ready` respondió correctamente y PyTorch `2.12.0+cu130` detectó la RTX 5080.
 - Las pruebas HTTP con datos sintéticos cubrieron ingesta, búsqueda, `/verify` y aislamiento entre tenants y usuarios.
 - Antes de actualizar se copiaron PostgreSQL y los originales a `C:\Users\Timur\ragmur-backup-final-c409b39`.
-- La restauración se probó con una copia de la instancia local, en volúmenes separados y con reconstrucción de Qdrant.
-- No se ha probado la restauración de la copia de Skynet.
+- La restauración aislada de una copia de Skynet se verificó el 2026-11-16, en volúmenes separados y con reconstrucción de Qdrant.
 - Docker Desktop requirió una configuración independiente para evitar el gestor de credenciales durante SSH.
 
 El repositorio ofrece `docker-compose.deploy.yml` para CPU y `docker-compose.cuda.yml` como overlay para CUDA.
@@ -55,8 +54,7 @@ En Skynet, el nombre de proyecto observado fue `ragmur_deploy`.
 - Revisar y ampliar la evaluación NLI con fragmentos reales. Los umbrales siguen provisionales.
 - La muestra reservada inicial contiene nueve afirmaciones. Detectó dos de tres contradicciones.
 - Repetir las pruebas HTTP si cambia la revisión o el entorno de Skynet.
-- Usar un corpus real y preparar una demo pública segura, sin exponer claves ni bases de datos.
-- Probar la restauración aislada de una copia de Skynet, incluidos los originales y la reconstrucción de Qdrant.
+- Skynet tiene el tenant de corpus público (10 documentos, 1395 puntos); falta preparar la demo pública segura, sin exponer claves ni bases de datos.
 - Revisar la configuración y permisos de los secretos en Windows antes de publicar el servicio.
 - `EMBEDDING_DEVICE=auto` selecciona CPU o CUDA al arrancar; `cpu` y `cuda` fuerzan la elección.
 - No abrir la fase 2 hasta cumplir todos los criterios de cierre del roadmap.
