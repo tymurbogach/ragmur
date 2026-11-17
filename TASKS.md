@@ -15,8 +15,8 @@
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
-- Last review: F05b `VERDICT: OK` (2026-11-17); 1 hallazgo bajo (ejemplo §5, aplicado) + 2 informativos. Antes: F09 `VERDICT: OK`; F08 `VERDICT: OK`; F05a tercera revisión `VERDICT: OK`.
-- Existing local changes: F05b verificada con cambios sin commitear (endurecimiento + `TASKS.md`), lista para el commit de fase.
+- Last review: F05c `VERDICT: OK` (2026-11-17); 3 hallazgos bajos + 2 informativos; reparación de tipos aplicada. Antes: F05b `VERDICT: OK`; F09 `VERDICT: OK`; F08 `VERDICT: OK`.
+- Existing local changes: F05c verificada con cambios sin commitear (solo 3 ficheros nuevos en `benchmarks/` + `TASKS.md`), lista para el commit de fase.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -98,7 +98,7 @@ uv run uvicorn ragmur.main:app --reload
 | F08 | Limpieza de código sin cambio de comportamiento | Completed |
 | F09 | Limpieza de documentación y eval | Completed |
 | F05b | Endurecimiento local del despliegue | Completed |
-| F05c | Arnés de carga y abuso en CPU local | Pending |
+| F05c | Arnés de carga y abuso en CPU local | Completed |
 | F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
 | F05e | Exposición pública de la demo | Pending (autorización B) |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
@@ -198,21 +198,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### F05c: Arnés de carga y abuso en CPU local
 
-- Objective: disponer de un arnés reproducible y comprobar el comportamiento ante abuso, sin fijar límites.
-- Tasks:
-  - [ ] `benchmarks/load.py` con asyncio y `httpx` (ya en el grupo dev); sin dependencia nueva.
-  - [ ] Consultas solo del split dev de recuperación; el arnés rechaza consultas reservadas.
-  - [ ] Calentamiento y barrido de concurrencia; registrar p50, p95, códigos, `Retry-After`, RSS, hardware, commit y configuración.
-  - [ ] Ejecución local en CPU a través del proxy: 429 y 503 separados, recuperación tras saturación, ningún 500, aislamiento intacto.
-  - [ ] Perfil mixto `/v1/search` + `/v1/verify`: un único `models.lock` serializa embeddings, reranker y NLI (`search.py:42,117`, `verify.py:89`); registrar `capacity_wait` por ruta.
-- Dependencies: F05b.
-- Acceptance criteria: tests unitarios del arnés (percentiles, esquema del resumen, rechazo de reserva); resumen CPU en `benchmarks/` etiquetado con hardware; ningún límite cambiado.
-- Required tests: gate compartido; `uv run python -m benchmarks.load` contra la pila local.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `benchmarks/load.py`, tests del arnés, resumen en `benchmarks/`.
-- Risks: la latencia en CPU no vale para cifras públicas. La muestra dev es pequeña.
-- Status: Pending
+- Outcome: `benchmarks/load.py` (asyncio+httpx+stdlib; perfiles search/mixed; calentamiento, barrido, recuperación, sonda de aislamiento; rechaza reservas; resumen JSON+Markdown) + `benchmarks/test_load.py` (12 tests) + `benchmarks/load-cpu-2026-11-17.md` (CPU Intel Ultra 9 285H, commit `cfbb73b`). Solo 3 ficheros nuevos; sin cambios en `src/`, configuración, límites ni dependencias (httpx/pyyaml ya existían).
+- Test evidence (orquestador, árbol integrado): `ruff check`/`format` 0; `mypy` 0 (128; más `mypy benchmarks/load.py` 0 tras reparar 6 avisos fuera del gate); harness 12/12; `pytest` 241 passed, 4 skipped; `check_nli_leak` verde; ejecución viva reducida en pila efímera demolida: 19×200 + 1 error de conexión en calentamiento, `saw_500` False, `capacity_wait` y aislamiento OK. Escritor: tramos search/mixto/interno, 0×500 en 300+ peticiones, 429 nginx y app separados de 503 app, recuperación 200, alien owner 0 resultados. Logs en `/tmp/opencode/taskflow/ragmur/F05c-gate/`.
+- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F05c con evidencia verde completa y sin defectos bloqueantes" (revisión 2026-11-17; 3 hallazgos bajos + 2 informativos, ninguno cambia el servicio). Ronda de reparación aplicada: tipos de `load.py` (mypy limpio), sin cambio de comportamiento.
+- Files changed: `benchmarks/load.py`, `benchmarks/test_load.py`, `benchmarks/load-cpu-2026-11-17.md` (nuevos), `TASKS.md`.
+- Risks: CPU sin valor público (F05d mide en RTX 5080); verify no expone `timings_ms` (capacity_wait de verify no observable; requiere cambio en `src/` si F05d lo necesita); 503 solo visible en tramo interno (F05d decide tasas con ese dato).
+- Status: Completed.
 
 ### F05d: Despliegue privado en Skynet y medición GPU
 
@@ -284,11 +275,12 @@ uv run uvicorn ragmur.main:app --reload
 | F08 | Limpieza de código muerto y duplicación sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, aislamiento 13+1, `check_nli_leak` verde, `VERDICT: OK` | F08: remove dead code and share error/store helpers |
 | F09 | Limpieza de documentación y eval, sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, `check_nli_leak` verde, enlaces 24/24, `HANDOFF` fuera de `TASKS.md` vacío, `VERDICT: OK` | F09: archive orphan eval scripts and update docs |
 | F05b | Endurecimiento local del despliegue (proxy, invariante, smoke 28/28) | gate verde, `config` 0 puertos, invariante `0/10/1` + rojo tras revocar, smoke 28/28, sonda edge DNS+L3, 0 fugas, `VERDICT: OK` | F05b: harden local deploy with proxy and invariant |
+| F05c | Arnés de carga (asyncio+httpx, perfiles search/mixed, resumen CPU) | harness 12/12, `pytest` 241+4, ejecución viva 19×200 + 0×500, `mypy` benchmarks limpio, `VERDICT: OK` | F05c: add CPU load and abuse harness |
 
 ## 9. Recommended next action
 
-- Next action: commitear F05b; después F05c (arnés de carga en CPU local).
-- Next phase: F05c. Después parada antes de F05d (autorización A).
-- Resume command: `/taskflow run F05c`
+- Next action: commitear F05c; después parada (F05d exige autorización A, F05e exige B).
+- Next phase: F05d (bloqueada: autorización A). F02 BLOCKED (pares humanos), F03/F06 bloqueadas por F02, F10 opcional.
+- Resume command: `/taskflow run F05c` (ya ejecutada; F05d solo con autorización escrita A)
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
