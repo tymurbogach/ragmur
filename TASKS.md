@@ -283,4 +283,4 @@ uv run uvicorn ragmur.main:app --reload
 - Next phase: F05d (bloqueada: autorización A). F02 BLOCKED (pares humanos), F03/F06 bloqueadas por F02, F10 opcional.
 - Resume command: `/taskflow run F05c` (ya ejecutada; F05d solo con autorización escrita A)
 - Recommended effort: medium
-- Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
+- Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e). Push al día con `origin/main` el 2026-11-17.
