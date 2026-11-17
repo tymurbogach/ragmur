@@ -16,7 +16,7 @@
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
 - Last review: F05a reintento, tercera revisión `VERDICT: OK` (2026-11-17); 9 hallazgos menores pasados a F05b. Hallazgos bajos de F07 anotados sin reparar.
-- Existing local changes: ninguno tras el commit de F05a.
+- Existing local changes: solo `TASKS.md` con el registro de aprobación de F05a (2026-11-17), sin commitear (modo plan no autoriza commits).
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -94,7 +94,7 @@ uv run uvicorn ragmur.main:app --reload
 | F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
-| F05a | Diseño de exposición pública | Verificada; pendiente de aprobación del usuario |
+| F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
 | F08 | Limpieza de código sin cambio de comportamiento | Pending |
 | F09 | Limpieza de documentación y eval | Pending |
 | F05b | Endurecimiento local del despliegue | Pending |
@@ -159,7 +159,7 @@ uv run uvicorn ragmur.main:app --reload
 - Test evidence (reintento): lead 2026-11-17 sobre el árbol integrado: `ruff check` exit 0; `format --check` exit 0, 155 ficheros; `mypy` exit 0, 124 ficheros; `check_nli_leak` exit 0; sin diff en código, tests, eval, dependencias, `Dockerfile` ni compose desde `6cd23b2`; `grep -nE '[0-9a-f]{40,}' docs/demo-design.md` sin resultados; secret grep 0. `pytest` no ejecutado: sin cambios de código.
 - Files changed: `docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`, `TASKS.md`.
 - Risks: ocultar botones no es un control. Si la clave llega al navegador, el modelo `owner_id` deja de proteger.
-- Status: verificada y con commit (`F05a: design public demo exposure`). Pendiente de la aprobación del usuario, que se registra aquí con fecha antes de F05b.
+- Status: Completed. Diseño aprobado por el usuario el 2026-11-17. Commit `1abaf61` (`F05a: design public demo exposure`). F05b desbloqueada.
 - Recomendaciones para el reintento (guardadas 2026-11-16, aplicadas el 2026-11-17):
   - Quitar los hashes literales del documento. La SQL del invariante se genera desde `eval/eu_manifest.yaml` con un script de F05b; la copia manual los corrompió.
   - N2: marcar "por verificar" que el conector no alcanza la API; smoke dentro del contenedor del conector: `api:8000`, `qdrant:6333`, `postgres:5432` y `host.docker.internal:8000` deben fallar.
@@ -320,7 +320,7 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next action: el usuario revisa y aprueba `docs/demo-design.md` (F05a). La aprobación se registra en F05a con fecha.
+- Next action: F05a aprobada el 2026-11-17; F05b desbloqueada (requiere F08 y F09 antes). Siguiente en orden: F08.
 - Next phase: F08 (no depende de la aprobación de F05a). Después F09 y F05b.
 - Resume command: `/taskflow run F08`
 - Recommended effort: medium
