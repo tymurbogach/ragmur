@@ -11,11 +11,12 @@
 
 - What works: ROADMAP 1.1-1.6 completadas; 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
 - Broken or pending work: F02 BLOCKED por 0/300 pares humanos; F03 depende de F02. Umbrales NLI provisionales 0.75/0.50/0.75. Sin demo pública ni endurecimiento de exposición (F05). Fase 1 abierta.
-- Documentación desfasada detectada (se corrige por D7): `ROADMAP.md` 1.9 aún dice que Skynet no tiene corpus real y que falta probar su restauración, y no marca esas dos casillas; `HANDOFF.md` repite ambas afirmaciones. Ver decisión D7.
+- D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
+- Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
-- Git branch: `main`, sincronizada con `origin/main` según la referencia local (0/0); no se hizo `fetch`. Último commit `6cd23b2`.
-- Last review: revisión final de F04 sin bloqueantes (2026-11-16). Hallazgos bajos de F07 anotados sin reparar.
-- Existing local changes: ninguno al inspeccionar.
+- Git branch: `main`, 2 commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7); sin push. Último commit `690533b`.
+- Last review: F05a bloqueada en la segunda revisión (2026-11-16): hashes del invariante corruptos. Hallazgos bajos de F07 anotados sin reparar.
+- Existing local changes: diff sin commit de F05a (`docs/demo-design.md`, `DECISIONS.md` 3.32, `ARCHITECTURE.md`) y este `TASKS.md`.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -41,7 +42,8 @@
 ```sh
 # install
 uv sync --locked
-docker compose up -d
+# hasta F05b, publicar los servicios de desarrollo solo en loopback:
+POSTGRES_PORT=127.0.0.1:5432 QDRANT_HTTP_PORT=127.0.0.1:6333 QDRANT_GRPC_PORT=127.0.0.1:6334 docker compose up -d
 uv run alembic upgrade head
 # shared phase gate, run by the orchestrator before every phase commit
 uv run ruff check . && uv run ruff format --check .
@@ -76,6 +78,14 @@ uv run uvicorn ragmur.main:app --reload
   - D6: F05a propone un objetivo p95 de `/v1/search` con rerank en RTX 5080 a partir de `benchmarks/gpu-rtx5080-2026-11-10.md`; el valor se confirma al aprobar el diseño y se mide en F05d.
   - D7: corregir `ROADMAP.md` 1.9 y `HANDOFF.md` en un commit `docs:` antes del commit de F05a.
 
+- Debate de la auditoría (2026-11-17): una ronda más una de cierre con `critica`. Parada: la ronda 2 no añadió hallazgos.
+  - A2 (validación de `owner_id` duplicada) se descarta: los mensajes 422 difieren por ruta y forman parte del contrato.
+  - B4 (`store.py`) limita los helpers a `document_ids` y parámetros dispersos; `corpus_filter` y `result_filter` quedan intactos.
+  - A9 (candado global de modelos) extiende F05c y F05d con carga mixta y `INFERENCE_MAX_REQUESTS` como profundidad de cola.
+  - A6 exige bytes y cabeceras idénticos por middleware; C1 actualiza el docstring que lo cita; D5 revisa todas las referencias a `HANDOFF.md`.
+- Decisiones del usuario (2026-11-17): solo cambios que preservan comportamiento; retirar `HANDOFF.md` y marcar `REVIEW.md` como histórico; mover los scripts huérfanos a `eval/_archive_ai/`; orden F05a, F08, F09, F05b.
+- Hallazgos descartados con motivo: B3 (DECISIONS 3.21); B7 falso (`budget - stride >= 1`); A7 (límites `gt=0`); B11 y B13 (DECISIONS 3.19, contenedor Linux); D1 (`Dockerfile:26` copia `eval`); B1 y B2 (identidad de chunks sin datos de evaluación); B6, B8 y B12 (rendimiento sin medir); A3, A4 y B14 (bajo valor, versiones fijadas); D6 (`LEARNING.md` lo usa la skill); `eval/_archive_ai` (lo usan `check_nli_leak` y tests); A5, A8 y A10 cambian el contrato (F10).
+
 ## 7. Phase plan
 
 | Phase | Title | Status |
@@ -84,13 +94,16 @@ uv run uvicorn ragmur.main:app --reload
 | F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
-| F05a | Diseño de exposición pública | In progress |
+| F05a | Diseño de exposición pública | BLOCKED |
+| F08 | Limpieza de código sin cambio de comportamiento | Pending |
+| F09 | Limpieza de documentación y eval | Pending |
 | F05b | Endurecimiento local del despliegue | Pending |
 | F05c | Arnés de carga y abuso en CPU local | Pending |
 | F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
 | F05e | Exposición pública de la demo | Pending (autorización B) |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
+| F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
 
 ### F02: Calibración de umbrales solo en dev
 
@@ -141,11 +154,60 @@ uv run uvicorn ragmur.main:app --reload
 - Dependencies: F04. Independiente de F02 y F03.
 - Acceptance criteria: diseño coherente con D1-D6; proveedor de túnel (D3) y objetivo p95 (D6) propuestos con su compromiso; el commit no cambia código. La aprobación del usuario se registra aquí con fecha antes de F05b.
 - Required tests: revisión del documento contra `ARCHITECTURE.md` y `DECISIONS.md`; `uv run ruff check .` sin cambios de código.
-- Test evidence: no run.
-- Review verdict: none.
+- Test evidence: lead 2026-11-16 sobre el diff de F05a (solo documentación): `ruff check` exit 0; `format --check` 155 ficheros; `mypy` 124 OK; `check_nli_leak` exit 0; sin diff en `src`, `tests`, `eval`, `pyproject.toml`, `uv.lock`, `Dockerfile` ni compose desde `6cd23b2`; secret grep 0. `pytest` no ejecutado: sin cambios de código.
+- Review verdict: ronda 1: "VERDICT: BLOCKED. Behind the tunnel, nginx sees only the connector's address, so the per-IP limit that D1 and TASKS §6 rely on becomes one global bucket. M1-M5 must also be fixed before F05b." Reparación acotada aplicada; ronda 2 confirma B1, M1, M2, M4, M5 y m1-m7 resueltos y M3 parcial. Ronda 2: "VERDICT: BLOCKED. 8 of the 10 manifest hashes in the invariant SQL (`docs/demo-design.md:183-190`) are corrupted, so the main tenant control fires on every correct tenant and cannot detect an extra document." Lead lo reprodujo: 8 hashes sin coincidencia en `eval/eu_manifest.yaml`, 6 con longitud distinta de 64. Pendientes N2 (conector frente a `host.docker.internal:8000` sin verificar), N3-N6 menores.
 - Files changed: `docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`, `TASKS.md`.
 - Risks: ocultar botones no es un control. Si la clave llega al navegador, el modelo `owner_id` deja de proteger.
-- Status: Pending. Requiere aprobación escrita del usuario para pasar a F05b.
+- Status: BLOCKED tras la segunda revisión. Diff sin commit en el árbol (`docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`; D7 en `ROADMAP.md` y `HANDOFF.md` aceptada). Siguiente paso: autorización del usuario para un reintento acotado con escritor nuevo.
+- Recomendaciones para el reintento (guardadas 2026-11-16 a petición del usuario):
+  - Quitar los hashes literales del documento. La SQL del invariante se genera desde `eval/eu_manifest.yaml` con un script de F05b; la copia manual los corrompió.
+  - N2: marcar "por verificar" que el conector no alcanza la API; smoke dentro del contenedor del conector: `api:8000`, `qdrant:6333`, `postgres:5432` y `host.docker.internal:8000` deben fallar.
+  - N3: IP fija del conector (`ipv4_address`) como único `set_real_ip_from`, o prohibir el enlace de nginx al host mientras corre el túnel.
+  - N4: Skynet es Windows: secreto como Docker secret o volumen con modo fijado dentro del contenedor; rotación de logs dentro de un contenedor o con el driver `local`.
+  - N5: topología de Funnel (host, `proxy_protocol`) o declarar que la sección 4 solo aplica a Cloudflare.
+  - N6: redacción (CLI, "fuera de Git" repetido, línea 58, origen del 404 en `POST /v1/search`); `include` de la clave dentro de cada una de las tres `location` exactas.
+  - Revisión nueva tras el reintento; si sale limpia, presentar el diseño al usuario para aprobarlo.
+
+### F08: Limpieza de código sin cambio de comportamiento
+
+- Objective: quitar código muerto y duplicación verificada sin alterar respuestas, contratos ni resultados de evaluación.
+- Tasks:
+  - [ ] A1: borrar `session_scope` (`src/ragmur/db/session.py:58`); es su única aparición en el repositorio.
+  - [ ] B9: borrar `verifier_type` (`src/ragmur/verification/nli.py:133`) y el import que quede sin uso.
+  - [ ] A6: un helper de respuesta de error para `json_limit.py`, `upload_limit.py` e `inference_limit.py`. Antes, capturar en tests los bytes y cabeceras actuales; después, compararlos.
+  - [ ] B4: helpers compartidos en `store.py` para validar `document_ids` y construir `SparseVector` y `SearchParams` entre `branch_search` y `hybrid_search`. `corpus_filter` y `result_filter` no cambian.
+  - [ ] B5: test que fija las dos políticas: `_checked_payload` falla ante un punto fuera de alcance y `retrieve_points` lo omite.
+- Dependencies: F05a con commit.
+- Acceptance criteria: gate compartido verde con PostgreSQL y Qdrant reales; mismos conteos de tests más los nuevos; cuerpos y cabeceras de error idénticos; tests de IDF acotado por tenant y `owner_id` y de aislamiento verdes; `git grep` de `session_scope` y `verifier_type` vacío.
+- Required tests: gate compartido; `pytest tests/api/test_json_limit.py tests/api/test_upload_limit.py tests/api/test_inference_limit.py tests/retrieval/test_hybrid.py -q`; `pytest -q -k "isolation or tenant or owner"`.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: `src/ragmur/db/session.py`, `src/ragmur/verification/nli.py`, `src/ragmur/api/{json_limit,upload_limit,inference_limit}.py` y un módulo de helper, `src/ragmur/retrieval/store.py`, tests correspondientes.
+- Risks: `store.py` aplica el filtro de tenant; un helper mal acotado cambia IDF o filtra mal. Revisor con foco en la regla 8 y DECISIONS 3.14.
+- Status: Pending
+
+### F09: Limpieza de documentación y eval
+
+- Objective: que la documentación y `eval/` reflejen el código actual, sin cambiar comportamiento.
+- Tasks:
+  - [ ] C1: mover `eval/numeric_signal_eval.py` a `eval/_archive_ai/`; actualizar el docstring de `numeric_signal_stress_eval.py:7`.
+  - [ ] C2: mover `eval/nli_sentence_window_run.py` a `eval/_archive_ai/`; `sentence_windows.py` y su test se quedan.
+  - [ ] C3 y C4: notas en `eval/NLI.md` (adaptadores externos sin `document_id`) y docstrings cruzados en `metrics.py` y `scifact_metrics.py`.
+  - [ ] D2: marcar en `README.md` las filas LiteLLM y RAGAS como fase 2 pendiente.
+  - [ ] D3: quitar de `ARCHITECTURE.md` la frase de fase 0 sobre `/health` y `/ready`.
+  - [ ] D12: separar en el árbol de `ARCHITECTURE.md` lo que existe (fase 1) de lo previsto (fase 2).
+  - [ ] D4: encabezado de documento histórico en `REVIEW.md` (fecha y base `58cd7ee`).
+  - [ ] D5: retirar `HANDOFF.md`. Llevar al runbook o al README los datos de Skynet vigentes (proyecto `ragmur_deploy`, nota del gestor de credenciales, overlay CUDA). `git grep HANDOFF` limpio antes de borrar.
+  - [ ] D8: indicar en `README.md` que el Compose de despliegue fija `EMBEDDING_DEVICE=cpu` y el overlay CUDA lo cambia.
+  - [ ] D11: listar `eval/eu_nli_holdout2_manifest_draft.yaml` como borrador en `eval/EU_CORPUS.md`; `eval/annotation_forms/` se queda (F02).
+- Dependencies: F05a con commit (comparte `ARCHITECTURE.md`).
+- Acceptance criteria: gate compartido verde; `check_nli_leak` verde; `git grep` de las rutas movidas y de `HANDOFF` solo encuentra `eval/_archive_ai/`, resultados archivados o menciones históricas en `TASKS.md`; enlaces relativos de los documentos tocados válidos.
+- Required tests: gate compartido; `uv run python -m eval.check_nli_leak`; comprobación de enlaces relativos.
+- Test evidence: no run.
+- Review verdict: none.
+- Files changed: `eval/`, `README.md`, `ARCHITECTURE.md`, `REVIEW.md`, `HANDOFF.md` (borrado), `docs/runbook-backup-restore.md`. El orquestador actualiza las referencias en `TASKS.md`.
+- Risks: mover scripts rompe imports de tests si alguno los usa; el gate lo detecta.
+- Status: Pending
 
 ### F05b: Endurecimiento local del despliegue
 
@@ -158,7 +220,7 @@ uv run uvicorn ragmur.main:app --reload
   - [ ] Test de `diagnostic`: los avisos de extracción no contienen texto del documento.
   - [ ] Smoke externo vía proxy: rutas permitidas 200; rutas denegadas 404; `X-API-Key` del cliente ignorada; `document_ids` ajenos dan 0 resultados; cuerpo grande 413; ráfaga por IP 429 de nginx con `Retry-After` antes del tope de la app; ningún 5xx.
   - [ ] Smoke interno en `127.0.0.1:8000`: `/health` 200 y `/ready` 200.
-- Dependencies: F05a aprobada.
+- Dependencies: F05a aprobada, F08 y F09.
 - Acceptance criteria: gate compartido verde; `docker compose -f docker-compose.deploy.yml -f docker-compose.demo.yml config` solo publica en `127.0.0.1`; secret scan `rgm_|hmac|password|BEGIN PRIVATE` 0 en Git; invariante del tenant de demo verde en datos locales; logs del smoke sin consultas, respuestas ni claves.
 - Required tests: gate compartido; smoke externo e interno; `nginx -t` en el contenedor; `pytest -q -k "isolation or tenant or owner"`.
 - Test evidence: no run.
@@ -175,6 +237,7 @@ uv run uvicorn ragmur.main:app --reload
   - [ ] Consultas solo del split dev de recuperación; el arnés rechaza consultas reservadas.
   - [ ] Calentamiento y barrido de concurrencia; registrar p50, p95, códigos, `Retry-After`, RSS, hardware, commit y configuración.
   - [ ] Ejecución local en CPU a través del proxy: 429 y 503 separados, recuperación tras saturación, ningún 500, aislamiento intacto.
+  - [ ] Perfil mixto `/v1/search` + `/v1/verify`: un único `models.lock` serializa embeddings, reranker y NLI (`search.py:42,117`, `verify.py:89`); registrar `capacity_wait` por ruta.
 - Dependencies: F05b.
 - Acceptance criteria: tests unitarios del arnés (percentiles, esquema del resumen, rechazo de reserva); resumen CPU en `benchmarks/` etiquetado con hardware; ningún límite cambiado.
 - Required tests: gate compartido; `uv run python -m benchmarks.load` contra la pila local.
@@ -191,7 +254,7 @@ uv run uvicorn ragmur.main:app --reload
   - [ ] Copia previa según `docs/runbook-backup-restore.md` y punto de restauración registrado.
   - [ ] Actualizar `ragmur_deploy` con la imagen endurecida; `chown` de volúmenes al UID nuevo; overlay de demo en `127.0.0.1`.
   - [ ] Smoke externo e interno desde Skynet; `pytest -k "isolation or tenant or owner"`; invariante del tenant de demo.
-  - [ ] Barrido GPU con el arnés de F05c; fijar `INFERENCE_MAX_REQUESTS`, límite por clave y tasas de nginx en el entorno de despliegue según los datos. Los valores por defecto del código no cambian.
+  - [ ] Barrido GPU con el arnés de F05c, incluido el perfil mixto; fijar `INFERENCE_MAX_REQUESTS` como profundidad de cola tras el candado único, límite por clave y tasas de nginx por ruta según los datos. Los valores por defecto del código no cambian.
 - Dependencies: F05c y autorización escrita A (acceso a Skynet y actualización de `ragmur_deploy`).
 - Acceptance criteria: smoke verde en Skynet; p50 y p95 por concurrencia en RTX 5080 con hardware; límites justificados por la tabla; restauración posible desde la copia previa.
 - Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`; smoke externo e interno; barrido de carga.
@@ -216,6 +279,15 @@ uv run uvicorn ragmur.main:app --reload
 - Files changed: `docs/demo-design.md`, `README.md`.
 - Risks: una exposición sin límites medidos permite agotar la GPU.
 - Status: Pending. Sin autorización B no se ejecuta.
+
+### F10: Cambios de contrato de errores (opcional)
+
+- Objective: decidir si se corrigen dos respuestas que hoy confunden al cliente. No se programa sin decisión expresa del usuario.
+- Tasks:
+  - [ ] A5: `search.py:41-66` y `verify.py:49-99` convierten cualquier excepción en 503; un error de programación debería dar 500.
+  - [ ] A8: `documents.py:118-133` devuelve 200 duplicado si el original está en `pending` o `processing`; podría dar 409 con `Retry-After`.
+- Dependencies: decisión del usuario; actualizar `ARCHITECTURE.md` en el mismo commit.
+- Status: Optional, sin programar.
 
 ### F06: Cierre fase 1: suite, README y marcas
 
@@ -245,7 +317,7 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next phase: F05a. Plan y decisiones D1-D7 aprobados el 2026-11-16.
+- Next phase: F05a (reintento acotado con escritor nuevo y las recomendaciones guardadas). Después F08, F09 y F05b.
 - Resume command: `/taskflow run F05a`
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
