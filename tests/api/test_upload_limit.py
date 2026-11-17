@@ -31,6 +31,14 @@ async def test_body_limit_rejects_stream_without_content_length(chunks: list[byt
     scope: Scope = {"type": "http", "method": "POST", "path": "/v1/documents"}
     await middleware(scope, receive, send)
     assert messages[0]["status"] == 413
+    assert messages[0]["headers"] == [
+        (b"content-type", b"application/json"),
+        (b"content-length", b"48"),
+    ]
+    assert messages[1] == {
+        "type": "http.response.body",
+        "body": b'{"code": "http_413", "detail": "File too large"}',
+    }
     assert not called
 
 
@@ -56,8 +64,25 @@ async def test_timeout_and_capacity_release() -> None:
     await entered.wait()
     await middleware(scope, receive, send)
     assert messages[0]["status"] == 503
+    assert messages[0]["headers"] == [
+        (b"content-type", b"application/json"),
+        (b"content-length", b"59"),
+        (b"retry-after", b"1"),
+    ]
+    assert messages[1] == {
+        "type": "http.response.body",
+        "body": b'{"code": "http_503", "detail": "Upload capacity exhausted"}',
+    }
     await first
     assert messages[2]["status"] == 408
+    assert messages[2]["headers"] == [
+        (b"content-type", b"application/json"),
+        (b"content-length", b"50"),
+    ]
+    assert messages[3] == {
+        "type": "http.response.body",
+        "body": b'{"code": "http_408", "detail": "Upload timed out"}',
+    }
     assert middleware.active == 0
     release.set()
     await middleware(scope, receive, send)

@@ -1,11 +1,12 @@
 """Limita el cuerpo multipart antes de que Starlette lo analice."""
 
 import asyncio
-import json
 import tempfile
 from collections.abc import Callable
 
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
+
+from ragmur.api.error_response import send_error
 
 
 async def _file_call[T](operation: Callable[..., T], *args: object) -> T:
@@ -40,25 +41,13 @@ class UploadLimitMiddleware:
             await self.app(scope, receive, send)
             return
         if self.active >= self.max_concurrent:
-            await self._error(send, 503, "Upload capacity exhausted")
+            await send_error(send, 503, "Upload capacity exhausted", retry_after=True)
             return
         self.active += 1
         try:
             await self._receive_upload(scope, receive, send)
         finally:
             self.active -= 1
-
-    @staticmethod
-    async def _error(send: Send, status: int, detail: str) -> None:
-        body = json.dumps({"code": f"http_{status}", "detail": detail}).encode()
-        headers = [
-            (b"content-type", b"application/json"),
-            (b"content-length", str(len(body)).encode()),
-        ]
-        if status == 503:
-            headers.append((b"retry-after", b"1"))
-        await send({"type": "http.response.start", "status": status, "headers": headers})
-        await send({"type": "http.response.body", "body": body})
 
     async def _receive_upload(self, scope: Scope, receive: Receive, send: Send) -> None:
         # El margen incluye cabeceras y campos del multipart, no bytes adicionales de fichero.
@@ -71,18 +60,18 @@ class UploadLimitMiddleware:
                     async with asyncio.timeout_at(deadline):
                         message = await receive()
                 except TimeoutError:
-                    await self._error(send, 408, "Upload timed out")
+                    await send_error(send, 408, "Upload timed out")
                     return
                 if message["type"] == "http.disconnect":
                     return
                 chunk = message.get("body", b"")
                 size += len(chunk)
                 if size > limit:
-                    await self._error(send, 413, "File too large")
+                    await send_error(send, 413, "File too large")
                     return
                 await _file_call(buffer.write, chunk)
                 if asyncio.get_running_loop().time() >= deadline:
-                    await self._error(send, 408, "Upload timed out")
+                    await send_error(send, 408, "Upload timed out")
                     return
                 if not message.get("more_body", False):
                     break

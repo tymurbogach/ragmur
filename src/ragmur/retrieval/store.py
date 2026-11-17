@@ -373,6 +373,22 @@ def _checked_payload(
     return payload
 
 
+def _require_document_ids(document_ids: list[UUID] | None) -> None:
+    """Rechaza la lista vacía: no restringir no equivale a buscar en todo."""
+    if document_ids is not None and not document_ids:
+        raise ValueError("Invalid search parameters")
+
+
+def _sparse_vector(indices: list[int], values: list[float]) -> models.SparseVector:
+    """Construye el vector disperso de consulta con un solo formato."""
+    return models.SparseVector(indices=indices, values=values)
+
+
+def _idf_search_params(corpus: models.Filter) -> models.SearchParams:
+    """Envuelve el filtro autorizado como corpus de estadísticas IDF."""
+    return models.SearchParams(idf=models.IdfCorpusParams(corpus=corpus))
+
+
 async def branch_search(
     tenant_id: UUID,
     client: AsyncQdrantClient,
@@ -387,12 +403,9 @@ async def branch_search(
     limit: int,
 ) -> list[BranchPoint]:
     """Consulta una rama con los mismos filtros que la búsqueda híbrida."""
-    if (
-        branch not in ("dense", "sparse")
-        or limit < 1
-        or (document_ids is not None and not document_ids)
-    ):
+    if branch not in ("dense", "sparse") or limit < 1:
         raise ValueError("Invalid search parameters")
+    _require_document_ids(document_ids)
     if not await client.collection_exists(collection) or (
         branch == "sparse" and not sparse_indices
     ):
@@ -400,10 +413,8 @@ async def branch_search(
     query: list[float] | models.SparseVector = dense
     params = None
     if branch == "sparse":
-        query = models.SparseVector(indices=sparse_indices, values=sparse_values)
-        params = models.SearchParams(
-            idf=models.IdfCorpusParams(corpus=_tenant_filter(tenant_id, owner_id=owner_id))
-        )
+        query = _sparse_vector(sparse_indices, sparse_values)
+        params = _idf_search_params(_tenant_filter(tenant_id, owner_id=owner_id))
     response = await client.query_points(
         collection_name=collection,
         query=query,
@@ -437,14 +448,15 @@ async def hybrid_search(
     rrf_k: int,
 ) -> list[HybridPoint]:
     """Fusiona las ramas con filtros de autorización y corpus IDF acotado."""
-    if candidates < 1 or rrf_k < 1 or (document_ids is not None and not document_ids):
+    if candidates < 1 or rrf_k < 1:
         raise ValueError("Invalid search parameters")
+    _require_document_ids(document_ids)
     if not await client.collection_exists(collection):
         return []
     corpus_filter = _tenant_filter(tenant_id, owner_id=owner_id)
     result_filter = _result_filter(tenant_id, owner_id, document_ids)
-    sparse_query = models.SparseVector(indices=sparse_indices, values=sparse_values)
-    sparse_params = models.SearchParams(idf=models.IdfCorpusParams(corpus=corpus_filter))
+    sparse_query = _sparse_vector(sparse_indices, sparse_values)
+    sparse_params = _idf_search_params(corpus_filter)
     prefetch = [models.Prefetch(query=dense, using="dense", filter=result_filter, limit=candidates)]
     if sparse_indices:
         prefetch.append(

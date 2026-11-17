@@ -1,8 +1,8 @@
 """Admisión acotada de peticiones que usan modelos."""
 
-import json
-
 from starlette.types import ASGIApp, Receive, Scope, Send
+
+from ragmur.api.error_response import send_error
 
 
 class InferenceLimitMiddleware:
@@ -22,21 +22,7 @@ class InferenceLimitMiddleware:
             await self.app(scope, receive, send)
             return
         if self.active >= self.max_requests:
-            body = json.dumps(
-                {"code": "http_503", "detail": "Inference capacity exhausted"}
-            ).encode()
-            await send(
-                {
-                    "type": "http.response.start",
-                    "status": 503,
-                    "headers": [
-                        (b"content-type", b"application/json"),
-                        (b"content-length", str(len(body)).encode()),
-                        (b"retry-after", b"1"),
-                    ],
-                }
-            )
-            await send({"type": "http.response.body", "body": body})
+            await send_error(send, 503, "Inference capacity exhausted", retry_after=True)
             return
         self.active += 1
         try:

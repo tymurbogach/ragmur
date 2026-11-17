@@ -1,7 +1,8 @@
 """Limita el cuerpo de las peticiones JSON antes de analizarlo."""
 
-from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
+
+from ragmur.api.error_response import send_error
 
 
 class JsonLimitMiddleware:
@@ -26,10 +27,7 @@ class JsonLimitMiddleware:
                 return
             chunk = message.get("body", b"")
             if len(body) + len(chunk) > self.max_bytes:
-                response = JSONResponse(
-                    status_code=413, content={"code": "http_413", "detail": "Body too large"}
-                )
-                await response(scope, receive, send)
+                await send_error(send, 413, "Body too large", compact=True)
                 return
             body.extend(chunk)
             if not message.get("more_body", False):

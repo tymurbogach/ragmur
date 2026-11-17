@@ -15,8 +15,8 @@
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
-- Last review: F05a reintento, tercera revisión `VERDICT: OK` (2026-11-17); 9 hallazgos menores pasados a F05b. Hallazgos bajos de F07 anotados sin reparar.
-- Existing local changes: solo `TASKS.md` con el registro de aprobación de F05a (2026-11-17), sin commitear (modo plan no autoriza commits).
+- Last review: F08 `VERDICT: OK` (2026-11-17); 5 observaciones menores no bloqueantes. Antes: F05a reintento, tercera revisión `VERDICT: OK` (2026-11-17); 9 hallazgos menores pasados a F05b.
+- Existing local changes: F08 verificada con cambios sin commitear (código + tests + `TASKS.md`), lista para el commit de fase.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -95,7 +95,7 @@ uv run uvicorn ragmur.main:app --reload
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
 | F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
-| F08 | Limpieza de código sin cambio de comportamiento | Pending |
+| F08 | Limpieza de código sin cambio de comportamiento | Completed |
 | F09 | Limpieza de documentación y eval | Pending |
 | F05b | Endurecimiento local del despliegue | Pending |
 | F05c | Arnés de carga y abuso en CPU local | Pending |
@@ -171,21 +171,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### F08: Limpieza de código sin cambio de comportamiento
 
-- Objective: quitar código muerto y duplicación verificada sin alterar respuestas, contratos ni resultados de evaluación.
-- Tasks:
-  - [ ] A1: borrar `session_scope` (`src/ragmur/db/session.py:58`); es su única aparición en el repositorio.
-  - [ ] B9: borrar `verifier_type` (`src/ragmur/verification/nli.py:133`) y el import que quede sin uso.
-  - [ ] A6: un helper de respuesta de error para `json_limit.py`, `upload_limit.py` e `inference_limit.py`. Antes, capturar en tests los bytes y cabeceras actuales; después, compararlos.
-  - [ ] B4: helpers compartidos en `store.py` para validar `document_ids` y construir `SparseVector` y `SearchParams` entre `branch_search` y `hybrid_search`. `corpus_filter` y `result_filter` no cambian.
-  - [ ] B5: test que fija las dos políticas: `_checked_payload` falla ante un punto fuera de alcance y `retrieve_points` lo omite.
-- Dependencies: F05a con commit.
-- Acceptance criteria: gate compartido verde con PostgreSQL y Qdrant reales; mismos conteos de tests más los nuevos; cuerpos y cabeceras de error idénticos; tests de IDF acotado por tenant y `owner_id` y de aislamiento verdes; `git grep` de `session_scope` y `verifier_type` vacío.
-- Required tests: gate compartido; `pytest tests/api/test_json_limit.py tests/api/test_upload_limit.py tests/api/test_inference_limit.py tests/retrieval/test_hybrid.py -q`; `pytest -q -k "isolation or tenant or owner"`.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `src/ragmur/db/session.py`, `src/ragmur/verification/nli.py`, `src/ragmur/api/{json_limit,upload_limit,inference_limit}.py` y un módulo de helper, `src/ragmur/retrieval/store.py`, tests correspondientes.
-- Risks: `store.py` aplica el filtro de tenant; un helper mal acotado cambia IDF o filtra mal. Revisor con foco en la regla 8 y DECISIONS 3.14.
-- Status: Pending
+- Outcome: A1 (`session_scope`), B9 (`verifier_type`) y su import eliminados; helper `send_error` compartido por los tres middlewares de límite (bytes y cabeceras idénticos); helpers `_require_document_ids`, `_sparse_vector` y `_idf_search_params` en `store.py` con `corpus_filter` y `result_filter` intactos; nuevo `tests/retrieval/test_store_scope.py` blinda `_checked_payload`/`retrieve_points`.
+- Test evidence (orquestador, árbol integrado, PostgreSQL 17 y Qdrant propios en `127.0.0.1:5433/6333-6334`; `alembic` con `API_KEY_HMAC_SECRET=test-only-hmac-secret` solo en entorno): `ruff check` exit 0; `format --check` exit 0; `mypy` exit 0 (126 ficheros); `alembic upgrade head` exit 0; `pytest` 237 passed, 4 skipped; subset límites+hybrid 9 passed; `-k "isolation or tenant or owner"` 13 passed, 1 skipped; `check_nli_leak` verde; `git grep session_scope|verifier_type` en `src tests eval` vacío. Logs en `/tmp/opencode/taskflow/ragmur/F08-gate/`.
+- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F08 sin cambios de comportamiento ni de contrato." (revisión 2026-11-17; 5 observaciones menores no bloqueantes).
+- Files changed: `src/ragmur/db/session.py`, `src/ragmur/verification/nli.py`, `src/ragmur/api/error_response.py` (nuevo), `src/ragmur/api/{json_limit,upload_limit,inference_limit}.py`, `src/ragmur/retrieval/store.py`, `tests/api/test_{json,upload,inference}_limit.py`, `tests/retrieval/test_store_scope.py` (nuevo).
+- Risks: ninguno abierto. `error_response.py` conserva a propósito dos serializaciones históricas; unificarlas cambiaría el contrato (F10).
+- Status: Completed.
 
 ### F09: Limpieza de documentación y eval
 
@@ -317,11 +308,12 @@ uv run uvicorn ragmur.main:app --reload
 | F01 | Protocolo NLI congelado; reservas quemadas declaradas; dev y test vacíos | `ruff` pass, `mypy` 123 OK, 20 tests NLI passed, `check_nli_leak` verde | F01: freeze NLI dataset protocol and anti-leak checks |
 | F07 | Diagnóstico automático 300 ES + 300 EN solo dev; no calibra | `ruff` pass, `mypy` 124 OK, `pytest tests/eval/` verde; ES recall 0.18, EN 0.26, respaldo falso 0.03 Wilson [0.0138, 0.0639] | F07: add local EN-ES diagnostic NLI datasets |
 | F04 | Manifiesto del corpus, triage de `eval/`, runbook y copia/restore/reindex de Skynet en entorno aislado | Skynet: `indexed\|88`, `sha256sum -c` OK, `Reindexed 88`, 1712 puntos, `hybrid_search` top-5 idéntico, isolation 13 passed 1 skipped. Lead: `ruff` pass, `mypy` 124 OK, `pytest` 235 passed 4 skipped, secret scan 0 | F04: verify corpus backup restore reindex against Skynet |
+| F08 | Limpieza de código muerto y duplicación sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, aislamiento 13+1, `check_nli_leak` verde, `VERDICT: OK` | F08: remove dead code and share error/store helpers |
 
 ## 9. Recommended next action
 
-- Next action: F05a aprobada el 2026-11-17; F05b desbloqueada (requiere F08 y F09 antes). Siguiente en orden: F08.
-- Next phase: F08 (no depende de la aprobación de F05a). Después F09 y F05b.
-- Resume command: `/taskflow run F08`
+- Next action: commitear F08; después F09 (documentación y eval).
+- Next phase: F09. Después F05b y F05c. Parada antes de F05d (autorización A).
+- Resume command: `/taskflow run F09`
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.

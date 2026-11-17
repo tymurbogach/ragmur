@@ -37,6 +37,15 @@ async def test_capacity_released_after_cancellation() -> None:
         await asyncio.sleep(0)
         await asyncio.wait_for(middleware(scope, receive, send), timeout=2)
         assert messages[0]["status"] == 503
+        assert messages[0]["headers"] == [
+            (b"content-type", b"application/json"),
+            (b"content-length", b"62"),
+            (b"retry-after", b"1"),
+        ]
+        assert messages[1] == {
+            "type": "http.response.body",
+            "body": b'{"code": "http_503", "detail": "Inference capacity exhausted"}',
+        }
         assert middleware.active == 1
     finally:
         release.set()

@@ -34,6 +34,15 @@ async def test_stream_limit(chunks: list[bytes], expected: int) -> None:
     await middleware({"type": "http", "method": "POST", "path": "/v1/search"}, receive, send)
     assert sent[0]["status"] == expected
     assert received == ([b"12345"] if expected == 200 else [])
+    if expected == 413:
+        assert sent[0]["headers"] == [
+            (b"content-length", b"45"),
+            (b"content-type", b"application/json"),
+        ]
+        assert sent[1] == {
+            "type": "http.response.body",
+            "body": b'{"code":"http_413","detail":"Body too large"}',
+        }
 
 
 @pytest.mark.parametrize("owner", ["x" * 257, "   "])

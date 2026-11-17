@@ -4,7 +4,6 @@ El motor mantiene un grupo de conexiones abiertas y se crea una sola vez por pro
 al arrancar. Abrir una conexión por petición costaría más que la propia consulta.
 """
 
-from collections.abc import AsyncIterator
 from typing import cast
 from uuid import UUID
 
@@ -53,11 +52,3 @@ async def first_tenant(factory: async_sessionmaker[AsyncSession]) -> UUID | None
     """Devuelve un tenant para validar la colección compartida, si existe."""
     async with factory() as session:
         return cast(UUID | None, await session.scalar(select(Tenant.id).limit(1)))
-
-
-async def session_scope(
-    factory: async_sessionmaker[AsyncSession],
-) -> AsyncIterator[AsyncSession]:
-    """Abre una sesión, la cede y la cierra pase lo que pase."""
-    async with factory() as session:
-        yield session

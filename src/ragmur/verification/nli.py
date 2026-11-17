@@ -7,7 +7,6 @@ puntúa, no decide veredictos.
 """
 
 from pathlib import Path
-from typing import Literal
 
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
@@ -129,10 +128,6 @@ class NliVerifier:
                 current[0] = max(current[0], ent)
                 current[1] = max(current[1], contra)
         return [(best[index][0], best[index][1]) for index in range(len(premises))]
-
-    def verifier_type(self) -> Literal["nli"]:
-        """Identifica el verificador en tiempos y respuestas."""
-        return "nli"
 
 
 def load_verifier(settings: Settings) -> NliVerifier:
