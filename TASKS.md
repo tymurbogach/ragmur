@@ -16,7 +16,7 @@
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
 - Last review: F05c `VERDICT: OK` (2026-11-17); 3 hallazgos bajos + 2 informativos; reparación de tipos aplicada. Antes: F05b `VERDICT: OK`; F09 `VERDICT: OK`; F08 `VERDICT: OK`.
-- Existing local changes: F05c verificada con cambios sin commitear (solo 3 ficheros nuevos en `benchmarks/` + `TASKS.md`), lista para el commit de fase.
+- Existing local changes: ninguna (árbol limpio tras el commit de F05c). Ciclo `run all` cerrado 2026-11-17: F08, F09, F05b y F05c verificadas y commiteadas (443e3dc, a5bf48a, cfbb73b, dbc1e39) sobre 1abaf61; gate global verde en el árbol final. Sin push.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
