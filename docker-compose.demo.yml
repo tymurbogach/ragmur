@@ -1,0 +1,119 @@
+# Overlay de demo pública (F05b). Fuente normativa: docs/demo-design.md §4.
+# Solo local, sin túnel real: el conector solo arranca con `--profile tunnel`.
+# Uso local:  docker compose -f docker-compose.deploy.yml \
+#                 -f docker-compose.demo.yml config
+# El smoke local añade un override temporal (puertos loopback de prueba);
+# en producción con túnel, nginx y la API no publican ningún puerto.
+#
+# Secretos fuera de Git (nunca en la imagen ni en este fichero):
+#   DEMO_KEY_FILE: fichero con UNA línea `proxy_set_header X-API-Key <clave>;`
+#   TUNNEL_TOKEN_FILE: token del túnel (solo con perfil `tunnel`).
+
+services:
+  postgres:
+    networks:
+      - internal
+    # Sin puertos: solo vive en la red interna (diseño §4).
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  qdrant:
+    networks:
+      - internal
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    networks:
+      - internal
+    # Plan B del hallazgo 8 de F05a: mientras corre el túnel, la API no
+    # publica ningún puerto al anfitrión. `!reset` vacía el mapeo
+    # `127.0.0.1:8000:8000` del despliegue; sin él, el conector (o cualquiera
+    # con acceso al anfitrión) alcanzaría `host.docker.internal:8000` y
+    # saltaría el proxy. `docker compose config` lo verifica.
+    ports: !reset []
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  nginx:
+    # Rama estable 1.30; digest verificado en F05b.
+    image: nginx:1.30.6-alpine@sha256:901e593c95dc85f5a729f5765516321366ef4ac401821431d408897e95287d0a
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      edge:
+        ipv4_address: 10.20.0.20
+      internal: null
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    secrets:
+      - source: demo_key
+        target: /etc/nginx/demo_key.conf
+    # Sin puertos publicados al host mientras corre el túnel (diseño §7):
+    # el único ingreso es el túnel saliente hacia el conector.
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Sin `max-size`/`max-file` no hay rotación: el driver `local` limita
+    # por tamaño, no por días. No afirma retención de 14 días (diseño §8);
+    # el plazo final lo fija F05d.
+
+  # Conector Cloudflare Tunnel: solo conexiones de salida, sin puertos.
+  # Fijado con digest en F05b; el proveedor lo confirma el diseño (D3).
+  # No arranca en local (perfil `tunnel`): en producción,
+  # `docker compose --profile tunnel up -d` con el secreto del token.
+  # `ipv4_address` fija acota `set_real_ip_from` en nginx (diseño §7).
+  connector:
+    image: cloudflare/cloudflared:2026.11.0@sha256:b94b96edf2c9c4360f8879c8580cfaa99077f19c849ec595ca2f711b27d4f344
+    profiles:
+      - tunnel
+    command: ["tunnel", "--no-autoupdate", "run", "--token-file", "/run/secrets/tunnel_token"]
+    depends_on:
+      nginx:
+        condition: service_started
+    networks:
+      edge:
+        ipv4_address: 10.20.0.10
+    secrets:
+      - tunnel_token
+    restart: unless-stopped
+
+networks:
+  # Conector -> nginx. Sin `internal`: el conector necesita salida a internet.
+  edge:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.20.0.0/24
+  # nginx + api + postgres + qdrant. `internal: true` bloquea la salida:
+  # los datos solo salen por el proxy. OJO: también bloquea la descarga de
+  # modelos; el volumen `model_data` debe llegar precalentado (o con salida
+  # temporal) antes del primer arranque. Riesgo anotado para F05d.
+  internal:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.20.1.0/24
+
+secrets:
+  # Clave de demo dedicada (nunca la de ingesta). La lee el proceso maestro
+  # de nginx al arrancar/recargar. Hallazgo 6 de F05a: Compose fuera de Swarm
+  # ignora `mode`, así que NO se fija aquí (solo generaría un aviso); el
+  # smoke comprueba el modo real con `stat` dentro del contenedor.
+  demo_key:
+    file: ${DEMO_KEY_FILE:?falta DEMO_KEY_FILE (fichero con la línea proxy_set_header, fuera de Git)}
+  tunnel_token:
+    file: ${TUNNEL_TOKEN_FILE:-/dev/null}

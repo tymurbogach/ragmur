@@ -55,7 +55,7 @@ F05e publica los ejemplos y el `README` de uso externo.
 | Bomba de cuerpo | `client_max_body_size` en Nginx es 64k. La app limita el JSON a 65536 bytes. El exceso recibe 413. |
 | Agotamiento de GPU | Límite por IP en Nginx más topes globales de la app. El exceso recibe 429 o 503 con `Retry-After`. Valores provisionales hasta F05d. Ver §7. |
 | Inyección en logs | Nginx no registra cuerpos, cadenas de consulta ni cabeceras con claves. No uses `$request` ni el formato combinado. La app no registra texto de consulta ni claves. Ver §8. |
-| Suplantación de IP origen | Nginx solo acepta la IP del conector. Con Cloudflare Tunnel usa `CF-Connecting-IP` con `real_ip`. Sin conexión directa al conector no existe cabecera fiable. Ver §7. |
+| Suplantación de IP origen | Nginx solo acepta la IP fija del conector (`set_real_ip_from` = `ipv4_address` del conector) con `real_ip_header CF-Connecting-IP`. Borra `X-Forwarded-For`, `Forwarded` y `CF-Connecting-IP` hacia la app y no usa `ProxyHeaders` ni `FORWARDED_ALLOW_IPS`. Sin conexión desde el conector no existe cabecera fiable. Ver §7. |
 
 ## 3. Matriz de rutas
 
@@ -64,8 +64,8 @@ Público a través del proxy:
 | Método | Ruta | Resultado |
 |---|---|---|
 | GET | `/health` | 200. Proceso vivo. |
-| POST | `/v1/search` | 200, 401, 404, 413, 422, 429 o 503 según el caso. |
-| POST | `/v1/verify` | 200, 401, 404, 413, 422, 429 o 503 según el caso. |
+| POST | `/v1/search` | 200, 401, 413, 422, 429 o 503 según el caso. |
+| POST | `/v1/verify` | 200, 401, 413, 422, 429 o 503 según el caso. |
 
 Mecanismo Nginx exigido (lo implementa F05b):
 
@@ -161,7 +161,7 @@ Tenant en Skynet: `skynet-public-corpus-2026-11-13`.
 Contenido verificado: 10 documentos, 1395 puntos.
 Reverificación: `eval/skynet_reverify_2026-11-16.md:205-207`.
 
-La CLI solo crea tenants y emite o revoca claves
+La CLI solo gestiona tenants y claves y nunca ingiere ni sirve documentos
 (`create-tenant`, `issue-key`, `revoke-key`, `reindex`, `delete-tenant` en `src/ragmur/cli.py:53-69`).
 El corpus se cargó con `POST /v1/documents` contra `127.0.0.1:8000`
 (`eval/skynet_public_corpus_2026-11-13.md:111-113`).
@@ -182,7 +182,7 @@ Contrato de generación:
 
 - Entradas: `eval/eu_manifest.yaml` y la lista de los 10 `document_id` en `eval/skynet_public_corpus_2026-11-13.md:58-71`.
 - Regla de selección: usa exactamente esos 10 `document_id`. Corresponden a `split: dev`, `license: CC BY 4.0`, fichero bajo 20 MiB y bajo 500 páginas, según §3 de ese informe.
-- Salida: las dos consultas SQL de este apartado con los hashes ya rellenos.
+- Salida: las tres consultas SQL de este apartado con los hashes ya rellenos.
 - Autocomprobación: el script falla salvo que emita exactamente 10 hashes de 64 caracteres hexadecimales cada uno.
 
 ```sql
@@ -246,7 +246,7 @@ El token del túnel Cloudflare es otro secreto:
 - Revoca en el interruptor de corte de §12.
 
 Rotación y revocación de la clave de demo usan la CLI existente.
-La CLI solo gestiona tenants y claves; nunca ingiere documentos.
+La CLI solo gestiona tenants y claves y nunca ingiere ni sirve documentos.
 Emite con `issue-key`. Revoca con `revoke-key`.
 Tras revocar, la siguiente petición recibe 401.
 Si la clave de demo se filtra, revócala y corta el túnel.

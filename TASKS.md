@@ -15,8 +15,8 @@
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
-- Last review: F09 `VERDICT: OK` (2026-11-17); 2 hallazgos bajos + 1 informativo en artefactos archivados. Antes: F08 `VERDICT: OK`; F05a tercera revisión `VERDICT: OK` con 9 hallazgos pasados a F05b.
-- Existing local changes: F09 verificada con cambios sin commitear (docs/eval + `TASKS.md`), lista para el commit de fase.
+- Last review: F05b `VERDICT: OK` (2026-11-17); 1 hallazgo bajo (ejemplo §5, aplicado) + 2 informativos. Antes: F09 `VERDICT: OK`; F08 `VERDICT: OK`; F05a tercera revisión `VERDICT: OK`.
+- Existing local changes: F05b verificada con cambios sin commitear (endurecimiento + `TASKS.md`), lista para el commit de fase.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -42,8 +42,8 @@
 ```sh
 # install
 uv sync --locked
-# hasta F05b, publicar los servicios de desarrollo solo en loopback:
-POSTGRES_PORT=127.0.0.1:5432 QDRANT_HTTP_PORT=127.0.0.1:6333 QDRANT_GRPC_PORT=127.0.0.1:6334 docker compose up -d
+# hasta F05b, los servicios de desarrollo ya solo escuchan en loopback:
+POSTGRES_PORT=5432 QDRANT_HTTP_PORT=6333 QDRANT_GRPC_PORT=6334 docker compose up -d
 uv run alembic upgrade head
 # shared phase gate, run by the orchestrator before every phase commit
 uv run ruff check . && uv run ruff format --check .
@@ -97,7 +97,7 @@ uv run uvicorn ragmur.main:app --reload
 | F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
 | F08 | Limpieza de código sin cambio de comportamiento | Completed |
 | F09 | Limpieza de documentación y eval | Completed |
-| F05b | Endurecimiento local del despliegue | Pending |
+| F05b | Endurecimiento local del despliegue | Completed |
 | F05c | Arnés de carga y abuso en CPU local | Pending |
 | F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
 | F05e | Exposición pública de la demo | Pending (autorización B) |
@@ -189,25 +189,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### F05b: Endurecimiento local del despliegue
 
-- Objective: aplicar el diseño aprobado en el repositorio y probarlo solo en local, sin Skynet.
-- Tasks:
-  - [ ] `Dockerfile`: usuario no root con UID fijo y versión fijada de la imagen `uv`; conservar `HEALTHCHECK`.
-  - [ ] `docker-compose.yml` de desarrollo: PostgreSQL y Qdrant solo en `127.0.0.1`.
-  - [ ] `docker-compose.demo.yml` según `docs/demo-design.md`: redes `edge` e `internal`, conector con `ipv4_address` fija, nginx sin puertos publicados al host mientras corre el túnel; configuración en `deploy/nginx/`; clave por `include` desde un secreto de Compose fuera de Git, sin `envsubst`.
-  - [ ] Script que genera las consultas del invariante desde los 10 `document_id` de `eval/skynet_public_corpus_2026-11-13.md:58-71` y sus hashes en `eval/eu_manifest.yaml`; falla salvo 10 hashes de 64 hex.
-  - [ ] Hallazgos menores de la revisión 3 de F05a: (1) redactar "la CLI nunca sube documentos" (`demo-design.md:164`, `:249`); (2) quitar 404 de las filas POST de la matriz (`:67-68`); (3) la regla de selección da 14 documentos: usar solo los 10 ids listados (`:184`); (4) "las dos consultas" son tres (`:185`); (5) el conteo exige `status = 'indexed'` (`:201-209`); (6) el fichero de clave lo lee el proceso maestro de nginx; comprobar su modo con `stat` dentro del contenedor y si Compose respeta `mode` fuera de Swarm (`:239`); (7) reescribir la frase de `:58`; (8) si el smoke del conector alcanza `host.docker.internal:8000`, quitar el puerto de host de la API mientras corre el túnel o usar ingress gestionado localmente (`:112`, `:145`); (9) no fijar `FORWARDED_ALLOW_IPS`; nginx borra `X-Forwarded-For` y `Forwarded` (`:294-297`).
-  - [ ] Cambios de código solo si F05a los decide (D5).
-  - [ ] Test de `diagnostic`: los avisos de extracción no contienen texto del documento.
-  - [ ] Smoke externo vía proxy: rutas permitidas 200; rutas denegadas 404; `X-API-Key` del cliente ignorada; `document_ids` ajenos dan 0 resultados; cuerpo grande 413; ráfaga por IP 429 de nginx con `Retry-After` antes del tope de la app; ningún 5xx.
-  - [ ] Smoke interno en `127.0.0.1:8000`: `/health` 200 y `/ready` 200.
-- Dependencies: F05a aprobada, F08 y F09.
-- Acceptance criteria: gate compartido verde; `docker compose -f docker-compose.deploy.yml -f docker-compose.demo.yml config` solo publica en `127.0.0.1`; secret scan `rgm_|hmac|password|BEGIN PRIVATE` 0 en Git; invariante del tenant de demo verde en datos locales; logs del smoke sin consultas, respuestas ni claves.
-- Required tests: gate compartido; smoke externo e interno; `nginx -t` en el contenedor; `pytest -q -k "isolation or tenant or owner"`.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `Dockerfile`, `docker-compose.yml`, `docker-compose.demo.yml`, `deploy/nginx/`, tests o script de smoke.
-- Risks: el UID no root cambia la propiedad de los volúmenes existentes de Skynet; F05d planifica `chown`. Las pruebas locales levantan contenedores solo en `127.0.0.1`.
-- Status: Pending
+- Outcome: `Dockerfile` con usuario `ragmur` UID 10000 e imagen `uv` fijada+digest (`HEALTHCHECK` intacto); `docker-compose.yml` con PG y Qdrant solo en `127.0.0.1`; `docker-compose.demo.yml` (redes `edge`/`internal`, conector con `ipv4_address` fija y perfil `tunnel`, nginx sin puertos, clave por `include` de secreto Compose, logs con rotación); `deploy/nginx/nginx.conf` (3 ubicaciones exactas + 404 resto, borrado de cabeceras de IP, `real_ip` acotada, 429 con `Retry-After`, `client_max_body_size 64k`, logs sin cuerpos/consultas/claves); `deploy/smoke_demo.sh` (28 comprobaciones); `eval/check_demo_invariant.py` (genera 3 consultas desde los 10 ids + hashes, exige 10 hashes 64hex y `status='indexed'`); test `diagnostic` (4 tests, sin fugas de texto); redacción 1/2/4/7 de F05a aplicada en `docs/demo-design.md`. Sin cambios en `src/`, sin dependencias nuevas, sin secretos en Git.
+- Test evidence (orquestador, árbol integrado): `ruff check`/`format` 0; `mypy` 0 (128); `config` deploy+demo 0 puertos y 0 `0.0.0.0`; `alembic` 0; `pytest` 241 passed, 4 skipped (diagnostic 4/4; aislamiento 13+1); `check_nli_leak` verde; secret scan sin secretos nuevos; invariante generación OK + `--check` verde (`0/10/1`) y rojo tras revocar en BD desechable; `nginx -t` OK; smoke re-ejecutado 28/28 con revocación 401 final; sonda edge (DNS irresoluble + L3 con timeout 4s y controles); 0 fugas en cuerpos/cabeceras/logs; pila demolida con `down -v`. Incidencias resueltas sin tocar el repo: `model_data` precalentado necesitó `chown 10000`; la clave inyectada debe ser clave real emitida. Logs en `/tmp/opencode/taskflow/ragmur/F05b-gate/`.
+- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F05b con evidencia verde completa y sin defectos bloqueantes." (revisión 2026-11-17; 1 hallazgo bajo + 2 informativos). Hallazgo bajo aplicado por el orquestador: ejemplo de §5 actualizado (el prefijo `127.0.0.1:` ya vive en `docker-compose.yml`).
+- Files changed: `Dockerfile`, `docker-compose.yml`, `docker-compose.demo.yml` (nuevo), `deploy/nginx/nginx.conf` (nuevo), `deploy/smoke_demo.sh` (nuevo), `eval/check_demo_invariant.py` (nuevo), `tests/ingestion/test_diagnostic_no_text.py` (nuevo), `docs/demo-design.md`, `TASKS.md`.
+- Risks: F05d debe precalentar `model_data` + `chown` al UID 10000 antes del primer arranque; D3 (ráfaga por IP de visitante) exige túnel real; `Retry-After: 60 always` también en 200 (ruido inofensivo, diseño §7).
+- Status: Completed.
 
 ### F05c: Arnés de carga y abuso en CPU local
 
@@ -296,11 +283,12 @@ uv run uvicorn ragmur.main:app --reload
 | F04 | Manifiesto del corpus, triage de `eval/`, runbook y copia/restore/reindex de Skynet en entorno aislado | Skynet: `indexed\|88`, `sha256sum -c` OK, `Reindexed 88`, 1712 puntos, `hybrid_search` top-5 idéntico, isolation 13 passed 1 skipped. Lead: `ruff` pass, `mypy` 124 OK, `pytest` 235 passed 4 skipped, secret scan 0 | F04: verify corpus backup restore reindex against Skynet |
 | F08 | Limpieza de código muerto y duplicación sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, aislamiento 13+1, `check_nli_leak` verde, `VERDICT: OK` | F08: remove dead code and share error/store helpers |
 | F09 | Limpieza de documentación y eval, sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, `check_nli_leak` verde, enlaces 24/24, `HANDOFF` fuera de `TASKS.md` vacío, `VERDICT: OK` | F09: archive orphan eval scripts and update docs |
+| F05b | Endurecimiento local del despliegue (proxy, invariante, smoke 28/28) | gate verde, `config` 0 puertos, invariante `0/10/1` + rojo tras revocar, smoke 28/28, sonda edge DNS+L3, 0 fugas, `VERDICT: OK` | F05b: harden local deploy with proxy and invariant |
 
 ## 9. Recommended next action
 
-- Next action: commitear F09; después F05b (endurecimiento local, requiere lo anterior).
-- Next phase: F05b. Después F05c. Parada antes de F05d (autorización A).
-- Resume command: `/taskflow run F05b`
+- Next action: commitear F05b; después F05c (arnés de carga en CPU local).
+- Next phase: F05c. Después parada antes de F05d (autorización A).
+- Resume command: `/taskflow run F05c`
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
