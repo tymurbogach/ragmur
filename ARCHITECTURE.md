@@ -7,6 +7,8 @@ La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendie
 
 ## Estructura del repositorio
 
+Lo siguiente existe en la fase 1. Al final del apartado se lista, por separado, lo previsto para la fase 2 (no implementado).
+
 ```
 ragmur/
 ├── src/ragmur/
@@ -23,9 +25,7 @@ ragmur/
 │   │       ├── health.py
 │   │       ├── documents.py
 │   │       ├── search.py
-│   │       ├── verify.py
-│   │       ├── query.py        # fase 2
-│   │       └── answer.py       # fase 2
+│   │       └── verify.py
 │   ├── ingestion/
 │   │   ├── extractors/         # pdf.py (pypdfium2), docx.py, text.py
 │   │   ├── storage.py          # fichero original en disco
@@ -36,14 +36,10 @@ ragmur/
 │   │   ├── sparse.py           # BM25 vía FastEmbed
 │   │   ├── store.py            # cliente Qdrant — único punto de acceso
 │   │   ├── hybrid.py           # fusión RRF
-│   │   ├── reranker.py         # cross-encoder
-│   │   └── router.py           # fase 2: reescritura y reintento
+│   │   └── reranker.py         # cross-encoder
 │   ├── verification/
 │   │   ├── splitter.py
 │   │   └── nli.py
-│   ├── llm/                    # fase 2
-│   │   ├── provider.py         # abstracción LiteLLM
-│   │   └── generator.py
 │   └── db/
 │       ├── models.py
 │       ├── session.py           # motor y fábrica de sesiones
@@ -57,6 +53,16 @@ ragmur/
 ├── docker-compose.yml
 ├── Dockerfile
 └── pyproject.toml
+```
+
+Previsto en la fase 2 (no existe en este árbol):
+
+```
+├── src/ragmur/api/routes/query.py    # recuperación agéntica
+├── src/ragmur/api/routes/answer.py   # endpoint principal con LLM
+├── src/ragmur/retrieval/router.py    # reescritura y reintento
+├── src/ragmur/llm/                   # provider.py (abstracción LiteLLM) y generator.py
+└── columna llm_configs en PostgreSQL # configuración del proveedor por tenant
 ```
 
 Dirección de dependencias: `api/` importa de `ingestion/`, `retrieval/`, `verification/` y `llm/`. Nunca al revés. La lógica de dominio no conoce FastAPI.
@@ -269,7 +275,7 @@ Los esquemas rechazan campos desconocidos. Los límites de texto, listas, subida
 Los errores incluyen un código estable y un mensaje seguro. No exponen rutas internas, secretos ni excepciones del driver.
 La respuesta de validación tampoco refleja contenido privado ni credenciales.
 
-`/health` y `/ready` no requieren API key. En fase 0, `/health` comprueba las dependencias; `/ready` todavía no existe.
+`/health` y `/ready` no requieren API key.
 La tarea 1.9 separa proceso vivo (`/health`) de recursos preparados (`/ready`) y limita el detalle público.
 
 ### `POST /v1/documents`

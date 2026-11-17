@@ -57,6 +57,9 @@ Selecciona como máximo una hipótesis por premisa y excluye la categoría `Auto
 Desarrollo usa los temas 1–5 del entrenamiento; prueba usa los temas 6 y 10 del test original.
 Los temas son disjuntos y se comprueba que las premisas seleccionadas no coincidan exactamente.
 El corpus no identifica documentos de origen de forma suficiente para garantizar separación por documento.
+Los casos que genera `eval/inferes.py` no llevan `document_id`: sirven como diagnóstico
+complementario, pero no son válidos para la evaluación de aceptación del corpus español,
+que exige `document_id` presente (ver `eval/EU_CORPUS.md`).
 
 Las etiquetas originales identifican tres relaciones. `weak` es un veredicto de Ragmur, no una cuarta etiqueta de InferES.
 La matriz conserva esa columna y no inventa ejemplos de referencia `weak`.
@@ -102,6 +105,8 @@ La etiqueta original describe la evidencia anotada; el texto adicional del fragm
 Las afirmaciones y documentos ya se usaron para estudiar recuperación, aunque no se evaluaron estas etiquetas del verificador.
 El corpus es científico y en inglés; no representa por sí solo documentos generales en español.
 La partición de prueba no se ha ejecutado para esta evaluación del verificador.
+Los casos que genera `eval/scifact_nli.py` tampoco llevan `document_id`: mismo alcance
+diagnóstico y misma exclusión de la aceptación con anti-fuga por documento.
 
 ### Primera medición de fragmentos de desarrollo
 

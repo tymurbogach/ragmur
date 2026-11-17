@@ -15,8 +15,8 @@
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
 - Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
-- Last review: F08 `VERDICT: OK` (2026-11-17); 5 observaciones menores no bloqueantes. Antes: F05a reintento, tercera revisión `VERDICT: OK` (2026-11-17); 9 hallazgos menores pasados a F05b.
-- Existing local changes: F08 verificada con cambios sin commitear (código + tests + `TASKS.md`), lista para el commit de fase.
+- Last review: F09 `VERDICT: OK` (2026-11-17); 2 hallazgos bajos + 1 informativo en artefactos archivados. Antes: F08 `VERDICT: OK`; F05a tercera revisión `VERDICT: OK` con 9 hallazgos pasados a F05b.
+- Existing local changes: F09 verificada con cambios sin commitear (docs/eval + `TASKS.md`), lista para el commit de fase.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -96,7 +96,7 @@ uv run uvicorn ragmur.main:app --reload
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
 | F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
 | F08 | Limpieza de código sin cambio de comportamiento | Completed |
-| F09 | Limpieza de documentación y eval | Pending |
+| F09 | Limpieza de documentación y eval | Completed |
 | F05b | Endurecimiento local del despliegue | Pending |
 | F05c | Arnés de carga y abuso en CPU local | Pending |
 | F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
@@ -180,26 +180,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### F09: Limpieza de documentación y eval
 
-- Objective: que la documentación y `eval/` reflejen el código actual, sin cambiar comportamiento.
-- Tasks:
-  - [ ] C1: mover `eval/numeric_signal_eval.py` a `eval/_archive_ai/`; actualizar el docstring de `numeric_signal_stress_eval.py:7`.
-  - [ ] C2: mover `eval/nli_sentence_window_run.py` a `eval/_archive_ai/`; `sentence_windows.py` y su test se quedan.
-  - [ ] C3 y C4: notas en `eval/NLI.md` (adaptadores externos sin `document_id`) y docstrings cruzados en `metrics.py` y `scifact_metrics.py`.
-  - [ ] D2: marcar en `README.md` las filas LiteLLM y RAGAS como fase 2 pendiente.
-  - [ ] D3: quitar de `ARCHITECTURE.md` la frase de fase 0 sobre `/health` y `/ready`.
-  - [ ] D12: separar en el árbol de `ARCHITECTURE.md` lo que existe (fase 1) de lo previsto (fase 2).
-  - [ ] D4: encabezado de documento histórico en `REVIEW.md` (fecha y base `58cd7ee`).
-  - [ ] D5: retirar `HANDOFF.md`. Llevar al runbook o al README los datos de Skynet vigentes (proyecto `ragmur_deploy`, nota del gestor de credenciales, overlay CUDA). `git grep HANDOFF` limpio antes de borrar.
-  - [ ] D8: indicar en `README.md` que el Compose de despliegue fija `EMBEDDING_DEVICE=cpu` y el overlay CUDA lo cambia.
-  - [ ] D11: listar `eval/eu_nli_holdout2_manifest_draft.yaml` como borrador en `eval/EU_CORPUS.md`; `eval/annotation_forms/` se queda (F02).
-- Dependencies: F05a con commit (comparte `ARCHITECTURE.md`).
-- Acceptance criteria: gate compartido verde; `check_nli_leak` verde; `git grep` de las rutas movidas y de `HANDOFF` solo encuentra `eval/_archive_ai/`, resultados archivados o menciones históricas en `TASKS.md`; enlaces relativos de los documentos tocados válidos.
-- Required tests: gate compartido; `uv run python -m eval.check_nli_leak`; comprobación de enlaces relativos.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `eval/`, `README.md`, `ARCHITECTURE.md`, `REVIEW.md`, `HANDOFF.md` (borrado), `docs/runbook-backup-restore.md`. El orquestador actualiza las referencias en `TASKS.md`.
-- Risks: mover scripts rompe imports de tests si alguno los usa; el gate lo detecta.
-- Status: Pending
+- Outcome: C1/C2 archivados en `eval/_archive_ai/` (con nota en su `README` y docstring C1); C3/C4 notas y docstrings cruzados; D2/D8 marcas fase 2 y `EMBEDDING_DEVICE` en `README.md`; D3/D12 árbol fase 1 vs fase 2 en `ARCHITECTURE.md`; D4 encabezado histórico en `REVIEW.md` (base `58cd7ee`); D5 `HANDOFF.md` borrado con datos Skynet vigentes relocalizados (`ragmur_deploy`, nota de credenciales SSH, overlay CUDA) en `README.md` y `docs/runbook-backup-restore.md`; D11 borrador listado en `eval/EU_CORPUS.md`. Sin cambios en `src/`, `tests/`, dependencias ni `TODO`s. Menciones restantes de `HANDOFF` en `TASKS.md` solo históricas (§2 D7, §6 D7, esta entrada).
+- Test evidence (orquestador, árbol integrado, PostgreSQL 17 y Qdrant propios en `127.0.0.1:5433/6333-6334`): `ruff check` exit 0; `format --check` exit 0 (156); `mypy` exit 0 (126); `alembic upgrade head` exit 0; `pytest` 237 passed, 4 skipped; `check_nli_leak` verde; `git grep` rutas movidas solo en `_archive_ai`/resultados/docstring C1; `git grep -i handoff` fuera de `TASKS.md` vacío; enlaces relativos 24/24 OK. Logs en `/tmp/opencode/taskflow/ragmur/F09-gate/`.
+- Review verdict: "VERDICT: OK — F09 meets all acceptance criteria with zero behavior/contract change; D5 Skynet data preserved; gate outputs consistent." (revisión 2026-11-17; 2 hallazgos bajos + 1 informativo, todos en artefactos archivados).
+- Files changed: `ARCHITECTURE.md`, `README.md`, `REVIEW.md`, `HANDOFF.md` (borrado), `docs/runbook-backup-restore.md`, `eval/NLI.md`, `eval/EU_CORPUS.md`, `eval/metrics.py`, `eval/scifact_metrics.py`, `eval/numeric_signal_stress_eval.py`, `eval/_archive_ai/` (2 scripts movidos + `README.md`).
+- Risks: ninguno abierto. Pregunta del writer resuelta por el revisor: 12 entradas del borrador vs 11 IDs `euh2-*` ejecutados no es contradicción (`EU_CORPUS.md:28-30` lo declara borrador).
+- Status: Completed.
 
 ### F05b: Endurecimiento local del despliegue
 
@@ -309,11 +295,12 @@ uv run uvicorn ragmur.main:app --reload
 | F07 | Diagnóstico automático 300 ES + 300 EN solo dev; no calibra | `ruff` pass, `mypy` 124 OK, `pytest tests/eval/` verde; ES recall 0.18, EN 0.26, respaldo falso 0.03 Wilson [0.0138, 0.0639] | F07: add local EN-ES diagnostic NLI datasets |
 | F04 | Manifiesto del corpus, triage de `eval/`, runbook y copia/restore/reindex de Skynet en entorno aislado | Skynet: `indexed\|88`, `sha256sum -c` OK, `Reindexed 88`, 1712 puntos, `hybrid_search` top-5 idéntico, isolation 13 passed 1 skipped. Lead: `ruff` pass, `mypy` 124 OK, `pytest` 235 passed 4 skipped, secret scan 0 | F04: verify corpus backup restore reindex against Skynet |
 | F08 | Limpieza de código muerto y duplicación sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, aislamiento 13+1, `check_nli_leak` verde, `VERDICT: OK` | F08: remove dead code and share error/store helpers |
+| F09 | Limpieza de documentación y eval, sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, `check_nli_leak` verde, enlaces 24/24, `HANDOFF` fuera de `TASKS.md` vacío, `VERDICT: OK` | F09: archive orphan eval scripts and update docs |
 
 ## 9. Recommended next action
 
-- Next action: commitear F08; después F09 (documentación y eval).
-- Next phase: F09. Después F05b y F05c. Parada antes de F05d (autorización A).
-- Resume command: `/taskflow run F09`
+- Next action: commitear F09; después F05b (endurecimiento local, requiere lo anterior).
+- Next phase: F05b. Después F05c. Parada antes de F05d (autorización A).
+- Resume command: `/taskflow run F05b`
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.

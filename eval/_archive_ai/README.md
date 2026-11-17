@@ -9,6 +9,9 @@ Ningún archivo aquí es `gold`, ni calibra umbrales, ni cierra 1.8.
   y piloto IA, pendientes de revisión humana.
 - `NLI_AI_EVALUATION_PROTOCOL*.md`, `nli_changed_ai_blind_review.yaml`: notas
   provisionales, no aceptadas.
+- `numeric_signal_eval.py`, `nli_sentence_window_run.py`: experimentos de
+  desarrollo archivados (F09). `sentence_windows.py`, `numeric_signal.py` y sus
+  tests siguen en `eval/` como utilidades vigentes.
 - `results/`: resúmenes de ejecuciones sobre etiquetas IA; solo diagnóstico,
   no validan umbrales. Detalles por consulta en `/tmp`, fuera de Git.
 

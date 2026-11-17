@@ -1,5 +1,9 @@
 # Revisión previa al desarrollo
 
+> Documento histórico: revisión del 2026-10-19 sobre la base `58cd7ee`, anterior a
+> la implementación de la fase 1. Se conserva como registro; no describe el estado
+> actual del código. El estado vigente está en `ROADMAP.md`.
+
 Fecha: 2026-10-19. Base revisada: `58cd7ee`, con cambios locales previos en `AGENTS.md` y `CLAUDE.md`.
 
 ## Resultado

@@ -76,6 +76,11 @@ ssh -o BatchMode=yes skynet-ts docker exec ragmur_deploy-api-1 rm /tmp/originals
 
 ## 3. Transferencia con `scp` BatchMode
 
+La transferencia exige que SSH funcione sin interacción (`BatchMode`).
+En Skynet, Docker Desktop requirió una configuración SSH independiente para
+evitar el gestor de credenciales durante la conexión; comprueba el acceso
+antes de copiar.
+
 ```bash
 scp -o BatchMode=yes 'skynet-ts:C:/Users/Timur/ragmur-backup-skynet-2026-11-13/postgres-20261113.dump' /tmp/opencode/ragmur-skynet-restore-2026-11-13/
 scp -o BatchMode=yes 'skynet-ts:C:/Users/Timur/ragmur-backup-skynet-2026-11-13/originals-20261113.tar' /tmp/opencode/ragmur-skynet-restore-2026-11-13/

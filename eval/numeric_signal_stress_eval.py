@@ -4,7 +4,7 @@ Solo diagnóstico: etiquetas IA sin revisión humana; NO sirve para aceptación
 ni para cambiar umbrales. No ejecuta NLI ni abre particiones reservadas.
 Detalles por caso en /tmp; el resumen agregado va a eval/results/.
 
-Diferencias frente a eval/numeric_signal_eval.py (al que no sustituye):
+Diferencias frente a eval/_archive_ai/numeric_signal_eval.py (al que no sustituye):
 ningún ID concreto exigido; tasas null cuando el denominador es cero;
 conteos explícitos; hash del script propio incluido.
 `reason="match"` indica solo coincidencia numérica, no apoyo semántico.

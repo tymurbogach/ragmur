@@ -63,7 +63,8 @@ Para forzar un dispositivo usa `cpu` o `cuda`. Si se fuerza CUDA y no está disp
 La GPU requiere PyTorch con CUDA, controladores compatibles y acceso del contenedor a la GPU.
 La selección se mantiene hasta reiniciar; un fallo posterior de CUDA no cambia el servicio a CPU automáticamente.
 
-El Compose privado usa CPU por defecto. El nombre del proyecto determina sus volúmenes.
+El Compose de despliegue fija `EMBEDDING_DEVICE=cpu`; el overlay `docker-compose.cuda.yml` lo cambia a `cuda`.
+El nombre del proyecto determina sus volúmenes.
 Si reutilizas una instalación, comprueba su nombre y sus archivos antes de ejecutar Compose.
 El proyecto observado en Skynet se llama `ragmur_deploy`.
 
@@ -190,7 +191,7 @@ docker build --build-arg INSTALL_CUDA=true -t ragmur:cuda .
 docker run --gpus all --env-file .env -p 8000:8000 -v ragmur-models:/app/models -v ragmur-storage:/app/storage ragmur:cuda
 ```
 
-El Compose privado usa CPU por defecto. Añade `docker-compose.cuda.yml` para activar CUDA.
+El Compose de despliegue fija `EMBEDDING_DEVICE=cpu`. Añade `docker-compose.cuda.yml` para activar CUDA (cambia el valor a `cuda` y reserva la GPU).
 Define `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` en un archivo de entorno privado.
 Usa los comandos de Compose de la sección de instalación.
 El nombre de proyecto determina los volúmenes: usa el mismo nombre para conservarlos.
@@ -211,8 +212,8 @@ Los volúmenes conservan los datos, originales y modelos entre reinicios.
 | Léxica | BM25 vía FastEmbed (vectores dispersos, IDF calculado por Qdrant y acotado al tenant) |
 | Reranking | bge-reranker-v2-m3 (cross-encoder) |
 | Verificación | mDeBERTa-v3-base-xnli-multilingual-nli-2mil7 (NLI) |
-| Capa LLM | LiteLLM sobre Ollama, OpenAI, Anthropic, Gemini |
-| Evaluación | Golden set propio; RAGAS a partir de la fase 2 |
+| Capa LLM | LiteLLM sobre Ollama, OpenAI, Anthropic, Gemini (fase 2, pendiente) |
+| Evaluación | Golden set propio; RAGAS a partir de la fase 2 (pendiente) |
 | Despliegue | Docker Compose |
 
 El pipeline previsto usa componentes explícitos, sin frameworks RAG de alto nivel.

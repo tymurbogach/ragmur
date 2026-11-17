@@ -19,7 +19,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml  # type: ignore[import-untyped]
-
 from eval.numeric_signal import numeric_review_signal
 
 

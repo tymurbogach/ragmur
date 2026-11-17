@@ -1,4 +1,8 @@
-"""Métricas sobre evidencias localizadas, sin duplicar ganancias por solape."""
+"""Métricas sobre evidencias localizadas, sin duplicar ganancias por solape.
+
+Cubre la evaluación de recuperación del corpus propio. Para métricas a nivel
+de documento sobre fragmentos de SciFact, ver `eval/scifact_metrics.py`.
+"""
 
 import math
 import re

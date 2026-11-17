@@ -26,7 +26,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml  # type: ignore[import-untyped]
-
 from eval.nli_run import validate_cases, wilson_interval
 from eval.sentence_windows import (
     aggregate_window_scores,
@@ -34,6 +33,7 @@ from eval.sentence_windows import (
     decide_verdict,
     expand_window_pairs,
 )
+
 from ragmur.core.config import get_settings
 from ragmur.verification.nli import load_verifier
 

@@ -1,4 +1,10 @@
-"""Métricas de documentos para los fragmentos recuperados en SciFact."""
+"""Métricas de documentos para los fragmentos recuperados en SciFact.
+
+Complementa a `eval/metrics.py`, que mide cobertura y orden sobre evidencias
+localizadas del corpus propio. Los adaptadores externos (`eval/inferes.py`,
+`eval/scifact_nli.py`) no emiten `document_id`, así que sus casos no valen
+para la aceptación con anti-fuga por documento.
+"""
 
 import math
 from dataclasses import dataclass

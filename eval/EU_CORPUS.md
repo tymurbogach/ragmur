@@ -23,6 +23,14 @@ sirvió para comprobar el flujo de descarga.
 Ragmur extrajo 36 páginas, 41 268 caracteres y 61 fragmentos con tamaño 800 y solape 120.
 La huella del PDF consta en el manifiesto.
 
+## Segunda reserva (borrador)
+
+`eval/eu_nli_holdout2_manifest_draft.yaml` es un borrador de segunda reserva con 12
+documentos fuera del manifiesto: no contiene etiquetas ni autoriza cambios ni aceptación.
+Sigue el protocolo preregistrado que cita su propia cabecera; queda pendiente de
+referencias IA y de revisión humana. `eval/annotation_forms/` conserva las planillas
+de anotación de la fase F02.
+
 ## Estado de la evaluación
 
 Faltan 300 pares de fragmento y afirmación revisados antes de ejecutar el modelo: 100 respaldados,
