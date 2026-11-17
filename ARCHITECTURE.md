@@ -614,6 +614,15 @@ El contenedor debe exponer la GPU mediante NVIDIA Container Toolkit; una imagen 
 
 Regla: toda cifra de `timings_ms` publicada indica sobre qué hardware se midió. Los ejemplos de este documento llevan `"..."` hasta que existan mediciones reales.
 
+## Despliegue público
+
+La demo pública sigue `docs/demo-design.md`.
+Rutas públicas: `GET /health`, `POST /v1/search`, `POST /v1/verify`.
+Todo lo demás devuelve 404 en el proxy, incluidos `/ready`, `/docs`, `/redoc`, `/openapi.json` y `/v1/documents*`.
+Invariante: la clave de demo pertenece al tenant público, que solo contiene documentos del manifiesto con `owner_id=ue-publico`.
+La clave de demo es dedicada; la clave de ingesta nunca la usa el proxy.
+La ingesta en ese tenant solo ocurre por la API interna en `127.0.0.1:8000` según el runbook, nunca por la vía pública.
+
 ## Evaluación
 
 `eval/golden_set.yaml`:

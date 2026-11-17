@@ -330,6 +330,28 @@ Falta evaluar fragmentos reales, incluidas negaciones, cifras, fechas y correfer
 
 `/health` indica proceso vivo y `/ready` comprueba PostgreSQL, Qdrant y modelos cargados. El límite por clave devuelve 429 con `Retry-After`; la capacidad de ingesta y las dependencias caídas devuelven 503. El borrado de tenant exige API detenida y elimina puntos, ficheros y filas. El contenedor instala la rueda CPU por defecto y la variante CUDA con `INSTALL_CUDA=true`, con volúmenes para modelos y `STORAGE_DIR`. Licencia MIT con titular confirmado.
 
+### 3.32 Exposición pública de la demo
+
+**Decidido:** tenant público dedicado (D1) con solo documentos del manifiesto y `owner_id=ue-publico`, más proxy inverso simple con lista permitida (D2 nginx).
+La clave de demo es dedicada y se verifica contra `api_keys` (`key_id`, `tenant_id`, `revoked_at`); la clave de ingesta nunca la usa el proxy.
+Sin alcances por clave, sin migración, sin BFF en Python.
+Rutas públicas: `GET /health`, `POST /v1/search`, `POST /v1/verify`.
+Todo lo demás devuelve 404 en el proxy, incluidos `/ready`, `/docs`, `/redoc`, `/openapi.json` y `/v1/documents*` (D5).
+Túnel de salida sin puerto entrante; el proveedor se confirma al aprobar el diseño (D3).
+Con Cloudflare Tunnel, el proxy recupera la IP del visitante con `CF-Connecting-IP` y `set_real_ip_from` acotado a la dirección única del conector; con Tailscale Funnel en HTTP no hay IP de cliente y el límite por IP exige TCP con `--proxy-protocol` o no existe.
+Redes separadas `edge` e `internal`; la clave viaja en un fichero incluido fuera de Git, sin `envsubst`.
+Demo solo API con ejemplos `curl`, sin página y sin CORS (D4).
+Objetivo p95 provisional para `/search` con rerank en RTX 5080, a medir en F05d (D6).
+
+**Motivo:** el tenant dedicado es el control principal; el proxy solo filtra y limita.
+Fijar la versión de nginx y del conector deja el despliegue reproducible.
+
+**Descartado:**
+- *Alcances por clave.* Exigiría migración y lógica nueva para un beneficio que ya da el tenant dedicado.
+- *BFF en Python.* Añade código propio y reescritura JSON sin control nuevo frente al proxy simple.
+- *Caddy.* Alternativa válida, pero con menos evidencia operativa reunida para este despliegue.
+- *Reenvío de puertos.* Abre entrada y exige firewall, DNS y TLS propios frente al túnel saliente.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

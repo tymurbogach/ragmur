@@ -14,9 +14,9 @@
 - D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
-- Git branch: `main`, 2 commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7); sin push. Último commit `690533b`.
-- Last review: F05a bloqueada en la segunda revisión (2026-11-16): hashes del invariante corruptos. Hallazgos bajos de F07 anotados sin reparar.
-- Existing local changes: diff sin commit de F05a (`docs/demo-design.md`, `DECISIONS.md` 3.32, `ARCHITECTURE.md`) y este `TASKS.md`.
+- Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
+- Last review: F05a reintento, tercera revisión `VERDICT: OK` (2026-11-17); 9 hallazgos menores pasados a F05b. Hallazgos bajos de F07 anotados sin reparar.
+- Existing local changes: ninguno tras el commit de F05a.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
@@ -94,7 +94,7 @@ uv run uvicorn ragmur.main:app --reload
 | F02 | Calibración de umbrales solo en dev | BLOCKED |
 | F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
-| F05a | Diseño de exposición pública | BLOCKED |
+| F05a | Diseño de exposición pública | Verificada; pendiente de aprobación del usuario |
 | F08 | Limpieza de código sin cambio de comportamiento | Pending |
 | F09 | Limpieza de documentación y eval | Pending |
 | F05b | Endurecimiento local del despliegue | Pending |
@@ -155,11 +155,12 @@ uv run uvicorn ragmur.main:app --reload
 - Acceptance criteria: diseño coherente con D1-D6; proveedor de túnel (D3) y objetivo p95 (D6) propuestos con su compromiso; el commit no cambia código. La aprobación del usuario se registra aquí con fecha antes de F05b.
 - Required tests: revisión del documento contra `ARCHITECTURE.md` y `DECISIONS.md`; `uv run ruff check .` sin cambios de código.
 - Test evidence: lead 2026-11-16 sobre el diff de F05a (solo documentación): `ruff check` exit 0; `format --check` 155 ficheros; `mypy` 124 OK; `check_nli_leak` exit 0; sin diff en `src`, `tests`, `eval`, `pyproject.toml`, `uv.lock`, `Dockerfile` ni compose desde `6cd23b2`; secret grep 0. `pytest` no ejecutado: sin cambios de código.
-- Review verdict: ronda 1: "VERDICT: BLOCKED. Behind the tunnel, nginx sees only the connector's address, so the per-IP limit that D1 and TASKS §6 rely on becomes one global bucket. M1-M5 must also be fixed before F05b." Reparación acotada aplicada; ronda 2 confirma B1, M1, M2, M4, M5 y m1-m7 resueltos y M3 parcial. Ronda 2: "VERDICT: BLOCKED. 8 of the 10 manifest hashes in the invariant SQL (`docs/demo-design.md:183-190`) are corrupted, so the main tenant control fires on every correct tenant and cannot detect an extra document." Lead lo reprodujo: 8 hashes sin coincidencia en `eval/eu_manifest.yaml`, 6 con longitud distinta de 64. Pendientes N2 (conector frente a `host.docker.internal:8000` sin verificar), N3-N6 menores.
+- Review verdict: ronda 1: "VERDICT: BLOCKED. Behind the tunnel, nginx sees only the connector's address, so the per-IP limit that D1 and TASKS §6 rely on becomes one global bucket. M1-M5 must also be fixed before F05b." Reparación acotada aplicada; ronda 2 confirma B1, M1, M2, M4, M5 y m1-m7 resueltos y M3 parcial. Ronda 2: "VERDICT: BLOCKED. 8 of the 10 manifest hashes in the invariant SQL (`docs/demo-design.md:183-190`) are corrupted, so the main tenant control fires on every correct tenant and cannot detect an extra document." Lead lo reprodujo: 8 hashes sin coincidencia en `eval/eu_manifest.yaml`, 6 con longitud distinta de 64. Pendientes N2 (conector frente a `host.docker.internal:8000` sin verificar), N3-N6 menores. Reintento acotado (2026-11-17, escritor nuevo, base `1801915`): hashes literales sustituidos por un contrato de generación en F05b con `:expected_hashes`, autocomprobación de 10 hashes de 64 hex y conteo exacto; fuente de los 10 documentos `eval/skynet_public_corpus_2026-11-13.md:58-71`; N2-N6 resueltos. Ronda 3: "VERDICT: OK". El revisor comprobó los 10 `document_id` contra `eval/eu_manifest.yaml`, las columnas de `api_keys` y que D1-D6, DECISIONS 3.32 y ARCHITECTURE concuerdan. Sus 9 hallazgos menores pasan a F05b.
+- Test evidence (reintento): lead 2026-11-17 sobre el árbol integrado: `ruff check` exit 0; `format --check` exit 0, 155 ficheros; `mypy` exit 0, 124 ficheros; `check_nli_leak` exit 0; sin diff en código, tests, eval, dependencias, `Dockerfile` ni compose desde `6cd23b2`; `grep -nE '[0-9a-f]{40,}' docs/demo-design.md` sin resultados; secret grep 0. `pytest` no ejecutado: sin cambios de código.
 - Files changed: `docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`, `TASKS.md`.
 - Risks: ocultar botones no es un control. Si la clave llega al navegador, el modelo `owner_id` deja de proteger.
-- Status: BLOCKED tras la segunda revisión. Diff sin commit en el árbol (`docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`; D7 en `ROADMAP.md` y `HANDOFF.md` aceptada). Siguiente paso: autorización del usuario para un reintento acotado con escritor nuevo.
-- Recomendaciones para el reintento (guardadas 2026-11-16 a petición del usuario):
+- Status: verificada y con commit (`F05a: design public demo exposure`). Pendiente de la aprobación del usuario, que se registra aquí con fecha antes de F05b.
+- Recomendaciones para el reintento (guardadas 2026-11-16, aplicadas el 2026-11-17):
   - Quitar los hashes literales del documento. La SQL del invariante se genera desde `eval/eu_manifest.yaml` con un script de F05b; la copia manual los corrompió.
   - N2: marcar "por verificar" que el conector no alcanza la API; smoke dentro del contenedor del conector: `api:8000`, `qdrant:6333`, `postgres:5432` y `host.docker.internal:8000` deben fallar.
   - N3: IP fija del conector (`ipv4_address`) como único `set_real_ip_from`, o prohibir el enlace de nginx al host mientras corre el túnel.
@@ -215,7 +216,9 @@ uv run uvicorn ragmur.main:app --reload
 - Tasks:
   - [ ] `Dockerfile`: usuario no root con UID fijo y versión fijada de la imagen `uv`; conservar `HEALTHCHECK`.
   - [ ] `docker-compose.yml` de desarrollo: PostgreSQL y Qdrant solo en `127.0.0.1`.
-  - [ ] `docker-compose.demo.yml` con nginx en `127.0.0.1`; configuración en `deploy/nginx/`; clave desde un fichero de entorno fuera de Git.
+  - [ ] `docker-compose.demo.yml` según `docs/demo-design.md`: redes `edge` e `internal`, conector con `ipv4_address` fija, nginx sin puertos publicados al host mientras corre el túnel; configuración en `deploy/nginx/`; clave por `include` desde un secreto de Compose fuera de Git, sin `envsubst`.
+  - [ ] Script que genera las consultas del invariante desde los 10 `document_id` de `eval/skynet_public_corpus_2026-11-13.md:58-71` y sus hashes en `eval/eu_manifest.yaml`; falla salvo 10 hashes de 64 hex.
+  - [ ] Hallazgos menores de la revisión 3 de F05a: (1) redactar "la CLI nunca sube documentos" (`demo-design.md:164`, `:249`); (2) quitar 404 de las filas POST de la matriz (`:67-68`); (3) la regla de selección da 14 documentos: usar solo los 10 ids listados (`:184`); (4) "las dos consultas" son tres (`:185`); (5) el conteo exige `status = 'indexed'` (`:201-209`); (6) el fichero de clave lo lee el proceso maestro de nginx; comprobar su modo con `stat` dentro del contenedor y si Compose respeta `mode` fuera de Swarm (`:239`); (7) reescribir la frase de `:58`; (8) si el smoke del conector alcanza `host.docker.internal:8000`, quitar el puerto de host de la API mientras corre el túnel o usar ingress gestionado localmente (`:112`, `:145`); (9) no fijar `FORWARDED_ALLOW_IPS`; nginx borra `X-Forwarded-For` y `Forwarded` (`:294-297`).
   - [ ] Cambios de código solo si F05a los decide (D5).
   - [ ] Test de `diagnostic`: los avisos de extracción no contienen texto del documento.
   - [ ] Smoke externo vía proxy: rutas permitidas 200; rutas denegadas 404; `X-API-Key` del cliente ignorada; `document_ids` ajenos dan 0 resultados; cuerpo grande 413; ráfaga por IP 429 de nginx con `Retry-After` antes del tope de la app; ningún 5xx.
@@ -317,7 +320,8 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next phase: F05a (reintento acotado con escritor nuevo y las recomendaciones guardadas). Después F08, F09 y F05b.
-- Resume command: `/taskflow run F05a`
+- Next action: el usuario revisa y aprueba `docs/demo-design.md` (F05a). La aprobación se registra en F05a con fecha.
+- Next phase: F08 (no depende de la aprobación de F05a). Después F09 y F05b.
+- Resume command: `/taskflow run F08`
 - Recommended effort: medium
 - Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e), push.
