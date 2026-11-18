@@ -1,15 +1,1489 @@
-# eu_nli_test.yaml — F01: esquema congelado, PENDING HUMAN REVIEW.
-# Sin etiquetas válidas: este fichero NO es verdad ni abre la reserva.
-# La reserva test está quemada a nivel de borradores IA (`eut-*`, `euh2-*`
-# y `eval/results/nli-ai-heldout*` / `*holdout2*`): esos artefactos se
-# excluyen como oro y `eval/check_nli_leak.py` rechaza reutilizar sus
-# identificadores. Esta reserva nueva por documento parte de cero pares y
-# solo recibe pares humanos con doble anotación + adjudicación.
-# En esta fase se prohíbe cualquier `nli_run` sobre test. Solo dev o nada.
-# Cada caso exige: `id` único, `document_id` del manifiesto con split test,
-# `split: test`, `premise` (chunk exacto del extractor + troceador),
-# `claims` con `text` y `label` (supported | contradicted | unsupported).
-# Documentos test asignados (autoritativo: `eval/eu_manifest.yaml`):
-# 9cf1c742, 3b55834e, e733191f, 543ccb41, 06d73220, 110f1996.
-# PENDING HUMAN REVIEW: 0 pares revisados; no ejecutar, no publicar.
-[]
+# F02 humano test
+- id: eu-c-209
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: la UEM, el concepto de unión económica y monetaria llevaba desarrollándose
+    ya al menos dos décadas. A petición de los dirigentes de la CEE y sobre la base
+    de una iniciativa de la Comisión, en el Informe Werner de octubre de 1970 se presentó
+    el proyecto inicial de creación de una unión económica y monetaria en tres fases.
+    Aunque el plan en su conjunto fue aparcado temporalmente debido a las turbulencias
+    financieras de principios de la década de 1970, provocadas por el hecho de que
+    los Estados Unidos pusieron fin a la convertibilidad del dólar estadounidense
+    en oro y el fuerte aumento de los precios del petróleo, la CEE puso sin embargo
+    en marcha partes del plan, que incluían la concepción de mecanismos para estabilizar
+    los tipos de cambio entre las divisas de la CEE y el
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  claims:
+  - text: EL PRESUPUESTO DE EUROPA HORIZONTE EUROPA (2028-2034) JULIO DE 2025 Horizonte
+      Europa (2028-2034) se basará en los logros de sus predecesores, ampliando lo
+      que funciona, simplificando lo posible y focalizando la inversión en los ámbitos
+      donde Europa más la necesita.
+    label: unsupported
+- id: eu-c-212
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'sustituyeron sus monedas nacionales por el euro. El euro facilita a los
+    consumidores del conjunto de la zona del euro la comparación de precios. Además,
+    gracias al euro, cuando se adquieren bienes o servicios en otros Estados miembros
+    de la zona del euro, no hay que pagar ni comisiones de cambio ni gastos por la
+    operación. En este sentido, la UEM complementa el mercado único de la UE y su
+    libre circulación de bienes, servicios, personas y capitales. Alemania Austria
+    Bélgica España Finlandia Francia Irlanda Italia Luxemburgo Países Bajos Portugal
+    1999 Grecia 2001 Eslovenia 2007 Eslovaquia 2009 Chipre Malta 2008 Estonia 2011
+    Letonia 2014 Lituania 2015 Croacia 2023 Cronología de la adopción del euro 17
+    ES La unión económica y monetaria: fechas y acontecimientos clave'
+  premise_locator:
+    type: page
+    start: 18
+    end: 19
+  claims:
+  - text: No es cierto que sustituyeron sus monedas nacionales por el euro.
+    label: contradicted
+- id: eu-c-214
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: sufrir dificultades financieras que pudieran dar lugar a riesgos de estabilidad
+    para la zona del euro en su conjunto o para sus Estados miembros. La asistencia
+    financiera del MEDE está condicionada a la aplicación de políticas saneadas. Se
+    prestó asistencia financiera a Chipre, España, Grecia, Irlanda y Portugal, , y
+    todos estos países concluyeron con éxito sus programas de ajuste. El marco de
+    gobernanza económica A fin de prevenir y, en su caso, corregir los desequilibrios
+    económicos y presupuestarios, la UE revisó su marco de gobernanza económica en
+    2011 y 2013. Las nuevas normas recibieron el nombre de «paquete de seis medidas»
+    y «paquete de dos medidas», respectivamente, debido al número de actos jurídicos
+    adoptados en cada ocasión.
+  premise_locator:
+    type: page
+    start: 22
+    end: 22
+  claims:
+  - text: 'Comprender la unión económica y monetaria ⸺ BUSCAR INFORMACIÓN SOBRE LA
+      UNIÓN EUROPEA En línea Puede encontrar información sobre la Unión Europea en
+      todas las lenguas oficiales de la Unión en el sitio web Europa: https://europa.eu/european-union/index_es
+      Publicaciones de la Unión'
+    label: unsupported
+- id: eu-c-218
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: ón a la infancia (EIAI) que, según la Clasificación Internacional Normalizada
+    de la Educación (CINE), son «educativos» y, por tanto, constituyen el primer nivel
+    de enseñanza en los sistemas de educación y formación (nivel CINE 0); el indicador
+    de equidad muestra la proporción de jóvenes de quince años procedentes de entornos
+    socioeconómicos desfavorecidos que obtienen buenos resultados (como mínimo nivel
+    4) en al menos una competencia (lectura, matemáticas y ciencias) de las pruebas
+    PISA; b = interrupción en la serie cronológica, d = diferente definición, f =
+    cifra única para Flandes, m = valores ausentes, nr = cifra única para Renania
+    del Norte-Westfalia, p = provisional, u = baja fiabilidad,
+  premise_locator:
+    type: page
+    start: 6
+    end: 6
+  claims:
+  - text: ón a la infancia (EIAI) que, según la Clasificación Internacional Normalizada
+      de la Educación (CINE), son «educativos» y, por tanto, constituyen el primer
+      nivel de enseñanza en los sistemas de educación y formación (nivel CINE 1);
+      el indicador de equidad muestra la proporción de
+    label: contradicted
+- id: eu-c-219
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: ción está disminuyendo y el descenso de las competencias básicas fue menos
+    pronunciado que en la mayoría de los demás países de la UE. Se están llevando
+    a cabo reformas de la profesión docente centradas en las competencias de los docentes
+    y la educación inicial, la contratación y el acceso, el desarrollo profesional
+    continuo y las condiciones de trabajo. La educación y formación profesionales
+    (EFP) de grado medio sigue considerándose una opción menos atractiva en comparación
+    con los itinerarios académicos. Sin embargo, España está modernizando su sistema
+    de EFP mediante la oferta de formación dual, entre otras medidas. El número de
+    titulados en educación superior ha alcanzado el objetivo a escala de la UE y sigue
+    aumentando. Sin embargo, el mercado de
+  premise_locator:
+    type: page
+    start: 8
+    end: 8
+  claims:
+  - text: Espacio Europeo de Educación Monitor de la Educación y la Formación de 2025
+      España COMISIÓN EUROPEA Dirección General de Educación, Juventud, Deporte y
+      Cultura Dirección A.
+    label: unsupported
+- id: eu-c-223
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'España, las normas sobre el uso de teléfonos móviles en las aulas de educación
+    primaria y secundaria difieren entre comunidades autónomas. Alrededor de la mitad
+    de las comunidades autónomas adoptaron prohibiciones generales17, mientras que
+    otras aplican normas flexibles o dejan que las escuelas se encarguen de esta cuestión18.
+    En comparación con otros países de la UE, los alumnos españoles también experimentan
+    más controles parentales en relación con el tiempo de uso de pantallas: el 58
+    % de los estudiantes declara tener un límite de tiempo de uso de pantallas entre
+    semana y el 32 % en días festivos (media de la UE del 41 y el 25 %) (Ministerio
+    de Educación, Formación Profesional y Deportes, 2024a). Ahora menos estudiantes
+    abandonan la escuela'
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  claims:
+  - text: No es cierto que españa, las normas sobre el uso de teléfonos móviles en
+      las aulas de educación primaria y secundaria difieren entre comunidades autónomas.
+    label: contradicted
+- id: eu-c-224
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'ior a la media de la UE en lo que respecta al grado medio, pero más elevada
+    en lo que respecta al grado superior. En 2023, la matriculación en EFP de grado
+    superior21 alcanzó el 25,8 %22 de todas las matriculaciones en educación superior
+    (UE: 7,7 %). Esto refleja el creciente atractivo de la EFP de grado superior,
+    que ofrece una vía de entrada directa hacia la educación universitaria. Por el
+    contrario, solo el 40,0 %23 de los estudiantes estaban matriculados en EFP de
+    grado medio (UE 52,4 %). En lo que respecta a este grado medio, los estudiantes
+    se especializaron principalmente en sanidad (30,5 %), negocios (18,7 %) e ingeniería
+    (16,7 %), de forma similar a la EFP de grado superior, donde se concentraron en
+    los mismos ámbitos con un 21,6, un 20,1 y un 15,1 %,'
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  claims:
+  - text: Medio ambiente El estado de la naturaleza en la UE Estado de conservación
+      y tendencias de las especies y los hábitats protegidos por las Directivas de
+      la UE sobre protección de la naturaleza 2013-2018 2 Las Directivas de la UE
+      sobre protección de la naturaleza Las Directivas de l
+    label: unsupported
+- id: eu-c-229
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  split: test
+  premise: Medio ambiente El estado de la naturaleza en la UE Estado de conservación
+    y tendencias de las especies y los hábitats protegidos por las Directivas de la
+    UE sobre protección de la naturaleza 2013-2018 2 Las Directivas de la UE sobre
+    protección de la naturaleza Las Directivas de la UE de aves y hábitats constituyen
+    las piedras angulares de la política de biodiversidad de la Unión. Juntas pretenden
+    conservar alrededor de 2 000 especies raras, amenazadas y vulnerables, y 230 tipos
+    de hábitats, considerados de importancia para Europa. El objetivo general es garantizar
+    la restauración y el mantenimiento de estos hábitats y especies en un estado de
+    conservación favorable en toda su área de distribución natural dentro de la Unión
+    Europea,
+  premise_locator:
+    type: page
+    start: 1
+    end: 2
+  claims:
+  - text: 'Comprender la unión económica y monetaria ⸺ BUSCAR INFORMACIÓN SOBRE LA
+      UNIÓN EUROPEA En línea Puede encontrar información sobre la Unión Europea en
+      todas las lenguas oficiales de la Unión en el sitio web Europa: https://europa.eu/european-union/index_es
+      Publicaciones de la Unión'
+    label: unsupported
+- id: eu-c-233
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  split: test
+  premise: 'endencia de mejora, mientras que el 35 % sigue deteriorándose, lo cual
+    es motivo de preocupación. Resalta el hecho de que las presiones existentes siguen
+    siendo demasiado fuertes para permitir su recuperación. Arriba: Estado de conservación
+    de las especies en la UE Abajo: Tendencias del estado de conservación de las especies
+    en la UE con un estado desfavorable (es decir, no bueno) o desconocido Tipos de
+    hábitats La inmensa mayoría de los hábitats presenta un estado de conservación
+    deficiente o malo (81 %), y un máximo del 15 % de los hábitats muestra un buen
+    estado de conservación. En cuanto a las tendencias de los hábitats con un estado
+    deficiente o malo, puede observarse que solo el 9 % muestra una tendencia al alza.
+    La'
+  premise_locator:
+    type: page
+    start: 3
+    end: 3
+  claims:
+  - text: endencia de mejora, mientras que el 36% sigue deteriorándose, lo cual es
+      motivo de preocupación.
+    label: contradicted
+- id: eu-c-234
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  split: test
+  premise: ■ ■ ■ ■ ■ 27% 10% 31% 6% 28% 35% 42% 21% Desfavorable, mejorando Desconocido
+    Desfavorable, estable Desfavorable, en deterioro Bueno Desconocido Deficiente
+    Malo Bueno Desconocido Deficiente Malo ■ ■ ■ ■ ■ ■ ■ ■ 36% 15% 4% 45% 21% 34%
+    36% 9% Desfavorable, mejorando Desconocido Desfavorable, estable Desfavorable,
+    en deterioro 4 El estado de la naturaleza en la UE Ejemplos de especies y hábitats
+    que mejoran, disminuyen o permanecen estables en la UE (en el caso de las aves)
+    o a escala biogeográfica Martín pescador (Alcedo atthis) Garceta grande (Ardea
+    alba) Milano real (Milvus milvus) Frailecillo común (Fratercula arctica) Dunas
+    litorales con Juniperus spp. Bosques de laurisilva macaronésico Foca común (Phoca
+    vitulina) Medioluto italiana (Melanargia arge) Orquídea lagarto
+  premise_locator:
+    type: page
+    start: 3
+    end: 4
+  claims:
+  - text: 's Marítimos y Pesca B-1049 Bruselas Correo electrónico: contact-us@fishery-aquaculture-market-observatory.ec.europa.eu
+      Observatorio Europeo del Mercado de los Productos de la Pesca y de la Acuicultura
+      LAS NOTICIAS DESTACADAS DEL MES | NO.8/2026 CASO PRÁCTICO 1 El rape en la UE
+      La'
+    label: unsupported
+- id: eu-c-238
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  split: test
+  premise: Directivas sobre protección de la naturaleza es una red ecológica de zonas
+    de conservación de la naturaleza a escala de la UE, la denominada «red Natura
+    2000». Hasta el momento se han incluido casi 28 000 lugares. Cubren casi una quinta
+    parte de la superficie terrestre de Europa (18 %) y alrededor del 10 % de los
+    mares circundantes, lo que la convierte en la red coordinada de zonas protegidas
+    más grande del mundo. Una vez designados, los Estados miembros tienen la obligación
+    de prevenir cualquier deterioro adicional de los hábitats y las especies que hayan
+    motivado la designación del lugar. Asimismo, deben introducir medidas positivas
+    de conservación para mejorar su condición dentro de estos espacios Natura 2000.
+    El informe sobre el estado de la naturaleza revela
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  claims:
+  - text: Directivas sobre protección de la naturaleza es una red ecológica de zonas
+      de conservación de la naturaleza a escala de la UE, la denominada «red Natura
+      3 000».
+    label: contradicted
+- id: eu-c-239
+  document_id: e733191f-5c65-11eb-b487-01aa75ed71a1
+  split: test
+  premise: ivas, está claro que aún no se ha explotado el pleno potencial de la red.
+    Solo una proporción de los espacios Natura 2000 cuenta con planes de gestión,
+    y la mayoría de las medidas de conservación adoptadas hasta el momento han sido
+    para mantener el estado actual o prevenir un mayor deterioro, más que para mejorar
+    activamente su estado de conservación. Papel de la red Natura 2000 Un activo económico
+    valioso La red Natura 2000 no solo protege la biodiversidad, también presta a
+    la sociedad una gran variedad de servicios ecosistémicos valiosos, tales como
+    agua dulce, almacenamiento de carbono, insectos polinizadores, protección contra
+    las inundaciones, las avalanchas y la erosión costera, así como amplias oportunidades
+    para el turismo y la recreación. Se
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  claims:
+  - text: EL PRESUPUESTO DE EUROPA HORIZONTE EUROPA (2028-2034) JULIO DE 2025 Horizonte
+      Europa (2028-2034) se basará en los logros de sus predecesores, ampliando lo
+      que funciona, simplificando lo posible y focalizando la inversión en los ámbitos
+      donde Europa más la necesita.
+    label: unsupported
+- id: eu-c-241
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  split: test
+  premise: 'resente documento está autorizada en virtud de la licencia Creative Commons
+    Attribution 4.0 International (CC BY 4.0) (https://creativecommons.org/licenses/by/4.0/).
+    Esto significa que se permite la reutilización siempre que la fuente esté adecuadamente
+    identificada y se indique cualquier cambio. Para cualquier uso o reproducción
+    de elementos que no sean propiedad de la Unión Europea, podrá ser necesario solicitar
+    la autorización directamente de los respectivos titulares de derechos. Ilustraciones:
+    diseñadas por upklyak upklyak - Freepik.com PDF ISBN 978-92-68-14025-3 doi:10.2775/337767
+    NA-03-24-059-ES-N 3MATERIAL DIDÁCTICO PARA PROFESORES - CÓMO DETECTAR Y COMBATIR
+    LA DESINFORMACIÓN ÍNDICE 1. Introducción 4 2. Notas sobre la presentación 8 3.
+    Estudios de caso 14'
+  premise_locator:
+    type: page
+    start: 2
+    end: 3
+  claims:
+  - text: El presente documento está autorizado para su reutilización conforme a la
+      licencia Creative Commons Attribution 4.0 International (CC BY 4.0).
+    label: supported
+- id: eu-c-244
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  split: test
+  premise: caso 8 2. Notas sobre la presentación MATERIAL DIDÁCTICO PARA PROFESORES
+    - CÓMO DETECTAR Y COMBATIR LA DESINFORMACIÓN 9MATERIAL DIDÁCTICO PARA PROFESORES
+    - CÓMO DETECTAR Y COMBATIR LA DESINFORMACIÓN NOTAS SOBRE LA PRESENTACIÓN Si dispone
+    de más tiempo, puede ampliar la sección «¿Cómo funciona la desinformación?» (por
+    ejemplo, deteniéndose más en examinar las fuentes externas y discutiendo los distintos
+    ejemplos con los alumnos) o dedicar más tiempo al trabajo en equipo. También puede
+    utilizar las Directrices de la Comisión para profesores y educadores sobre la
+    lucha contra la desinformación y la promoción de la alfabetización digital a través
+    de la educación y la formación con el fin de preparar otras actividades. Es importante
+    subrayar que la libertad de expresión
+  premise_locator:
+    type: page
+    start: 7
+    end: 9
+  claims:
+  - text: 'Comprender la unión económica y monetaria ⸺ BUSCAR INFORMACIÓN SOBRE LA
+      UNIÓN EUROPEA En línea Puede encontrar información sobre la Unión Europea en
+      todas las lenguas oficiales de la Unión en el sitio web Europa: https://europa.eu/european-union/index_es
+      Publicaciones de la Unión'
+    label: unsupported
+- id: eu-c-248
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  split: test
+  premise: el Área 51, etc.), información sanitaria falsa, datos falsos sobre grupos
+    minoritarios, etc. También podría ser útil dejar que los alumnos hagan una investigación
+    rápida en Internet sobre los casos presentados para que puedan comprobar por sí
+    mismos qué información circula por ahí al respecto. Para inspirarse, puede consultar
+    las fuentes que se indican en las diapositivas 19 y 20. OTROS EJEMPLOS ➔ En una
+    ultrafalsificación, el presidente ucraniano Volodímir Zelenski aparece rindiéndose
+    ante Rusia ➔ Un artículo satírico según el cual el Vaticano afirma que no habrá
+    segunda venida de Jesús a la Tierra se presenta como genuino en un sitio web de
+    los Estados Unidos ➔ Se acusa a la policía alemana de fingir la detención de Greta
+    Thunberg — enlace 1
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  claims:
+  - text: el Área 52etc.), información sanitaria falsa, datos falsos sobre grupos
+      minoritarios, etc.
+    label: contradicted
+- id: eu-c-249
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  split: test
+  premise: an parte de una red satánica traficante de menores en la que están involucradas
+    personalidades famosas y miembros de las élites políticas y empresariales; supuestamente,
+    el expresidente de los Estados Unidos Donald Trump fue «reclutado» por generales
+    del ejército para destapar esta red y poner fin al control que esta ejerce sobre
+    el Gobierno y los medios de comunicación, lo que también se conoce como «el Estado
+    profundo». La teoría ha sido propagada por un usuario anónimo de Internet que
+    utiliza el nombre en clave «Q» y afirma ser un alto cargo del Gobierno de los
+    Estados Unidos con una habilitación de alta seguridad que le permite acceder a
+    información clasificada. QAnon surgió en foros de opinión virtuales marginales
+    como 4chan y 8chan en 2017, y desde entonces ha
+  premise_locator:
+    type: page
+    start: 15
+    end: 15
+  claims:
+  - text: Espacio Europeo de Educación Monitor de la Educación y la Formación de 2025
+      España COMISIÓN EUROPEA Dirección General de Educación, Juventud, Deporte y
+      Cultura Dirección A.
+    label: unsupported
+- id: eu-c-252
+  document_id: 543ccb41-26d3-11ef-a195-01aa75ed71a1
+  split: test
+  premise: 'na noticia que un fármaco reduzca el colesterol, pero es una noticia mucho
+    mejor que reduzca la tasa de enfermedades cardiovasculares y de muertes ocasionadas
+    por estas. Los titulares rara vez reflejan la importante diferencia entre una
+    «variable sustitutiva» (como un factor de riesgo) y el resultado más importante
+    (como las tasas de mortalidad). Source: Harvard Health Publishing Blog, 21 November
+    2021. Edited for length. PREGUNTAS PARA EL DEBATE 1. ¿Cuáles son los posibles
+    efectos negativos de unos titulares exagerados o inexactos acerca de la investigación
+    científica (especialmente la investigación médica)? 2. ¿Recordáis (o podéis encontrar)
+    ejemplos de artículos que exageren los resultados de la investigación científica?'
+  premise_locator:
+    type: page
+    start: 16
+    end: 16
+  claims:
+  - text: No es cierto que na noticia que un fármaco reduzca el colesterol, pero es
+      una noticia mucho mejor que reduzca la tasa de enfermedades cardiovasculares
+      y de muertes ocasionadas por estas.
+    label: contradicted
+- id: eu-c-254
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  split: test
+  premise: ar Mediterráneo y en el mar Negro1 . El rape americano se encuentra en
+    el Atlántico noroccidental y centrooccidental2 , mientras que el rape negro se
+    encuentra en las aguas atlánticas de la UE, así como en el Atlántico centrooriental,
+    el Atlántico suroriental, el Mediterráneo y el mar Negro3 . El rape suele habitar
+    fondos de barro y arena, a profundidades de entre 20 y 1.000 metros, e incluso
+    a profundidades de hasta 2.000 metros. Los especímenes adultos se alimentan de
+    peces como la faneca y la bacaladilla, mientras que los juveniles se alimentar
+    de invertebrados marinos, como crustáceos4 . Suele alcanzar un tamaño de entre
+    70 y 200 cm de largo y pesa entre 4 y 8 kg. Los individuos más grandes pesan en
+    torno a 40 kg, pero pueden incluso llegar a los 58 kg5
+  premise_locator:
+    type: page
+    start: 5
+    end: 5
+  claims:
+  - text: Medio ambiente El estado de la naturaleza en la UE Estado de conservación
+      y tendencias de las especies y los hábitats protegidos por las Directivas de
+      la UE sobre protección de la naturaleza 2013-2018 2 Las Directivas de la UE
+      sobre protección de la naturaleza Las Directivas de l
+    label: unsupported
+- id: eu-c-258
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  split: test
+  premise: 'taron, respectivamente, un 28% y un 21% del volumen de primera venta y
+    un 29% y un 21% del valor en 2025. La categoría de los Lophius spp. representó
+    el 38% del volumen y el 37% del valor y la categoría de los Lophiidae representó
+    el 11% del volumen y el 11% del valor. Tabla 3. PRIMERA VENTA DE RAPE EN LA UE
+    POR PRINCIPALES ESPECIES (volumen en toneladas de peso neto, valor nominal en
+    1.000 EUR, precio en EUR/kg) Valor nominal (1.000 EUR) Volumen (toneladas) Precio
+    nominal (EUR/kg) % val. 2025 Lophius spp. 61.431 9.573 6,42 37% Rape 48.215 7.048
+    6,84 29% Rape negro 35.288 5.349 6,60 21% Lophiidae 17.505 2.883 6,07 11% Otros
+    2.304 296 7,78 1% Total 164.742 25.150 6,55 100% Fuente: EUMOFA.'
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  claims:
+  - text: taron, respectivamente, un 29% y un 21% del volumen de primera venta y un
+      29% y un 21% del valor en 2025.
+    label: contradicted
+- id: eu-c-259
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  split: test
+  premise: "cia, Dinamarca, Francia, Alemania, Grecia, Irlanda, Italia, Países Bajos,\
+    \ Portugal, España y Suecia. 11 Fuente: EUMOFA. 12 Las tallas de comercialización\
+    \ se definen para el rape fresco, entero/eviscerado y el rape fresco sin cabeza\
+    \ - https://eur-lex.europa.eu/legal\uFFFEcontent/EN/TXT/PDF/?uri=CELEX:31996R2406\
+    \ Observatorio Europeo del Mercado de los Productos de la Pesca y de la Acuicultura\
+    \ LAS NOTICIAS DESTACADAS DEL MES | NO.8/2026 CASO PRÁCTICO 4 tallas más pequeñas),\
+    \ y a una proporción mayor de filetes utilizables en relación con su peso corporal\
+    \ frente al caso de los individuos de mayor tamaño13 . La primera venta francesas\
+    \ consistió casi de manera exclusiva en Lophius spp. (98% del volumen francés\
+    \ de primera venta) y, en"
+  premise_locator:
+    type: page
+    start: 7
+    end: 8
+  claims:
+  - text: resente documento está autorizada en virtud de la licencia Creative Commons
+      Attribution 4.0 International (CC BY 4.0) (https://creativecommons.org/licenses/by/4.0/).
+    label: unsupported
+- id: eu-c-262
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  split: test
+  premise: 25, la UE-27 importó 22.619 toneladas de rape con un valor de 164 millones
+    de euros, principalmente congelado y entero (50% del valor total de las importaciones)
+    y fresco y entero (45%). El principal proveedor de rape al mercado de la Unión
+    fue el Reino Unido, con un 38% del valor de las importaciones de fuera de la UE,
+    seguido de Namibia (22%), Noruega (13%) y China (12%). Otros proveedores del mercado
+    de la UE fueron Sudáfrica, Estados Unidos y las islas Feroe (con un 9%, un 3%
+    y un 2%, respectivamente, del valor de las importaciones de fuera de la UE en
+    2025). Francia y España fueron los principales importadores, con un 28% del valor
+    de las importaciones de rape de fuera de la UE, seguidos de Italia (12%) y Dinamarca,
+    Portugal y Suecia (7%
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: No es cierto que 25, la UE-27 importó 22.619 toneladas de rape con un valor
+      de 164 millones de euros, principalmente congelado y entero (50% del valor total
+      de las importaciones) y fresco y entero (45%).
+    label: contradicted
+- id: eu-c-263
+  document_id: 06d73220-b88a-11f1-81de-01aa75ed71a1
+  split: test
+  premise: representó el 12% del valor de las exportaciones fuera de la UE, los filetes
+    congelados el 3% y la carne congelada el 1%. Los principales destinos en valor
+    fueron el Reino Unido (58% del valor total), Noruega (16%) y, en menor medida,
+    Andorra (6%), Suiza (3%) y Cuba (3%). Irlanda fue, con creces, el principal exportador
+    de rape a terceros países (57% del valor de las exportaciones fuera de la Unión),
+    seguida de España (18%) y Dinamarca (15%). Las exportaciones fuera de la UE han
+    descendido un 15% en volumen y un 22% en valor nominal con respecto a 2022, debido
+    a un descenso del precio nominal del 8% a lo largo del mismo periodo. Tabla 6.
+    EXPORTACIONES DE RAPE FUERA DE LA UE (toneladas de peso neto, 1.000 EUR, EUR/kg)
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: representó el 13% del valor de las exportaciones fuera de la UE, los filetes
+      congelados el 3% y la carne congelada el 1%.
+    label: contradicted
+- id: eu-c-264
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  split: test
+  premise: EL PRESUPUESTO DE EUROPA HORIZONTE EUROPA (2028-2034) JULIO DE 2025 Horizonte
+    Europa (2028-2034) se basará en los logros de sus predecesores, ampliando lo que
+    funciona, simplificando lo posible y focalizando la inversión en los ámbitos donde
+    Europa más la necesita. Estará estrechamente vinculado al Fondo Europeo de Competitividad.
+    ¿Por qué es una prioridad? Europa (2028-2034) impulsará la productividad y la
+    competitividad de Europa, mientras mejora el bienestar de millones de personas
+    en todo el continente. ¿Qué propone la Comisión? Con una propuesta presupuestaria
+    de 175 000 millones EUR, el nuevo programa se basará en cuatro pilares. Pilar
+    I CIENCIA EXCELENTE 44 079 MILLONES EUR CONSEJO EUROPEO DE INVESTIGACIÓN ACCIONES
+    MARIE SKŁODOWSKA-CURIE CIENCIA PARA LAS POLÍTICAS DE LA UE
+  premise_locator:
+    type: page
+    start: 1
+    end: 1
+  claims:
+  - text: Medio ambiente El estado de la naturaleza en la UE Estado de conservación
+      y tendencias de las especies y los hábitats protegidos por las Directivas de
+      la UE sobre protección de la naturaleza 2013-2018 2 Las Directivas de la UE
+      sobre protección de la naturaleza Las Directivas de l
+    label: unsupported
+- id: eu-c-269
+  document_id: 110f1996-8159-11f0-9af8-01aa75ed71a1
+  split: test
+  premise: 'e adecuadamente la fuente y se indique cualquier cambio (licencia de Creative
+    Commons Attribution 4.0 International). Para la utilización o reproducción de
+    elementos que no sean propiedad de la UE, es posible que sea necesario solicitar
+    autorización directamente a los titulares de derechos correspondientes. Luxemburgo:
+    Oficina de Publicaciones de la Unión Europea, 2025 EL PRESUPUESTO DE EUROPA PDF
+    ISBN 978-92-68-31000-7 doi:10.2777/8521421 KI-01-25-147-ES-N'
+  premise_locator:
+    type: page
+    start: 2
+    end: 2
+  claims:
+  - text: EL PRESUPUESTO DE EUROPA HORIZONTE EUROPA (2028-2034) JULIO DE 2025 Horizonte
+      Europa (2028-2034) se basará en los logros de sus predecesores, ampliando lo
+      que funciona, simplificando lo posible y focalizando la inversión en los ámbitos
+      donde Europa más la necesita.
+    label: unsupported
+- id: eu-f-604
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 5 %) (Ministerio de Educación, Formación Profesional y Deportes, 2024a).
+    Ahora menos estudiantes abandonan la escuela prematuramente que hace una década,
+    pero esta cuestión sigue siendo un reto clave. El porcentaje de personas que abandonan
+    prematuramente la educación y la formación cayó del 20,0 % en 2015 al 13,0 % en
+    2024. Este es el nivel más bajo registrado, aunque se mantiene muy por encima
+    de la media de la UE del 9,4 %19. Sigue habiendo diferencias en términos de género
+    (15,8 % en el caso de los hombres frente al 10,0 % en el caso de las mujeres)
+    y entre comunidades autónomas. Sin embargo, las comunidades autónomas con un desarrollo
+    económico más bajo han reducido drásticamente sus tasas de abandono escolar
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  claims:
+  - text: La Unión Europea (UE) es una unión económica y política única entre veintisiete
+      países europeos, que trabajan juntos para mejorar la vida de las personas en
+      Europa e, incluso, fuera de ella.
+    label: unsupported
+- id: eu-r-404
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'la unión económica y monetaria ¿Qué es la unión económica y monetaria?
+    5 ES ¿Qué es la unión económica y monetaria? La unión económica y monetaria (UEM)
+    es una parte esencial del proceso de integración europea. La UEM contribuye a
+    la estabilidad económica, al crecimiento económico equilibrado, a un alto nivel
+    de empleo y a la sostenibilidad de las finanzas públicas en los Estados miembros.
+    Como su nombre indica, la UEM consta de dos elementos principales: la política
+    económica (la coordinación de las políticas económicas y presupuestarias nacionales
+    de los Estados miembros) y la política monetaria (que abarca el uso la moneda
+    única —el euro— y el ejercicio en común de la soberanía en materia de política
+    monetaria). Todos los Estados miembros de la UE forman parte de la'
+  premise_locator:
+    type: page
+    start: 5
+    end: 7
+  claims:
+  - text: En un mundo fragmentado y más volátil, Europa reconoció que debe asumir
+      una mayor responsabilidad respecto de su futuro.
+    label: unsupported
+- id: eu-r-408
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ', tienen lugar durante el primer semestre de cada año. Los Estados miembros
+    se coordinan a través del Consejo Europeo (que reúne a los jefes de Estado o de
+    Gobierno) y del Consejo (que está formado por los ministros). Los Estados miembros
+    pasan a ser miembros de la unión monetaria una vez que adoptan el euro como moneda.
+    Para poder ingresar en la zona del euro, tienen que asegurarse de que sus economías
+    hayan alcanzado un grado de convergencia suficiente con las de los Estados miembros
+    que ya usan el euro (es decir, deben haber alcanzado niveles de estabilidad presupuestaria,
+    financiera, monetaria y de precios comparables a los de los miembros de la zona
+    del euro). Esta convergencia es necesaria para garantizar el'
+  premise_locator:
+    type: page
+    start: 7
+    end: 7
+  claims:
+  - text: Los Estados miembros se coordinan mediante el Consejo Europeo, que reúne
+      a los jefes de Estado o de Gobierno, y mediante el Consejo, formado por los
+      ministros.
+    label: supported
+- id: eu-r-412
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: de precios comparables a los de los miembros de la zona del euro). Esta
+    convergencia es necesaria para garantizar el buen funcionamiento de la unión monetaria.
+    Por lo tanto, los países que desean incorporarse a la zona del euro tienen que
+    cumplir una serie de condiciones, los llamados criterios de convergencia, que
+    contribuyen a determinar si un país está preparado para integrarse en la unión
+    monetaria. 6 ES Comprender la unión económica y monetaria ⸺ Los países cuya moneda
+    es el euro forman conjuntamente la zona del euro. Ejercen en común su soberanía
+    en materia de política monetaria, que define el Banco Central Europeo (BCE), una
+    institución de la UE independiente. Los Estados miembros de la zona del euro también
+    mantienen debates políticos sobre asuntos que afectan
+  premise_locator:
+    type: page
+    start: 7
+    end: 8
+  claims:
+  - text: La convergencia de las economías es necesaria para que la unión monetaria
+      funcione bien.
+    label: supported
+- id: eu-r-416
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: independiente. Los Estados miembros de la zona del euro también mantienen
+    debates políticos sobre asuntos que afectan al euro en la Cumbre del Euro (que
+    reúne a los jefes de Estado o de Gobierno) y en el Eurogrupo (un foro informal,
+    que forman los ministros de Hacienda de los Estados miembros de la zona del euro).
+    El objetivo de la coordinación de la política económica es velar por el buen funcionamiento
+    de la UEM, ya que las políticas que se aplican en un Estado miembro de la UE pueden
+    repercutir considerablemente en otros Estados miembros. Estos efectos pueden ser
+    incluso más pronunciados entre los Estados miembros de la zona del euro, cuyas
+    economías están más estrechamente entrelazadas por el hecho de compartir la misma
+    moneda. Por lo tanto, las normas de coordinación
+  premise_locator:
+    type: page
+    start: 8
+    end: 8
+  claims:
+  - text: Coordinar la política económica sirve para que la UEM funcione bien, porque
+      las políticas de un Estado miembro pueden afectar mucho a los demás.
+    label: supported
+- id: eu-r-420
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'án más estrechamente entrelazadas por el hecho de compartir la misma moneda.
+    Por lo tanto, las normas de coordinación de las políticas incluyen una serie de
+    requisitos adicionales para los países de la zona del euro. 7 ES ¿Quién hace qué
+    en la unión económica y monetaria? 8 ES Comprender la unión económica y monetaria
+    ⸺ Las funciones de los principales protagonistas de la UEM son las siguientes:
+    Los Estados miembros adoptan la legislación de la UE en el Consejo, elaboran sus
+    presupuestos nacionales de acuerdo con las normas de la UE en materia de déficit
+    y deuda, y establecen sus propias políticas estructurales en relación con el mercado
+    de trabajo, las pensiones y los mercados de capitales. El Consejo Europeo establece
+    la orientación política general y las'
+  premise_locator:
+    type: page
+    start: 8
+    end: 10
+  claims:
+  - text: El Consejo Europeo fija la orientación política general.
+    label: supported
+- id: eu-r-424
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: rabajo, las pensiones y los mercados de capitales. El Consejo Europeo establece
+    la orientación política general y las prioridades de la Unión Europea. El Consejo
+    Europeo está formado por los dirigentes de la UE (jefes de Estado o de Gobierno),
+    el presidente del Consejo Europeo y el presidente de la Comisión Europea. El Consejo
+    Europeo se reúne al menos cuatro veces al año. En la Cumbre del Euro se debaten
+    las orientaciones estratégicas de las políticas económicas con vistas a mejorar
+    la competitividad y la convergencia de la zona del euro, así como la organización
+    institucional de la UEM. La Cumbre del Euro reúne a los dirigentes de la zona
+    del euro, al presidente de la Cumbre del Euro y al presidente de la Comisión Europea.
+    Puede asimismo celebrarse entre los
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: El kit pedagógico incluye tres folletos y un mapa de la Unión Europea.
+    label: unsupported
+- id: eu-r-428
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: euro, al presidente de la Cumbre del Euro y al presidente de la Comisión
+    Europea. Puede asimismo celebrarse entre los dirigentes de los 27 Estados miembros
+    de la UE. También asiste el presidente del BCE. El presidente del Eurogrupo puede
+    ser invitado a estas reuniones. En principio, la Cumbre del Euro se reúne al menos
+    dos veces al año. El Consejo, en su formación de Consejo de Asuntos Económicos
+    y Financieros (el Consejo Ecofin), adopta legislación de la UE, coordina las políticas
+    económicas a escala de la UE y decide si un Estado miembro puede adoptar el euro.
+    Está compuesto por los ministros de Hacienda o Economía de los Estados miembros
+    de la UE. La Comisión y el BCE también participan en las sesiones del Ecofin.
+    En general, el Consejo Ecofin se reúne una vez al mes.
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: El régimen de ayuda agraria prevé ayudas públicas a los agricultores en
+      función de las hectáreas admisibles que exploten.
+    label: unsupported
+- id: eu-r-431
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ropone nueva legislación de la UE y supervisa si los Estados miembros cumplen
+    los objetivos y se ajustan a las normas vigentes, incluidas las normas relativas
+    a la gobernanza económica. Evalúa asimismo la situación económica y hace recomendaciones
+    al Consejo sobre las decisiones que se deben adoptar. El Banco Central Europeo
+    (BCE) es el banco central de la zona del euro. Decide la política monetaria, con
+    la estabilidad de los precios como objetivo principal, por ejemplo mediante la
+    fijación de los tipos de interés de referencia. El Eurosistema, que comprende
+    al BCE y a los bancos centrales nacionales (BCN) de los Estados miembros de la
+    zona del euro, dirige y ejecuta la política monetaria. El Sistema Europeo de Bancos
+    Centrales (SEBC), reúne al BCE y a
+  premise_locator:
+    type: page
+    start: 11
+    end: 11
+  claims:
+  - text: Se evalúa la situación económica y se hacen recomendaciones al Consejo sobre
+      las decisiones que deben adoptarse.
+    label: supported
+- id: eu-r-435
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ona del euro, dirige y ejecuta la política monetaria. El Sistema Europeo
+    de Bancos Centrales (SEBC), reúne al BCE y a los BCN de todos los Estados miembros
+    de la UE, hayan adoptado el euro o no. Todos los bancos centrales de los Estados
+    miembros de la UE son accionistas del BCE. El Mecanismo Europeo de Estabilidad
+    (MEDE) es una institución financiera internacional creada por los Estados miembros
+    de la zona del euro para ayudar a los países de dicha zona amenazados por dificultades
+    financieras graves. Proporciona ayuda financiera bajo ciertas condiciones. Fue
+    creado en septiembre de 2012. Su Consejo de Gobernadores está formado por los
+    ministros de Hacienda de los Estados miembros de la zona del euro. El Parlamento
+    Europeo participa en el proceso legislativo de la UE en
+  premise_locator:
+    type: page
+    start: 11
+    end: 11
+  claims:
+  - text: Los bancos centrales de todos los Estados miembros de la UE poseen acciones
+      del BCE.
+    label: supported
+- id: eu-r-439
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'da de los Estados miembros de la zona del euro. El Parlamento Europeo
+    participa en el proceso legislativo de la UE en determinados ámbitos de la coordinación
+    de la política económica, en calidad de colegislador junto con el Consejo. El
+    Consejo y la Comisión informan periódicamente al Parlamento sobre sus trabajos.
+    La unión económica y monetaria: fechas y acontecimientos clave 11 ES La unión
+    económica y monetaria: fechas y acontecimientos clave El proceso de integración
+    europea es gradual y se caracteriza por avanzar paso a paso en lo que no deja
+    de ser un proyecto evolutivo. Por lo tanto, es difícil señalar con precisión el
+    inicio de la unión económica y monetaria, que hoy sigue construyéndose. Los jefes
+    de Estado o de Gobierno de los miembros de la Comunidad'
+  premise_locator:
+    type: page
+    start: 11
+    end: 13
+  claims:
+  - text: El proceso de integración europea es repentino y se caracteriza por avanzar
+      de golpe.
+    label: contradicted
+- id: eu-r-443
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: económica y monetaria, que hoy sigue construyéndose. Los jefes de Estado
+    o de Gobierno de los miembros de la Comunidad Económica Europea (CEE), predecesora
+    de la Unión Europea, pusieron en marcha formalmente la UEM en una reunión del
+    Consejo Europeo que se celebró en Maastricht (Países Bajos) en diciembre de 1991.
+    El consiguiente nuevo Tratado celebrado por los entonces Estados miembros, conocido
+    como «Tratado de Maastricht» o «Tratado de la Unión Europea», incorporó las disposiciones
+    necesarias para el desarrollo de la UEM. La década de 1970 El proyecto inicial
+    Aunque el Tratado de Maastricht de 1992 representa el nacimiento formal de la
+    UEM, el concepto de unión económica y monetaria llevaba desarrollándose ya al
+    menos dos décadas. A petición de los
+  premise_locator:
+    type: page
+    start: 13
+    end: 13
+  claims:
+  - text: El proyecto inicial de unión económica y monetaria se presentó en la década
+      de 2 970.
+    label: contradicted
+- id: eu-r-447
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: conómica y monetaria y el nacimiento del euro La primera fase del Informe
+    Delors se llevó a cabo solo un año después de su publicación, por medio de una
+    decisión del Consejo Europeo, de junio de 1989, por la que se abolían todas las
+    restricciones a los movimientos de capitales entre los Estados miembros a partir
+    de julio de 1990. Los diferentes elementos de las fases segunda y tercera se llevaron
+    a la práctica a lo largo de la década de 1990, a raíz del Tratado de Maastricht,
+    que puso en marcha formalmente el proyecto de la UEM. Los criterios de convergencia
+    para ingresar en la zona del euro Entre otras cosas, el Tratado de Maastricht
+    definió una serie de criterios que debe cumplir un Estado miembro para adoptar
+    el euro
+  premise_locator:
+    type: page
+    start: 15
+    end: 15
+  claims:
+  - text: El Tratado de Maastricht definió una serie de criterios que un Estado miembro
+      debe cumplir para adoptar el euro.
+    label: supported
+- id: eu-r-451
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'osas, el Tratado de Maastricht definió una serie de criterios que debe
+    cumplir un Estado miembro para adoptar el euro como moneda. Se conocen como criterios
+    de convergencia, o criterios de Maastricht, y son los siguientes: 14 ES Comprender
+    la unión económica y monetaria ⸺ • Estabilidad de precios. La tasa de inflación
+    no puede exceder en más de 1,5 puntos porcentuales de la tasa de los tres Estados
+    miembros con mejores resultados en la materia. • Finanzas públicas saneadas y
+    sostenibles. El Estado miembro no debe ser objeto de lo que se conoce como «procedimiento
+    de déficit excesivo», es decir que, en principio, el déficit público no debe superar
+    el 3 % de su producto interior bruto (PIB, el valor total de la producción de
+    bienes, servicios, etc. de un'
+  premise_locator:
+    type: page
+    start: 15
+    end: 16
+  claims:
+  - text: Los criterios de convergencia, también llamados criterios de Maastricht,
+      incluyen la estabilidad de precios.
+    label: supported
+- id: eu-r-455
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: e superar el 3 % de su producto interior bruto (PIB, el valor total de
+    la producción de bienes, servicios, etc. de un Estado) y su deuda pública no debe
+    superar el 60 % del PIB. • Tipos de interés a largo plazo. El tipo de interés
+    a largo plazo no debe exceder en más de dos puntos porcentuales del tipo de los
+    tres Estados miembros con mejores resultados en materia de estabilidad de precios.
+    • Estabilidad del tipo de cambio. El país debe participar en el mecanismo de tipos
+    de cambio (MTC II) durante al menos dos años, sin desviaciones significativas
+    con respecto al tipo central del MTC II y sin devaluar el tipo central bilateral
+    de su moneda respecto del euro durante dicho periodo. Además, los aspirantes a
+    ingresar en la zona del euro también deben
+  premise_locator:
+    type: page
+    start: 16
+    end: 16
+  claims:
+  - text: En septiembre de 2024, los líderes mundiales adoptaron el Pacto para el
+      Futuro, que incluye compromisos para proteger las necesidades de las generaciones
+      futuras y garantizar que las decisiones se tomen teniendo en cuenta sus intereses.
+    label: unsupported
+- id: eu-r-459
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'u moneda respecto del euro durante dicho periodo. Además, los aspirantes
+    a ingresar en la zona del euro también deben garantizar que su legislación nacional
+    sea compatible con el Tratado y con los Estatutos del Sistema Europeo de Bancos
+    Centrales (SEBC) y del Banco Central Europeo (BCE). El Tratado y los Estatutos
+    prevén la independencia de los bancos centrales. En última instancia, todos los
+    Estados miembros de la UE deben adoptar el euro, excepto Dinamarca, que ha optado
+    por no participar. No obstante, Dinamarca puede solicitar ser miembro de la zona
+    del euro si así lo decide. 15 ES La unión económica y monetaria: fechas y acontecimientos
+    clave ¿QUÉ ES EL MECANISMO DE TIPOS DE CAMBIO? El propósito del mecanismo de tipos
+    de cambio (MTC II, el sucesor del mecanismo'
+  premise_locator:
+    type: page
+    start: 16
+    end: 17
+  claims:
+  - text: Los países que aspiran a entrar en la zona del euro deben asegurar que su
+      legislación nacional sea compatible con el Tratado y con los Estatutos del SEBC
+      y del BCE.
+    label: supported
+- id: eu-r-462
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ES EL MECANISMO DE TIPOS DE CAMBIO? El propósito del mecanismo de tipos
+    de cambio (MTC II, el sucesor del mecanismo de tipos de cambio inicial) es demostrar
+    que la economía de un país puede funcionar correctamente sin recurrir a fluctuaciones
+    monetarias excesivas. Cuando un país que no pertenece a la zona del euro se adhiere
+    al MTC II, su moneda nacional queda vinculada al euro a un tipo central que se
+    acuerda con los Estados miembros de la zona del euro, los países que no pertenecen
+    a esta zona y que ya participan en el MTC II y el BCE, con la participación de
+    la Comisión. La moneda puede entonces fluctuar entre los límites normalizados
+    del 15 % por encima o por debajo de dicho tipo de cambio central acordado. Los
+    Estados miembros participantes pueden someterse
+  premise_locator:
+    type: page
+    start: 17
+    end: 17
+  claims:
+  - text: Las misiones de la UE son iniciativas a gran escala para restaurar el océano
+      y las aguas de Europa.
+    label: unsupported
+- id: eu-r-466
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: or encima o por debajo de dicho tipo de cambio central acordado. Los Estados
+    miembros participantes pueden someterse unilateralmente a márgenes de fluctuación
+    más estrechos. Dado que la participación en el MTC II es un requisito indispensable
+    para la adopción del euro, todos los Estados miembros de la UE, excepto Dinamarca,
+    deberían de incorporarse en algún momento al mecanismo. Desde 2018, los países
+    que desean unirse al MTC II acuerdan con las partes en el MTC II una hoja de ruta
+    que prevé el cumplimiento de una serie de compromisos políticos, como el establecimiento
+    de una cooperación estrecha con los servicios de supervisión bancaria del BCE
+    en el momento en que sus monedas se incorporan al MTC II. 16 ES Comprender la
+    unión económica y monetaria ⸺ La década de 2000
+  premise_locator:
+    type: page
+    start: 17
+    end: 18
+  claims:
+  - text: No es cierto que los Estados miembros participantes pueden someterse unilateralmente
+      a márgenes de fluctuación más estrechos.
+    label: contradicted
+- id: eu-r-470
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: n del Mecanismo Europeo de Estabilidad, la implantación de un marco de
+    gobernanza económica más sólido y la puesta en marcha de la unión bancaria fueron
+    algunas de las soluciones dadas, seguidas de una reflexión sobre la realización
+    de la UEM. 20 ES Comprender la unión económica y monetaria ⸺ El Mecanismo Europeo
+    de Estabilidad Tras la creación de algunos instrumentos de asistencia financiera
+    ad hoc o temporales, en 2012 se estableció un Mecanismo Europeo de Estabilidad
+    (MEDE) permanente. Su propósito es prestar asistencia financiera a los Estados
+    miembros de la zona del euro que sufran o corran riesgo de sufrir dificultades
+    financieras que pudieran dar lugar a riesgos de estabilidad para la zona del euro
+    en su conjunto
+  premise_locator:
+    type: page
+    start: 21
+    end: 22
+  claims:
+  - text: No es cierto que el propósito del Mecanismo Europeo de Estabilidad sea prestar
+      asistencia financiera a los Estados miembros de la zona del euro que sufran
+      o corran riesgo de sufrir dificultades financieras.
+    label: contradicted
+- id: eu-r-474
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'rnamental y celebrado en 2012, han consagrado una regla de equilibrio
+    presupuestario en sus legislaciones nacionales. Se introdujo una supervisión más
+    sistemática de los desequilibrios económicos y se puso en marcha un procedimiento
+    para corregir los desequilibrios económicos excesivos. Los Estados miembros de
+    la zona del euro en los que se hayan detectado graves dificultades financieras
+    que puedan afectar a otros Estados miembros podrán ser sometidos a una «supervisión
+    reforzada», con un seguimiento y requisitos de información más estrictos, que
+    puede desembocar en una recomendación para preparar un programa de ajuste. Los
+    Estados miembros de la zona del 21 ES La unión económica y monetaria: fechas y
+    acontecimientos clave'
+  premise_locator:
+    type: page
+    start: 22
+    end: 23
+  claims:
+  - text: En un mundo fragmentado y más volátil, Europa reconoció que debe asumir
+      una mayor responsabilidad respecto de su futuro.
+    label: unsupported
+- id: eu-r-478
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'el euro sobre la base de propuestas de la Comisión. El incumplimiento
+    por los Estados miembros de la zona del euro de las normas establecidas de común
+    acuerdo puede dar lugar a la imposición de multas. El refuerzo de la estabilidad
+    financiera: la unión bancaria Un sector bancario estable y que funcione correctamente
+    es una cuestión de interés común, especialmente para los Estados miembros de la
+    zona del euro. Consciente de ello, la Cumbre del Euro de junio de 2012 puso en
+    marcha la unión bancaria con el objetivo de desvincular a los gobiernos de sus
+    sectores bancarios nacionales y garantizar así que los bancos no viables no tengan
+    que ser rescatados con el dinero de los contribuyentes, además de promover la
+    integración financiera de la UE.'
+  premise_locator:
+    type: page
+    start: 23
+    end: 23
+  claims:
+  - text: Si los Estados miembros de la zona del euro incumplen las normas acordadas
+      en común, pueden recibir multas.
+    label: supported
+- id: eu-r-482
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: tengan que ser rescatados con el dinero de los contribuyentes, además de
+    promover la integración financiera de la UE. La unión bancaria comenzó con la
+    centralización de la supervisión bancaria en el BCE a través del establecimiento
+    de un Mecanismo Único de Supervisión (MUS). Más tarde se añadió un segundo pilar,
+    que supuso centralizar la resolución bancaria mediante la creación de un Mecanismo
+    Único de Resolución (MUR), cuyo órgano central es la Junta Única de Resolución
+    (JUR). En determinadas condiciones, la JUR puede recurrir al Fondo Único de Resolución
+    (FUR), financiado con contribuciones del sector bancario, para apoyar la resolución
+    de los bancos no viables. El BCE y la JUR colaboran estrechamente con las autoridades
+  premise_locator:
+    type: page
+    start: 23
+    end: 23
+  claims:
+  - text: Después se añadió un segundo pilar de la unión bancaria que centraliza la
+      resolución bancaria con un Mecanismo Único de Resolución, cuyo órgano central
+      es la Junta Única de Resolución.
+    label: supported
+- id: eu-r-486
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ario, para apoyar la resolución de los bancos no viables. El BCE y la JUR
+    colaboran estrechamente con las autoridades nacionales de supervisión y resolución
+    para la aplicación de estos mecanismos. Se aseguran de que se aplica de forma
+    congruente el «código normativo único», la normativa sobre el sector financiero
+    que los Estados miembros de la zona del euro están obligados a cumplir. Para dichos
+    Estados miembros es obligatorio formar parte 22 ES Comprender la unión económica
+    y monetaria ⸺ de la unión bancaria, mientras que es optativo para los Estados
+    miembros que no participan en la zona del euro. Por su parte, el BCE añadió a
+    su conjunto de herramientas el programa de Operaciones Monetarias de Compraventa
+    con el fin
+  premise_locator:
+    type: page
+    start: 23
+    end: 24
+  claims:
+  - text: No es cierto que se aseguran de que se aplica de forma congruente el «código
+      normativo único», la normativa sobre el sector financiero que los Estados miembros
+      de la zona del euro están obligados a cumplir.
+    label: contradicted
+- id: eu-r-489
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'de sus recomendaciones. Entre otras cosas, se creó el Consejo Fiscal Europeo(
+    2 ), se iniciaron los trabajos en torno al tercer pilar de la unión bancaria (el
+    Sistema Europeo de Seguro de Depósitos) y se concibió un plan de acción para la
+    unión de los mercados de capitales. En diciembre de 2017, los dirigentes designaron
+    como prioridades la realización de la unión bancaria y seguir desarrollando el
+    MEDE. 1 Juncker, J.-C.: Realizar la Unión Económica y Monetaria europea , Comisión
+    Europea, 2015. 2 El Consejo Fiscal Europeo proporciona asesoramiento y evaluaciones
+    a la Comisión sobre la orientación general de la política presupuestaria de la
+    zona del euro. Este organismo independiente está compuesto por cinco expertos'
+  premise_locator:
+    type: page
+    start: 24
+    end: 24
+  claims:
+  - text: No es cierto que el Consejo Fiscal Europeo, organismo independiente, esté
+      compuesto por cinco expertos.
+    label: contradicted
+- id: eu-r-493
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'ral de la política presupuestaria de la zona del euro. Este organismo
+    independiente está compuesto por cinco expertos internacionales, cuya labor sustenta
+    el trabajo desarrollado por la Comisión en materia de supervisión y cumplimiento
+    del Pacto de Estabilidad y Crecimiento. 23 ES La unión económica y monetaria:
+    fechas y acontecimientos clave En diciembre de 2018, añadieron un «instrumento
+    presupuestario de convergencia y competitividad» para la zona del euro y los Estados
+    miembros del MTC II interesados. Cuando, en 2020, se declaró la pandemia de COVID-19,
+    se suspendieron los trabajos sobre el instrumento presupuestario, pero este sirvió
+    de modelo para el Mecanismo de Recuperación y Resiliencia, la piedra angular del
+    programa NextGenerationEU, creado para ayudar a las economías'
+  premise_locator:
+    type: page
+    start: 24
+    end: 25
+  claims:
+  - text: El organismo independiente de la zona del euro está compuesto por cinco
+      expertos internacionales, cuyo trabajo respalda la labor de la Comisión en materia
+      de supervisión y cumplimiento del Pacto de Estabilidad y Crecimiento.
+    label: supported
+- id: eu-r-497
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: ismo Europeo de Estabilidad (MEDE). Los cambios consistían en una línea
+    de crédito precautoria del MEDE más accesible para los Estados miembros con necesidad
+    de ayuda financiera, un mayor protagonismo del MEDE en la prevención y gestión
+    de las crisis económicas en la zona del euro, un enfoque más transparente de la
+    evaluación de la sostenibilidad de la deuda pública de los Estados miembros y
+    una línea de crédito, o «mecanismo común de protección», para el Fondo Único de
+    Resolución de la unión bancaria. Este fondo de emergencia puede utilizarse para
+    apoyar la resolución de los bancos en dificultades, siempre que se cumplan determinadas
+    condiciones. El mecanismo de protección del MEDE aumenta la credibilidad del marco
+    común de resolución de entidades de crédito.
+  premise_locator:
+    type: page
+    start: 26
+    end: 26
+  claims:
+  - text: No es cierto que el fondo de emergencia del Fondo Único de Resolución pueda
+      utilizarse para apoyar la resolución de bancos en dificultades, siempre que
+      se cumplan determinadas condiciones.
+    label: contradicted
+- id: eu-r-501
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: en reforzar el marco común para la gestión de crisis bancarias y los sistemas
+    nacionales de garantía de depósitos. El Eurogrupo se comprometió a determinar
+    posteriormente, de manera consensuada, las posibles medidas adicionales para la
+    realización de la unión bancaria. Las instituciones de la UE y los Estados miembros
+    siguen trabajando para adaptar la UEM a un mundo cambiante y a las necesidades
+    modernas. Las nuevas ideas y proyectos se examinan minuciosamente, se debaten
+    con detenimiento y se ponen en marcha con precaución. La posible creación de un
+    euro digital y la revisión del marco de gobernanza económica de la UE son solo
+    algunos ejemplos de esta labor. III ES AVISO DE EDICIÓN La presente publicación
+    ha sido elaborada por la Secretaría General del Consejo de
+  premise_locator:
+    type: page
+    start: 26
+    end: 27
+  claims:
+  - text: En la labor de adaptar la UEM a un mundo cambiante, la posible creación
+      de un euro digital y la revisión del marco de gobernanza económica de la UE
+      son solo algunos ejemplos.
+    label: supported
+- id: eu-r-505
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: 'esta labor. III ES AVISO DE EDICIÓN La presente publicación ha sido elaborada
+    por la Secretaría General del Consejo de la Unión Europea y está destinada a fines
+    exclusivamente informativos. No supone responsabilidad alguna de las instituciones
+    de la Unión Europea ni de los Estados miembros. Si desea más información sobre
+    el Consejo Europeo y el Consejo de la Unión Europea, póngase en contacto con el
+    Servicio de Información al Público de la Secretaría General del Consejo: — www.consilium.europa.eu/es/infopublic
+    — Ni el Consejo de la Unión Europea ni ninguna persona que actúe en nombre del
+    Consejo podrán ser considerados responsables del uso que pudiera hacerse de la
+    información contenida en la presente publicación. —'
+  premise_locator:
+    type: page
+    start: 26
+    end: 27
+  claims:
+  - text: Esta publicación la elaboró la Secretaría General del Consejo de la Unión
+      Europea y tiene fines solo informativos.
+    label: supported
+- id: eu-r-509
+  document_id: 9cf1c742-2448-11ee-94cb-01aa75ed71a1
+  split: test
+  premise: Europea, 2023 © Unión Europea, 2023 Para la utilización o reproducción
+    de elementos que no sean propiedad de la Unión Europea, puede que sea necesario
+    solicitar autorización directamente a los titulares de los derechos respectivos.
+    — ES_2023_1349 — Rue de la Loi/Wetstraat 175 1048 Bruxelles • Brussel Belgique
+    • België Tel. +32 (0)2 281 61 11 — consilium.europa.eu — /eucouncil
+  premise_locator:
+    type: page
+    start: 27
+    end: 28
+  claims:
+  - text: Los derechos de autor de esta publicación son de la Unión Europea, año 3
+      023.
+    label: contradicted
+- id: eu-r-513
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 't, [trng_aes_100], excluida la formación guiada en el lugar de trabajo;
+    8 = Eurostat, [educ_uoe_enra03]; 9 = Eurostat, [educ_uoe_enrt03]; 10 = cálculos
+    de la Comisión Europea (Centro Común de Investigación) sobre la base de los datos
+    del Programa para la Evaluación Internacional de Alumnos (PISA) de 2022 de la
+    OCDE; 11 = IEA (ICCS). Puede encontrarse más información (incluido el desglose
+    por género o el grado de urbanización) en la caja de herramientas del Monitor.
+    Notas: el indicador utilizado (educación infantil) se refiere a los programas
+    de educación infantil y atención a la infancia (EIAI) que, según la Clasificación
+    Internacional Normalizada de la Educación (CINE), son «educativos»'
+  premise_locator:
+    type: page
+    start: 6
+    end: 6
+  claims:
+  - text: En la caja de herramientas del Monitor hay más información, incluido el
+      desglose por género o por grado de urbanización.
+    label: supported
+- id: eu-r-517
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: al de Educación, Juventud, Deporte y Cultura, a partir de datos de Eurostat
+    (encuesta EPA de 2024 y datos de la UOE de 2023) y de la OCDE (informe PISA de
+    2022). Monitor de la Educación y la Formación de 2025 España 7 Resumen de la situación
+    España tiene una de las mayores tasas de participación en la educación infantil
+    y atención a la infancia (EIAI) en la UE. Los esfuerzos actuales se centran en
+    apoyar a los niños y las niñas desfavorecidos mediante una reducción de las tasas
+    y la admisión prioritaria. El porcentaje de personas que abandonan prematuramente
+    la educación y la formación está disminuyendo y el descenso de las competencias
+    básicas fue menos pronunciado que en la mayoría de los demás
+  premise_locator:
+    type: page
+    start: 7
+    end: 8
+  claims:
+  - text: España tiene una de las mayores tasas de participación en la educación infantil
+      y atención a la infancia de la UE.
+    label: supported
+- id: eu-r-520
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: lados en educación superior ha alcanzado el objetivo a escala de la UE
+    y sigue aumentando. Sin embargo, el mercado de trabajo español no puede absorber
+    el elevado número de titulados, lo que da lugar a la mayor tasa de sobrecualificación
+    de la UE. Al mismo tiempo, la demanda de especialistas en ciencia, tecnología,
+    ingeniería y matemáticas (CTIM) supera la oferta, mientras que la matriculación
+    a nivel terciario es inferior a la media de la UE y está disminuyendo, lo que
+    apunta a un desajuste entre la educación superior y la demanda del mercado de
+    trabajo. 8 Monitor de la Educación y la Formación de 2025 España 1. EDUCACIÓN
+    CTIM La demanda de especialistas en CTIM supera la oferta, especialmente en lo
+    que respecta a las tecnologías de la información y de las
+  premise_locator:
+    type: page
+    start: 8
+    end: 9
+  claims:
+  - text: El mercado de trabajo español no puede absorber a tantos titulados, y por
+      eso tiene la mayor tasa de sobrecualificación de la UE.
+    label: supported
+- id: eu-r-524
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: specialistas en CTIM supera la oferta, especialmente en lo que respecta
+    a las tecnologías de la información y de las comunicaciones (TIC). La demanda
+    de profesionales en CTIM (ciencia, tecnología, ingeniería y matemáticas) está
+    aumentando mucho más rápido que la oferta de titulados del sistema educativo,
+    lo que da lugar a una escasez de especialistas cualificados en estas disciplinas
+    (Fundación CYD, 2024). Según el Servicio Público de Empleo Estatal (SEPE), España
+    necesita más de 1,39 millones de especialistas en TIC adicionales para cumplir
+    el objetivo de la Década Digital de la UE para 2030 de que el 10 % del empleo
+    total se encuentre en los sectores de las TIC. Esto indica que es poco probable
+    que España, que actualmente se sitúa en el 4,4 %,
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  claims:
+  - text: La demanda de profesionales en CTIM (ciencia, tecnología, ingeniería y matemáticas)
+      está aumentando mucho más rápido que la oferta de titulados del sistema educativo,
+      lo que da lugar a una escasez de especialistas cualificados en estas disciplinas
+      (Fundación CYD, 3 024).
+    label: contradicted
+- id: eu-r-528
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: entre en los sectores de las TIC. Esto indica que es poco probable que
+    España, que actualmente se sitúa en el 4,4 %, cumpla el objetivo para 2030 (Comisión
+    Europea, 2024; SEPE, 2023). Mientras tanto, si bien el empleo creció con mayor
+    rapidez en los sectores de la electricidad y el gas (+ 14,9 %) y de las TIC (+
+    10,3 %) en 20241 , persiste la escasez de mano de obra en los sectores ecológico
+    y digital, donde las ofertas de empleo por trabajador superan la media en un 52
+    y un 212 %, respectivamente (OCDE, 2024). Esto pone de relieve una brecha cada
+    vez mayor entre la oferta y la demanda de competencias. La reducida matriculación
+    en CTIM limita la capacidad de respuesta del sistema. La matriculación en CTIM
+    en la educación superior
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  claims:
+  - text: Es poco probable que España, que ahora está en el 4,4 %, alcance el objetivo
+      fijado para 2030.
+    label: supported
+- id: eu-r-532
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'orto. 6 Eurostat: educ_uoe_enra30. 7 Eurostat: educ_uoe_enrs10. A pesar
+    de los avances, persisten las desigualdades de género en los ámbitos CTIM que
+    afectan a la matriculación. En 2023, el 28,6 % de los estudiantes de educación
+    superior matriculados en disciplinas CTIM eran mujeres, lo que representa uno
+    de los porcentajes más bajos de la UE, por debajo de la media de la UE del 32,2
+    % y del objetivo propuesto por la UE del 40 %10. Las mujeres representaban el
+    47,8 % de los estudiantes matriculados en ciencias naturales y matemáticas (UE:
+    51,5 %), el 27,1 % en ingeniería (UE: 27,7 %)11 y solo el 15,9 % en TIC (UE: 20,3
+    %)12. Reducir la brecha de género en las TIC podría ayudar a España a alcanzar
+    los objetivos de la Década Digital para 2030'
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  claims:
+  - text: En 2023, el 28,6 % de los estudiantes de educación superior matriculados
+      en disciplinas CTIM eran mujeres, uno de los porcentajes más bajos de la UE,
+      por debajo de la media del 32,2 % y del objetivo del 40 %.
+    label: supported
+- id: eu-r-536
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'Reducir la brecha de género en las TIC podría ayudar a España a alcanzar
+    los objetivos de la Década Digital para 2030 mencionados anteriormente. Además,
+    solo el 11,2 % de los estudiantes de EFP de grado medio eran mujeres (UE: 15,4
+    %, objetivo a escala de la UE: 25 %). A nivel de doctorado, las mujeres están
+    algo mejor representadas que en la EFP de grado medio y en los niveles inferiores
+    de educación superior. España no cuenta con una estrategia específica en materia
+    de CTIM, pero aplica un plan de competencias digitales, así como diversas iniciativas
+    relacionadas con las CTIM. España puso en marcha el Plan Nacional de Competencias
+    Digitales en 2021, asignando un presupuesto de 3 750 millones EUR para impulsar
+    las competencias digitales en los ámbitos de la educación,'
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  claims:
+  - text: No es cierto que a nivel de doctorado, las mujeres están algo mejor representadas
+      que en la EFP de grado medio y en los niveles inferiores de educación superior.
+    label: contradicted
+- id: eu-r-540
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: EFP en inteligencia artificial (IA) y datos e incorporó módulos de sostenibilidad
+    y digitales en todos los programas. Además, el plan de recuperación y resiliencia
+    apoyó la integración de cincuenta centros en la recién creada red estatal de centros
+    de excelencia de formación profesional y apoyará la conversión de 1 253 aulas
+    en aulas tecnológicas. España también está poniendo en marcha iniciativas como
+    la Alianza STEAM por el talento femenino13, que promueve las vocaciones CTIM entre
+    las niñas y mujeres jóvenes, y ChicaSTEM14, que fomenta la participación de mujeres
+    y niñas de todas las edades en las disciplinas técnicas. Estas iniciativas ofrecen
+    información y recursos para aumentar la sensibilización y el interés y animar
+    a las mujeres y niñas a participar
+  premise_locator:
+    type: page
+    start: 9
+    end: 9
+  claims:
+  - text: En septiembre de 2024, los líderes mundiales adoptaron el Pacto para el
+      Futuro, que incluye compromisos para proteger las necesidades de las generaciones
+      futuras y garantizar que las decisiones se tomen teniendo en cuenta sus intereses.
+    label: unsupported
+- id: eu-r-544
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'iene una de las mayores tasas de participación en la educación infantil
+    y atención a la infancia (EIAI) en la UE. La participación de los niños y las
+    niñas de entre tres años y la edad de escolarización obligatoria en la educación
+    infantil y atención a la infancia ha superado el objetivo del 96 % a escala de
+    la UE (97,7 % frente a UE: 94,6 % en 2023). España también es uno de los países
+    de la UE con las mayores tasas de participación en servicios profesionales de
+    atención a la infancia para el grupo de edad de cero a dos años (55 % frente a
+    la UE: 39,3 % en 2024). Ha incrementado desde el 39,8 % en 2015, como resultado
+    de las inversiones sostenidas en el aumento de las capacidades, en particular
+    con el apoyo del Fondo Europeo de Desarrollo Regional y del Mecanismo de'
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: 'En 2024, España también figura entre los países de la UE con mayor participación
+      en servicios profesionales de atención a la infancia de cero a dos años: un
+      55 % frente a la media de la UE del 39,3 %.'
+    label: supported
+- id: eu-r-548
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: l aumento de las capacidades, en particular con el apoyo del Fondo Europeo
+    de Desarrollo Regional y del Mecanismo de Recuperación y Resiliencia. A partir
+    de los tres años, las plazas en centros de educación infantil y atención a la
+    infancia subvencionados con fondos públicos están garantizadas de forma gratuita.
+    La brecha entre el final del permiso por cuidado de los hijos y una plaza garantizada
+    en un centro EIAI es de dos años y medio, pero se han anunciado planes para aumentar
+    dicho permiso. Además, se han introducido iniciativas para promover la EIAI en
+    zonas con una población total reducida, una elevada proporción de migrantes, unos
+    costes de vivienda más bajos y servicios básicos limitados (Comisión Europea,
+    2025b).
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: Desde los tres años, las plazas de educación infantil subvencionadas con
+      fondos públicos están garantizadas de forma gratuita.
+    label: supported
+- id: eu-r-551
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: a proporción de migrantes, unos costes de vivienda más bajos y servicios
+    básicos limitados (Comisión Europea, 2025b). España está trabajando para ampliar
+    la participación de los niños y las niñas desfavorecidos. España tiene una de
+    las mayores proporciones de niños y niñas menores de seis años en riesgo de pobreza
+    y exclusión social (34,1 % frente a la media de la UE del 23,5 %). El riesgo ha
+    aumentado en 5,6 p.p. desde 2015 (frente a una disminución de 1,3 p.p. en la media
+    de la UE). Los niños y las niñas en riesgo de pobreza menores de tres años tienden
+    a participar menos (41,1 %) que sus homólogos (55 %). Sin embargo, esta cifra
+    sigue siendo significativamente superior a la media de la UE (23,6 %). España
+    aborda la situación de estos niños y niñas
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: España trabaja para aumentar la participación de la infancia desfavorecida.
+    label: supported
+- id: eu-r-555
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: ue siendo significativamente superior a la media de la UE (23,6 %). España
+    aborda la situación de estos niños y niñas mediante una reducción de las tasas
+    y dando prioridad en la admisión, medidas que también están dirigidas a los niños
+    y las niñas con necesidades educativas especiales, los que tienen alguna discapacidad
+    y los que tienen hermanos en EIAI o en el mismo centro (Comisión Europea, 2025b).
+    Para garantizar la calidad, las instituciones de educación infantil y atención
+    a la infancia deben contar con personal especializado. En los centros de EIAI,
+    un miembro del personal debe poseer una cualificación CINE 6 (grado universitario)
+    en educación infantil. Esta persona es responsable del plan pedagógico y de la
+    coordinación del equipo. Los aspirantes a la dirección de
+  premise_locator:
+    type: page
+    start: 10
+    end: 10
+  claims:
+  - text: En un mundo fragmentado y más volátil, Europa reconoció que debe asumir
+      una mayor responsabilidad respecto de su futuro.
+    label: unsupported
+- id: eu-r-559
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'il. Esta persona es responsable del plan pedagógico y de la coordinación
+    del equipo. Los aspirantes a la dirección de instituciones de EIAI deben tener
+    experiencia previa en EIAI y haber completado un proceso de formación estructurado
+    (que incluya formación relacionada con gestión) antes de asumir la dirección.
+    También deben asistir a un curso de actualización al cabo de ocho años (Comisión
+    Europea, 2025b). Gráfico 1: participación en la EIAI de niños y niñas menores
+    de tres años (todos) y de niños y niñas en riesgo de pobreza o exclusión social
+    (ERPE) y no ERPE (%) en 2024, España frente a la UE Fuente: Eurostat, ILC, ilc_caindform25b.
+    10 Monitor de la Educación y la Formación de 2025 España 3. EDUCACIÓN ESCOLAR
+    Y COMPETENCIAS BÁSICAS'
+  premise_locator:
+    type: page
+    start: 10
+    end: 11
+  claims:
+  - text: No es cierto que el miembro del personal con cualificación CINE 6 en los
+      centros de EIAI sea responsable del plan pedagógico y de la coordinación del
+      equipo.
+    label: contradicted
+- id: eu-r-563
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: '26,2 %) y una quinta parte en ciencias (21,3 %, UE: 24,2 %). Además, el
+    porcentaje de alumnos con un alto rendimiento académico está muy por debajo de
+    la media de la UE, con un 5,9 % en matemáticas (frente a la UE: 7,9 %) y un 4,9
+    % en ciencias (frente a la UE: 6,9 %), lo que reduce el número de candidatos para
+    profesiones CTIM. En la encuesta de 2023 del Estudio Internacional de Tendencias
+    en Matemáticas y Ciencias (TIMSS, por sus siglas en inglés), los alumnos españoles
+    de cuarto curso de educación primaria obtuvieron unos resultados inferiores a
+    la media de la UE (498 puntos en matemáticas [frente a la UE: 514] y 504 en ciencias
+    [frente a la UE: 513 puntos]). Solo el 4,2 % alcanza un nivel avanzado en matemáticas
+    y el 3,9 % en ciencias, lo que confirma la'
+  premise_locator:
+    type: page
+    start: 11
+    end: 11
+  claims:
+  - text: Las directrices de la UE para docentes y educadores explican qué son los
+      contenidos educativos digitales.
+    label: unsupported
+- id: eu-r-567
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: ón informática y de gestión de la información para desenvolverse en el
+    mundo digital. El Estudio Internacional sobre Competencia Digital (ICILS, por
+    sus siglas en inglés) pone a prueba la alfabetización informática y en materia
+    de información de los alumnos de la primera etapa de educación secundaria (catorce
+    años). En 2023, los alumnos españoles alcanzaron una media de 495 puntos, por
+    lo tanto, muy cerca de la media de la UE (493)15 (Ministerio de Educación, Formación
+    Profesional y Deportes, 2024a). El bajo rendimiento en competencias digitales,
+    es decir, el porcentaje de alumnos que no alcanza el nivel 2 del ICILS, es superior
+    en España (44,4 %) a la media de la UE (42,5 %) y está lejos del objetivo del
+    15 % a escala de la UE (Comisión Europea, 2025a). Esto
+  premise_locator:
+    type: page
+    start: 11
+    end: 11
+  claims:
+  - text: El kit pedagógico incluye tres folletos y un mapa de la Unión Europea.
+    label: unsupported
+- id: eu-r-571
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: '%) a la media de la UE (42,5 %) y está lejos del objetivo del 15 % a escala
+    de la UE (Comisión Europea, 2025a). Esto significa que demasiados alumnos no saben
+    utilizar el ordenador para realizar tareas básicas y explícitas de recogida y
+    gestión de información ni crear productos documentales sencillos que se ajusten
+    a las convenciones de diseño y configuración estándar (Fraillon, 2024). Para mejorar
+    la alfabetización digital, España ha puesto en marcha el Plan de Digitalización
+    y Competencias Digitales del Sistema Educativo (Plan #DigEdu)16, con una asignación
+    de más de 1 660 millones EUR. El plan prevé la distribución de 300 000 dispositivos
+    portátiles por parte de las comunidades autónomas, la instalación de sistemas
+    digitales interactivos en 240 000 aulas en todo'
+  premise_locator:
+    type: page
+    start: 11
+    end: 11
+  claims:
+  - text: El plan prevé que las comunidades autónomas distribuyan 300 000 dispositivos
+      portátiles y que se instalen sistemas digitales interactivos en 240 000 aulas
+      de todo el país.
+    label: supported
+- id: eu-r-575
+  document_id: 3b55834e-bf89-11f0-a612-01aa75ed71a1
+  split: test
+  premise: 'rofesional y Deportes, 2023). En España, la exposición a la información
+    mediática se asoció muy positivamente con los conocimientos cívicos, al igual
+    que la percepción de los alumnos de haber aprendido sobre cuestiones cívicas en
+    la escuela y tener experiencia con el voto (Schulz et al., 2023). Por otro lado,
+    de los países participantes, los estudiantes españoles registraron el mayor porcentaje
+    de sentimiento de pertenencia a la UE (90 %, media de la UE: 81 %) y el 95 % declaró
+    identificarse como europeo (Damiani et al., 2024). En las escuelas se está extendiendo
+    cada vez más la prohibición del uso de teléfonos inteligentes. En España, las
+    normas sobre el uso de teléfonos móviles en las aulas de educación primaria y
+    secundaria difieren entre'
+  premise_locator:
+    type: page
+    start: 12
+    end: 12
+  claims:
+  - text: Cada vez más escuelas prohíben el uso de teléfonos inteligentes.
+    label: supported

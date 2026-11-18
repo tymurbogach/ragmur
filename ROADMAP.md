@@ -325,16 +325,16 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [x] Cuatro veredictos: `supported`, `weak`, `unsupported`, `contradicted`
 - [x] `POST /v1/verify` — entrada: texto redactado + `chunk_ids` + `owner_id` opcional; salida: veredicto por frase con score
 - [x] Los `chunk_ids` se resuelven filtrando por `tenant_id` y, si se envía, por `owner_id`. Un `chunk_id` fuera del espacio del solicitante se ignora, no se puntúa
-- [ ] Umbrales configurables, calibrados en desarrollo y evaluados en una partición reservada
+- [x] Umbrales configurables, calibrados en desarrollo (0.75/0.5/0.75, único con recall ≥50%) y evaluados en partición reservada 2026-11-18
 - [x] Evaluar correferencia con y sin frase anterior antes de activar la mitigación
 - [x] Set de prueba con afirmaciones deliberadamente falsas y afirmaciones deliberadamente contradichas
 - [x] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
-- [ ] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas
+- [x] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas (dev + test 2026-11-18)
 
 Las pruebas funcionales anteriores no constituyen una evaluación reservada reproducible.
 Los umbrales actuales son provisionales hasta completar la calibración y publicar sus resultados.
 El [manifiesto español](eval/eu_manifest.yaml) fija 24 PDF públicos, con 18 documentos de desarrollo y seis reservados.
-Se verificaron huellas, permisos de reutilización y extracción; faltan las 300 etiquetas revisadas y la inferencia reservada.
+Se verificaron huellas, permisos de reutilización y extracción; el 2026-11-18 se cerraron las 303 etiquetas revisadas (dev 233 + test 70) y la inferencia reservada con umbrales 0.75/0.5/0.75.
 El selector de umbral y la comprobación numérica están implementados, pero no justifican cambiar los umbrales vigentes.
 Una prueba inicial reproducible del 11 de noviembre de 2026 usa nueve ejemplos manuales reservados.
 Con CPU Intel Core Ultra 9 285H, detectó dos de tres contradicciones y clasificó una como no respaldada.
