@@ -225,3 +225,20 @@ docker compose -p ragmur-skyrestore-20261113 -f "$AISLADO_YML" down
 - Sin medición de latencia en CPU como cifra de rendimiento.
 - Sin `nli_run`, `nli_thresholds` ni `eval/run.py` sobre reserva en esta tarea.
 - Sin proxy, demo, TLS, firewall, DNS ni `publish`.
+
+## 11. Lección F05d: construir la imagen sin registro bajo SSH
+
+Docker Desktop en Windows resuelve credenciales con `docker-credential-desktop`,
+que falla en sesiones SSH («no existe una sesión de inicio»). El fallo
+persiste aunque se apunte `DOCKER_CONFIG` a una config vacía: `build` y `pull`
+no funcionan por SSH. Procedimiento aplicado el 2026-11-19:
+
+1. Construir en el ThinkPad con el mismo árbol (`docker build
+   -t ragmur_deploy-api:latest --build-arg INSTALL_CUDA=true`).
+2. `docker save` + `zstd` y `docker load` en Skynet por LAN
+   (`zstd -d -c imagen.tar.zst | ssh skynet "docker load"`; 8,5 GB,
+   torch apenas comprime).
+3. `chown -R 10000:10000` de `model_data` y `original_data` con la propia
+   imagen (`docker run --rm --user root ... chown ...`) antes del primer
+   arranque no-root.
+4. Recrear con el mismo `-p ragmur_deploy` para reutilizar los volúmenes.

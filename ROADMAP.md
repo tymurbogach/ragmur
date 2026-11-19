@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.8 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** cerró el 2026-11-18 con 303 etiquetas NLI revisadas (dev 233 + test 70), umbrales calibrados 0.75/0.5/0.75 y matriz reservada publicada. La tarea **1.9** tiene despliegue en Skynet con el tenant de corpus público (10 documentos, 1395 puntos); la restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`); demo y endurecimiento quedan pendientes.
+Las tareas 1.1 a 1.8 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** cerró el 2026-11-18 con 303 etiquetas NLI revisadas (dev 233 + test 70), umbrales calibrados 0.75/0.5/0.75 y matriz reservada publicada. La tarea **1.9** tiene despliegue endurecido en Skynet con el tenant de corpus público (10 documentos, 1395 puntos, imagen no-root, medición GPU 2026-11-19 en `benchmarks/load-gpu-2026-11-19.md`); la restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`); la demo pública está descartada a petición del usuario (2026-11-19, `DECISIONS.md` 3.33).
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -360,15 +360,15 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 - [x] Contenedor compatible con la rueda PyTorch elegida; GPU expuesta; volúmenes para caché de modelos y `STORAGE_DIR`
 - [x] README con arquitectura, arranque y cifras de evaluación
 - [x] Desplegado en el homelab con un corpus real como primer tenant
-- [ ] Demo accesible públicamente
-- [ ] Demo con clave solo en servidor, tenant de corpus público y rutas permitidas; sin subida ni borrado públicos
-- [ ] PostgreSQL y Qdrant sin exposición pública; secretos propios del despliegue; logs sin contenido privado
+- [x] Servicio privado verificado en Skynet (sin demo pública, descartada 2026-11-19)
+- [x] Clave solo en servidor, tenant de corpus público y rutas permitidas; sin subida ni borrado públicos
+- [x] PostgreSQL y Qdrant sin exposición pública; secretos propios del despliegue; logs sin contenido privado
 - [x] Copia y restauración comprobadas de PostgreSQL y originales; reconstrucción de Qdrant documentada
 - [x] Añadir `LICENSE` con titular confirmado y revisar avisos de dependencias y modelos antes de publicar
 
 Skynet tiene el tenant de corpus público (10 documentos, 1395 puntos).
 La restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`).
-La evaluación NLI cerró el 2026-11-18; la demo pública y el endurecimiento de red quedan pendientes.
+La evaluación NLI cerró el 2026-11-18; el endurecimiento y la medición GPU en Skynet cerraron el 2026-11-19; la demo pública está descartada.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.
@@ -377,7 +377,7 @@ Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos dire
 
 **Nota sobre el borrado de tenant.** `documents` cascadea desde `tenants` por clave foránea, pero los puntos de Qdrant no: hay que borrarlos explícitamente. Con usuarios finales subiendo facturas, el borrado a petición es un requisito, no un extra.
 
-**Cierre de la fase 1.** Se cumplen a la vez: los criterios de cierre de 1.1 a 1.8; la suite de tests pasa incluyendo aislamiento por tenant y por `owner_id`; el servicio está desplegado en el homelab con un corpus real; la demo es accesible; y el README publica las cifras de evaluación con su fecha y su hardware. Hasta entonces no se abre la fase 2.
+**Cierre de la fase 1.** Se cumplen a la vez: los criterios de cierre de 1.1 a 1.8; la suite de tests pasa incluyendo aislamiento por tenant y por `owner_id`; el servicio está desplegado en el homelab con un corpus real; el despliegue privado está verificado y medido (la demo pública está descartada, ver 3.33 de `DECISIONS.md`); y el README publica las cifras de evaluación con su fecha y su hardware. Hasta entonces no se abre la fase 2.
 
 ---
 

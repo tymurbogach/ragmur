@@ -352,6 +352,22 @@ Fijar la versión de nginx y del conector deja el despliegue reproducible.
 - *Caddy.* Alternativa válida, pero con menos evidencia operativa reunida para este despliegue.
 - *Reenvío de puertos.* Abre entrada y exige firewall, DNS y TLS propios frente al túnel saliente.
 
+### 3.33 Cierre privado de 1.9 sin demo pública
+
+**Decidido (usuario, 2026-11-19):** la demo pública no es necesaria; 1.9 cierra
+en privado. F05e queda descartada. F05d desplegó la imagen endurecida en
+Skynet (usuario `ragmur` UID 10000, CUDA) y midió en RTX 5080: `/search` con
+rerank p50 251 ms / p95 293 ms (conc=1), p95 859 ms (conc=4), saturación con
+cola ordenada desde conc=16 sin 500; `/verify` 143 ms. Límites finales sin
+cambiar código: `INFERENCE_MAX_REQUESTS=16`, cuota 60/min por clave, tasas
+nginx 5r/s como valor de diseño para una hipotética exposición. Sin plazo de
+retención de logs por días (rotación por tamaño). Detalle en
+`benchmarks/load-gpu-2026-11-19.md`.
+
+**Motivo:** el uso previsto es privado; exponer no aporta y añade superficie
+(GPU, DNS/TLS, túnel). El proxy de F05b queda validado en local por si se
+reabre la exposición en el futuro.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

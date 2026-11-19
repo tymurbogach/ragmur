@@ -10,7 +10,7 @@
 ## 2. Current state
 
 - What works: ROADMAP 1.1-1.8 completadas (1.8 cerrada el 2026-11-18: 303 etiquetas NLI, umbrales 0.75/0.5/0.75, matriz reservada publicada); 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
-- Broken or pending work: demo pública y endurecimiento de exposición (F05). Fase 1 abierta solo por 1.9.
+- Broken or pending work: cierre de fase 1 (F06: `eval/run.py` 4 configuraciones sobre dev y reserva + tabla README). Demo pública descartada (F05e) a petición del usuario el 2026-11-19: 1.9 cierra en privado.
 - D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
@@ -99,8 +99,8 @@ uv run uvicorn ragmur.main:app --reload
 | F09 | Limpieza de documentación y eval | Completed |
 | F05b | Endurecimiento local del despliegue | Completed |
 | F05c | Arnés de carga y abuso en CPU local | Completed |
-| F05d | Despliegue privado en Skynet y medición GPU | Pending (autorización A) |
-| F05e | Exposición pública de la demo | Pending (autorización B) |
+| F05d | Despliegue privado en Skynet y medición GPU | Completed 2026-11-19 |
+| F05e | Exposición pública de la demo | Discarded (sin demo pública, decisión usuario 2026-11-19) |
 | F06 | Cierre fase 1: suite, README y marcas | Pending |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 | F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
@@ -209,18 +209,18 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: llevar el endurecimiento a `ragmur_deploy` y fijar límites con datos de RTX 5080, sin exposición pública.
 - Tasks:
-  - [ ] Copia previa según `docs/runbook-backup-restore.md` y punto de restauración registrado.
-  - [ ] Actualizar `ragmur_deploy` con la imagen endurecida; `chown` de volúmenes al UID nuevo; overlay de demo en `127.0.0.1`.
-  - [ ] Smoke externo e interno desde Skynet; `pytest -k "isolation or tenant or owner"`; invariante del tenant de demo.
-  - [ ] Barrido GPU con el arnés de F05c, incluido el perfil mixto; fijar `INFERENCE_MAX_REQUESTS` como profundidad de cola tras el candado único, límite por clave y tasas de nginx por ruta según los datos. Los valores por defecto del código no cambian.
-- Dependencies: F05c y autorización escrita A (acceso a Skynet y actualización de `ragmur_deploy`).
+  - [x] Copia previa según `docs/runbook-backup-restore.md` y punto de restauración registrado.
+  - [x] Actualizar `ragmur_deploy` con la imagen endurecida; `chown` de volúmenes al UID nuevo; API en `127.0.0.1` sin proxy (demo pública descartada; proxy validado 28/28 en F05b).
+  - [x] Smoke interno desde Skynet; `pytest -k "isolation or tenant or owner"`; invariante del tenant de demo.
+  - [x] Barrido GPU con el arnés de F05c, incluido el perfil mixto; `INFERENCE_MAX_REQUESTS` como profundidad de cola, límite por clave y tasas de nginx por ruta según los datos. Los valores por defecto del código no cambian.
+- Dependencies: F05c y autorización escrita A (acceso a Skynet y actualización de `ragmur_deploy`, concedida 2026-11-19).
 - Acceptance criteria: smoke verde en Skynet; p50 y p95 por concurrencia en RTX 5080 con hardware; límites justificados por la tabla; restauración posible desde la copia previa.
-- Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`; smoke externo e interno; barrido de carga.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: resumen en `benchmarks/`, `docs/demo-design.md` con valores finales, `README.md` si cambia el uso.
-- Risks: actualizar con un nombre de proyecto o volumen erróneo destruye datos; pre-vuelo obligatorio del runbook.
-- Status: Pending. Sin autorización A no se ejecuta.
+- Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`; smoke interno; barrido de carga.
+- Test evidence (2026-11-19): copia `ragmur-backup-skynet-2026-11-19` en Skynet (dump 17.277 B/32 entradas, originales 73,7 MB con hash idéntico al 2026-11-13); imagen endurecida construida en ThinkPad y cargada por LAN (build por SSH imposible por el gestor de credenciales de Docker Desktop, ver runbook); `whoami=ragmur`, `/health`+`/ready` 200 (`dense-1024+nli`), 88 `indexed`; invariante `0/10/1` con clave temporal dedicada (revocada tras medir); search GPU conc=1 p50 251/p95 293, conc=4 771/859, conc=16/32 saturación con cola ~2,5 s sin 500; verify 143 ms `supported` 0,999; mixto limitado por cuota 60/min (429 con `Retry-After`, 0×500); `pytest -k "isolation or tenant or owner"` 13 passed 1 skipped en pila local; informe `benchmarks/load-gpu-2026-11-19.md`.
+- Review verdict: none (pendiente de revisión).
+- Files changed: `benchmarks/load-gpu-2026-11-19.md` (nuevo), `docs/demo-design.md` (valores finales), `DECISIONS.md` (3.33), `TASKS.md`, `ROADMAP.md`, `docs/runbook-backup-restore.md` (lección SSH).
+- Risks: imagen vieja sin etiqueta (8,5 GB) conservada en Skynet como repliegue hasta F06; secretos de despliegue vistos en logs de la sesión (rotar `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` con reemisión de claves).
+- Status: Completed 2026-11-19.
 
 ### F05e: Exposición pública de la demo
 
@@ -232,11 +232,11 @@ uv run uvicorn ragmur.main:app --reload
 - Dependencies: F05d y autorización escrita B (DNS, TLS, túnel o firewall).
 - Acceptance criteria: la URL pública solo responde las rutas permitidas; un escaneo externo solo muestra 443; corte comprobado; casillas de demo de 1.9 listas para F06.
 - Required tests: smoke externo; escaneo de puertos externo; prueba de corte.
-- Test evidence: no run.
+- Test evidence: no run (fase descartada).
 - Review verdict: none.
-- Files changed: `docs/demo-design.md`, `README.md`.
-- Risks: una exposición sin límites medidos permite agotar la GPU.
-- Status: Pending. Sin autorización B no se ejecuta.
+- Files changed: `TASKS.md`, `ROADMAP.md`, `DECISIONS.md` (3.33).
+- Risks: ninguno (no se expone nada).
+- Status: Discarded 2026-11-19 (decisión del usuario: sin demo pública).
 
 ### F10: Cambios de contrato de errores (opcional)
 
@@ -279,8 +279,8 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next action: commitear F05c; después parada (F05d exige autorización A, F05e exige B).
-- Next phase: F05d (bloqueada: autorización A). F02 BLOCKED (pares humanos), F03/F06 bloqueadas por F02, F10 opcional.
-- Resume command: `/taskflow run F05c` (ya ejecutada; F05d solo con autorización escrita A)
+- Next action: commitear F05d; después F06 (cierre: `eval/run.py` 4 configuraciones + tabla README + marcas).
+- Next phase: F06 (pendiente). F05e descartada (sin demo pública, 2026-11-19). F10 opcional, sin programar.
+- Resume command: `/taskflow run F06`
 - Recommended effort: medium
-- Autorizaciones pendientes: A (Skynet, F05d), B (exposición pública, F05e). Push al día con `origin/main` el 2026-11-17.
+- Autorizaciones: A concedida y consumida (F05d, 2026-11-19). B ya no aplica (F05e descartada). Push al día con `origin/main` (`535e904`; falta push del commit F05d).

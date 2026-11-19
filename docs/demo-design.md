@@ -2,7 +2,9 @@
 
 Documento de diseño. Sin código. Sin Compose. Sin Nginx real.
 Fija qué se expone, cómo y con qué límites.
-La aprobación del diseño queda pendiente antes de F05b.
+Diseño aprobado 2026-11-17. Exposición pública descartada 2026-11-19
+(`DECISIONS.md` 3.33): los valores finales de F05d valen como topes privados
+y quedan registrados por si se reabre.
 
 Decisiones D1-D7 aprobadas por el usuario el 2026-11-16.
 Este documento las aplica. No las reabre.
@@ -276,7 +278,11 @@ Con Tailscale Funnel en modo HTTP no hay cabecera de IP de cliente.
 El límite por IP necesita modo TCP con `--proxy-protocol`, o no está disponible.
 F05b fija la opción elegida según el proveedor confirmado.
 
-Nginx propuesto (provisional hasta F05d):
+Nginx propuesto (valores finales F05d 2026-11-19 para hipotética exposición;
+en privado no se despliega proxy):
+
+- `limit_req` por IP con `limit_req_status 429`.
+- `limit_conn` por IP con `limit_conn_status 429`.
 
 - `limit_req` por IP con `limit_req_status 429`.
 - `limit_conn` por IP con `limit_conn_status 429`.
@@ -298,7 +304,10 @@ No usa `ProxyHeaders`.
 Tras el proxy todas las peticiones comparten origen.
 Ese limitador pasa a ser un tope global.
 El límite por IP real vive solo en Nginx.
-F05d fija los valores finales con datos de GPU.
+F05d (2026-11-19, RTX 5080) confirmó: la cuota 60/min por clave es la
+restricción vinculante en ráfaga (429 con `Retry-After`, 0×500) y
+`INFERENCE_MAX_REQUESTS=16` ordena la cola hasta conc=32 sin errores.
+Sin cambios de código.
 
 Si Nginx devuelve 429, no llega a la app.
 Si la app devuelve 429, la clave agotó su cuota.
@@ -325,7 +334,8 @@ El driver `local` de Docker no rota por tiempo.
 F05b configura `local` con `max-size` y `max-file` antes de exponer.
 Ese ajuste limita por tamaño, no por días: no garantiza 14 días.
 Sin un recolector con borrado a 14 días, reduce la afirmación a "sin retención definida".
-Documenta el plazo final en F05d.
+Valor final F05d (2026-11-19): sin retención por días mientras el uso sea
+privado; rotación por tamaño `10m×3` por servicio.
 
 TLS termina en el borde de Cloudflare.
 Cloudflare ve los cuerpos de petición en claro.
@@ -392,6 +402,11 @@ Derivación:
 
 F05d mide p50 y p95 por concurrencia en RTX 5080.
 F05d fija entonces los límites finales y confirma o cambia este objetivo.
+
+Medido 2026-11-19 (`benchmarks/load-gpu-2026-11-19.md`): conc=1 p50 251 ms /
+p95 293 ms; conc=4 p50 771 ms / p95 859 ms. Objetivo confirmado para
+concurrencia baja (≤4). Desde conc=16 la cola de 16 satura (p95 ~2,5 s, sin
+errores).
 
 ## 11. Perfiles de smoke
 
