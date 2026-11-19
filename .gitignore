@@ -23,5 +23,11 @@ eval/results/**/per_query/
 eval/results/*details*.json
 /tmp/nli-*-details*.json
 
+# Andamiaje local de etiquetado NLI (caché de PDFs, candidatos y progreso)
+eval/.pdf_cache/
+eval/eu_candidates_280.yaml
+eval/labeling_bundle*.json
+eval/labels_*.json
+
 # Ajustes locales de Claude Code (la skill del proyecto sí se versiona)
 .claude/settings.local.json
