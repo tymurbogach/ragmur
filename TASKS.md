@@ -114,25 +114,19 @@ uv run uvicorn ragmur.main:app --reload
 | F06 | Cierre fase 1: suite, README y marcas | Completed 2026-11-19 |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 | F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
-| R01 | Refinamiento docs: contradicciones F05e | Pending (plan solo, sin ejecutar) |
+| R01 | Refinamiento docs: contradicciones F05e | Completed |
 | R02a | Refinamiento código: solo comentarios | Pending (plan solo, sin ejecutar) |
 | R02b | Refinamiento código: renames+const (con gate) | Pending (para mañana, con Docker) |
 | R03 | Higiene: verificación estática + CI tags | Pending (lectura; tags con red mañana) |
 
 ### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
 
-- Objective: eliminar contradicciones demo pública pendiente vs descartada, sin reescribir historia.
-- Tasks:
-  - [ ] `README.md:8` → "despliegue privado verificado en Skynet 2026-11-19; demo pública descartada (DECISIONS 3.33)".
-  - [ ] `ARCHITECTURE.md:5` matiz + banner en `623-631` "descartado 2026-11-19, conservado como diseño".
-  - [ ] `ROADMAP.md:62,66,72` sufijo "(objetivo original; F05e descartada 2026-11-19, ver 3.33)", sin borrar.
-  - [ ] `DECISIONS.md:3.26/3.30` append-only 1 línea puntero a 3.33/NLI cierre; `docs/demo-design.md` congelado (`1abaf61`); `REVIEW.md:62` intacto.
-  - [ ] Conciliar commit base `e3bdba1` vs `beab7b1`/`535e904` y counts `pytest` antes de editar.
-- Dependencies: ninguna. Excluye `TASKS.md` (solo orquestador), `demo-design.md` interior, `REVIEW.md:62`, `.github/`.
-- Acceptance criteria: cero contradicciones F05e; historia intacta; enlaces relativos 24/24 OK.
-- Required tests: `ruff check` (sin cambios de código debe pasar igual); `git grep -n "pendiente" README.md ARCHITECTURE.md ROADMAP.md`; verificación de enlaces relativos. Gate completo mañana.
-- Risks: ninguno de comportamiento. No tocar `documents.py:118-133` (F10-A8).
-- Status: Pending (plan solo, sin ejecutar).
+- Outcome: `README:8` privado verificado + descarte 3.33; `ARCHITECTURE:5` + banner 623-631; `ROADMAP:62,66,72` sufijo sin borrado; `DECISIONS 3.26/3.30` append-only. Historia intacta (`REVIEW:62`, `demo-design` interior, `TASKS.md` del diff intactos).
+- Test evidence (orquestador, árbol integrado, solo estático esta noche): `ruff check` exit 0; `format --check` exit 0 (162 ficheros); `mypy` exit 0 (128 ficheros). Sin `pytest`/Docker/Skynet por petición (mañana). Logs en `/tmp/opencode/taskflow/ragmur/R01-gate/`.
+- Review verdict: VERDICT: OK (revisión R01; 1 baja + 3 informativas, ninguna bloqueante; `README:49` como mejora futura).
+- Files changed: `README.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `DECISIONS.md`.
+- Risks: ninguno abierto. Gate completo + `grep pendiente/demo` + enlaces 24/24 quedan para mañana.
+- Status: Completed.
 
 ### R02a: Refinamiento código solo comentarios (cero diff ejecutable)
 

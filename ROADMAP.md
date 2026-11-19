@@ -59,17 +59,17 @@ Es la fase larga, y la que da su valor al proyecto.
 - Aislamiento real y probado con tests: cada aplicación ve solo sus documentos, y cada usuario final solo los suyos dentro de su aplicación.
 - Un endpoint al que le pasas una frase y unos fragmentos y te responde si esos fragmentos la respaldan, la contradicen o no dicen nada al respecto.
 - **Una tabla con números.** Cuánto recupera la búsqueda por significado sola, cuánto la de palabras sola, cuánto las dos combinadas y cuánto añade el reordenado. Reproducible, con fecha y hardware. Es lo que separa este proyecto de una demo.
-- Todo desplegado en el homelab sobre documentos reales, con una demo accesible públicamente.
+- Todo desplegado en el homelab sobre documentos reales, con una demo accesible públicamente (objetivo original; F05e descartada 2026-11-19, ver `DECISIONS.md` 3.33).
 
 **Qué no hay todavía.**
 
-**No hay respuesta redactada.** Preguntas "¿cuál es el plazo de entrega?" y recibes el párrafo donde lo pone, no la frase "el plazo es de 48 horas". La demo pública de esta fase es un buscador con citas, no un chatbot.
+**No hay respuesta redactada.** Preguntas "¿cuál es el plazo de entrega?" y recibes el párrafo donde lo pone, no la frase "el plazo es de 48 horas". La demo pública de esta fase es un buscador con citas, no un chatbot (objetivo original; F05e descartada 2026-11-19, ver `DECISIONS.md` 3.33).
 
 Y la verificación funciona al revés de lo que parece: como todavía no hay nada que redacte, el texto a verificar lo envía quien llama a la API. Sirve para demostrar el mecanismo —pegas una afirmación y ves si el corpus la sostiene— pero aún no está enganchada a una generación propia.
 
 **Por qué se hace así.** Con el LLM presente desde el principio, una respuesta mala no permite saber si falló la búsqueda o el modelo. Midiendo primero la búsqueda sola queda una línea base contra la que comparar todo lo que venga después.
 
-**Se termina cuando.** Hay una cifra reproducible de recall@10 para las cuatro configuraciones, la demo está en pie y los tests de aislamiento pasan.
+**Se termina cuando.** Hay una cifra reproducible de recall@10 para las cuatro configuraciones, la demo está en pie y los tests de aislamiento pasan (objetivo original; F05e descartada 2026-11-19, ver `DECISIONS.md` 3.33).
 
 ### Fase 2 — El que responde
 

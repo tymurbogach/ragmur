@@ -299,6 +299,7 @@ La instalación opcional prepara PyTorch 2.12.0 con CUDA 13.0 sin cambiar el con
 La resolución de dependencias se comprobó para ambos modos. La inferencia real solo se ha probado en CPU.
 CUDA 13.0 GA requiere el [controlador Linux 580.65.06 o posterior](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-toolkit-release-notes/index.html).
 La prueba en RTX 5080 y la combinación efectiva de controlador quedan pendientes.
+Cierre: GPU validada en Skynet el 2026-11-19; demo pública descartada (ver 3.33).
 
 ### 3.27 Búsqueda previa al reranking
 
@@ -325,6 +326,7 @@ Se conservan troceado 800/120 y `top_k` 5 en API. Esta muestra no demuestra una 
 El verificador usa `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` con revisión `b5113eb38ab63efdd7f280f8c144ea8b13f978ce`.
 Los umbrales 0.75/0.5/0.75 son provisionales. La [prueba funcional](eval/results/nli-test-2026-11-11.json) contiene nueve afirmaciones manuales y no justifica una calibración.
 Falta evaluar fragmentos reales, incluidas negaciones, cifras, fechas y correferencias, con particiones por documento.
+Cierre: umbrales 0.75/0.5/0.75 calibrados en desarrollo y evaluados en reserva el 2026-11-18 (ver `ROADMAP.md` 1.8).
 
 ### 3.31 Cierre operativo de la fase 1
 

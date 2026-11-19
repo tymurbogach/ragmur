@@ -5,7 +5,7 @@ La fase 1 no genera respuestas: devuelve fragmentos con fuente y verifica texto 
 
 ## Estado actual
 
-La fase 1 deja el código listo con evaluación reproducible. El despliegue en el homelab y la demo pública quedan pendientes.
+La fase 1 deja el código listo con evaluación reproducible. Despliegue privado verificado en Skynet el 2026-11-19; demo pública descartada (ver `DECISIONS.md` 3.33).
 El proyecto incluye FastAPI, servicios Docker, migraciones, `/health` y `/ready`,
 linting, tipos y CI. Las cifras de recuperación están medidas con `eval/` sobre 35 documentos y 27 consultas.
 

@@ -2,7 +2,7 @@
 
 Qué se construye y con qué contratos. El porqué de cada decisión está en [`DECISIONS.md`](DECISIONS.md); el orden en [`ROADMAP.md`](ROADMAP.md).
 
-Este documento describe el objetivo, no solo las funciones disponibles. Existe un despliegue privado de prueba con GPU en Skynet; la demo pública y el cierre de fase quedan pendientes.
+Este documento describe el objetivo, no solo las funciones disponibles. Despliegue privado verificado en Skynet el 2026-11-19; demo pública descartada (ver `DECISIONS.md` 3.33).
 La [revisión previa](REVIEW.md) registra las comprobaciones y los puntos pendientes antes de continuar.
 
 ## Estructura del repositorio
@@ -621,6 +621,8 @@ El contenedor debe exponer la GPU mediante NVIDIA Container Toolkit; una imagen 
 Regla: toda cifra de `timings_ms` publicada indica sobre qué hardware se midió. Los ejemplos de este documento llevan `"..."` hasta que existan mediciones reales.
 
 ## Despliegue público
+
+> Descartado el 2026-11-19 (ver `DECISIONS.md` 3.33): la demo pública no se expone. Esta sección se conserva como diseño validado en local.
 
 La demo pública sigue `docs/demo-design.md`.
 Rutas públicas: `GET /health`, `POST /v1/search`, `POST /v1/verify`.
