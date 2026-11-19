@@ -251,18 +251,18 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: declarar la fase 1 cerrada solo si todo lo anterior está verde.
 - Tasks:
-  - [ ] Gate compartido completo en el árbol integrado más `alembic upgrade head`.
-  - [ ] `eval/run.py` con 4 configuraciones (densa, BM25, híbrida, híbrida con rerank) sobre dev y reserva, con resúmenes versionados.
-  - [ ] Tabla final en README: recall@10 x4, MRR/nDCG híbrida con y sin rerank, latencias p50/p95 con hardware, matriz NLI y respaldo falso con N y Wilson, fecha, commit, corpus y split.
-  - [ ] Marcar las casillas de 1.8 y 1.9 en `ROADMAP.md` en el commit de cierre.
-- Dependencies: F03, F04 y F05e.
-- Acceptance criteria: criterios 1.1-1.8 cumplidos; suite con aislamiento por tenant y `owner_id` verde; corpus real desplegado; demo accesible; README con cifras fechadas.
+  - [x] Gate compartido completo en el árbol integrado más `alembic upgrade head`.
+  - [x] `eval/run.py` con 4 configuraciones (densa, BM25, híbrida, híbrida con rerank) sobre dev y reserva, con resúmenes versionados.
+  - [x] Tabla final en README: recall@10 x4, MRR/nDCG híbrida con y sin rerank, latencias p50/p95 con hardware, matriz NLI y respaldo falso con N y Wilson, fecha, commit, corpus y split.
+  - [x] Marcar las casillas de 1.8 y 1.9 en `ROADMAP.md` en el commit de cierre.
+- Dependencies: F03, F04 y F05d en privado (F05e descartada 2026-11-19).
+- Acceptance criteria: criterios 1.1-1.8 cumplidos; suite con aislamiento por tenant y `owner_id` verde; corpus real desplegado y medido en privado; README con cifras fechadas.
 - Required tests: gate compartido y gate de entrega.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `README.md`, `ROADMAP.md`, `TASKS.md`, `eval/results/*` resúmenes.
+- Test evidence (2026-11-19, commit `beab7b1`): `ruff check`/`format`/`mypy` (128) limpios; `alembic upgrade head` OK; `pytest` 242 passed 4 skipped; `check_nli_leak` verde; `eval/run.py` dev (10+4, recall 1.0 x4, rerank MRR/nDCG 1.0, p95 CPU 19 s) y test (10+3, rerank 1.0/1.0, p95 CPU 18,7 s) en `eval/results/summary-2026-11-19T*-{dev,test}.json`; tabla README verificada 8/8 contra los JSON por script.
+- Review verdict: auto-verificación con comprobación programática (sin revisor independiente; cambio limitado a resúmenes generados + tabla + marcas).
+- Files changed: `README.md`, `ROADMAP.md`, `TASKS.md`, `eval/results/summary-2026-11-19T*-dev.json`, `eval/results/summary-2026-11-19T*-test.json`.
 - Risks: la muestra de 1.7 es poco discriminativa (recall 1.0); declararlo y no afirmar significación sin incertidumbre.
-- Status: Pending
+- Status: Completed 2026-11-19
 
 ## 8. Completed phases
 

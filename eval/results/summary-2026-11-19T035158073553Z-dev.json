@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-19T03:51:58.070708+00:00",
+  "commit": "beab7b17ff5afbee190b50fd628c670d83db851a",
+  "corpus": {
+    "manifest": "eval/manifest.yaml",
+    "golden": "eval/golden_set.yaml",
+    "manifest_sha256": "78bf95e1116984176882575e83f9eba878621427a3f62f365b25e7a64132725c",
+    "golden_sha256": "a0e3910b09bfa85dec1ed5ee7a529e54468030b0df2985a6d1e694b6759e930a",
+    "documents": 35,
+    "queries": 14,
+    "positives": 10,
+    "negatives": 4,
+    "partition": "dev",
+    "dev_queries": 14,
+    "test_queries": 13
+  },
+  "models": {
+    "dense_model": "BAAI/bge-m3",
+    "dense_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "sparse_model": "Qdrant/bm25",
+    "sparse_revision": "22b8d2af71a76161e18dd432d2cee0eefa66e412",
+    "sparse_language": "spanish",
+    "sparse_disable_stemmer": false,
+    "sparse_k": 1.2,
+    "sparse_b": 0.75,
+    "sparse_avg_len": 256.0,
+    "reranker_model": "BAAI/bge-reranker-v2-m3",
+    "reranker_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+  },
+  "configuration": {
+    "chunk_size": 800,
+    "chunk_overlap": 120,
+    "candidates": 30,
+    "top_k": 10,
+    "rrf_k": 2,
+    "collection": "ragmur_chunks_eval",
+    "tenant": "952fcd8d-97aa-5c4f-857f-4d9f440ecca3"
+  },
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "python": "3.12.13",
+    "cpu_count": 16,
+    "device": "cpu",
+    "torch_version": "2.12.0+cpu",
+    "cuda_available": false,
+    "cuda_device_name": null,
+    "omp_threads": "2",
+    "concurrency": 1
+  },
+  "summaries": {
+    "dense": {
+      "positives": 10,
+      "negatives": 4,
+      "recall_candidates": 1.0,
+      "recall_at_10": 1.0,
+      "hit_rate_at_10": 1.0,
+      "mrr_at_10": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_p50_ms": 91.14823499839986,
+      "latency_p95_ms": 110.99799899966456
+    },
+    "sparse": {
+      "positives": 10,
+      "negatives": 4,
+      "recall_candidates": 1.0,
+      "recall_at_10": 1.0,
+      "hit_rate_at_10": 1.0,
+      "mrr_at_10": 0.8333333333333334,
+      "ndcg_at_10": 0.8761859507142915,
+      "latency_p50_ms": 5.595856004219968,
+      "latency_p95_ms": 10.47168999502901
+    },
+    "hybrid": {
+      "positives": 10,
+      "negatives": 4,
+      "recall_candidates": 1.0,
+      "recall_at_10": 1.0,
+      "hit_rate_at_10": 1.0,
+      "mrr_at_10": 0.9,
+      "ndcg_at_10": 0.9261859507142916,
+      "latency_p50_ms": 92.59422600007383,
+      "latency_p95_ms": 135.48071100376546
+    },
+    "hybrid_rerank": {
+      "positives": 10,
+      "negatives": 4,
+      "recall_candidates": 1.0,
+      "recall_at_10": 1.0,
+      "hit_rate_at_10": 1.0,
+      "mrr_at_10": 1.0,
+      "ndcg_at_10": 1.0,
+      "latency_p50_ms": 16952.416225001798,
+      "latency_p95_ms": 19003.748811999685
+    }
+  },
+  "comparisons": {
+    "hybrid_vs_dense": {
+      "wins": 0,
+      "losses": 0,
+      "ties": 10
+    },
+    "hybrid_vs_sparse": {
+      "wins": 0,
+      "losses": 0,
+      "ties": 10
+    },
+    "rerank_vs_hybrid": {
+      "wins": 0,
+      "losses": 0,
+      "ties": 10
+    }
+  }
+}

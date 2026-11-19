@@ -113,17 +113,23 @@ Los identificadores ajenos se ignoran; sin evidencia válida todo queda `unsuppo
 ## Evaluación de recuperación
 
 Corpus mixto inglés/español de 35 documentos (SQuAD 2.0 y XQuAD) y 27 consultas (20 positivas, 7 negativas; 14 en desarrollo y 13 en prueba).
-Medido el 2026-11-10 en CPU sin GPU, con `candidates=30` y `top_k=10`, concurrencia 1.
+Medición de cierre el 2026-11-19 en CPU (ThinkPad, sin GPU), con `candidates=30` y `top_k=10`, concurrencia 1, commit `beab7b1`.
+Resúmenes: `eval/results/summary-2026-11-19T035158073553Z-dev.json` y `eval/results/summary-2026-11-19T035607738397Z-test.json`.
+Latencias GPU con corpus público en `benchmarks/load-gpu-2026-11-19.md` (search+rerank p95 293 ms en conc=1).
 
-| Configuración | recall@10 | MRR@10 | nDCG@10 | p50 | p95 |
-|---|---|---|---|---|---|
-| Densa | 1.0 | 0.975 | 0.982 | 87 ms | 109 ms |
-| BM25 | 1.0 | 0.858 | 0.895 | 8 ms | 10 ms |
-| Híbrida | 1.0 | 0.975 | 0.982 | 98 ms | 132 ms |
-| Híbrida + reranking | 1.0 | 1.0 | 1.0 | 16448 ms | 23725 ms |
+| Partición | Configuración | recall@10 | MRR@10 | nDCG@10 | p50 | p95 |
+|---|---|---|---|---|---|---|
+| dev (10+4) | Densa | 1.0 | 1.0 | 1.0 | 91 ms | 111 ms |
+| dev (10+4) | BM25 | 1.0 | 0.833 | 0.876 | 6 ms | 10 ms |
+| dev (10+4) | Híbrida | 1.0 | 0.9 | 0.926 | 93 ms | 135 ms |
+| dev (10+4) | Híbrida + reranking | 1.0 | 1.0 | 1.0 | 16952 ms | 19004 ms |
+| test (10+3) | Densa | 1.0 | 0.95 | 0.963 | 93 ms | 178 ms |
+| test (10+3) | BM25 | 1.0 | 0.883 | 0.913 | 5 ms | 6 ms |
+| test (10+3) | Híbrida | 1.0 | 0.95 | 0.963 | 94 ms | 178 ms |
+| test (10+3) | Híbrida + reranking | 1.0 | 1.0 | 1.0 | 16224 ms | 18691 ms |
 
-Victorias/derrotas/empates en recall@10: 0/0/20 entre híbrida y densa, híbrida y BM25, y reranking frente a híbrida.
-La muestra es pequeña y poco discriminativa: las cuatro configuraciones recuperan todas las evidencias a `top_k=10`.
+Victorias/derrotas/empates en recall@10: 0/0/10 en ambas particiones entre híbrida y densa, híbrida y BM25, y reranking frente a híbrida.
+La muestra es pequeña y poco discriminativa: todo recupera todas las evidencias a `top_k=10`; el reranking solo ordena (MRR/nDCG 1.0) a costa de ~16-19 s en CPU.
 No demuestra una mejora general.
 Los resúmenes versionados están en `eval/results/`; los volcados por consulta se ignoran.
 
