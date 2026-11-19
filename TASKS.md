@@ -117,7 +117,7 @@ uv run uvicorn ragmur.main:app --reload
 | R01 | Refinamiento docs: contradicciones F05e | Completed |
 | R02a | Refinamiento código: solo comentarios | Completed |
 | R02b | Refinamiento código: renames+const (con gate) | Pending (para mañana, con Docker) |
-| R03 | Higiene: verificación estática + CI tags | Pending (lectura; tags con red mañana) |
+| R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
 
 ### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
 
@@ -150,12 +150,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### R03: Higiene estática + CI tags (lectura)
 
-- Objective: dejar constancia sin historia ni red esta noche.
-- Tasks:
-  - [ ] Verificar `ruff`/`mypy` config strict, `.gitignore` (models/storage/.env/per_query/details), sin `TODO`/`print`, `qdrant_client` solo en `store.py`.
-  - [ ] Mañana con red: verificar `actions/checkout@v7` / `setup-uv` tags; decidir `git gc` de `eval/.pdf_cache` 124 MB (altera hashes, coordinar). Sin `gc` esta noche.
-- Acceptance criteria: informe con evidencia; cero diff en `.github/` esta noche.
-- Status: Pending.
+- Outcome: `qdrant_client` import solo en `store.py:20` (`deps.py:16` solo comentario); sin `TODO`/`print(` en `src/tests/eval/run.py`; `.gitignore` cubre `models/`, `storage/`, `.env`; nada de `models/ storage/` rastreado. CI tags (`checkout@v7`) y `gc` de `eval/.pdf_cache` quedan para mañana con red (cero diff en `.github/` esta noche).
+- Test evidence (orquestador, solo lectura): `git grep qdrant_client`, `git grep TODO/print`, `git check-ignore models storage .env`. Logs en `/tmp/opencode/taskflow/ragmur/R03-gate/`. Sin `pytest`/Docker.
+- Review verdict: auto-verificación sin revisor (sin cambios de comportamiento ni diff; regla roles §review).
+- Files changed: ninguno (solo este registro en `TASKS.md`).
+- Risks: ninguno. `actions/checkout@v7` por verificar con red mañana.
+- Status: Completed.
 
 ### F02: Calibración de umbrales solo en dev
 
@@ -331,8 +331,8 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next action (solo plan 2026-11-19, sin ejecutar): plan R01-R03 registrado y criticado (ronda 2 VERDICT OK). No commitear esta noche. Mañana: `run R01`, luego R02a (estático), luego R02b+R03 con gate completo + Docker.
-- Next phase: R01 (Pending). F06 Completed 2026-11-19. F05e descartada. F10 opcional, sin programar.
-- Resume command: `/taskflow run R01` (mañana, con Docker disponible)
+- Next action (2026-11-19 noche, automático): R01 Completed (`dec6e12`), R02a Completed (`dd0eda6`), R03 Completed (solo lectura). Mañana con Docker: `run R02b` (renames+`*`+const, gate aislamiento) + gate completo (`pytest -q`, `alembic`, `check_nli_leak`) + CI tags con red. Sin push esta noche.
+- Next phase: R02b (Pending, para mañana).
+- Resume command: `/taskflow run R02b` (mañana, con Docker disponible)
 - Recommended effort: low (R01+R02a), medium (R02b con aislamiento)
 - Autorizaciones: ninguna nueva. Sin push, sin Skynet, sin Docker esta noche por petición del usuario. Base `e3bdba1` (ahead 1 sobre `origin/main`).
