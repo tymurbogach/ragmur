@@ -251,10 +251,24 @@ def test_auto_manifest_rejects_wrong_counts() -> None:
     assert any("26/9" in error or "11/15" in error for error in errors)
 
 
-def test_frozen_test_still_pending() -> None:
+def test_frozen_test_opened_once_with_reviewed_pairs() -> None:
+    """F03: la reserva se abrió una vez con pares humanos, ya no está pendiente."""
+    from eval.check_nli_leak import BLESSED_TEST_OPENING, collect_burnt_ids, manifest_map
+
     raw = FROZEN_TEST.read_bytes()
-    assert b"PENDING HUMAN REVIEW" in raw
-    assert yaml.safe_load(raw) == []
+    assert b"PENDING HUMAN REVIEW" not in raw
+    cases = yaml.safe_load(raw)
+    assert isinstance(cases, list) and len(cases) > 0
+    manifest, errors = manifest_map(yaml.safe_load(FROZEN_MANIFEST.read_text(encoding="utf-8")))
+    assert not errors
+    burnt = collect_burnt_ids()
+    for case in cases:
+        assert case["split"] == "test"
+        assert manifest[case["document_id"]] == "test"
+        assert case["id"] not in burnt
+        for claim in case["claims"]:
+            assert claim["label"] in ("supported", "contradicted", "unsupported")
+    assert BLESSED_TEST_OPENING == "nli-eu-test-2026-11-18.json"
 
 
 def test_thresholds_intact_in_config() -> None:

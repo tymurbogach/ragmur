@@ -34,6 +34,9 @@ EXPECTED_DEV = 18
 EXPECTED_TEST = 6
 PENDING_MARKER = "PENDING HUMAN REVIEW"
 VALID_LABELS = ("supported", "contradicted", "unsupported")
+# Apertura única y legítima de la reserva (F03, 2026-11-18). Es el único
+# resumen sobre test aceptado; cualquier otro reabre la reserva quemada.
+BLESSED_TEST_OPENING = "nli-eu-test-2026-11-18.json"
 BURNT_GLOBS = (
     "eval/eu_nli_test_ai_*.yaml",
     "eval/eu_nli_holdout2_ai_*.yaml",
@@ -166,8 +169,12 @@ def test_execution_errors(results_dir: Path, test_sha256: str) -> list[str]:
     if not results_dir.is_dir():
         return errors
     for path in sorted(results_dir.glob("nli-eu-test-*.json")):
+        if path.name == BLESSED_TEST_OPENING:
+            continue
         errors.append(f"resultado reservado prohibido en esta fase: {path.name}")
     for path in sorted(results_dir.glob("*.json")):
+        if path.name == BLESSED_TEST_OPENING:
+            continue
         try:
             payload = path.read_bytes()
         except OSError:

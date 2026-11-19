@@ -178,7 +178,7 @@ fueron inspeccionados a nivel de borrador IA; ese es el riesgo residual
 declarado: los umbrales siguen provisionales y sin cambiar, y la reserva
 solo se abre una vez en F03 con pares escritos a ciegas de las puntuaciones.
 
-### Esquema de los 300 pares revisados (pendiente)
+### Esquema de los 300 pares revisados (cerrado 2026-11-18)
 
 Objetivo: 300 pares (100 supported / 100 contradicted / 100 unsupported),
 repartidos por documento sin cruzar dev y test. Premisas con chunks reales
@@ -188,6 +188,19 @@ más adjudicación de desacuerdos; los desacuerdos se publican y los pares
 ambiguos sin resolución se sustituyen por otro del mismo fenómeno.
 Estado F01: 0 pares revisados. Ambos conjuntos llevan esquema más
 `PENDING HUMAN REVIEW`; no calibran, no evalúan y no publican cifras.
+
+Cierre F02/F03 (2026-11-18): 303 pares revisados útiles (dev 233 + test 70;
+99 supported / 100 contradicted / 104 unsupported + 5 descartadas ambiguas
+sustituidas). Conjuntos en `eval/eu_nli_dev.yaml` y `eval/eu_nli_test.yaml`.
+Calibración solo en dev: 0.75 único elegible (recall de apoyo 41/74 = 55%,
+respaldo falso 12/159 = 7,5%). Apertura única de test con umbrales
+congelados: apoyo 19/25 = 76%, contradichas 19/21, respaldo falso 2/45 =
+4,4%, Wilson 95% [1,2%, 14,8%]. Resúmenes en
+`eval/results/nli-eu-dev-2026-11-18.json` y
+`eval/results/nli-eu-test-2026-11-18.json`; detalles con texto fuera de Git.
+La muestra pequeña no permite afirmar tasa de respaldo falso <10% en
+producción; queda como limitación publicada. La reserva queda quemada: no
+reabrir test para otros umbrales.
 
 ### Regla de umbrales y definiciones
 

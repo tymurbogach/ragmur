@@ -31,15 +31,16 @@ Sigue el protocolo preregistrado que cita su propia cabecera; queda pendiente de
 referencias IA y de revisión humana. `eval/annotation_forms/` conserva las planillas
 de anotación de la fase F02.
 
-## Estado de la evaluación
+## Estado de la evaluación (cerrada 2026-11-18)
 
-Faltan 300 pares de fragmento y afirmación revisados antes de ejecutar el modelo: 100 respaldados,
-100 contradictorios y 100 sin respaldo.
-La revisión debe incluir cifras, fechas, negaciones y referencias entre frases; debe registrar desacuerdos.
-Solo después se puntúa desarrollo, se fijan los tres umbrales y se abre una vez la reserva.
-La selección de fuentes no prueba la calidad del verificador ni la recuperación.
+303 pares revisados (dev 233 + test 70): 99 respaldados, 100 contradictorios,
+104 sin respaldo, más 5 ambiguos sustituidos. La revisión incluyó cifras,
+fechas, negaciones y referencias entre frases, con desacuerdos registrados.
+Calibración en desarrollo y apertura única de la reserva con umbrales
+0.75/0.5/0.75 (ver `eval/NLI.md`). La selección de fuentes no prueba la
+calidad del verificador ni la recuperación.
 
-## Protocolo de anotación (pendiente de revisión humana)
+## Protocolo de anotación (aplicado)
 
 Objetivo: producir 300 pares revisados (100 respaldados, 100 contradictorios, 100 sin respaldo)
 sin ejecutar aún el modelo sobre el split reservado ni fijar umbrales.

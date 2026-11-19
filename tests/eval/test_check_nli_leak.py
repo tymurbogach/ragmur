@@ -106,3 +106,20 @@ def test_forbids_frozen_test_result(tmp_path: Path, monkeypatch: pytest.MonkeyPa
     monkeypatch.setattr(leak, "collect_burnt_ids", lambda *args, **kwargs: set())
     monkeypatch.chdir(tmp_path)
     assert any("prohibido" in error for error in run_checks(manifest, dev, test, results))
+
+
+def test_allows_blessed_f03_opening(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import eval.check_nli_leak as leak
+
+    manifest = tmp_path / "manifest.yaml"
+    dev = tmp_path / "dev.yaml"
+    test = tmp_path / "test.yaml"
+    results = tmp_path / "results"
+    results.mkdir()
+    manifest.write_text(yaml.safe_dump(_manifest_entries()), encoding="utf-8")
+    _write(dev, [], pending=True)
+    _write(test, [], pending=True)
+    (results / leak.BLESSED_TEST_OPENING).write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(leak, "collect_burnt_ids", lambda *args, **kwargs: set())
+    monkeypatch.chdir(tmp_path)
+    assert run_checks(manifest, dev, test, results) == []

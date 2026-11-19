@@ -9,8 +9,8 @@
 
 ## 2. Current state
 
-- What works: ROADMAP 1.1-1.6 completadas; 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
-- Broken or pending work: F02 BLOCKED por 0/300 pares humanos; F03 depende de F02. Umbrales NLI provisionales 0.75/0.50/0.75. Sin demo pública ni endurecimiento de exposición (F05). Fase 1 abierta.
+- What works: ROADMAP 1.1-1.8 completadas (1.8 cerrada el 2026-11-18: 303 etiquetas NLI, umbrales 0.75/0.5/0.75, matriz reservada publicada); 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
+- Broken or pending work: demo pública y endurecimiento de exposición (F05). Fase 1 abierta solo por 1.9.
 - D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
@@ -91,8 +91,8 @@ uv run uvicorn ragmur.main:app --reload
 | Phase | Title | Status |
 |-------|-------|--------|
 | F01 | Protocolo NLI y congelación de dataset | Completed |
-| F02 | Calibración de umbrales solo en dev | BLOCKED |
-| F03 | Evaluación ciega única en reserva (cierra 1.8) | Pending |
+| F02 | Calibración de umbrales solo en dev | Completed 2026-11-18 |
+| F03 | Evaluación ciega única en reserva (cierra 1.8) | Completed 2026-11-18 |
 | F04 | Corpus real y runbook copia/restore/reindex | Completed |
 | F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
 | F08 | Limpieza de código sin cambio de comportamiento | Completed |
@@ -109,33 +109,33 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: fijar `supported/weak/contradiction` solo con dev.
 - Tasks:
-  - [ ] Ejecutar `nli_run` solo en dev con chunks reales e inferencia real.
-  - [ ] Explorar umbrales con `nli_thresholds.py`; publicar matriz dev y tasa de respaldo falso con Wilson.
-  - [ ] Congelar umbrales; no modificar la configuración sin decisión registrada.
-- Dependencies: F01 y 300 pares humanos (100/100/100) con doble anotación y adjudicación.
+  - [x] Ejecutar `nli_run` solo en dev con chunks reales e inferencia real (233 pares, CPU, 2026-11-18).
+  - [x] Explorar umbrales con `nli_thresholds.py`; publicar matriz dev y tasa de respaldo falso con Wilson (recall 41/74, falso apoyo 12/159).
+  - [x] Congelar umbrales 0.75/0.5/0.75; no modificar la configuración sin decisión registrada.
+- Dependencies: F01 y 303 pares humanos revisados (99/100/104 + 5 descartadas sustituidas) con doble anotación y adjudicación.
 - Acceptance criteria: umbrales congelados con informe dev versionado (matriz 3x3, `recall_supported>=0.5`, hardware, revisión `b5113eb`, commit, hash del corpus).
 - Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_dev.yaml --split dev`, `uv run python -m eval.nli_thresholds ...`, unitarios NLI.
-- Test evidence: no run. `eval/eu_nli_dev.yaml` contiene 0 pares; `check_nli_leak` avisa "sin pares todavía".
-- Review verdict: none.
-- Files changed: none.
+- Test evidence: `eval/results/nli-eu-dev-2026-11-18.json` (dev 233: apoyo 41/74, falso apoyo 12/159).
+- Review verdict: 0.75 único elegible (0.85/0.90/0.95 con recall <0.5). Sin cambios de configuración.
+- Files changed: `eval/eu_nli_dev.yaml`, `eval/eu_nli_test.yaml`, `eval/results/nli-eu-dev-2026-11-18.json`, `eval/results/nli-eu-test-2026-11-18.json`, `ROADMAP.md`, `README.md`, `eval/NLI.md`, `eval/EU_CORPUS.md`.
 - Risks: n pequeña da Wilson ancho. La anotación humana queda fuera del alcance de los agentes.
-- Status: BLOCKED. No lanzar escritor hasta que existan los 300 pares humanos.
+- Status: Completed 2026-11-18.
 
 ### F03: Evaluación ciega única en reserva (cierra 1.8)
 
 - Objective: medir una vez con parámetros congelados y cerrar la verificación.
 - Tasks:
-  - [ ] Una sola ejecución de `nli_run` sobre test; `nli_run` rechaza una segunda ejecución.
-  - [ ] Publicar matriz test, respaldo falso con Wilson, `recall_supported`, hardware, revisión y commit.
-  - [ ] Versionar solo resúmenes; `--details` con texto va a `/tmp`.
+  - [x] Una sola ejecución de `nli_run` sobre test (70 pares, 2026-11-18); reserva abierta una vez.
+  - [x] Publicar matriz test, respaldo falso con Wilson, `recall_supported`, hardware, revisión y commit.
+  - [x] Versionar solo resúmenes; `--details` con texto va a `/tmp`.
 - Dependencies: F02.
-- Acceptance criteria: informe test versionado; casillas 1.8 listas para marcar en F06.
-- Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_test.yaml --split test` una vez; gate compartido.
-- Test evidence: no run.
-- Review verdict: none.
-- Files changed: `eval/results/nli-eu-test-*.json`, `eval/NLI.md`.
+- Acceptance criteria: informe test versionado; casillas 1.8 marcadas.
+- Required tests: `nli_run` sobre test una vez; gate compartido.
+- Test evidence: `eval/results/nli-eu-test-2026-11-18.json` (apoyo 19/25, contradichas 19/21, falso apoyo 2/45, Wilson [1,2%, 14,8%]).
+- Review verdict: Wilson superior 14,8% no permite afirmar tasa <10% en producción; limitación publicada.
+- Files changed: `eval/results/nli-eu-test-2026-11-18.json`, `eval/NLI.md`.
 - Risks: reabrir test para otro umbral quema la reserva.
-- Status: Pending
+- Status: Completed 2026-11-18
 
 ### F05a: Diseño de exposición pública
 

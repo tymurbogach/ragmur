@@ -12,7 +12,7 @@
 - [x] Cerrar las correcciones del esqueleto indicadas en la revisión, con tests de recursos y configuración.
 - [x] Unificar la regla 8: solo `create_client()` y `ping()` quedan exentas de `tenant_id`, sin acceso a documentos o fragmentos.
 
-Las tareas 1.1 a 1.6 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** verifica con NLI; falta una evaluación representativa y calibración. La tarea **1.9** tiene despliegue en Skynet con el tenant de corpus público (10 documentos, 1395 puntos); la restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`); demo y endurecimiento quedan pendientes.
+Las tareas 1.1 a 1.8 están completadas. La tarea **1.7** tiene línea base en desarrollo, prueba reservada y comparación BM25 con 35 documentos y 27 consultas. La tarea **1.8** cerró el 2026-11-18 con 303 etiquetas NLI revisadas (dev 233 + test 70), umbrales calibrados 0.75/0.5/0.75 y matriz reservada publicada. La tarea **1.9** tiene despliegue en Skynet con el tenant de corpus público (10 documentos, 1395 puntos); la restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`); demo y endurecimiento quedan pendientes.
 Las dependencias previstas en el diseño todavía requieren la aprobación de la regla 9 antes de incorporarse.
 
 ## Estado final del sistema
@@ -331,8 +331,8 @@ Esta tarea no es opcional ni se pospone. Es la que permite ajustar troceado, `to
 - [x] Tests sin evidencia accesible, chunks borrados, fuentes contradictorias, negaciones, cifras, fechas e hipótesis demasiado largas
 - [x] Matriz de confusión por veredicto y tasa de respaldo falso sobre afirmaciones no respaldadas (dev + test 2026-11-18)
 
-Las pruebas funcionales anteriores no constituyen una evaluación reservada reproducible.
-Los umbrales actuales son provisionales hasta completar la calibración y publicar sus resultados.
+Las pruebas funcionales anteriores no constituyen la evaluación reservada; la calibración se completó el 2026-11-18 y publicó sus resultados (ver abajo).
+Los umbrales quedaron fijados en 0.75/0.5/0.75 tras la calibración en desarrollo y la apertura única de la reserva.
 El [manifiesto español](eval/eu_manifest.yaml) fija 24 PDF públicos, con 18 documentos de desarrollo y seis reservados.
 Se verificaron huellas, permisos de reutilización y extracción; el 2026-11-18 se cerraron las 303 etiquetas revisadas (dev 233 + test 70) y la inferencia reservada con umbrales 0.75/0.5/0.75.
 El selector de umbral y la comprobación numérica están implementados, pero no justifican cambiar los umbrales vigentes.
@@ -368,7 +368,7 @@ Añadir contexto anterior también puede cambiar la afirmación evaluada; su ben
 
 Skynet tiene el tenant de corpus público (10 documentos, 1395 puntos).
 La restauración aislada de una copia de Skynet se verificó el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`, runbook `docs/runbook-backup-restore.md`).
-La evaluación NLI, la demo pública y el endurecimiento de red quedan pendientes.
+La evaluación NLI cerró el 2026-11-18; la demo pública y el endurecimiento de red quedan pendientes.
 
 **Nota sobre el contenedor.** La combinación de rueda, bibliotecas y controlador se valida con inferencia dentro del contenedor.
 Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos directorios requieren volúmenes persistentes.

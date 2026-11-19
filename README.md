@@ -104,11 +104,9 @@ Usa `query` y, opcionalmente, `owner_id`, `document_ids`, `top_k` y `candidates`
 La respuesta incluye localizadores y rangos por rama. Sus puntuaciones no son probabilidades.
 
 `POST /v1/verify` puntúa cada frase contra `chunk_ids` autorizados con NLI local.
-La evaluación NLI inicial usa pocos ejemplos manuales. No demuestra la calidad sobre documentos reales.
-En la prueba reservada detectó dos de tres contradicciones; una quedó como no respaldada.
-Consulta los detalles y el hardware en `eval/results/nli-test-2026-11-11.json`.
-El [corpus español de 24 publicaciones](eval/EU_CORPUS.md) ya tiene fuentes y particiones fijadas.
-Faltan 300 etiquetas revisadas antes de calibrar o abrir la reserva; los umbrales siguen provisionales.
+Calibración con corpus español propio el 2026-11-18: 233 pares dev (recall de apoyo 41/74 = 55%, respaldo falso 12/159 = 7,5%) y apertura única de 70 pares test (apoyo 19/25 = 76%, contradichas 19/21, respaldo falso 2/45 = 4,4%, Wilson 95% [1,2%, 14,8%]). La muestra pequeña no permite afirmar tasa <10% en producción; queda como limitación publicada.
+Umbrales fijados 0.75/0.5/0.75 (único con recall ≥50% en dev). Detalles y hardware en `eval/results/nli-eu-dev-2026-11-18.json` y `eval/results/nli-eu-test-2026-11-18.json`.
+El [corpus español de 24 publicaciones](eval/EU_CORPUS.md) ya tiene fuentes, particiones, etiquetas revisadas y reserva evaluada.
 Devuelve `supported`, `weak`, `unsupported` o `contradicted` con score y mejor evidencia.
 Los identificadores ajenos se ignoran; sin evidencia válida todo queda `unsupported`.
 
