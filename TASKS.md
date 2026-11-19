@@ -115,7 +115,7 @@ uv run uvicorn ragmur.main:app --reload
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 | F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
 | R01 | Refinamiento docs: contradicciones F05e | Completed |
-| R02a | Refinamiento código: solo comentarios | Pending (plan solo, sin ejecutar) |
+| R02a | Refinamiento código: solo comentarios | Completed |
 | R02b | Refinamiento código: renames+const (con gate) | Pending (para mañana, con Docker) |
 | R03 | Higiene: verificación estática + CI tags | Pending (lectura; tags con red mañana) |
 
@@ -130,13 +130,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### R02a: Refinamiento código solo comentarios (cero diff ejecutable)
 
-- Objective: anti-regresión con solo comentarios/docstrings (≤3 líneas c/u).
-- Tasks:
-  - [ ] `error_response.py:16` +1 línea bytes/cabeceras idénticos (F10).
-  - [ ] `storage.py:30` docstring lock cooperativo; `config.py:66` desambiguación bm25 vs owner/scroll; `extractors/core.py` Raises; `config.py:91-103` lazy torch; `deps.py:41-52` lifespan; `store.py:196-205` relectura tras índices.
-- Acceptance criteria: `git diff --numstat` solo añade comentarios; `ruff`/`mypy` verdes; sin cambios de firmas ni mensajes.
-- Required tests: `ruff check`, `format --check`, `mypy`. Sin `pytest` esta noche.
-- Status: Pending (plan solo).
+- Outcome: docstrings anti-regresión en 6 ficheros (`error_response` bytes F10, `storage` lock, `config` bm25, `extractors` Raises, `config` lazy torch, `deps` lifespan, `store` relectura). Prohibidos intactos (sin SCROLL, renames, `*`, const, logs, handlers, TASKS/.github).
+- Test evidence (orquestador, solo estático): `ruff check` exit 0; `format --check` exit 0 (162); `mypy` exit 0 (128). Sin pytest/Docker esta noche. Logs en `/tmp/opencode/taskflow/ragmur/R02a-gate/`.
+- Review verdict: VERDICT: OK (0 bloqueantes; 2 informativos sin cambio).
+- Files changed: `src/ragmur/api/deps.py`, `src/ragmur/api/error_response.py`, `src/ragmur/core/config.py`, `src/ragmur/ingestion/extractors/core.py`, `src/ragmur/ingestion/storage.py`, `src/ragmur/retrieval/store.py`.
+- Risks: ninguno. Gate completo mañana.
+- Status: Completed.
 
 ### R02b: Renames + keyword-only + const (mañana, con gate completo)
 

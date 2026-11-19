@@ -16,7 +16,10 @@ from starlette.types import Send
 async def send_error(
     send: Send, status_code: int, detail: str, *, retry_after: bool = False, compact: bool = False
 ) -> None:
-    """Envía el error JSON con los bytes y cabeceras históricos del middleware."""
+    """Envía el error JSON con los bytes y cabeceras históricos del middleware.
+
+    Unificar formatos cambiaría el contrato y pertenece a F10.
+    """
     payload = {"code": f"http_{status_code}", "detail": detail}
     separators = (",", ":") if compact else (", ", ": ")
     body = json.dumps(payload, separators=separators).encode()

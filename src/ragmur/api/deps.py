@@ -41,6 +41,7 @@ class Resources:
 def get_resources(request: Request) -> Resources:
     """Recupera los recursos que `lifespan` dejó en la aplicación.
 
+    `lifespan` instala `Resources` al arrancar.
     El `cast` es necesario porque `app.state` es un contenedor de atributos libres y
     el revisor de tipos no puede saber qué hay dentro.
     """

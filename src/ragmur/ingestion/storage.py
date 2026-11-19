@@ -28,7 +28,10 @@ def resolve_document_path(root: Path, document_id: UUID, storage_path: str) -> P
 
 
 def acquire_instance_lock(root: Path) -> IO[bytes]:
-    """Impide ejecutar dos instancias escritoras sobre el mismo almacenamiento."""
+    """Impide ejecutar dos instancias escritoras sobre el mismo almacenamiento.
+
+    Candado cooperativo del mismo host; no sustituye detener la API para reindex/delete_tenant.
+    """
     root.mkdir(parents=True, exist_ok=True)
     lock = (root / ".ragmur.lock").open("a+b")
     try:

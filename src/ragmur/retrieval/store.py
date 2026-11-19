@@ -193,6 +193,7 @@ async def ensure_collection(
             wait=True,
         )
         _require_completed(result)
+    # Relee la colección tras crear los índices para comprobar su estado real.
     indexes = (await client.get_collection(collection)).payload_schema
     for field_name in ("tenant_id", "owner_id", "document_id"):
         index = indexes.get(field_name)

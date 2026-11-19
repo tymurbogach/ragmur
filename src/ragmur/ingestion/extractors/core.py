@@ -81,7 +81,11 @@ def extract_text(path: Path, mime_type: str, max_chars: int) -> ExtractionResult
 
 
 def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> ExtractionResult:
-    """Comprueba el ZIP antes de abrir el documento DOCX."""
+    """Comprueba el ZIP antes de abrir el documento DOCX.
+
+    Raises ExtractionError si el fichero es inválido.
+    Raises UnsupportedDocumentError si no hay texto utilizable.
+    """
     try:
         with ZipFile(path) as archive:
             entries = archive.infolist()
@@ -153,7 +157,11 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
 
 
 def extract_pdf(path: Path, max_chars: int, max_pages: int, min_chars: int) -> ExtractionResult:
-    """Extrae las páginas de un PDF desde un proceso aislado."""
+    """Extrae las páginas de un PDF desde un proceso aislado.
+
+    Raises ExtractionError si el fichero es inválido.
+    Raises UnsupportedDocumentError si no hay texto extraíble.
+    """
     try:
         with path.open("rb") as stream:
             if stream.read(5) != b"%PDF-":

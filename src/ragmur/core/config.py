@@ -63,6 +63,7 @@ class Settings(BaseSettings):
     bm25_disable_stemmer: bool = False
     bm25_k: float = Field(default=1.2, gt=0, allow_inf_nan=False)
     bm25_b: float = Field(default=0.75, ge=0, le=1, allow_inf_nan=False)
+    # 256 de BM25 sin relación con owner_id ni con el paginado de scroll.
     bm25_avg_len: float = Field(default=256, gt=0, allow_inf_nan=False)
     search_max_query_chars: int = Field(default=4096, gt=0)
     search_max_candidates: int = Field(default=100, ge=30)
@@ -93,6 +94,7 @@ class Settings(BaseSettings):
         """Selecciona el dispositivo una vez para todos los modelos del proceso."""
         if self.embedding_device == "cpu":
             return "cpu"
+        # Importación diferida: torch solo se carga al resolver el dispositivo.
         import torch
 
         available = torch.cuda.is_available()
