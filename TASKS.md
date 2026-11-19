@@ -9,7 +9,8 @@
 
 ## 2. Current state
 
-- What works: ROADMAP 1.1-1.8 completadas (1.8 cerrada el 2026-11-18: 303 etiquetas NLI, umbrales 0.75/0.5/0.75, matriz reservada publicada); 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`).
+- What works: ROADMAP 1.1-1.9 completadas (1.8 cerrada el 2026-11-18: 303 etiquetas NLI, umbrales 0.75/0.5/0.75, matriz reservada publicada); 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`). F06 cierre fase 1 commiteado (`e3bdba1` docs, 2026-11-19; `beab7b1` suite+tabla).
+- Refinamiento R (plan 2026-11-19, base `e3bdba1`): solo fase 1, sin cambios de comportamiento, sin fase 2/3, sin dependencias nuevas, sin Skynet, sin Docker/integración esta noche (pruebas para mañana por petición del usuario). 3 exploradores + 2 rondas de crítica cerradas con VERDICT OK.
 - Broken or pending work: cierre de fase 1 (F06: `eval/run.py` 4 configuraciones sobre dev y reserva + tabla README). Demo pública descartada (F05e) a petición del usuario el 2026-11-19: 1.9 cierra en privado.
 - D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
@@ -18,6 +19,7 @@
 - Last review: F05c `VERDICT: OK` (2026-11-17); 3 hallazgos bajos + 2 informativos; reparación de tipos aplicada. Antes: F05b `VERDICT: OK`; F09 `VERDICT: OK`; F08 `VERDICT: OK`.
 - Existing local changes: ninguna (árbol limpio tras el commit de F05c). Ciclo `run all` cerrado 2026-11-17: F08, F09, F05b y F05c verificadas y commiteadas (443e3dc, a5bf48a, cfbb73b, dbc1e39) sobre 1abaf61; gate global verde en el árbol final. Sin push.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
+- Refinamiento R (2026-11-19, solo local): esta noche solo estático (`ruff`, `mypy`, `grep`, lectura). Gate completo con Docker/PostgreSQL/Qdrant (`alembic`, `pytest -q`, `check_nli_leak`, `pytest -k isolation`) queda para mañana por petición del usuario. Sin Skynet esta noche.
 - Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
 
 ## 3. Architecture and technology
@@ -50,6 +52,9 @@ uv run ruff check . && uv run ruff format --check .
 uv run mypy
 uv run pytest -q
 uv run python -m eval.check_nli_leak
+# Refinamiento R (2026-11-19, solo local, pruebas para mañana):
+# - Esta noche: solo `ruff check`, `format --check`, `mypy` y greps de alcance (qdrant_client, TODO/print, 256). Sin docker/alembic/pytest/Skynet.
+# - Mañana (gate completo): `docker compose up -d` + `alembic upgrade head` + `pytest -q` + `check_nli_leak` + `pytest -k "isolation or tenant or owner"`.
 # focused phase checks: see each phase
 # delivery gate: shared gate + eval/run.py 4 configuraciones + nli_run dev/test congelados + smoke de despliegue
 # run the app
@@ -78,7 +83,12 @@ uv run uvicorn ragmur.main:app --reload
   - D6: F05a propone un objetivo p95 de `/v1/search` con rerank en RTX 5080 a partir de `benchmarks/gpu-rtx5080-2026-11-10.md`; el valor se confirma al aprobar el diseño y se mide en F05d.
   - D7: corregir `ROADMAP.md` 1.9 y `HANDOFF.md` en un commit `docs:` antes del commit de F05a.
 
-- Debate de la auditoría (2026-11-17): una ronda más una de cierre con `critica`. Parada: la ronda 2 no añadió hallazgos.
+- Debate del refinamiento R (2026-11-19, base `e3bdba1`): 3 exploradores (código/docs/calidad) + 2 rondas con `critica`. Parada: ronda 2 VERDICT OK sin bloqueantes nuevos.
+  - B1 aceptado: `_tenant_filter` keyword-only pasa a cambio atómico 6 líneas + gate de aislamiento mañana.
+  - B2 aceptado: R01 excluye `TASKS.md` (solo el orquestador la edita).
+  - B3 aceptado: split R02a (solo comentarios) vs R02b (renames+`*`+const, gate completo mañana); esta noche cero commits.
+  - M1-M7 aceptados: DECISIONS append-only, REVIEW intacto, demo-design congelado, ROADMAP con sufijo, OWNER const aislada de F10-A8, sin reword de logs, cero diff en `.github/` esta noche.
+  - m1 aplicado: `SCROLL_PAGE_SIZE` y f-string de `embedder` van a R02b (código), R02a queda solo comentarios.
   - A2 (validación de `owner_id` duplicada) se descarta: los mensajes 422 difieren por ruta y forman parte del contrato.
   - B4 (`store.py`) limita los helpers a `document_ids` y parámetros dispersos; `corpus_filter` y `result_filter` quedan intactos.
   - A9 (candado global de modelos) extiende F05c y F05d con carga mixta y `INFERENCE_MAX_REQUESTS` como profundidad de cola.
@@ -101,9 +111,58 @@ uv run uvicorn ragmur.main:app --reload
 | F05c | Arnés de carga y abuso en CPU local | Completed |
 | F05d | Despliegue privado en Skynet y medición GPU | Completed 2026-11-19 |
 | F05e | Exposición pública de la demo | Discarded (sin demo pública, decisión usuario 2026-11-19) |
-| F06 | Cierre fase 1: suite, README y marcas | Pending |
+| F06 | Cierre fase 1: suite, README y marcas | Completed 2026-11-19 |
 | F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
 | F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
+| R01 | Refinamiento docs: contradicciones F05e | Pending (plan solo, sin ejecutar) |
+| R02a | Refinamiento código: solo comentarios | Pending (plan solo, sin ejecutar) |
+| R02b | Refinamiento código: renames+const (con gate) | Pending (para mañana, con Docker) |
+| R03 | Higiene: verificación estática + CI tags | Pending (lectura; tags con red mañana) |
+
+### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
+
+- Objective: eliminar contradicciones demo pública pendiente vs descartada, sin reescribir historia.
+- Tasks:
+  - [ ] `README.md:8` → "despliegue privado verificado en Skynet 2026-11-19; demo pública descartada (DECISIONS 3.33)".
+  - [ ] `ARCHITECTURE.md:5` matiz + banner en `623-631` "descartado 2026-11-19, conservado como diseño".
+  - [ ] `ROADMAP.md:62,66,72` sufijo "(objetivo original; F05e descartada 2026-11-19, ver 3.33)", sin borrar.
+  - [ ] `DECISIONS.md:3.26/3.30` append-only 1 línea puntero a 3.33/NLI cierre; `docs/demo-design.md` congelado (`1abaf61`); `REVIEW.md:62` intacto.
+  - [ ] Conciliar commit base `e3bdba1` vs `beab7b1`/`535e904` y counts `pytest` antes de editar.
+- Dependencies: ninguna. Excluye `TASKS.md` (solo orquestador), `demo-design.md` interior, `REVIEW.md:62`, `.github/`.
+- Acceptance criteria: cero contradicciones F05e; historia intacta; enlaces relativos 24/24 OK.
+- Required tests: `ruff check` (sin cambios de código debe pasar igual); `git grep -n "pendiente" README.md ARCHITECTURE.md ROADMAP.md`; verificación de enlaces relativos. Gate completo mañana.
+- Risks: ninguno de comportamiento. No tocar `documents.py:118-133` (F10-A8).
+- Status: Pending (plan solo, sin ejecutar).
+
+### R02a: Refinamiento código solo comentarios (cero diff ejecutable)
+
+- Objective: anti-regresión con solo comentarios/docstrings (≤3 líneas c/u).
+- Tasks:
+  - [ ] `error_response.py:16` +1 línea bytes/cabeceras idénticos (F10).
+  - [ ] `storage.py:30` docstring lock cooperativo; `config.py:66` desambiguación bm25 vs owner/scroll; `extractors/core.py` Raises; `config.py:91-103` lazy torch; `deps.py:41-52` lifespan; `store.py:196-205` relectura tras índices.
+- Acceptance criteria: `git diff --numstat` solo añade comentarios; `ruff`/`mypy` verdes; sin cambios de firmas ni mensajes.
+- Required tests: `ruff check`, `format --check`, `mypy`. Sin `pytest` esta noche.
+- Status: Pending (plan solo).
+
+### R02b: Renames + keyword-only + const (mañana, con gate completo)
+
+- Objective: P1-P2 ejecutables, atómicos, con gate Docker.
+- Tasks:
+  - [ ] `_tenant_filter` + `*` + 4 callsites a keyword (`store.py:90,119,138,245,281`) + `grep _tenant_filter` sin posicionales.
+  - [ ] Renames `first→batch_document`, `_find_label`, `choose`; `OWNER_ID_MAX_LENGTH=256`, `SCROLL_PAGE_SIZE=256`, f-string `embedder` con modelo/revisión.
+  - [ ] Valor 256 idéntico; `documents.py:118-133` intacto; sin reword `logger.*`; sin P4 (`_branch_query`, `_must_list`, `OwnerQueryParam`) ni P3-15.
+- Acceptance criteria: `pytest -k "isolation or tenant or owner"` verde + gate compartido completo.
+- Required tests: gate completo + `pytest -q` + `check_nli_leak`.
+- Status: Pending (para mañana).
+
+### R03: Higiene estática + CI tags (lectura)
+
+- Objective: dejar constancia sin historia ni red esta noche.
+- Tasks:
+  - [ ] Verificar `ruff`/`mypy` config strict, `.gitignore` (models/storage/.env/per_query/details), sin `TODO`/`print`, `qdrant_client` solo en `store.py`.
+  - [ ] Mañana con red: verificar `actions/checkout@v7` / `setup-uv` tags; decidir `git gc` de `eval/.pdf_cache` 124 MB (altera hashes, coordinar). Sin `gc` esta noche.
+- Acceptance criteria: informe con evidencia; cero diff en `.github/` esta noche.
+- Status: Pending.
 
 ### F02: Calibración de umbrales solo en dev
 
@@ -279,8 +338,8 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next action: commitear F05d; después F06 (cierre: `eval/run.py` 4 configuraciones + tabla README + marcas).
-- Next phase: F06 (pendiente). F05e descartada (sin demo pública, 2026-11-19). F10 opcional, sin programar.
-- Resume command: `/taskflow run F06`
-- Recommended effort: medium
-- Autorizaciones: A concedida y consumida (F05d, 2026-11-19). B ya no aplica (F05e descartada). Push al día con `origin/main` (`535e904`; falta push del commit F05d).
+- Next action (solo plan 2026-11-19, sin ejecutar): plan R01-R03 registrado y criticado (ronda 2 VERDICT OK). No commitear esta noche. Mañana: `run R01`, luego R02a (estático), luego R02b+R03 con gate completo + Docker.
+- Next phase: R01 (Pending). F06 Completed 2026-11-19. F05e descartada. F10 opcional, sin programar.
+- Resume command: `/taskflow run R01` (mañana, con Docker disponible)
+- Recommended effort: low (R01+R02a), medium (R02b con aislamiento)
+- Autorizaciones: ninguna nueva. Sin push, sin Skynet, sin Docker esta noche por petición del usuario. Base `e3bdba1` (ahead 1 sobre `origin/main`).
