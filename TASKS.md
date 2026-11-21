@@ -125,7 +125,7 @@ uv run uvicorn ragmur.main:app --reload
 | R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
 | G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Completed 2026-11-21 |
 | G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Completed 2026-11-21 |
-| G03a | 2.1b Datos, ingesta y caché de recuperación | Pending |
+| G03a | 2.1b Datos, ingesta y caché de recuperación | Completed 2026-11-21 |
 | G03b | 2.1b Lector, puntuación y controles | Pending |
 | G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Pending |
 | G05 | 2.1b Escalado masivo, una subfase por dataset | Pending (tras revisión humana del piloto) |
@@ -174,16 +174,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ### G03a: 2.1b Datos, ingesta y caché de recuperación
 
-- Objective: XQuAD-es indexado en un tenant propio y búsquedas guardadas, sin LLM.
-- Tasks:
-  - [ ] `eval/reader/xquad.py`: descarga desde una URL fijada a un commit concreto del repositorio `google-deepmind/xquad` (no `master`), SHA-256 fijado en código, datos en `eval/.datasets/` (ignorado por Git), licencia CC BY-SA 4.0 anotada.
-  - [ ] Partición por artículo con semilla fija: `dev` y `reserve`. `reserve` no se abre en esta fase ni en G04.
-  - [ ] Ingesta de cada párrafo como documento en el tenant `uuid5(NAMESPACE_DNS, "ragmur.eval.reader.xquad-es")` y colección de evaluación propia, con `split_document` 800/120 y `store.*` con `tenant_id` primero (regla 8). Sin importar `api/` (regla 5).
-  - [ ] Caché de recuperación JSONL por caso y configuración (`hybrid_rerank`, `candidates` 30, `top_k` 5) con `chunk_id`, texto, documento y puntuación, clave con hash del dataset y commit.
-  - [ ] Aislamiento (regla 3): integración con Qdrant real; un tenant señuelo y un `owner_id` distinto con copias de párrafos; ninguna búsqueda devuelve puntos del otro lado, en ambos sentidos.
-- Acceptance criteria: unitarios (modelos simulados) e integración con Qdrant real verdes; indexado real de XQuAD-es completado en CPU; caché de las preguntas del piloto generada.
-- Required tests: gate compartido + `pytest tests/eval/reader`.
-- Status: Pending.
+- Outcome: `eval/reader/` (`xquad`, `index`, `retrieve`, `cache`, `prepare`). XQuAD-es fijado al commit `7d30520c` con SHA-256 `dcbae93e…` y descarga atómica; partición por artículo (semilla 20261121): 36 `dev` (908 preguntas) y 12 `reserve` sellada (`allow_reserve`). Se indexan los 240 párrafos (los de reserva solo como ruido) en el tenant `ragmur.eval.reader.xquad-es` y la colección `*_eval_reader`, con 800/120 y `chunk_id` determinista. Recuperación `hybrid_rerank` con el mismo camino que `eval/run.py`. Clave de caché con dataset, commit, árbol sucio (`src`, `eval`, `pyproject.toml`, `uv.lock`), configuración, `candidates`, `top_k`, `rrf_k`, hash completo de BM25, troceado, modelos, semilla, muestra y split; `prepare` se niega con árbol sucio salvo `--allow-dirty`. Meta con hardware y latencias.
+- Plan adjustment: la caché de 100 casos del piloto se genera tras este commit, como primer paso de G04 (la clave incluye el commit).
+- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 181; `mypy` 147 OK; `pytest` 314 passed 5 skipped; aislamiento 14+1 (incluye tenant señuelo en ambos sentidos y owners A↔B con Qdrant real); `tests/eval/reader` 46 passed; `check_nli_leak` verde; secretos limpio (incluye ficheros sin seguimiento). Smoke real: 240 párrafos indexados y caché de 5 casos en 4 min 40 s en CPU. Logs en `/tmp/opencode/taskflow/ragmur/G03a-final-gate/`.
+- Review verdict: ronda 1 "VERDICT: OK — no blocking findings; fix majors 1-2 before generating the 100-case cache, because G04 freezes its key." Reparación acotada de M1-M3 y m1-m7. Ronda 2 "VERDICT: OK — all requested majors and minors are fixed; the new findings are minor and do not block the commit." El orquestador aplicó 3 arreglos de una línea pedidos por la ronda 2 (hash BM25 completo, rutas `:/` y ficheros de dependencias en el control de árbol sucio, mensaje de descarga).
+- Later work (menor): conftest de Qdrant duplicado entre `tests/retrieval` y `tests/eval/reader`; fijar la lista de 12 artículos de reserva como regresión; el test de reutilización de `Indexer` solo busca texto.
+- Status: Completed 2026-11-21.
 
 ### G03b: 2.1b Lector, puntuación y controles
 
@@ -205,6 +201,7 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: primera medición real, pequeña, para revisión humana antes de escalar.
 - Tasks:
+  - [ ] Generar con árbol limpio la caché de las 100 preguntas: `uv run python -m eval.reader.prepare --split dev --sample-size 100 --reuse-index`.
   - [ ] Congelar antes de ejecutar: prompt v1 (SHA-256), semilla, 100 preguntas de `dev`, modelo por id, temperatura 0 y clave de la caché de recuperación. Registrarlo en esta sección. Si el humo de G03b falla, G04 no arranca.
   - [ ] Pasada con fragmentos, pasada sin fragmentos sobre las mismas 100 y 30 contrafactuales; `--max-calls 260`.
   - [ ] Resumen versionado; muestra de 30 respuestas para revisión humana en `per_query/` (fuera de Git).

@@ -21,6 +21,7 @@ storage/
 # Evaluación: se versionan los resúmenes por ejecución, no los volcados por consulta
 eval/results/**/per_query/
 eval/results/*details*.json
+eval/.datasets/
 /tmp/nli-*-details*.json
 
 # Andamiaje local de etiquetado NLI (caché de PDFs, candidatos y progreso)
