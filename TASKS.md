@@ -124,7 +124,7 @@ uv run uvicorn ragmur.main:app --reload
 | R02b | Refinamiento código: renames+const (con gate) | Completed 2026-11-21 |
 | R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
 | G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Completed 2026-11-21 |
-| G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Pending |
+| G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Completed 2026-11-21 |
 | G03a | 2.1b Datos, ingesta y caché de recuperación | Pending |
 | G03b | 2.1b Lector, puntuación y controles | Pending |
 | G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Pending |
@@ -164,18 +164,13 @@ uv run uvicorn ragmur.main:app --reload
 
 ### G02: 2.1a Proveedor LLM mínimo
 
-- Objective: única puerta a cualquier LLM (regla 7), reutilizable por `eval/` hoy y por `/answer` en 2.3.
-- Tasks:
-  - [ ] `litellm==1.108.2` fijada en `pyproject.toml` y `uv.lock`.
-  - [ ] `Settings`: `llm_model`, `llm_api_key` (`SecretStr`, env `LLM_API_KEY`), `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens`, `llm_max_retries`. Sin valores de proveedor hardcodeados; `.env.example` actualizado.
-  - [ ] `llm/provider.py`: `async complete(messages, *, settings, temperature, seed) -> Completion` (texto, modelo devuelto, tokens, latencia). Un solo modelo por llamada; sin fallback. Errores propios (`LLMTimeout`, `LLMRateLimited` con `retry_after`, `LLMAuthError`, `LLMQuotaExceeded` para 402, `LLMError`); nadie fuera ve excepciones de LiteLLM. Reintentos acotados por `llm_max_retries`, nunca ante 401/402.
-  - [ ] Test estático: ningún fichero fuera de `src/ragmur/llm/provider.py` importa `litellm`, `openai` ni `anthropic`.
-  - [ ] Unitarios con LiteLLM simulado: éxito con tokens, timeout, 429 con `retry_after`, 401, 402, la clave nunca aparece en logs ni `repr`.
-  - [ ] Smoke real marcado `llm_live`, saltado salvo `RAGMUR_LLM_LIVE=1`.
-  - [ ] `ARCHITECTURE.md` sección `llm/` con la interfaz real.
-- Acceptance criteria: gate compartido verde; smoke real contra OpenCode Go ejecutado por el orquestador; ningún secreto en Git.
-- Required tests: gate compartido + `RAGMUR_LLM_LIVE=1 pytest -m llm_live`.
-- Status: Pending.
+- Outcome: `litellm==1.108.2` fijada; `Settings` con `llm_model`, `llm_api_key`, `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens`, `llm_max_retries` (≤5) y `llm_extra_headers` (oculto en `repr`); `llm/provider.py` con `complete()`, `Completion(attempts, latency_ms del intento con éxito)`, errores propios y red final que envuelve toda excepción de LiteLLM; reintentos solo ante timeout, 429, conexión y 5xx con backoff acotado a 10 s; mapa de costes local (`LITELLM_LOCAL_MODEL_COST_MAP`). Test estático de imports (también `importlib`/`__import__`).
+- Hallazgo: LiteLLM 1.108.2 no trae `opencode_go/`. OpenCode Go va por `openai/<modelo>` + `https://opencode.ai/zen/go/v1` + cabecera `x-opencode-session`. Su política limita el uso a tráfico de agentes de código y comparte cupo de 5 h y semanal: el banco masivo usa modelo local (DECISIONS 3.34).
+- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 167; `mypy` 133 OK; `pytest` 268 passed 5 skipped; aislamiento 13+1; `check_nli_leak` verde; secretos 0; `uv sync --locked` 0. Smoke real `pytest -m llm_live`: Ollama local `ollama_chat/gemma3:4b` 1 passed (8 s, CPU); OpenCode Go `openai/glm-5.3-flash` 1 passed. Logs en `/tmp/opencode/taskflow/ragmur/G02r2-gate/`.
+- Review verdict: ronda 1 "VERDICT: BLOCKED — copying `.env.example` with the empty `LLM_EXTRA_HEADERS=` stops `Settings()` from loading, and LiteLLM errors outside `litellm.APIError` (for example `NotFoundError`) reach callers unwrapped." Reparación acotada (2 rondas de escritor). Ronda 2: "VERDICT: OK — all earlier findings are fixed; the two new findings are minor test-hygiene issues and do not block the commit."
+- Later work (menor): aislar de variables `LLM_*` del entorno `test_env_example_loads` y `test_no_extra_headers_by_default`; test que proteja `LITELLM_LOCAL_MODEL_COST_MAP`.
+- Entorno añadido: contenedor `ragmur-ollama-eval` (`ollama/ollama:0.40.14`, `sha256:ebaef4f4…`, solo `127.0.0.1:11434`, volumen `ragmur_ollama_eval`) con `gemma3:4b` (`68ceab7e468a`).
+- Status: Completed 2026-11-21.
 
 ### G03a: 2.1b Datos, ingesta y caché de recuperación
 

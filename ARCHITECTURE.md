@@ -61,7 +61,7 @@ Previsto en la fase 2 (no existe en este árbol):
 ├── src/ragmur/api/routes/query.py    # recuperación agéntica
 ├── src/ragmur/api/routes/answer.py   # endpoint principal con LLM
 ├── src/ragmur/retrieval/router.py    # reescritura y reintento
-├── src/ragmur/llm/                   # provider.py (abstracción LiteLLM) y generator.py
+├── src/ragmur/llm/generator.py       # redacción sobre fragmentos (provider.py ya existe, ver abajo)
 └── columna llm_configs en PostgreSQL # configuración del proveedor por tenant
 ```
 
@@ -75,6 +75,41 @@ Dos puntos de estrangulamiento obligatorios, ambos verificables con un test de i
 Toda función pública de `store.py` recibe `tenant_id` como primer argumento obligatorio, excepto `create_client()` y `ping()`.
 Estas dos funciones solo gestionan la conexión y comprueban el servidor; no pueden leer ni escribir documentos o fragmentos.
 Las operaciones de búsqueda, indexado, lectura y borrado conservan el tenant obligatorio, según la regla 8 de [`AGENTS.md`](AGENTS.md).
+
+### `llm/` — puerta única al LLM (fase 2)
+
+`src/ragmur/llm/provider.py` es la única puerta a cualquier LLM (regla 7):
+ningún otro módulo importa `litellm`, `openai` ni `anthropic`, lo que verifica
+`tests/llm/test_imports.py` recorriendo `src/`, `eval/`, `tests/` y
+`benchmarks/` (incluye `importlib.import_module` y `__import__` dinámicos).
+Interfaz real:
+
+- `ChatMessage(role, content)` con `role` en `system` / `user` / `assistant`.
+- `async complete(messages, *, settings, temperature=0.0, seed=None, max_tokens=None)`
+  → `Completion(text, model, prompt_tokens, completion_tokens, latency_ms, attempts)`.
+  Un solo modelo por llamada, sin `fallback`. `attempts` cuenta desde 1 el
+  intento que tuvo éxito; `latency_ms` mide solo ese intento, no los reintentos.
+- Errores propios (`LLMError` y subclases `LLMConfigError`, `LLMTimeout`,
+  `LLMRateLimited` con `retry_after`, `LLMAuthError`, `LLMQuotaExceeded`):
+  fuera de `provider.py` no se ve ninguna excepción de LiteLLM.
+- Reintentos acotados por `llm_max_retries` (máximo 5, o sea 6 intentos) solo
+  ante timeout, `429` y errores de conexión o `5xx` sin código conocido;
+  nunca ante `401` / `403` / `402` ni otros `4xx`. Ante `429` con
+  `retry-after` se espera lo pedido (acotado a 10 s); sin indicación del
+  proveedor, la espera crece como `0.5 * 2**intento`, también acotada a 10 s.
+  Dentro de LiteLLM `num_retries=0`: el bucle es propio. Peor caso por
+  petición: 6 intentos de como mucho (`llm_timeout_seconds` + 10 s) cada uno.
+- Sin `llm_model` configurado, `LLMConfigError` antes de llamar a la red.
+  La clave viaja explícita desde `llm_api_key` y nunca aparece en logs ni en
+  mensajes de error; tampoco el contenido de los mensajes.
+
+Configuración (`Settings`, prefijo `LLM_`): `llm_model`, `llm_api_key`
+(`SecretStr`), `llm_api_base`, `llm_extra_headers` (`dict[str, str]`, en
+entorno como JSON `LLM_EXTRA_HEADERS`; viaja como `extra_headers` a
+LiteLLM y sus valores nunca se registran, con `repr=False` también fuera de
+`repr()` y `str()`), `llm_timeout_seconds` (60 s),
+`llm_max_tokens` (512), `llm_max_retries` (2, máximo 5). Fijado `litellm==1.108.2`
+(ver `DECISIONS.md` §3.34).
 
 ## Flujo
 

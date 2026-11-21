@@ -405,12 +405,30 @@ par dejaría de estar emparejado.
 
 **Dependencia nueva (regla 9): `litellm==1.108.2`.**
 Frente a `httpx` directo, LiteLLM ofrece una sola interfaz para
-`opencode_go/`, `lm_studio/`, `ollama/` y los proveedores remotos previstos
+`lm_studio/`, `ollama/` y los proveedores remotos previstos
 en 2.1, más el recuento de tokens de uso por petición. Licencia MIT.
+Corrección: la versión 1.108.2 no trae ruta `opencode_go/`. OpenCode Go se
+usa con prefijo `openai/`, `api_base` de Go y cabecera `x-opencode-session`.
+El banco de pruebas usa un modelo local fijo o un proveedor que permita
+evaluación por lotes. OpenCode Go solo sirve para humo puntual, salvo que
+el usuario decida otra cosa. Go está diseñado para tráfico de agentes de
+código. Su uso está monitorizado y el cupo de 5 horas y el semanal son
+compartidos.
 Peso transitivo: `openai`, `tiktoken`, `tokenizers`, `huggingface-hub`,
 `aiohttp`, `boto3` y otros. La versión 1.107.0 quedó marcada como
 comprometida por el propio proveedor el 2026-10-21, así que la versión queda
 fijada en `uv.lock` y no se acepta un rango abierto.
+Medido en `uv.lock`: `filelock` baja de 4.2.10 a 3.32.7, `certifi` sube de
+2026.7.22 a 2026.11.20, y `openai` 3.57.0 trae `httpx2`/`httpcore2` (nombres
+renombrados por el propio `openai`, conviven con `httpx`/`httpcore`) más
+`truststore`.
+Arranque sin red: `provider.py` fija `LITELLM_LOCAL_MODEL_COST_MAP=True`
+antes de importar `litellm`, así no descarga el mapa de costes de modelos al
+importar (verificado en `litellm/__init__.py`: `get_model_cost_map(url=...)`
+corre en el import; el propio `get_model_cost_map.py` documenta la variable
+como interruptor). Sin `noqa E402`: ruff 0.16.2 exime `os.environ.setdefault`
+previo a imports (comprobado: `print()` sí dispara E402, `setdefault` no);
+añadir el `noqa` rompería `RUF100` y con él `ruff check`.
 
 ## 4. Aclaraciones conceptuales fijadas
 

@@ -4,7 +4,7 @@ from functools import cached_property, lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, model_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -87,7 +87,34 @@ class Settings(BaseSettings):
     verify_weak_threshold: float = Field(default=0.5, ge=0, le=1)
     verify_contradiction_threshold: float = Field(default=0.75, ge=0, le=1)
 
+    # Puerta única al LLM (fase 2, regla 7): ningún valor de proveedor
+    # hardcodeado; el modelo y la clave llegan por entorno.
+    llm_model: str | None = None
+    llm_api_key: SecretStr | None = None
+    llm_api_base: str | None = None
+    # Cabeceras extra por petición (p. ej. sesión de OpenCode Go).
+    # En entorno llega como JSON: LLM_EXTRA_HEADERS='{"X":"y"}'.
+    # Los valores pueden ser secretos: nunca se registran ni van en errores.
+    # `repr=False` los oculta también de `repr()` y `str()`.
+    llm_extra_headers: dict[str, str] = Field(default_factory=dict, repr=False)
+    llm_timeout_seconds: float = Field(default=60, gt=0, allow_inf_nan=False)
+    llm_max_tokens: int = Field(default=512, gt=0)
+    # `le=5` acota el peor caso: 6 intentos de como mucho
+    # (`timeout` + 10 s) cada uno (ver `ARCHITECTURE.md`).
+    llm_max_retries: int = Field(default=2, ge=0, le=5)
+
     log_level: str = "INFO"
+
+    @field_validator("llm_model", "llm_api_key", "llm_api_base", mode="before")
+    @classmethod
+    def empty_llm_string_is_none(cls, value: object) -> object:
+        """Convierte `""` en `None` para las opciones del LLM.
+
+        En un fichero de entorno una variable sin valor (`LLM_MODEL=`) llega
+        como cadena vacía, no como ausencia; sin este validador el servicio
+        intentaría usar `""` como modelo, clave o URL base.
+        """
+        return None if value == "" else value
 
     @cached_property
     def resolved_device(self) -> Literal["cpu", "cuda"]:

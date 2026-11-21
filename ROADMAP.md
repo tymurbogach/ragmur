@@ -386,11 +386,13 @@ Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos dire
 ### 2.1a Proveedor mínimo (G02)
 
 - [ ] LiteLLM como interfaz única sobre Ollama, OpenAI, Anthropic y Gemini
-- [ ] `Settings` con `llm_model`, `llm_api_key`, `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens` y `llm_max_retries`; sin valores de proveedor hardcodeados (solo el valor por defecto; ver 2.1c)
+- [ ] `Settings` con `llm_model`, `llm_api_key`, `llm_api_base`, `llm_extra_headers`, `llm_timeout_seconds`, `llm_max_tokens` y `llm_max_retries`; sin valores de proveedor hardcodeados (solo el valor por defecto; ver 2.1c)
 - [ ] `llm/provider.py` como única puerta a cualquier LLM (regla 7), con errores propios y reintentos acotados
 - [ ] Tests: ningún import de SDK fuera de `llm/provider.py`; unitarios con LiteLLM simulado; smoke real marcado `llm_live`
 
 **Nota.** Versión fijada `litellm==1.108.2` en `uv.lock`; justificación en `DECISIONS.md` 3.34.
+Esa versión no trae `opencode_go/`: OpenCode Go va por `openai/` con `api_base` y
+cabecera de sesión. El banco usa modelo local fijo; Go solo para humo puntual.
 
 ### 2.1b Banco de pruebas con lectores (G03–G05)
 
