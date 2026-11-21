@@ -96,6 +96,10 @@ uv run uvicorn ragmur.main:app --reload
 - Decisiones del usuario (2026-11-17): solo cambios que preservan comportamiento; retirar `HANDOFF.md` y marcar `REVIEW.md` como histórico; mover los scripts huérfanos a `eval/_archive_ai/`; orden F05a, F08, F09, F05b.
 - Hallazgos descartados con motivo: B3 (DECISIONS 3.21); B7 falso (`budget - stride >= 1`); A7 (límites `gt=0`); B11 y B13 (DECISIONS 3.19, contenedor Linux); D1 (`Dockerfile:26` copia `eval`); B1 y B2 (identidad de chunks sin datos de evaluación); B6, B8 y B12 (rendimiento sin medir); A3, A4 y B14 (bajo valor, versiones fijadas); D6 (`LEARNING.md` lo usa la skill); `eval/_archive_ai` (lo usan `check_nli_leak` y tests); A5, A8 y A10 cambian el contrato (F10).
 
+- Debate fase G (2026-11-21, base `b5847fd`): explorador (LiteLLM 1.108.2, XQuAD/MLQA/NoMIRACL, reutilización de `eval/run.py`) + crítica ronda 1 `BLOCKED` (5 bloqueantes, 4 mayores, 3 menores).
+  - Aceptados B1 (tope de llamadas, sin fallback, parada en 401/402), B2 (`provider.py` obligatorio y test de imports), B3 (delta y faithful-EM; contrafactual emparejado sobre la misma caché en vez de tenant aparte, porque el IDF va por tenant), B4 (LLM solo lector; prompt, semilla y muestra congelados; partición `reserve`), M1-M4, m1-m3.
+  - B5 aceptado en parte: G03 se parte en G03a y G03b y G05 en una subfase por dataset. Rechazado no ejecutar G04 esta noche: el usuario pidió resultados para mañana, y el piloto está limitado a 260 llamadas, es solo dev, no se publica y queda pendiente de revisión humana.
+
 ## 7. Phase plan
 
 | Phase | Title | Status |
@@ -116,8 +120,14 @@ uv run uvicorn ragmur.main:app --reload
 | F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
 | R01 | Refinamiento docs: contradicciones F05e | Completed |
 | R02a | Refinamiento código: solo comentarios | Completed |
-| R02b | Refinamiento código: renames+const (con gate) | Pending (para mañana, con Docker) |
+| R02b | Refinamiento código: renames+const (con gate) | Completed 2026-11-21 |
 | R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
+| G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Pending |
+| G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Pending |
+| G03a | 2.1b Datos, ingesta y caché de recuperación | Pending |
+| G03b | 2.1b Lector, puntuación y controles | Pending |
+| G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Pending |
+| G05 | 2.1b Escalado masivo, una subfase por dataset | Pending (tras revisión humana del piloto) |
 
 ### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
 
@@ -137,16 +147,83 @@ uv run uvicorn ragmur.main:app --reload
 - Risks: ninguno. Gate completo mañana.
 - Status: Completed.
 
-### R02b: Renames + keyword-only + const (mañana, con gate completo)
+### R02b: Renames + keyword-only + const
 
-- Objective: P1-P2 ejecutables, atómicos, con gate Docker.
+- Outcome: `_tenant_filter(tenant_id, *, ...)` con 4 llamadas nombradas; `first→batch_document`, `_find_label→_find_label_index`, `choose→choose_separator_end`; `OWNER_ID_MAX_LENGTH=256` (una definición en `db/models.py`, usada en API y CHECK con el mismo SQL) y `SCROLL_PAGE_SIZE=256`. Tarea del embedder no aplica (no hay cadena descriptiva). `documents.py:118-133` intacto.
+- Test evidence (orquestador, 2026-11-21, PostgreSQL 17 y Qdrant 1.19 locales): `alembic` 0; `ruff` 0; `format` 162; `mypy` 128 OK; `pytest` 242 passed 4 skipped; aislamiento 13 passed 1 skipped; `check_nli_leak` verde. Logs en `/tmp/opencode/taskflow/ragmur/R02b-gate/`.
+- Review verdict: auto-verificación del orquestador sobre el diff completo (41+/26-), sin cambio de comportamiento ni contrato (regla roles §review).
+- Status: Completed.
+
+### G01: Abrir fase 2 (documentación, sin código)
+
+- Objective: dejar escrita la decisión del usuario (2026-11-21) de abrir la fase 2 y permitir el LLM en las pruebas de fase 1.
 - Tasks:
-  - [ ] `_tenant_filter` + `*` + 4 callsites a keyword (`store.py:90,119,138,245,281`) + `grep _tenant_filter` sin posicionales.
-  - [ ] Renames `first→batch_document`, `_find_label`, `choose`; `OWNER_ID_MAX_LENGTH=256`, `SCROLL_PAGE_SIZE=256`, f-string `embedder` con modelo/revisión.
-  - [ ] Valor 256 idéntico; `documents.py:118-133` intacto; sin reword `logger.*`; sin P4 (`_branch_query`, `_must_list`, `OwnerQueryParam`) ni P3-15.
-- Acceptance criteria: `pytest -k "isolation or tenant or owner"` verde + gate compartido completo.
-- Required tests: gate completo + `pytest -q` + `check_nli_leak`.
-- Status: Pending (para mañana).
+  - [ ] `AGENTS.md` regla 2: `/search` y `/verify` siguen sin LLM. En `eval/` el LLM solo actúa como **lector bajo prueba**; la respuesta correcta sale del dataset o de la construcción del caso, nunca del LLM, y ningún LLM juzga la aceptación. Cifras con LLM se publican aparte de las de fase 1.
+  - [ ] `DECISIONS.md` 3.34: banco de agentes lectores. Incluye `litellm==1.108.2` (regla 9: qué aporta frente a `httpx` directo, licencia MIT, peso transitivo, aviso de seguridad de 1.107.0) y alternativas descartadas (generador RAGAS por LangChain, agentes de código por escala y reproducibilidad, LLM como fuente de etiquetas o juez).
+  - [ ] `ROADMAP.md`: partir 2.1 en 2.1a (proveedor mínimo), 2.1b (banco de pruebas) y 2.1c (tablas, presupuesto, `PUT /v1/config/llm`, fallback). En 2.1c, `Settings` es solo el valor por defecto; la tabla por tenant lo sobrescribe dentro de la lista permitida. Sin borrar casillas; nota 2.4 actualizada (RAGAS sigue exigiendo justificación por regla 6 y 9).
+- Acceptance criteria: los tres documentos concuerdan entre sí y con `TASKS.md`; ninguna otra regla cambia; cero diff en `src/`, `tests/` y `eval/*.py`.
+- Required tests: gate estático, `check_nli_leak`, grep de secretos (`LLM_API_KEY`, `oc_sk_`) sobre el diff.
+- Status: Pending.
+
+### G02: 2.1a Proveedor LLM mínimo
+
+- Objective: única puerta a cualquier LLM (regla 7), reutilizable por `eval/` hoy y por `/answer` en 2.3.
+- Tasks:
+  - [ ] `litellm==1.108.2` fijada en `pyproject.toml` y `uv.lock`.
+  - [ ] `Settings`: `llm_model`, `llm_api_key` (`SecretStr`, env `LLM_API_KEY`), `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens`, `llm_max_retries`. Sin valores de proveedor hardcodeados; `.env.example` actualizado.
+  - [ ] `llm/provider.py`: `async complete(messages, *, settings, temperature, seed) -> Completion` (texto, modelo devuelto, tokens, latencia). Un solo modelo por llamada; sin fallback. Errores propios (`LLMTimeout`, `LLMRateLimited` con `retry_after`, `LLMAuthError`, `LLMQuotaExceeded` para 402, `LLMError`); nadie fuera ve excepciones de LiteLLM. Reintentos acotados por `llm_max_retries`, nunca ante 401/402.
+  - [ ] Test estático: ningún fichero fuera de `src/ragmur/llm/provider.py` importa `litellm`, `openai` ni `anthropic`.
+  - [ ] Unitarios con LiteLLM simulado: éxito con tokens, timeout, 429 con `retry_after`, 401, 402, la clave nunca aparece en logs ni `repr`.
+  - [ ] Smoke real marcado `llm_live`, saltado salvo `RAGMUR_LLM_LIVE=1`.
+  - [ ] `ARCHITECTURE.md` sección `llm/` con la interfaz real.
+- Acceptance criteria: gate compartido verde; smoke real contra OpenCode Go ejecutado por el orquestador; ningún secreto en Git.
+- Required tests: gate compartido + `RAGMUR_LLM_LIVE=1 pytest -m llm_live`.
+- Status: Pending.
+
+### G03a: 2.1b Datos, ingesta y caché de recuperación
+
+- Objective: XQuAD-es indexado en un tenant propio y búsquedas guardadas, sin LLM.
+- Tasks:
+  - [ ] `eval/reader/xquad.py`: descarga de `https://github.com/deepmind/xquad/raw/master/xquad.es.json`, SHA-256 fijado en código, datos en `eval/.datasets/` (ignorado por Git), licencia CC BY-SA 4.0 anotada.
+  - [ ] Partición por artículo con semilla fija: `dev` y `reserve`. `reserve` no se abre en esta fase ni en G04.
+  - [ ] Ingesta de cada párrafo como documento en el tenant `uuid5(NAMESPACE_DNS, "ragmur.eval.reader.xquad-es")` y colección de evaluación propia, con `split_document` 800/120 y `store.*` con `tenant_id` primero (regla 8). Sin importar `api/` (regla 5).
+  - [ ] Caché de recuperación JSONL por caso y configuración (`hybrid_rerank`, `candidates` 30, `top_k` 5) con `chunk_id`, texto, documento y puntuación, clave con hash del dataset y commit.
+  - [ ] Aislamiento (regla 3): integración con Qdrant real; un tenant señuelo y un `owner_id` distinto con copias de párrafos; ninguna búsqueda devuelve puntos del otro lado, en ambos sentidos.
+- Acceptance criteria: unitarios (modelos simulados) e integración con Qdrant real verdes; indexado real de XQuAD-es completado en CPU; caché de las preguntas del piloto generada.
+- Required tests: gate compartido + `pytest tests/eval/reader`.
+- Status: Pending.
+
+### G03b: 2.1b Lector, puntuación y controles
+
+- Objective: el agente responde con prompt fijo y solo con los fragmentos de la caché; el script puntúa contra el dataset.
+- Tasks:
+  - [ ] Toda llamada pasa por `ragmur.llm.provider.complete` (regla 7).
+  - [ ] Prompt congelado `eval/reader/prompts/reader_v1.md`: fragmentos delimitados y numerados, salida JSON (`answer`, `citations` con `chunk_id`, `found`), `NO CONSTA` si falta. Su SHA-256 va al resumen; cambiarlo exige otra muestra.
+  - [ ] Ejecutor reanudable con concurrencia acotada y `--max-calls` obligatorio; respeta `retry_after`; se detiene limpio ante 401 o 402; un modelo por id, sin fallback.
+  - [ ] Normalización española fijada con vectores de test: minúsculas, sin tildes, sin puntuación, sin artículos `el la los las un una unos unas lo`, espacios colapsados.
+  - [ ] Métricas: EM y F1; **faithful-EM** (acierto con al menos una cita válida); cita válida = `chunk_id` presente en el contexto enviado y que contiene la respuesta del dataset normalizada; abstención; acierto de recuperación (alguna respuesta del dataset en los fragmentos) y reparto de fallos entre recuperación y lector. Intervalos de Wilson.
+  - [ ] Control sin fragmentos: misma pregunta sin contexto. Métrica principal: **delta** (con fragmentos − sin fragmentos); los casos acertados sin contexto se marcan como contaminados.
+  - [ ] Contrafactual emparejado: mismos fragmentos de la caché con la respuesta sustituida por la de otra pregunta del mismo artículo; se mide si el lector devuelve el sustituto (lee) o el original (memoria).
+  - [ ] Resumen en `eval/results/reader-*.json`: fecha, commit, dataset y SHA, licencia, partición, N, troceado, `candidates`, `top_k`, configuración, modelo pedido y devuelto, temperatura, semilla, hash del prompt, hardware, concurrencia, llamadas y tokens. Volcados en `eval/results/reader/per_query/`.
+- Acceptance criteria: unitarios con proveedor simulado verdes (puntuación, normalización, reanudación, parada 402, contrafactual); humo real de 5 casos completado.
+- Required tests: gate compartido + `pytest tests/eval/reader` + humo de 5 casos.
+- Status: Pending.
+
+### G04: 2.1b Piloto XQuAD-es (solo dev, sin publicar)
+
+- Objective: primera medición real, pequeña, para revisión humana antes de escalar.
+- Tasks:
+  - [ ] Congelar antes de ejecutar: prompt v1, semilla, 100 preguntas de `dev`, modelo por id. Registrarlo en esta sección.
+  - [ ] Pasada con fragmentos, pasada sin fragmentos sobre las mismas 100 y 30 contrafactuales; `--max-calls 260`.
+  - [ ] Resumen versionado; muestra de 30 respuestas para revisión humana en `per_query/` (fuera de Git).
+- Acceptance criteria: resumen completo con etapas declaradas; revisión humana pendiente declarada; ninguna cifra en README; `reserve` sin abrir.
+- Required tests: gate compartido.
+- Status: Pending.
+
+### G05: 2.1b Escalado masivo (una fase por dataset)
+
+- G05a XQuAD-es `dev` completo; G05b NoMIRACL-es (mide abstención, no EM); G05c SciFact como lector NLI (va contra etiquetas humanas, no EM); G05d modelo local fijado (LM Studio u Ollama en la 5080).
+- Status: Pending; empieza solo después de que el usuario revise el piloto. Prohibido de noche sin humano: G05, presupuestos, fallback, `PUT /v1/config/llm`, Skynet, README, abrir `reserve`.
 
 ### R03: Higiene estática + CI tags (lectura)
 

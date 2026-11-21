@@ -69,7 +69,7 @@ def _end_at_boundary(text: str, start: int, limit: int, overlap: int) -> int:
         return maximum
     minimum = start + overlap + 1
 
-    def choose(separators: tuple[str, ...]) -> int:
+    def choose_separator_end(separators: tuple[str, ...]) -> int:
         if not separators:
             return maximum
         separator = separators[0]
@@ -77,9 +77,9 @@ def _end_at_boundary(text: str, start: int, limit: int, overlap: int) -> int:
         end = index + len(separator)
         if index >= start and minimum <= end <= maximum:
             return end
-        return choose(separators[1:])
+        return choose_separator_end(separators[1:])
 
-    return choose(("\n\n", "\n", " "))
+    return choose_separator_end(("\n\n", "\n", " "))
 
 
 def split_document(

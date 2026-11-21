@@ -44,6 +44,10 @@ __all__ = [
 ]
 
 
+# Página del scroll de Qdrant; sin relación con `owner_id` ni con BM25.
+SCROLL_PAGE_SIZE = 256
+
+
 def create_client(url: str, timeout_seconds: float) -> AsyncQdrantClient:
     """Abre el cliente asíncrono contra el Qdrant configurado."""
     return AsyncQdrantClient(url=url, timeout=math.ceil(timeout_seconds))
@@ -88,7 +92,7 @@ def _require_completed(result: models.UpdateResult) -> None:
 
 
 def _tenant_filter(
-    tenant_id: UUID, document_id: UUID | None = None, owner_id: str | None = None
+    tenant_id: UUID, *, document_id: UUID | None = None, owner_id: str | None = None
 ) -> models.Filter:
     conditions = [
         models.FieldCondition(key="tenant_id", match=models.MatchValue(value=str(tenant_id)))
@@ -116,7 +120,7 @@ async def count_document_points(
     """Cuenta puntos de un documento dentro del espacio autorizado."""
     result = await client.count(
         collection_name=collection,
-        count_filter=_tenant_filter(tenant_id, document_id, owner_id),
+        count_filter=_tenant_filter(tenant_id, document_id=document_id, owner_id=owner_id),
         exact=True,
     )
     return result.count
@@ -135,8 +139,8 @@ async def list_document_point_ids(
     while True:
         points, next_offset = await client.scroll(
             collection_name=collection,
-            scroll_filter=_tenant_filter(tenant_id, document_id, owner_id),
-            limit=256,
+            scroll_filter=_tenant_filter(tenant_id, document_id=document_id, owner_id=owner_id),
+            limit=SCROLL_PAGE_SIZE,
             offset=offset,
             with_payload=False,
             with_vectors=False,
@@ -212,9 +216,9 @@ async def upsert_points(
     """Escribe vectores y fija el tenant desde el argumento autorizado."""
     if not points:
         return
-    first = points[0]
+    batch_document = points[0]
     if any(
-        point.document_id != first.document_id or point.owner_id != first.owner_id
+        point.document_id != batch_document.document_id or point.owner_id != batch_document.owner_id
         for point in points
     ):
         raise ValueError("All points in a batch must belong to the same document and owner")
@@ -243,13 +247,15 @@ async def upsert_points(
         )
         for point in points
     ]
-    condition = _tenant_filter(tenant_id, first.document_id)
+    condition = _tenant_filter(tenant_id, document_id=batch_document.document_id)
     assert isinstance(condition.must, list)
-    if first.owner_id is None:
+    if batch_document.owner_id is None:
         condition.must.append(models.IsNullCondition(is_null=models.PayloadField(key="owner_id")))
     else:
         condition.must.append(
-            models.FieldCondition(key="owner_id", match=models.MatchValue(value=first.owner_id))
+            models.FieldCondition(
+                key="owner_id", match=models.MatchValue(value=batch_document.owner_id)
+            )
         )
     update_result = await client.upsert(
         collection_name=collection,
@@ -279,7 +285,7 @@ async def delete_document_points(
         return
     result = await client.delete(
         collection_name=collection,
-        points_selector=_tenant_filter(tenant_id, document_id, owner_id),
+        points_selector=_tenant_filter(tenant_id, document_id=document_id, owner_id=owner_id),
         wait=True,
         ordering=models.WriteOrdering.STRONG,
     )

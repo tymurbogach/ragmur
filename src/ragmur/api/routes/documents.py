@@ -27,7 +27,7 @@ from sqlalchemy.sql.elements import ColumnElement
 from ragmur.api.deps import CurrentTenant, ResourcesDep
 from ragmur.api.schemas import DocumentAccepted, DocumentList, DocumentView
 from ragmur.core.config import get_settings
-from ragmur.db.models import Document
+from ragmur.db.models import OWNER_ID_MAX_LENGTH, Document
 from ragmur.ingestion.storage import UploadTooLargeError, store_original
 
 router = APIRouter(prefix="/v1/documents", tags=["documents"])
@@ -43,7 +43,7 @@ def owner_filter(owner_id: str | None) -> ColumnElement[bool]:
     """Filtra el usuario solicitado cuando está presente."""
     if owner_id is None:
         return true()
-    if not owner_id.strip() or len(owner_id) > 256:
+    if not owner_id.strip() or len(owner_id) > OWNER_ID_MAX_LENGTH:
         raise HTTPException(422, detail="Invalid owner_id")
     return Document.owner_id == owner_id
 
@@ -56,7 +56,7 @@ async def upload(
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
     file: Annotated[UploadFile, File()],
-    owner_id: Annotated[str | None, Form(max_length=256)] = None,
+    owner_id: Annotated[str | None, Form(max_length=OWNER_ID_MAX_LENGTH)] = None,
 ) -> DocumentAccepted:
     """Conserva el original y acepta su extracción."""
     owner_filter(owner_id)
@@ -149,7 +149,7 @@ async def upload(
 async def list_documents(
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: Annotated[str | None, Query(max_length=256)] = None,
+    owner_id: Annotated[str | None, Query(max_length=OWNER_ID_MAX_LENGTH)] = None,
     limit: Annotated[int | None, Query(ge=1)] = None,
     cursor: str | None = None,
 ) -> DocumentList:
@@ -197,7 +197,7 @@ async def document_detail(
     document_id: uuid.UUID,
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: Annotated[str | None, Query(max_length=256)] = None,
+    owner_id: Annotated[str | None, Query(max_length=OWNER_ID_MAX_LENGTH)] = None,
 ) -> DocumentView:
     """Devuelve metadatos dentro del espacio autorizado."""
     async with resources.sessions() as session:
@@ -216,7 +216,7 @@ async def delete_document(
     document_id: uuid.UUID,
     tenant_id: CurrentTenant,
     resources: ResourcesDep,
-    owner_id: Annotated[str | None, Query(max_length=256)] = None,
+    owner_id: Annotated[str | None, Query(max_length=OWNER_ID_MAX_LENGTH)] = None,
 ) -> Response:
     """Borra el original y después la fila, con reintentos."""
     async with resources.sessions() as session:

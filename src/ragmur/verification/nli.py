@@ -14,7 +14,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from ragmur.core.config import Settings
 
 
-def _find_label(id2label: dict[int, str], names: tuple[str, ...]) -> int:
+def _find_label_index(id2label: dict[int, str], names: tuple[str, ...]) -> int:
     """Localiza un índice de etiqueta sin suponer su orden."""
     normalized = {index: label.lower() for index, label in id2label.items()}
     for index, label in normalized.items():
@@ -50,9 +50,9 @@ class NliVerifier:
         self.model.eval()
         self.device = device
         raw_labels: dict[int, str] = dict(self.model.config.id2label)
-        self.entailment_index = _find_label(raw_labels, ("entail",))
-        self.contradiction_index = _find_label(raw_labels, ("contradict", "contra"))
-        _find_label(raw_labels, ("neutral",))
+        self.entailment_index = _find_label_index(raw_labels, ("entail",))
+        self.contradiction_index = _find_label_index(raw_labels, ("contradict", "contra"))
+        _find_label_index(raw_labels, ("neutral",))
         position_embeddings = getattr(self.model.config, "max_position_embeddings", 512)
         self.max_length = min(int(position_embeddings), 512)
         self.max_windows = max_windows

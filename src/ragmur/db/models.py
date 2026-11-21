@@ -54,6 +54,10 @@ class ApiKey(Base):
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+# Longitud máxima de `owner_id`; la validan la API y la restricción CHECK con el mismo valor.
+OWNER_ID_MAX_LENGTH = 256
+
+
 class Document(Base):
     """Metadatos y estado de un original conservado en disco."""
 
@@ -67,7 +71,10 @@ class Document(Base):
             "'failed', 'unsupported', 'deleting')",
             name="status",
         ),
-        CheckConstraint("owner_id IS NULL OR char_length(owner_id) <= 256", name="owner_id_length"),
+        CheckConstraint(
+            f"owner_id IS NULL OR char_length(owner_id) <= {OWNER_ID_MAX_LENGTH}",
+            name="owner_id_length",
+        ),
         Index("ix_documents_tenant_id_owner_id", "tenant_id", "owner_id"),
     )
 
