@@ -402,7 +402,12 @@ uv run uvicorn ragmur.main:app --reload
   - lector para el escalado: `gemma3:4b` en CPU (lento y verboso), un modelo mayor en Ollama con la 5080 de Skynet (requiere autorización escrita), u OpenCode Go (su política limita el uso a tráfico de agentes de código; DECISIONS 3.34);
   - si se rota la clave de OpenCode Go (pasó por el chat). Está en `.env` como `LLM_API_KEY`, fuera de Git.
 - Next phase: G05a (XQuAD-es `dev` completo, 908 preguntas) solo tras la revisión humana. Con el lector actual en CPU: unas 9 h de lector y 2,5 h de recuperación.
+- Lector en Skynet preparado (2026-11-22, autorización escrita del usuario: "hazlo ya"): contenedor `ragmur-ollama-eval` con `ollama/ollama:0.40.14` (mismo digest `ebaef4f4…` que el local), `--gpus all`, `restart unless-stopped`, puerto solo en `127.0.0.1:11434` de Skynet, volumen `ragmur_ollama_eval`, `OLLAMA_KEEP_ALIVE=30m`.
+  - Modelo `gemma3:12b` (digest `b92b218582c5`, 8,16 GB): `ollama ps` 100 % GPU, contexto 4096. RTX 5080 compartida con `ragmur_deploy` (6,5 GiB ocupados antes).
+  - Medido en caliente: ~107 tok/s, 0,1-0,2 s por respuesta corta. `tests/llm/test_provider_live.py` 1 passed por el túnel.
+  - Acceso sin abrir puertos: `ssh -f -N -o ExitOnForwardFailure=yes -L 127.0.0.1:11435:127.0.0.1:11434 skynet-ts` y `LLM_API_BASE=http://127.0.0.1:11435`, `LLM_MODEL=ollama_chat/gemma3:12b`.
+  - Para G05a: `--model-digest b92b218582c5 --llm-server-label ollama-0.40.14-docker-rtx5080-skynet`. Sigue pendiente la revisión humana del piloto.
 - Resume command: `/taskflow run G05a` (tras decidir el lector).
 - Recommended effort: medium.
 - Entorno local: contenedores `ragmur-postgres-1`, `ragmur-qdrant-1` y `ragmur-ollama-eval` parados al terminar; volúmenes conservados (`ragmur_qdrant_data` incluye la colección `ragmur_chunks_eval_reader`). Arrancar con `docker compose up -d` y `docker start ragmur-ollama-eval`.
-- Autorizaciones: sin push, sin Skynet. El `.env` local no tiene `API_KEY_HMAC_SECRET`; los gates usan `API_KEY_HMAC_SECRET=test-only-hmac-secret` en la orden.
+- Autorizaciones: sin push. Skynet autorizado solo para el lector Ollama de G05 (2026-11-22). El `.env` local no tiene `API_KEY_HMAC_SECRET`; los gates usan `API_KEY_HMAC_SECRET=test-only-hmac-secret` en la orden.
