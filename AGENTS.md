@@ -6,6 +6,8 @@ Ragmur es un servicio RAG expuesto como API HTTP: ingiere documentos, los indexa
 
 Antes de escribir código: leer `ARCHITECTURE.md` (contratos y modelo de datos) y `ROADMAP.md` (tarea actual). `DECISIONS.md` guarda el porqué de cada decisión y las alternativas ya descartadas: consultarlo antes de proponer un cambio de diseño, para no reabrir discusiones cerradas.
 
+Jerga: Tymur es junior y necesita entender en todo momento lo que se hace y lo que se propone. Explicar cada término técnico la primera vez que aparece.
+
 Idioma: español en conversación y documentación. Código, identificadores y mensajes de commit en inglés.
 
 ## Reglas de arquitectura
