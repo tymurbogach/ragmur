@@ -1,0 +1,249 @@
+{
+  "date": "2026-11-21T08:13:02.622484+00:00",
+  "run_id": "reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9",
+  "commit": "6ed6abdd26505ac57650711e59b64128ff5c7b1b",
+  "dirty": false,
+  "smoke": false,
+  "dataset": {
+    "url": "https://raw.githubusercontent.com/google-deepmind/xquad/7d30520c717524000f0d9d2f9c10a069acd9d285/xquad.es.json",
+    "sha256": "dcbae93ec3a9f4b9e78fd834a171d6f96c1a875e10e15b7530b7e4ef4971e37e",
+    "license": "CC BY-SA 4.0",
+    "path": "eval/.datasets/xquad/xquad.es.json"
+  },
+  "partition": {
+    "seed": 20261121,
+    "split": "dev"
+  },
+  "split": "dev",
+  "n_cases": 100,
+  "chunking": {
+    "chunk_size": 800,
+    "chunk_overlap": 120
+  },
+  "candidates": 30,
+  "top_k": 5,
+  "configuration": "hybrid_rerank",
+  "cache_key": "f32e8ee3980ba2ac",
+  "cache_commit": "e998d2c22880fb9a98fd3d0207e3b52aa0e445ab",
+  "cache_dirty": false,
+  "model_requested": "ollama_chat/gemma3:4b",
+  "model_returned": [
+    "ollama_chat/gemma3:4b"
+  ],
+  "model_digest": "68ceab7e468a",
+  "llm_api_base_host": "127.0.0.1",
+  "llm_server": "ollama-0.40.14-docker-cpu-local",
+  "temperature": 0.0,
+  "seed": 20261121,
+  "prompt_sha256": {
+    "with_context": "c949c3e371a7c3d5dc80fdd55dea6441dd22f940cbf69a1ac3c0a28eea41dfd5",
+    "without_context": "18f6a3962b0b3a475d24e7c52a3a846a9376e8b173a5827615477f2f0b625a7a"
+  },
+  "hardware": {
+    "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+    "python": "3.12.13",
+    "cpu_count": 16,
+    "device": "cpu",
+    "torch_version": "2.12.0+cpu",
+    "cuda_available": false,
+    "cuda_device_name": null,
+    "omp_threads": null,
+    "concurrency": 1
+  },
+  "concurrency": 1,
+  "passes": [
+    "with",
+    "without",
+    "counterfactual"
+  ],
+  "counterfactual_size": 30,
+  "calls": {
+    "max_calls": 260,
+    "new_calls": 273,
+    "new_tries": 230,
+    "new_retry_after_retries": 0,
+    "completed": 230,
+    "cumulative_records": 273,
+    "prompt_tokens": 219210,
+    "completion_tokens": 13459,
+    "attempts_total": 230
+  },
+  "wall_seconds": 5428.2182202859985,
+  "wall_seconds_cumulative": 5428.2182202859985,
+  "partial": false,
+  "pending": 0,
+  "aborted": false,
+  "abort_reason": null,
+  "metrics": {
+    "with": {
+      "n": 100,
+      "em": {
+        "successes": 25,
+        "total": 100,
+        "rate": 0.25,
+        "wilson_95": [
+          0.17545211362287672,
+          0.34304463548061603
+        ]
+      },
+      "faithful_em": {
+        "successes": 22,
+        "total": 100,
+        "rate": 0.22,
+        "wilson_95": [
+          0.150012823846054,
+          0.31070353514985793
+        ]
+      },
+      "contains_match": {
+        "successes": 30,
+        "total": 100,
+        "rate": 0.3,
+        "wilson_95": [
+          0.2189488529493276,
+          0.3958485463334666
+        ]
+      },
+      "abstention": {
+        "successes": 11,
+        "total": 100,
+        "rate": 0.11,
+        "wilson_95": [
+          0.06254196357064568,
+          0.18631296503080313
+        ]
+      },
+      "parse_error": {
+        "successes": 1,
+        "total": 100,
+        "rate": 0.01,
+        "wilson_95": [
+          0.0017674320641406505,
+          0.054486196178705315
+        ]
+      },
+      "provider_error": {
+        "count": 0
+      },
+      "retrieval_hit": {
+        "successes": 99,
+        "total": 100,
+        "rate": 0.99,
+        "wilson_95": [
+          0.9455138038212946,
+          0.9982325679358593
+        ]
+      },
+      "f1": {
+        "mean": 0.41261177928505466,
+        "n": 100
+      },
+      "failure_attribution": {
+        "retrieval_miss": 0,
+        "reader_miss": 75
+      }
+    },
+    "without": {
+      "n": 100,
+      "em": {
+        "successes": 1,
+        "total": 100,
+        "rate": 0.01,
+        "wilson_95": [
+          0.0017674320641406505,
+          0.054486196178705315
+        ]
+      },
+      "contains_match": {
+        "successes": 1,
+        "total": 100,
+        "rate": 0.01,
+        "wilson_95": [
+          0.0017674320641406505,
+          0.054486196178705315
+        ]
+      },
+      "provider_error": {
+        "count": 0
+      },
+      "contaminated": 1,
+      "contaminated_case_ids": [
+        "56beb7953aeaaa14008c92ad"
+      ]
+    },
+    "delta": {
+      "em_with_minus_without": 0.24,
+      "n_common": 100
+    },
+    "counterfactual": {
+      "n": 30,
+      "reads_context": {
+        "successes": 4,
+        "total": 30,
+        "rate": 0.13333333333333333,
+        "wilson_95": [
+          0.053096554840547455,
+          0.296813266820363
+        ]
+      },
+      "uses_memory": {
+        "successes": 0,
+        "total": 30,
+        "rate": 0.0,
+        "wilson_95": [
+          0.0,
+          0.11351339317396876
+        ]
+      },
+      "both": {
+        "successes": 0,
+        "total": 30,
+        "rate": 0.0,
+        "wilson_95": [
+          0.0,
+          0.11351339317396876
+        ]
+      },
+      "other": {
+        "successes": 26,
+        "total": 30,
+        "rate": 0.8666666666666667,
+        "wilson_95": [
+          0.703186733179637,
+          0.9469034451594526
+        ]
+      },
+      "provider_error": {
+        "count": 0
+      },
+      "discarded": 43,
+      "discarded_reasons": {
+        "substitute already present": 43
+      },
+      "by_with_em": {
+        "with_correct": {
+          "reads_context": 3,
+          "uses_memory": 0,
+          "both": 0,
+          "other": 6,
+          "n": 9
+        },
+        "with_not_correct": {
+          "reads_context": 1,
+          "uses_memory": 0,
+          "both": 0,
+          "other": 20,
+          "n": 21
+        }
+      },
+      "requested": 30,
+      "eligible": 99,
+      "built": 30,
+      "shortfall": 0
+    }
+  },
+  "review_sample": {
+    "path": "eval/results/reader/per_query/reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9/review_sample.md",
+    "cases": 30
+  }
+}

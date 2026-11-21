@@ -127,7 +127,7 @@ uv run uvicorn ragmur.main:app --reload
 | G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Completed 2026-11-21 |
 | G03a | 2.1b Datos, ingesta y caché de recuperación | Completed 2026-11-21 |
 | G03b | 2.1b Lector, puntuación y controles | Completed 2026-11-21 |
-| G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Pending |
+| G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Completed 2026-11-21 (revisión humana pendiente) |
 | G05 | 2.1b Escalado masivo, una subfase por dataset | Pending (tras revisión humana del piloto) |
 
 ### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
@@ -193,15 +193,21 @@ uv run uvicorn ragmur.main:app --reload
 ### G04: 2.1b Piloto XQuAD-es (solo dev, sin publicar)
 
 - Objective: primera medición real, pequeña, para revisión humana antes de escalar.
-- Tasks:
+- Frozen protocol:
   - [x] Generar con árbol limpio la caché de las 100 preguntas: `retrieval-f32e8ee3980ba2ac` (commit `e998d2c`, `dirty: false`, `hybrid_rerank`, `candidates` 30, `top_k` 5, `rrf_k` 2, 800/120; recuperación CPU p50 9,8 s, p95 11,0 s, Intel Core Ultra 9 285H).
   - Métricas fijadas antes del piloto (no se ajustan con sus resultados): EM principal; `contains_match` secundaria con tope `min(oro+3, 2×oro)` tokens; contrafactual `reads_context` (sustituto contenido, original no, con tope), `uses_memory` (original contenido), `both`, `other`; sustituto del mismo tipo (numérico, nombre propio, común).
-  - [ ] Congelar antes de ejecutar: prompt v1 (SHA-256), semilla, 100 preguntas de `dev`, modelo por id, temperatura 0 y clave de la caché de recuperación. Registrarlo en esta sección. Si el humo de G03b falla, G04 no arranca.
-  - [ ] Pasada con fragmentos, pasada sin fragmentos sobre las mismas 100 y 30 contrafactuales; `--max-calls 260`.
-  - [ ] Resumen versionado; muestra de 30 respuestas para revisión humana en `per_query/` (fuera de Git).
-- Acceptance criteria: resumen completo con etapas declaradas; revisión humana pendiente declarada; ninguna cifra en README; `reserve` sin abrir.
-- Required tests: gate compartido.
-- Status: Pending.
+  - [x] Congelado el 2026-11-21 antes de ejecutar (commit `6ed6abd`): caché `retrieval-f32e8ee3980ba2ac` (100 casos `dev`, semilla 20261121); prompts `reader_v1.md` `c949c3e371a7c3d5dc80fdd55dea6441dd22f940cbf69a1ac3c0a28eea41dfd5` y `reader_v1_nocontext.md` `18f6a3962b0b3a475d24e7c52a3a846a9376e8b173a5827615477f2f0b625a7a`; modelo `ollama_chat/gemma3:4b` (`68ceab7e468a`) en `ollama/ollama:0.40.14` local en CPU; temperatura 0; semilla 20261121; `LLM_TIMEOUT_SECONDS=180`; `--max-calls 260`; `--counterfactual-size 30`.
+- Outcome (`eval/results/reader-2026-11-21T081302625577Z-dev.json`, commit `6ed6abd`, árbol limpio, 230 llamadas reales de 260, 0 errores de proveedor, 90 min de pared; LLM `gemma3:4b` en Ollama 0.40.14 Docker y recuperación en CPU Intel Core Ultra 9 285H, 16 hilos, sin GPU):
+  - Recuperación (`hybrid_rerank`, top 5): la respuesta del dataset aparece por palabra completa en los fragmentos en 99/100 [0,95-1,00].
+  - Lector con fragmentos: EM 25/100 [0,18-0,34]; faithful-EM 22/100 [0,15-0,31]; `contains_match` 30/100 [0,22-0,40]; F1 media 0,41; abstención 11/100; `parse_error` 1/100. Reparto de fallos: 0 de recuperación, 75 del lector.
+  - Sin fragmentos: EM 1/100 [0,00-0,05]; 1 caso contaminado. Delta EM +0,24 (n=100).
+  - Contrafactual (exploratorio, 30 construidos, 43 descartados por sustituto ya presente): `reads_context` 4/30, `uses_memory` 0/30, `both` 0/30, `other` 26/30.
+  - Lectura: con este modelo el cuello de botella es el lector, no la recuperación. No hay señal de que responda de memoria. Las cifras miden `gemma3:4b` en CPU; no describen a Ragmur con un lector fuerte.
+- Human review: pendiente. Muestra de 30 casos en `eval/results/reader/per_query/reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9/review_sample.md` (fuera de Git).
+- Test evidence (orquestador): gate compartido verde (`pytest` 377 passed 5 skipped, aislamiento 14+1, `check_nli_leak`, secretos). `reserve` sin abrir; ninguna cifra en README. Logs en `/tmp/opencode/taskflow/ragmur/G04-gate/` y `/tmp/opencode/taskflow/ragmur/G04-pilot.log`.
+- Review verdict: auto-verificación del orquestador (fase sin cambio de código: ejecución congelada y resumen generado).
+- Later work (menor): el campo `calls.new_calls` cuenta también los descartes del contrafactual (273); las llamadas reales son `new_tries` (230).
+- Status: Completed 2026-11-21 (revisión humana pendiente).
 
 ### G05: 2.1b Escalado masivo (una fase por dataset)
 
