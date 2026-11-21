@@ -16,7 +16,6 @@ import asyncio
 import json
 import logging
 import statistics
-import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -28,6 +27,7 @@ from eval.reader.cache import (
     sparse_metadata_hash,
     write_meta,
 )
+from eval.reader.gitstate import is_dirty_tree as is_dirty_tree
 from eval.reader.index import (
     DEFAULT_COLLECTION_SUFFIX,
     READER_TENANT_UUID,
@@ -55,45 +55,6 @@ from ragmur.retrieval import store
 from ragmur.retrieval.models import load_models
 
 logger = logging.getLogger(__name__)
-
-IGNORED_DIRTY_PREFIXES = ("eval/results", "eval/.datasets")
-
-
-def is_dirty_tree() -> bool:
-    """Indica si `src` o `eval` tienen cambios sin commitear.
-
-    Ignora `eval/results` y `eval/.datasets` (cachés y descargas locales).
-    Si Git no responde, se considera sucio por prudencia.
-    """
-    try:
-        proc = subprocess.run(
-            [
-                "git",
-                "status",
-                "--porcelain",
-                "--",
-                ":/src",
-                ":/eval",
-                ":/pyproject.toml",
-                ":/uv.lock",
-            ],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
-        return True
-    for line in proc.stdout.splitlines():
-        path = line[3:] if len(line) > 3 else ""
-        if " -> " in path:
-            path = path.split(" -> ", 1)[1]
-        path = path.strip().strip('"')
-        if not path:
-            continue
-        if path.startswith(IGNORED_DIRTY_PREFIXES):
-            continue
-        return True
-    return False
 
 
 def build_arguments(argv: list[str] | None = None) -> argparse.Namespace:

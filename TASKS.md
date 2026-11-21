@@ -126,7 +126,7 @@ uv run uvicorn ragmur.main:app --reload
 | G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Completed 2026-11-21 |
 | G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Completed 2026-11-21 |
 | G03a | 2.1b Datos, ingesta y caché de recuperación | Completed 2026-11-21 |
-| G03b | 2.1b Lector, puntuación y controles | Pending |
+| G03b | 2.1b Lector, puntuación y controles | Completed 2026-11-21 |
 | G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Pending |
 | G05 | 2.1b Escalado masivo, una subfase por dataset | Pending (tras revisión humana del piloto) |
 
@@ -183,25 +183,19 @@ uv run uvicorn ragmur.main:app --reload
 
 ### G03b: 2.1b Lector, puntuación y controles
 
-- Objective: el agente responde con prompt fijo y solo con los fragmentos de la caché; el script puntúa contra el dataset.
-- Tasks:
-  - [ ] Toda llamada pasa por `ragmur.llm.provider.complete` (regla 7).
-  - [ ] Prompt congelado `eval/reader/prompts/reader_v1.md`: fragmentos delimitados y numerados, salida JSON (`answer`, `citations` con `chunk_id`, `found`), `NO CONSTA` si falta. Su SHA-256 va al resumen; cambiarlo exige otra muestra.
-  - [ ] Ejecutor reanudable con concurrencia acotada y `--max-calls` obligatorio; respeta `retry_after`; se detiene limpio ante 401 o 402; un modelo por id, sin fallback.
-  - [ ] Normalización española fijada con vectores de test: minúsculas, sin tildes, sin puntuación, sin artículos `el la los las un una unos unas lo`, espacios colapsados.
-  - [ ] Métricas: EM y F1; **faithful-EM** (acierto con al menos una cita válida); cita válida = `chunk_id` presente en el contexto enviado y que contiene la respuesta del dataset normalizada; abstención; acierto de recuperación (alguna respuesta del dataset en los fragmentos) y reparto de fallos entre recuperación y lector. Intervalos de Wilson.
-  - [ ] Control sin fragmentos: misma pregunta sin contexto. Métrica principal: **delta** (con fragmentos − sin fragmentos); los casos acertados sin contexto se marcan como contaminados.
-  - [ ] Contrafactual emparejado: mismos fragmentos de la caché con la respuesta sustituida por la de otra pregunta del mismo artículo; se mide si el lector devuelve el sustituto (lee) o el original (memoria). Guardia: tras normalizar, el original desaparece de todos los fragmentos y el sustituto no estaba ya en ellos; si no, el caso se descarta y se registra.
-  - [ ] Resumen en `eval/results/reader-*.json`: fecha, commit, dataset y SHA, licencia, partición, N, troceado, `candidates`, `top_k`, configuración, modelo pedido y devuelto, temperatura, semilla, hash del prompt, hardware, concurrencia, llamadas y tokens. Volcados en `eval/results/reader/per_query/`, fuera de Git (`.gitignore` ya cubre `eval/results/**/per_query/`).
-- Acceptance criteria: unitarios con proveedor simulado verdes (puntuación, normalización, reanudación, parada 402, contrafactual); humo real de 5 casos completado.
-- Required tests: gate compartido + `pytest tests/eval/reader` + humo de 5 casos.
-- Status: Pending.
+- Outcome: `eval/reader/{reader,scoring,run,gitstate}.py` y prompts congelados `reader_v1.md` (`c949c3e371a7…`) y `reader_v1_nocontext.md` (`18f6a3962b0b…`), con ejemplos emparejados y contexto delimitado y escapado. Toda llamada va por `provider.complete`. `run_id` incluye caché, semilla, hash de prompts y modelo; la reanudación rechaza registros incompatibles y reintenta errores de proveedor. `--max-calls` obligatorio (cuenta intentos), parada limpia ante 401/402, rechazo de árbol sucio salvo `--allow-dirty` (resumen `-smoke`). Normalización ES `[^\w\s]|_` y coincidencia por palabra completa. EM principal; F1, `faithful_EM`, `contains_match` con tope, abstención, `parse_error` en denominadores, reparto recuperación/lector; control sin fragmentos con delta y contaminados; contrafactual emparejado con sustituto del mismo tipo y guardas; Wilson 95 %. Muestra de revisión con fragmento principal.
+- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 190; `mypy` 154 OK; `pytest` 377 passed 5 skipped; `tests/eval/reader` 109 passed; aislamiento 14+1; `check_nli_leak` verde; secretos limpio. Smoke final real (gemma3:4b, CPU, 5 casos, prompt definitivo): sin errores de parseo ni de proveedor; resúmenes en `/tmp/opencode/taskflow/ragmur/G03b-smoke/` (fuera de Git). Seco del piloto: 230 trabajos (100+100+30), 43 descartes por sustituto ya presente, sin déficit.
+- Review verdict: ronda 1 "VERDICT: BLOCKED. Resume ignores prompt and model changes, so the planned smoke rerun after the prompt edit would silently reuse old answers under the new prompt SHA (B1)." Reparación acotada de B1, M1-M6, m1-m9 y decisiones P1-P3. Ronda 2 "VERDICT: OK. B1 and every earlier major are fixed, and nothing here invalidates the 230-call G04 pilot; fix N1 before freezing the prompt SHA." N1 aplicado por el orquestador (ejemplo sin contexto pasa a un hecho común; SHA fijado en test).
+- Límites declarados para G04: las clases de sustituto (numérico, propio, común) son gruesas y el contrafactual será sobre todo exploratorio; `gemma3:4b` responde con frases largas pese a los ejemplos.
+- Later work (menor): partir el contrafactual por `gold_kind`; clase `parse_error` en el contrafactual; registrar `substitute_source` o quitar el repliegue a otros artículos (0/30 en el piloto); registrar `timeout`, `max_tokens` y `max_retries` en el resumen.
+- Status: Completed 2026-11-21.
 
 ### G04: 2.1b Piloto XQuAD-es (solo dev, sin publicar)
 
 - Objective: primera medición real, pequeña, para revisión humana antes de escalar.
 - Tasks:
-  - [ ] Generar con árbol limpio la caché de las 100 preguntas: `uv run python -m eval.reader.prepare --split dev --sample-size 100 --reuse-index`.
+  - [x] Generar con árbol limpio la caché de las 100 preguntas: `retrieval-f32e8ee3980ba2ac` (commit `e998d2c`, `dirty: false`, `hybrid_rerank`, `candidates` 30, `top_k` 5, `rrf_k` 2, 800/120; recuperación CPU p50 9,8 s, p95 11,0 s, Intel Core Ultra 9 285H).
+  - Métricas fijadas antes del piloto (no se ajustan con sus resultados): EM principal; `contains_match` secundaria con tope `min(oro+3, 2×oro)` tokens; contrafactual `reads_context` (sustituto contenido, original no, con tope), `uses_memory` (original contenido), `both`, `other`; sustituto del mismo tipo (numérico, nombre propio, común).
   - [ ] Congelar antes de ejecutar: prompt v1 (SHA-256), semilla, 100 preguntas de `dev`, modelo por id, temperatura 0 y clave de la caché de recuperación. Registrarlo en esta sección. Si el humo de G03b falla, G04 no arranca.
   - [ ] Pasada con fragmentos, pasada sin fragmentos sobre las mismas 100 y 30 contrafactuales; `--max-calls 260`.
   - [ ] Resumen versionado; muestra de 30 respuestas para revisión humana en `per_query/` (fuera de Git).
