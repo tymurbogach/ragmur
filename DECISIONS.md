@@ -370,6 +370,48 @@ retención de logs por días (rotación por tamaño). Detalle en
 (GPU, DNS/TLS, túnel). El proxy de F05b queda validado en local por si se
 reabre la exposición en el futuro.
 
+### 3.34 Banco de pruebas con agentes lectores
+
+**Decidido (usuario, 2026-11-21):** la fase 1 está cerrada y la fase 2 queda abierta.
+`/search` y `/verify` siguen funcionando sin ningún LLM.
+En `eval/`, el LLM actúa solo como lector bajo prueba: recibe fragmentos
+recuperados y responde sobre ellos. La respuesta correcta sale del dataset o
+de la construcción del caso, nunca del LLM. Ningún LLM juzga la aceptación.
+Las cifras obtenidas con LLM se publican aparte de las cifras de fase 1.
+
+**Motivo:** la línea base de fase 1 mide solo recuperación. Para medir cuánto
+aporta el LLM como lector hace falta un banco donde el contexto esté fijado
+de antemano y la puntuación sea contra etiquetas humanas. XQuAD-es abre el
+banco; después siguen NoMIRACL-es (abstención) y SciFact como lector NLI.
+El modelo local queda fijado para reproducibilidad.
+
+**Contrafactual emparejado.** El control contrafactual usa los mismos
+fragmentos de la caché, con la respuesta sustituida por la de otra pregunta
+del mismo artículo. No usa un tenant aparte: el IDF se acota por tenant
+(ver §3.14), así que otro tenant cambiaría las estadísticas léxicas y el
+par dejaría de estar emparejado.
+
+**Descartado:**
+- *Generador de conjuntos de prueba de RAGAS.* Depende de LangChain como
+  framework, lo que choca con la regla 6. Sirve como métrica en 2.4, no como
+  fuente de casos.
+- *Agentes de código (Claude, OpenCode) como lectores.* No escalan a miles de
+  llamadas y su comportamiento no es reproducible entre versiones. El lector
+  es un modelo fijado por identificador, con prompt y semilla congelados.
+- *LLM como fuente de etiquetas o como juez de aceptación.* Las etiquetas
+  propuestas por IA nunca son verdad: precedente F01 en `eval/NLI.md`, donde
+  dos reservas generadas por IA quedaron quemadas y excluidas como oro.
+  El acuerdo entre dos modelos tampoco demuestra corrección.
+
+**Dependencia nueva (regla 9): `litellm==1.108.2`.**
+Frente a `httpx` directo, LiteLLM ofrece una sola interfaz para
+`opencode_go/`, `lm_studio/`, `ollama/` y los proveedores remotos previstos
+en 2.1, más el recuento de tokens de uso por petición. Licencia MIT.
+Peso transitivo: `openai`, `tiktoken`, `tokenizers`, `huggingface-hub`,
+`aiohttp`, `boto3` y otros. La versión 1.107.0 quedó marcada como
+comprometida por el propio proveedor el 2026-10-21, así que la versión queda
+fijada en `uv.lock` y no se acepta un rango abierto.
+
 ## 4. Aclaraciones conceptuales fijadas
 
 Puntos que se aclararon durante el diseño y que conviene no volver a confundir:

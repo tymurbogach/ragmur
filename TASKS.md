@@ -98,6 +98,7 @@ uv run uvicorn ragmur.main:app --reload
 
 - Debate fase G (2026-11-21, base `b5847fd`): explorador (LiteLLM 1.108.2, XQuAD/MLQA/NoMIRACL, reutilización de `eval/run.py`) + crítica ronda 1 `BLOCKED` (5 bloqueantes, 4 mayores, 3 menores).
   - Aceptados B1 (tope de llamadas, sin fallback, parada en 401/402), B2 (`provider.py` obligatorio y test de imports), B3 (delta y faithful-EM; contrafactual emparejado sobre la misma caché en vez de tenant aparte, porque el IDF va por tenant), B4 (LLM solo lector; prompt, semilla y muestra congelados; partición `reserve`), M1-M4, m1-m3.
+  - Ronda 2 `VERDICT: OK`: B1-B4, M1, M3 y m1-m3 resueltos; B5 rechazo justificado de forma condicional (tope duro, fail-closed, sin G05). Nuevos aceptados: N1 URL de XQuAD fijada a commit, N2 congelar temperatura y clave de caché, m1 `per_query/` fuera de Git, m2 guardia de unicidad del contrafactual, m3 G01 commitea el trío de documentos.
   - B5 aceptado en parte: G03 se parte en G03a y G03b y G05 en una subfase por dataset. Rechazado no ejecutar G04 esta noche: el usuario pidió resultados para mañana, y el piloto está limitado a 260 llamadas, es solo dev, no se publica y queda pendiente de revisión humana.
 
 ## 7. Phase plan
@@ -122,7 +123,7 @@ uv run uvicorn ragmur.main:app --reload
 | R02a | Refinamiento código: solo comentarios | Completed |
 | R02b | Refinamiento código: renames+const (con gate) | Completed 2026-11-21 |
 | R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
-| G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Pending |
+| G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Completed 2026-11-21 |
 | G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Pending |
 | G03a | 2.1b Datos, ingesta y caché de recuperación | Pending |
 | G03b | 2.1b Lector, puntuación y controles | Pending |
@@ -156,14 +157,10 @@ uv run uvicorn ragmur.main:app --reload
 
 ### G01: Abrir fase 2 (documentación, sin código)
 
-- Objective: dejar escrita la decisión del usuario (2026-11-21) de abrir la fase 2 y permitir el LLM en las pruebas de fase 1.
-- Tasks:
-  - [ ] `AGENTS.md` regla 2: `/search` y `/verify` siguen sin LLM. En `eval/` el LLM solo actúa como **lector bajo prueba**; la respuesta correcta sale del dataset o de la construcción del caso, nunca del LLM, y ningún LLM juzga la aceptación. Cifras con LLM se publican aparte de las de fase 1.
-  - [ ] `DECISIONS.md` 3.34: banco de agentes lectores. Incluye `litellm==1.108.2` (regla 9: qué aporta frente a `httpx` directo, licencia MIT, peso transitivo, aviso de seguridad de 1.107.0) y alternativas descartadas (generador RAGAS por LangChain, agentes de código por escala y reproducibilidad, LLM como fuente de etiquetas o juez).
-  - [ ] `ROADMAP.md`: partir 2.1 en 2.1a (proveedor mínimo), 2.1b (banco de pruebas) y 2.1c (tablas, presupuesto, `PUT /v1/config/llm`, fallback). En 2.1c, `Settings` es solo el valor por defecto; la tabla por tenant lo sobrescribe dentro de la lista permitida. Sin borrar casillas; nota 2.4 actualizada (RAGAS sigue exigiendo justificación por regla 6 y 9).
-- Acceptance criteria: los tres documentos concuerdan entre sí y con `TASKS.md`; ninguna otra regla cambia; cero diff en `src/`, `tests/` y `eval/*.py`.
-- Required tests: gate estático, `check_nli_leak`, grep de secretos (`LLM_API_KEY`, `oc_sk_`) sobre el diff.
-- Status: Pending.
+- Outcome: regla 2 de `AGENTS.md` reescrita (LLM solo como lector bajo prueba en `eval/`; `/search` y `/verify` sin LLM); `DECISIONS.md` 3.34 con justificación de `litellm==1.108.2` y alternativas descartadas; `ROADMAP.md` 2.1 partida en 2.1a/2.1b/2.1c sin borrar casillas y nota 2.4 actualizada.
+- Test evidence (orquestador): `ruff` 0, `format` 162, `mypy` 128 OK, `check_nli_leak` verde, grep de secretos 0; diff limitado a los 3 ficheros. Logs en `/tmp/opencode/taskflow/ragmur/G01-gate/`.
+- Review verdict: auto-verificación del orquestador (solo documentación, sin comportamiento).
+- Status: Completed 2026-11-21.
 
 ### G02: 2.1a Proveedor LLM mínimo
 
@@ -184,7 +181,7 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: XQuAD-es indexado en un tenant propio y búsquedas guardadas, sin LLM.
 - Tasks:
-  - [ ] `eval/reader/xquad.py`: descarga de `https://github.com/deepmind/xquad/raw/master/xquad.es.json`, SHA-256 fijado en código, datos en `eval/.datasets/` (ignorado por Git), licencia CC BY-SA 4.0 anotada.
+  - [ ] `eval/reader/xquad.py`: descarga desde una URL fijada a un commit concreto del repositorio `google-deepmind/xquad` (no `master`), SHA-256 fijado en código, datos en `eval/.datasets/` (ignorado por Git), licencia CC BY-SA 4.0 anotada.
   - [ ] Partición por artículo con semilla fija: `dev` y `reserve`. `reserve` no se abre en esta fase ni en G04.
   - [ ] Ingesta de cada párrafo como documento en el tenant `uuid5(NAMESPACE_DNS, "ragmur.eval.reader.xquad-es")` y colección de evaluación propia, con `split_document` 800/120 y `store.*` con `tenant_id` primero (regla 8). Sin importar `api/` (regla 5).
   - [ ] Caché de recuperación JSONL por caso y configuración (`hybrid_rerank`, `candidates` 30, `top_k` 5) con `chunk_id`, texto, documento y puntuación, clave con hash del dataset y commit.
@@ -203,8 +200,8 @@ uv run uvicorn ragmur.main:app --reload
   - [ ] Normalización española fijada con vectores de test: minúsculas, sin tildes, sin puntuación, sin artículos `el la los las un una unos unas lo`, espacios colapsados.
   - [ ] Métricas: EM y F1; **faithful-EM** (acierto con al menos una cita válida); cita válida = `chunk_id` presente en el contexto enviado y que contiene la respuesta del dataset normalizada; abstención; acierto de recuperación (alguna respuesta del dataset en los fragmentos) y reparto de fallos entre recuperación y lector. Intervalos de Wilson.
   - [ ] Control sin fragmentos: misma pregunta sin contexto. Métrica principal: **delta** (con fragmentos − sin fragmentos); los casos acertados sin contexto se marcan como contaminados.
-  - [ ] Contrafactual emparejado: mismos fragmentos de la caché con la respuesta sustituida por la de otra pregunta del mismo artículo; se mide si el lector devuelve el sustituto (lee) o el original (memoria).
-  - [ ] Resumen en `eval/results/reader-*.json`: fecha, commit, dataset y SHA, licencia, partición, N, troceado, `candidates`, `top_k`, configuración, modelo pedido y devuelto, temperatura, semilla, hash del prompt, hardware, concurrencia, llamadas y tokens. Volcados en `eval/results/reader/per_query/`.
+  - [ ] Contrafactual emparejado: mismos fragmentos de la caché con la respuesta sustituida por la de otra pregunta del mismo artículo; se mide si el lector devuelve el sustituto (lee) o el original (memoria). Guardia: tras normalizar, el original desaparece de todos los fragmentos y el sustituto no estaba ya en ellos; si no, el caso se descarta y se registra.
+  - [ ] Resumen en `eval/results/reader-*.json`: fecha, commit, dataset y SHA, licencia, partición, N, troceado, `candidates`, `top_k`, configuración, modelo pedido y devuelto, temperatura, semilla, hash del prompt, hardware, concurrencia, llamadas y tokens. Volcados en `eval/results/reader/per_query/`, fuera de Git (`.gitignore` ya cubre `eval/results/**/per_query/`).
 - Acceptance criteria: unitarios con proveedor simulado verdes (puntuación, normalización, reanudación, parada 402, contrafactual); humo real de 5 casos completado.
 - Required tests: gate compartido + `pytest tests/eval/reader` + humo de 5 casos.
 - Status: Pending.
@@ -213,7 +210,7 @@ uv run uvicorn ragmur.main:app --reload
 
 - Objective: primera medición real, pequeña, para revisión humana antes de escalar.
 - Tasks:
-  - [ ] Congelar antes de ejecutar: prompt v1, semilla, 100 preguntas de `dev`, modelo por id. Registrarlo en esta sección.
+  - [ ] Congelar antes de ejecutar: prompt v1 (SHA-256), semilla, 100 preguntas de `dev`, modelo por id, temperatura 0 y clave de la caché de recuperación. Registrarlo en esta sección. Si el humo de G03b falla, G04 no arranca.
   - [ ] Pasada con fragmentos, pasada sin fragmentos sobre las mismas 100 y 30 contrafactuales; `--max-calls 260`.
   - [ ] Resumen versionado; muestra de 30 respuestas para revisión humana en `per_query/` (fuera de Git).
 - Acceptance criteria: resumen completo con etapas declaradas; revisión humana pendiente declarada; ninguna cifra en README; `reserve` sin abrir.

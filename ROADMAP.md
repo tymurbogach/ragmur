@@ -383,9 +383,24 @@ Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos dire
 
 ## Fase 2 — LLM dentro del servicio
 
-### 2.1 Capa de proveedor
+### 2.1a Proveedor mínimo (G02)
 
 - [ ] LiteLLM como interfaz única sobre Ollama, OpenAI, Anthropic y Gemini
+- [ ] `Settings` con `llm_model`, `llm_api_key`, `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens` y `llm_max_retries`; sin valores de proveedor hardcodeados (solo el valor por defecto; ver 2.1c)
+- [ ] `llm/provider.py` como única puerta a cualquier LLM (regla 7), con errores propios y reintentos acotados
+- [ ] Tests: ningún import de SDK fuera de `llm/provider.py`; unitarios con LiteLLM simulado; smoke real marcado `llm_live`
+
+**Nota.** Versión fijada `litellm==1.108.2` en `uv.lock`; justificación en `DECISIONS.md` 3.34.
+
+### 2.1b Banco de pruebas con lectores (G03–G05)
+
+- [ ] XQuAD-es primero: EM y F1 del lector sobre la caché de recuperación fijada
+- [ ] NoMIRACL-es: mide abstención, no EM
+- [ ] SciFact como lector NLI sobre etiquetas humanas
+- [ ] Modelo local fijado (LM Studio u Ollama en la 5080)
+
+### 2.1c Configuración por tenant y operación (pendiente)
+
 - [ ] Tabla `llm_configs`: proveedor y modelo por tenant
 - [ ] Lista permitida de `provider/model`: llegan desde la API y determinan a quién se factura
 - [ ] Tabla de uso: tokens y coste por petición y por tenant
@@ -397,7 +412,7 @@ Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos dire
 - [ ] Timeout total, cancelación y límites de tokens aplicados también a reintentos y fallback
 - [ ] Test con Ollama local y con un proveedor remoto
 
-**Nota.** `llm_configs` no guarda credenciales del proveedor. Si un tenant configura `provider: openai`, se gasta la cuenta del operador. De ahí la lista permitida y el presupuesto; si en algún momento hacen falta credenciales por tenant, se cifran en reposo.
+**Nota.** `Settings` es solo el valor por defecto; la tabla por tenant lo sobrescribe dentro de la lista permitida. `llm_configs` no guarda credenciales del proveedor. Si un tenant configura `provider: openai`, se gasta la cuenta del operador. De ahí la lista permitida y el presupuesto; si en algún momento hacen falta credenciales por tenant, se cifran en reposo.
 
 ### 2.2 Router de recuperación
 
@@ -425,7 +440,7 @@ Los modelos se conservan en caché y los originales en `STORAGE_DIR`; ambos dire
 
 - [ ] Integración de RAGAS
 
-**Nota.** RAGAS va aquí y no en la fase 1 porque sus métricas principales (`faithfulness`, `answer_relevancy`, `context_precision`, `context_recall`) usan un LLM como juez, lo que choca con la regla de que la fase 1 no usa LLM. Si en algún momento interesa adelantarlas, solo son admisibles las variantes no-LLM (`NonLLMContextRecall`, `NonLLMContextPrecisionWithReference`).
+**Nota.** RAGAS va aquí y no en la fase 1 porque sus métricas principales (`faithfulness`, `answer_relevancy`, `context_precision`, `context_recall`) usan un LLM como juez, lo que chocaba con la regla de fase 1 sin LLM. Con la fase 1 cerrada (decisión del usuario del 2026-11-21), esa regla ya no lo bloquea; pero RAGAS sigue exigiendo justificación por la regla 6 y la regla 9 por su dependencia de LangChain antes de incorporarse. Si en algún momento interesa adelantarlas, solo son admisibles las variantes no-LLM (`NonLLMContextRecall`, `NonLLMContextPrecisionWithReference`).
 
 ### 2.5 Cierre de fase
 
