@@ -15,7 +15,7 @@
 - D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
 - Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
 - Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
-- Git branch: `main`, commits locales sobre `origin/main` (`c9abcaa` plan, `690533b` D7, `1801915` plan refinado y el commit de F05a); sin push.
+- Git branch: `main`, commits locales sobre `origin/main`; sin push. Fase 2 abierta el 2026-11-21 (G01-G04 completadas; ver §9).
 - Last review: F05c `VERDICT: OK` (2026-11-17); 3 hallazgos bajos + 2 informativos; reparación de tipos aplicada. Antes: F05b `VERDICT: OK`; F09 `VERDICT: OK`; F08 `VERDICT: OK`.
 - Existing local changes: ninguna (árbol limpio tras el commit de F05c). Ciclo `run all` cerrado 2026-11-17: F08, F09, F05b y F05c verificadas y commiteadas (443e3dc, a5bf48a, cfbb73b, dbc1e39) sobre 1abaf61; gate global verde en el árbol final. Sin push.
 - Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
@@ -397,8 +397,12 @@ uv run uvicorn ragmur.main:app --reload
 
 ## 9. Recommended next action
 
-- Next action (2026-11-19 noche, automático): R01 Completed (`dec6e12`), R02a Completed (`dd0eda6`), R03 Completed (solo lectura). Mañana con Docker: `run R02b` (renames+`*`+const, gate aislamiento) + gate completo (`pytest -q`, `alembic`, `check_nli_leak`) + CI tags con red. Sin push esta noche.
-- Next phase: R02b (Pending, para mañana).
-- Resume command: `/taskflow run R02b` (mañana, con Docker disponible)
-- Recommended effort: low (R01+R02a), medium (R02b con aislamiento)
-- Autorizaciones: ninguna nueva. Sin push, sin Skynet, sin Docker esta noche por petición del usuario. Base `e3bdba1` (ahead 1 sobre `origin/main`).
+- Estado (2026-11-21 mañana): fase 2 abierta. Completadas R02b (`55ab54b`), G01 (`f3b0aa7`), G02 (`fddc583`), G03a (`e998d2c`), G03b (`6ed6abd`) y G04 (`4d6f2e6`). Sin push.
+- Next action (usuario): revisar a mano la muestra de 30 casos del piloto (`eval/results/reader/per_query/reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9/review_sample.md`) y decidir:
+  - lector para el escalado: `gemma3:4b` en CPU (lento y verboso), un modelo mayor en Ollama con la 5080 de Skynet (requiere autorización escrita), u OpenCode Go (su política limita el uso a tráfico de agentes de código; DECISIONS 3.34);
+  - si se rota la clave de OpenCode Go (pasó por el chat). Está en `.env` como `LLM_API_KEY`, fuera de Git.
+- Next phase: G05a (XQuAD-es `dev` completo, 908 preguntas) solo tras la revisión humana. Con el lector actual en CPU: unas 9 h de lector y 2,5 h de recuperación.
+- Resume command: `/taskflow run G05a` (tras decidir el lector).
+- Recommended effort: medium.
+- Entorno local: contenedores `ragmur-postgres-1`, `ragmur-qdrant-1` y `ragmur-ollama-eval` parados al terminar; volúmenes conservados (`ragmur_qdrant_data` incluye la colección `ragmur_chunks_eval_reader`). Arrancar con `docker compose up -d` y `docker start ragmur-ollama-eval`.
+- Autorizaciones: sin push, sin Skynet. El `.env` local no tiene `API_KEY_HMAC_SECRET`; los gates usan `API_KEY_HMAC_SECRET=test-only-hmac-secret` en la orden.
