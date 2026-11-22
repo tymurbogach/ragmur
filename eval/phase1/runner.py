@@ -35,8 +35,8 @@ RESULTS_DIR = REPO_ROOT / "eval" / "results" / "phase1"
 RUNS_DIR = RESULTS_DIR / "per_query"
 LOCK_FILE = RUNS_DIR / ".lock"
 
-STAGES = ("static", "ingest", "suite")
-STAGE_TIMEOUTS = {"static": 600.0, "ingest": 1800.0, "suite": 2700.0}
+STAGES = ("static", "ingest", "suite", "nli")
+STAGE_TIMEOUTS = {"static": 600.0, "ingest": 1800.0, "suite": 2700.0, "nli": 5400.0}
 HEARTBEAT_EVERY = 15.0
 DEAD_AFTER = 120.0
 
@@ -415,10 +415,16 @@ def run_worker(run_id: str) -> int:
                     result = stages.run_ingest(run_dir(run_id))
                 elif name == "suite":
                     config = status.get("config")
-                    host: str | None = None
+                    suite_host: str | None = None
                     if isinstance(config, dict) and config.get("ssh_host"):
-                        host = str(config["ssh_host"])
-                    result = stages.run_suite(run_dir(run_id), host, _note_tunnels(run_id))
+                        suite_host = str(config["ssh_host"])
+                    result = stages.run_suite(run_dir(run_id), suite_host, _note_tunnels(run_id))
+                elif name == "nli":
+                    config = status.get("config")
+                    nli_host: str | None = None
+                    if isinstance(config, dict) and config.get("ssh_host"):
+                        nli_host = str(config["ssh_host"])
+                    result = stages.run_nli(run_dir(run_id), nli_host)
                 else:
                     result = {
                         "state": "infra_error",

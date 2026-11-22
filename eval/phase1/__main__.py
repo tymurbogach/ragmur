@@ -159,6 +159,10 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
     if isinstance(suite, dict) and isinstance(suite.get("counts"), dict):
         suite_counts = suite["counts"]
     ingest = stages.get("ingest")
+    nli = stages.get("nli")
+    nli_summary: dict[str, Any] = {}
+    if isinstance(nli, dict) and isinstance(nli.get("summary"), dict):
+        nli_summary = nli["summary"]
     return {
         "static_passed": (static or {}).get("state") == "passed"
         if "static" in expected
@@ -169,6 +173,11 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
         "suite_zero_failed": suite_counts.get("failed") == 0 if suite_counts else "unverified",
         "suite_passed_min": suite_counts.get("passed", -1) >= 376 if suite_counts else "unverified",
         "suite_skips": suite_counts.get("skipped") if suite_counts else "unverified",
+        "nli_passed": (nli or {}).get("state") in ("passed", "quality_failed")
+        if "nli" in expected
+        else "not_applicable",
+        "nli_counts": nli_summary.get("counts") if nli_summary else "unverified",
+        "nli_refs": nli_summary.get("refs") if nli_summary else "unverified",
         "no_missing_stage": all(
             isinstance(stages.get(n), dict) and stages[n].get("state") != "pending"
             for n in expected

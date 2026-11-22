@@ -22,6 +22,8 @@ from xml.etree import ElementTree
 from eval.phase1 import skynet
 from eval.phase1.runner import REPO_ROOT, STAGE_TIMEOUTS, write_json
 
+NLI_TIMEOUT_FALLBACK = 5400.0
+
 EXPECTED_PASSED_MIN = 376
 EXPECTED_SKIPPED = 6
 
@@ -443,11 +445,13 @@ __all__ = [
     "EXPECTED_SKIPPED",
     "KNOWN_SKIPPABLE",
     "KNOWN_XFAIL",
+    "NLI_TIMEOUT_FALLBACK",
     "ingest_command",
     "ingest_env",
     "map_ingest_summary",
     "parse_junit",
     "run_ingest",
+    "run_nli",
     "run_static",
     "run_suite",
     "static_command",
@@ -455,3 +459,14 @@ __all__ = [
     "suite_acceptance",
     "suite_env",
 ]
+
+
+def run_nli(
+    directory: Path,
+    ssh_host: str | None,
+    timeout: float = NLI_TIMEOUT_FALLBACK,
+) -> dict[str, Any]:
+    """Ejecuta la etapa nli C03: verificador con miles de frases en GPU."""
+    from eval.phase1 import nli as nli_stage
+
+    return nli_stage.run(directory, ssh_host, timeout)

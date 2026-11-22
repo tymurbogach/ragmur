@@ -152,7 +152,6 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C03 | Verificador con miles de frases | Pending |
 | C04 | Búsqueda y aislamiento con 16.000 preguntas | Pending |
 | C05 | Servicio real de principio a fin y bajo carga | Pending |
 | C06 | Una orden y un agente que explica | Pending |
@@ -160,52 +159,6 @@ scripts/phase1-agent.sh full
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
 | F10 | Cambios de contrato de errores | Not scheduled (usuario) |
-
-### C03: Verificador con miles de frases
-
-- Objective: medir el verificador con etiquetas humanas y la misma lógica del servicio.
-- Tasks:
-  - [ ] Descarga atómica y con huella en `eval/.datasets/`, solo de esta lista cerrada, fichero a fichero:
-    - `https://huggingface.co/datasets/PlanTL-GOB-ES/SQAC/resolve/f9928e8819596a601b8887cc5f8598b15d589a82/train.json`
-    - `https://huggingface.co/datasets/venelin/inferes/resolve/c371a1915e6902b40182b2ae83c5ec7fe5e6cbd2/train.csv`
-    - XQuAD-es con `eval.reader.xquad.download_dataset`. Ese fichero único trae la reserva: filtrar siempre con `list_cases(data, "dev")`.
-  - [ ] Prohibido `git clone`, `snapshot_download`, `load_dataset` de Hugging Face y cualquier descarga de un repositorio de datos entero.
-  - [ ] Etapa `nli` en la RTX 5080: matrices por tipo y con 1, 3 y 5 textos (distractores de otro tema, semilla fija), con intervalos de Wilson.
-  - [ ] Selección congelada: filas de `train.csv` con `Topic` 1-5 y premisa e hipótesis no vacías, en orden del fichero, sin deduplicar. Etiquetas con `eval.inferes.LABELS`. Cifra principal: `Anno_Type != "Automated"`.
-  - [ ] Distractores con este algoritmo exacto. `P` es la lista seleccionada en su orden (incluye `Automated`), `n = len(P) = 4602`, `id` es la columna `ID` y `t` es `Topic`:
-
-    ```python
-    j = int(hashlib.sha256(p.id.encode()).hexdigest(), 16) % n
-    chosen = []
-    while len(chosen) < 4:
-        q = P[j % n]
-        j += 37
-        while q.t == p.t or q.premise in [c.premise for c in chosen]:
-            q = P[j % n]
-            j += 1
-        chosen.append(q)
-    # k textos: [p] + chosen[:k - 1]
-    ```
-
-  - [ ] Línea base trivial solo con la forma de la frase, para detectar fugas de etiqueta.
-- Dependencies: C01.
-- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
-- Acceptance criteria:
-  - 4.602 pares, 3.124 en la cifra principal. Vector de test: `1968` elige `2428, 5511, 4367, 2559`; `2148` elige `4488, 793, 632, 93`.
-  - Cada celda queda a ±5 casos (columnas supported, weak, unsupported, contradicted):
-
-    | Etiqueta humana | 1 texto | 3 textos | 5 textos |
-    |---|---|---|---|
-    | supported | 774, 92, 409, 68 | 746, 88, 360, 149 | 728, 92, 334, 189 |
-    | unsupported | 29, 14, 133, 50 | 32, 17, 108, 69 | 32, 17, 99, 78 |
-    | contradicted | 96, 44, 495, 920 | 98, 55, 421, 981 | 98, 54, 393, 1010 |
-
-  - Un test demuestra que el cargador rechaza los sellados y cualquier URL fuera de la lista sin hacer ninguna petición de red.
-  - Un test y la comprobación previa de cada ejecución fallan si hay `dev.json`, `test.json` o `test.csv` de esos conjuntos bajo `eval/.datasets/`, o una pregunta de la reserva en `prepared/`.
-  - La regla de veredicto coincide con `/verify` en un test de paridad que llama a la ruta.
-  - Referencias existentes, solo diagnósticas: respaldo falso ≤5 %, Wilson superior ≤10 %, recall de apoyo ≥50 %. Si no se cumplen, calidad en rojo y salida 3.
-- Required tests: puerta compartida; tests del cargador, métricas y paridad; etapa real en Skynet.
-- Status: Pending
 
 ### C04: Búsqueda y aislamiento con 16.000 preguntas
 
@@ -298,10 +251,11 @@ scripts/phase1-agent.sh full
 | G04 | Piloto de 100 preguntas; revisión humana pendiente | EM 25/100; respuesta en top 5 99/100 | `4d6f2e6` |
 | C01 | Runner desatendido `eval/phase1` (start/status/report/cancel, cerrojo PID+latido, resume) y suite real en Skynet | Puerta: ruff+mypy+leak OK; pytest 353 passed, 3 skipped. Skynet `20261122T214759-e6adfcbf` salida 0 (static + suite 398 passed, 0 failed, 5 skipped conocidos), 0 llamadas Docker local, cancel+resume con 0 restos, deploy ids intactos. `revision` VERDICT: OK | `test: C01 add unattended phase 1 runner` |
 | C02 | Ingesta a gran escala (100k docs, 0 problemas, ~34 s) y D1-D7 en xfail estricto + D8 normal | Puerta: 370 passed, 3 skipped, 7 xfailed. Skynet `20261122T222105-e2182582` salida 0 (static+ingest+suite 415 passed, 0 failed, 12 skipped = 7 xfail + 5 entorno), 0 restos. `revision` VERDICT: OK | `test: C02 add large-scale ingest and known-defect tests` |
+| C03 | Verificador NLI (4602 pares, 3124 principal, celdas exactas) con calidad en rojo | Puerta: 380 passed, 3 skipped, 7 xfailed. Skynet `20261122T225810-d8096e78` salida 3 (medición válida: respaldo falso 0,070, Wilson 0,083, recall 0,576), 48,9 s cuda, 0 restos, deploy intacto. `revision` VERDICT: OK | `test: C03 add NLI verifier measurement stage` |
 
 ## 9. Recommended next action
 
-- Next phase: C03.
+- Next phase: C04.
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.
