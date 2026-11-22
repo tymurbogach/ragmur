@@ -1,413 +1,356 @@
 # TASKS.md
 
-> Plan único de taskflow. Trabajo en curso aquí; fases completadas resumidas. Git guarda el detalle.
+> Plan único de taskflow. Trabajo en curso aquí; fases completadas resumidas. Git guarda el detalle: el plan anterior completo está en `git show f35ee93:TASKS.md`.
 
 ## 1. Objective
 
-- Project purpose: servicio RAG multi-tenant que ingiere documentos, los indexa en Qdrant y responde con citas. Fase 1 sin LLM: buscador con fragmentos más verificación NLI de texto enviado por el cliente.
-- Audience: aplicaciones propias (portfolio, lazytripz, chatbot) y revisión humana final de fase 1.
+- Project purpose: servicio RAG multi-tenant que ingiere documentos, los indexa y responde con citas. Fase 1: buscador y verificador, sin LLM.
+- Current cycle (C): poner a prueba la fase 1 con tests grandes que un agente lanza solo, antes de darla por cerrada del todo. Petición del usuario del 2026-11-22.
+- Outcome: una orden ejecuta todas las pruebas, deja un informe en español sencillo y un agente explica los fallos. La nota la pone siempre un programa.
+- Audience: el usuario (junior). Informes con palabras sencillas, pocas cifras y cada término explicado.
 
 ## 2. Current state
 
-- What works: ROADMAP 1.1-1.9 completadas (1.8 cerrada el 2026-11-18: 303 etiquetas NLI, umbrales 0.75/0.5/0.75, matriz reservada publicada); 1.7 con línea base en desarrollo. F01 protocolo NLI congelado. F07 diagnóstico automático EN+ES solo dev. F04 corpus real (88 PDF, tenant público) y copia/restauración/reindex de Skynet verificados el 2026-11-16 (`eval/skynet_reverify_2026-11-16.md`). F06 cierre fase 1 commiteado (`e3bdba1` docs, 2026-11-19; `beab7b1` suite+tabla).
-- Refinamiento R (plan 2026-11-19, base `e3bdba1`): solo fase 1, sin cambios de comportamiento, sin fase 2/3, sin dependencias nuevas, sin Skynet, sin Docker/integración esta noche (pruebas para mañana por petición del usuario). 3 exploradores + 2 rondas de crítica cerradas con VERDICT OK.
-- Broken or pending work: cierre de fase 1 (F06: `eval/run.py` 4 configuraciones sobre dev y reserva + tabla README). Demo pública descartada (F05e) a petición del usuario el 2026-11-19: 1.9 cierra en privado.
-- D7 resuelto en `690533b`: `ROADMAP.md` 1.9 y `HANDOFF.md` reflejan el corpus y la restauración verificados.
-- Auditoría de complejidad (2026-11-17, base `690533b`): 4 exploradores por área, verificación del lead y dos rondas de crítica. Aceptados: código muerto (`session_scope`, `verifier_type`), duplicación en middlewares de error y en `store.py`, scripts de eval huérfanos y documentos desfasados. Ejecución en F08 y F09; cambios de contrato en F10 opcional.
-- Riesgos de exposición conocidos (evidencia del explorador, base `6cd23b2`): las claves no tienen alcance por ruta; `/docs`, `/redoc` y `/openapi.json` están siempre activos; `/ready` no exige clave y devuelve `dense-1024+nli`; los limitadores son memoria por proceso; el `Dockerfile` corre como root y usa `uv:latest`; `docker-compose.yml` de desarrollo publica PostgreSQL y Qdrant en `0.0.0.0`.
-- Git branch: `main`, commits locales sobre `origin/main`; sin push. Fase 2 abierta el 2026-11-21 (G01-G04 completadas; ver §9).
-- Last review: F05c `VERDICT: OK` (2026-11-17); 3 hallazgos bajos + 2 informativos; reparación de tipos aplicada. Antes: F05b `VERDICT: OK`; F09 `VERDICT: OK`; F08 `VERDICT: OK`.
-- Existing local changes: ninguna (árbol limpio tras el commit de F05c). Ciclo `run all` cerrado 2026-11-17: F08, F09, F05b y F05c verificadas y commiteadas (443e3dc, a5bf48a, cfbb73b, dbc1e39) sobre 1abaf61; gate global verde en el árbol final. Sin push.
-- Required test capabilities and unavailable gates: el gate compartido requiere PostgreSQL y Qdrant en Docker. Skynet (RTX 5080, `ragmur_deploy`) solo con autorización escrita por fase. Sin autorización de push, DNS, firewall, túnel ni apertura de puertos.
-- Refinamiento R (2026-11-19, solo local): esta noche solo estático (`ruff`, `mypy`, `grep`, lectura). Gate completo con Docker/PostgreSQL/Qdrant (`alembic`, `pytest -q`, `check_nli_leak`, `pytest -k isolation`) queda para mañana por petición del usuario. Sin Skynet esta noche.
-- Model family limits: orquestador Claude; explorador y crítica en OpenCode `muse-spark` (otra familia); revisor como subagente Claude, distinto del escritor OpenCode.
+- Git branch: `main`, base del plan `f35ee93`, 14 commits por delante de `origin/main`. Sin push, por tanto CI no los ha probado.
+- What works (medido el 2026-11-22 sobre `f35ee93`):
+  - Suite completa con PostgreSQL y Qdrant desechables en Skynet: 376 passed, 6 skipped, 0 failed.
+  - Troceador: 100.000 documentos inventados, 0 pérdidas de texto, spans erróneos o dueños erróneos.
+  - Aislamiento a escala, sobre `store.py` con Qdrant real: 15.944 preguntas, 956.640 resultados de búsqueda y 31.888 lecturas cruzadas por id, 0 fugas entre tenants o dueños.
+- Search baseline (mismo día, prototipo, RTX 5080, 5.226 documentos, 11.788 fragmentos, 30 candidatos, documento correcto entre los 5 primeros):
+  - Híbrida: 83,2 % en total. Tras el reranker: 88,2 % en total (14.067/15.944), XQuAD-es 98,7 % (896/908), SQAC 87,6 % (13.171/15.036). Latencia sin HTTP p50 210 ms, p95 225 ms.
+  - De los 1.877 fallos, en 1.328 el documento no llega a los 30 candidatos.
+  - SQAC se escribió para leer con el texto delante: muchas preguntas no se entienden solas («¿Dónde despegó el avión?»). Su cifra en bruto no es una nota de aprobado.
+  - Hay fallos reales: «¿Qué significan las siglas CAF?» no recupera su documento aunque solo 2 de 5.226 contienen «CAF».
+- What fails (mismo día, prototipo, solo datos de práctica, no son cifras publicables):
+  - Verificador, InferES train temas 1-5 sin `Automated`, 3.124 pares, RTX 5080: exactitud 58,5 %, recall de apoyo 57,6 %, recall de contradicción 59,2 %, respaldo falso 7,0 %.
+  - Verdades marcadas como contradichas: 5,1 % con 1 texto, 11,1 % con 3, 14,1 % con 5.
+  - 4.236 de 6.562 fragmentos de continuación empiezan a mitad de palabra.
+  - Examen ciego de 150 pares: Ragmur 56,0 %, Muse Spark 73,3 %, GLM Flash 77,3 %. Los dos agentes coinciden en 136 y en 30 de esos contradicen a los humanos. Un agente no sirve de juez.
+- Known defects without repair (reproducirlos es de C02, arreglarlos no es de este ciclo):
+  - D1 `store.py` `retrieve_points`: la petición a Qdrant no filtra por tenant (regla 3); filtra después. El filtro posterior dio 0 fugas en el prototipo; el defecto de la petición sigue.
+  - D2 DOCX rechazado entero si cabecera, pie o tabla tienen texto.
+  - D3 Estilo de título del Word español `Ttulo1` no detectado.
+  - D4 `#` dentro de un bloque de código Markdown se toma por título.
+  - D5 Fragmentos que empiezan a mitad de palabra.
+  - D6 El divisor de frases rompe «Dr.», aísla `[1]` y junta listas.
+  - D7 `/verify`: una contradicción en cualquier fragmento gana al apoyo.
+  - D8 Sin `owner_id` se busca en todos los usuarios del tenant. Es el contrato actual: se fija con un test y se lleva a decisión.
+- Phase status: la fase 1 figura cerrada desde el 2026-11-21 y las reglas no cambian en este ciclo. La fase 2 queda sin programar hasta el informe de C07. Reabrir formalmente la fase 1 es U01.
+- Open risks inherited:
+  - Rotar `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` de Skynet (vistos en logs, F05d) y la clave de OpenCode Go (pasó por el chat). Sin confirmar.
+  - Revisión humana del piloto G04, pendiente.
+  - La reserva NLI de 70 pares está quemada y filtra la etiqueta por la forma. El golden set da recall 1,0 y no discrimina.
+- Pendientes menores heredados, fuera de este ciclo:
+  - R03: verificar `actions/checkout@v7` con red y limpiar `eval/.pdf_cache`.
+  - F05d: la imagen de repliegue de 8,5 GB sigue en Skynet.
+  - Exposición: claves sin alcance por ruta; `/docs`, `/redoc`, `/openapi.json` y `/ready` sin clave; limitadores por proceso. Aceptable solo con la API privada.
+  - G02, G03a, G03b y G04: mejoras menores en `git show f35ee93:TASKS.md` («Later work»).
+- Required test capabilities: `ssh -o BatchMode=yes skynet-ts`, Docker en Skynet, RTX 5080 con 8 GiB de VRAM libres.
+- Model family limits: en OpenCode todos los roles usan Muse Spark (`models.json`). Crítica y revisión van en sesiones nuevas.
+- Existing local changes at planning: solo `TASKS.md`.
 
 ## 3. Architecture and technology
 
-- Languages and frameworks: Python 3.12 con `uv`, FastAPI, Pydantic v2, SQLAlchemy 2.0 sobre `asyncpg`, Alembic, `pydantic-settings`.
-- Relevant structure: `api/` importa de `ingestion/`, `retrieval/`, `verification/` y `llm/` (fase 2). `retrieval/store.py` es el único acceso a Qdrant. `llm/provider.py` será el único acceso a LLM.
-- Important dependencies: `pypdfium2`, `python-docx`, `langchain-text-splitters` (utilidad), torch 2.12 CPU/CUDA 13, `sentence-transformers`, FastEmbed BM25, Qdrant 1.19 (`sparse modifier=IDF`, IDF acotado por tenant y `owner_id`), bge-m3, bge-reranker-v2-m3, mDeBERTa NLI `b5113eb`.
-- Despliegue: `docker-compose.deploy.yml` publica solo la API en `127.0.0.1:8000`; `docker-compose.cuda.yml` añade GPU. Una sola instancia uvicorn; los limitadores no se comparten entre procesos.
+- Stack: Python 3.12 con `uv`, FastAPI, Pydantic v2, SQLAlchemy 2.0 sobre `asyncpg`, Alembic, Qdrant 1.19, bge-m3, BM25, bge-reranker-v2-m3, mDeBERTa NLI `b5113eb`.
+- `retrieval/store.py` es el único acceso a Qdrant. `llm/provider.py` es el único acceso a un LLM. La API no importa `litellm`.
+- Pieza nueva `eval/phase1/`: orquesta pruebas deterministas. No importa `llm/` ni invoca agentes.
+- Pieza nueva `scripts/phase1-agent.sh`: herramienta de desarrollo fuera del servicio y de `eval/`. Pide al runner el informe y, después, a un agente de solo lectura que lo explique.
+- Cómputo: el portátil hace lo estático y los tests unitarios. Skynet hace PostgreSQL, Qdrant y GPU en contenedores desechables.
+- Imágenes en Skynet, sin build ni pull por SSH: `ragmur_deploy-api:latest`, `qdrant/qdrant:v1.19.0`, `postgres:17-alpine`. El código del commit se copia al contenedor.
+- Modelos: volumen `ragmur_deploy_model_data`, siempre de solo lectura.
+- Receta de Skynet (probada de principio a fin el 2026-11-22 en 43 s, con `P=ragmur-p1-<run_id>`):
+  1. `docker network create --label ragmur.p1.run=<run_id> $P-net`. Guardar antes los ids de `ragmur_deploy*`.
+  2. `docker run --rm -d` de `$P-pg` (`--tmpfs /var/lib/postgresql/data`, usuario, clave y base de prueba) y de `$P-q`, los dos en esa red.
+  3. `docker run --rm -d --init --name $P-api --network $P-net --memory 10g --tmpfs /app/storage:mode=1777 -p 127.0.0.1::8000 -v ragmur_deploy_model_data:/app/models:ro -w /tmp` con `-e` de `HF_HUB_OFFLINE=1`, `MODEL_CACHE_DIR=/app/models/huggingface`, `STORAGE_DIR=/app/storage`, `EMBEDDING_DEVICE`, `API_KEY_HMAC_SECRET` de prueba, `DATABASE_URL` y `QDRANT_URL` hacia `$P-pg` y `$P-q`, `PYTHONPATH=/tmp/code/src`, imagen `ragmur_deploy-api:latest` y orden `sleep`. Para GPU, añadir `--gpus all`.
+  4. `docker exec $P-api mkdir -p /tmp/code`; `tar -czf - src alembic.ini eval/__init__.py eval/phase1 eval/.datasets/phase1/prepared | ssh skynet-ts "docker exec -i $P-api tar --no-same-owner --no-overwrite-dir -xzf - -C /tmp/code"`.
+  5. Con `docker exec -w /tmp/code`: `/app/.venv/bin/alembic upgrade head`, `python -m ragmur.cli create-tenant`, `issue-key` (no imprimir la clave) y `uvicorn ragmur.main:app`. El Python es `/app/.venv/bin/python`.
+  6. Túnel `ssh -N -L` al puerto que da `docker port`. Al acabar: `docker stop` de los tres, `docker network rm` y comparar los ids de `ragmur_deploy*`.
+  - Dónde corre cada cosa:
+    - Portátil: orquesta, descarga, usa `eval/inferes.py` y `eval/reader/xquad.py` y escribe en `eval/.datasets/phase1/prepared/` solo los casos de práctica. Ese directorio es lo único de los datos que viaja.
+    - Contenedor `$P-api`: cálculo de `nli` y `search` sobre los ficheros preparados, con `PYTHONPATH=/tmp/code/src:/tmp/code`. No importa cargadores de datasets.
+    - `service`: el cliente corre en el portátil por el túnel y la API en el contenedor.
+  - Trabajos largos con `docker exec -d` y log dentro del contenedor. Recoger ficheros con `docker exec ... base64`.
+  - Etapas GPU en serie. Exigir 8 GiB de VRAM libres antes de cada una; si faltan, esperar hasta 15 min y salir con 2.
+- Prototipo de referencia, no es dependencia: `~/.local/share/ragmur/phase1-prototype-20261122/` (`bin/`, `work/code/bench.py`, `out/`). Puede faltar: este plan basta.
+
+### Datos del ciclo
+
+| Conjunto | Origen fijado | Se usa | Sellado |
+|---|---|---|---|
+| XQuAD-es | `eval/reader/xquad.py` | 908 preguntas dev; todos los párrafos como ruido | preguntas `reserve` |
+| SQAC | `PlanTL-GOB-ES/SQAC@f9928e8819596a601b8887cc5f8598b15d589a82`, `train.json` SHA-256 `1d5c76176646e2ae7bdcd8b5ec6f18349102a9363aa25ad7d0e48262d7480d43`, CC BY-SA 4.0 | 15.036 preguntas, 4.986 textos | `dev.json`, `test.json`: ni descargar |
+| InferES | `venelin/inferes@c371a1915e6902b40182b2ae83c5ec7fe5e6cbd2`, `train.csv` con el SHA-256 de `eval/inferes.py`, CC BY 4.0 | temas 1-5: 4.602 pares, 3.124 sin `Automated` | `test.csv`: ni descargar; temas 6 y 10 de train: ni evaluar |
 
 ## 4. Required rules
 
-- Follow `AGENTS.md`, `ARCHITECTURE.md` and `DECISIONS.md`. No abrir fase 2 hasta cumplir el cierre de 1.9.
-- Fase 1 sin LLM. `tenant_id` en toda consulta a Qdrant. Probar aislamiento por tenant y por `owner_id`.
+- Follow `AGENTS.md`, `ARCHITECTURE.md` and `DECISIONS.md`.
 - Only the orchestrator edits this file. Workers report through report files.
-- Execution modes create one commit per verified phase.
-- Remote operations require an explicit user request: push, PR, Skynet, DNS, firewall, túnel y puertos.
-- `eval/results/` versiona solo resúmenes con fecha, commit, corpus, split, revisiones, configuración y hardware. Volcados por consulta fuera de Git.
-- Do not commit failing required tests or force-push without authorization.
+- Execution modes create one commit per verified phase, con mensaje semántico e ID: `test: C01 add unattended phase 1 runner`. Nunca atribuir commits a una IA, sin `Co-Authored-By`.
+- `run all` ejecuta solo C01-C07. U01-U03, G05 y F10 no son fases pendientes: necesitan una petición expresa del usuario.
+- Docker del portátil: prohibido cualquier comando, aunque esté encendido. Exportar siempre `DOCKER_HOST=unix:///nonexistent`. Usar el socket enciende JobPilot, que se conecta a portales de empleo.
+- Skynet (autorizado por el usuario el 2026-11-22 para estas pruebas):
+  - Crear y borrar solo recursos `ragmur-p1-<run_id>-*`, con etiqueta `ragmur.p1.run=<run_id>`.
+  - Puertos solo en `127.0.0.1`. Sin build, pull, prune, DNS, firewall ni cambios de configuración.
+  - Nunca parar, modificar ni usar como banco `ragmur_deploy*` o `ragmur-ollama-eval`. Nunca leer sus variables con secretos.
+- No usar `eval.inferes.main` ni `make_cases`: exigen el `test.csv` sellado.
+- Sellados: no descargar, abrir, listar su contenido ni evaluar. El cargador solo conoce los ficheros de práctica y falla cerrado.
+- LLM: ningún LLM crea etiquetas, puntúa, cambia un veredicto ni decide una aceptación. El explicador solo recibe el paquete de fallos públicos de práctica.
+- Este ciclo no arregla defectos, no cambia `src/`, umbrales, `top_k`, troceado, esquema, reglas ni dependencias. Un fallo de calidad se publica y no bloquea una fase cuyo objetivo es medirlo.
+- Tests de defectos conocidos: `xfail(strict=True, raises=AssertionError)` con su ID D1-D7. No se añade otro `xfail` para poner en verde la puerta.
+- No push, PR, publication or deployment. No `.env`, secretos, modelos, datasets ni volcados por consulta en Git.
 
 ## 5. Commands
 
 ```sh
 # install
 uv sync --locked
-# hasta F05b, los servicios de desarrollo ya solo escuchan en loopback:
-POSTGRES_PORT=5432 QDRANT_HTTP_PORT=6333 QDRANT_GRPC_PORT=6334 docker compose up -d
-uv run alembic upgrade head
-# shared phase gate, run by the orchestrator before every phase commit
-uv run ruff check . && uv run ruff format --check .
-uv run mypy
-uv run pytest -q
-uv run python -m eval.check_nli_leak
-# Refinamiento R (2026-11-19, solo local, pruebas para mañana):
-# - Esta noche: solo `ruff check`, `format --check`, `mypy` y greps de alcance (qdrant_client, TODO/print, 256). Sin docker/alembic/pytest/Skynet.
-# - Mañana (gate completo): `docker compose up -d` + `alembic upgrade head` + `pytest -q` + `check_nli_leak` + `pytest -k "isolation or tenant or owner"`.
-# focused phase checks: see each phase
-# delivery gate: shared gate + eval/run.py 4 configuraciones + nli_run dev/test congelados + smoke de despliegue
-# run the app
-uv run uvicorn ragmur.main:app --reload
+
+# shared phase gate, sin Docker ni red. Son dos llamadas de shell separadas, cada una de menos de 120 s
+# llamada 1
+export DOCKER_HOST=unix:///nonexistent
+uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run python -m eval.check_nli_leak
+# llamada 2 (53 s; 332 passed, 3 skipped)
+export DOCKER_HOST=unix:///nonexistent HF_HUB_OFFLINE=1 API_KEY_HMAC_SECRET=test-only-hmac-secret
+export DATABASE_URL=postgresql+asyncpg://x:x@127.0.0.1:59999/x QDRANT_URL=http://127.0.0.1:59998
+uv run pytest --ignore=tests/retrieval --ignore=tests/api/routes/test_health.py \
+  --ignore=tests/api/routes/test_documents.py --ignore=tests/api/test_rate_limit.py \
+  --ignore=tests/test_auth.py --ignore=tests/eval/reader/test_isolation.py \
+  --ignore=tests/ingestion/test_recovery.py --ignore=tests/ingestion/test_document_model.py \
+  --ignore=tests/ingestion/test_instance_lock.py
+
+# suite completa, desde C01 (unos 9 min)
+uv run python -m eval.phase1 start --only suite
+uv run python -m eval.phase1 status "$RUN_ID"   # el id lo imprime start
+
+# delivery gate y uso diario, desde C06
+scripts/phase1-agent.sh full
 ```
 
-- Medido el 2026-11-16 en CPU Intel Core Ultra 9 285H: `ruff check` pasa, `format --check` 154 ficheros, `mypy` 124 ficheros en 1.2 s con caché.
-- `pytest` recoge 239 tests. No se ejecutó en esta planificación para no levantar contenedores con puertos. Última ejecución registrada (F04): 235 passed, 4 skipped. Tiempo sin medir.
+- Los tests con PostgreSQL o Qdrant quedan fuera de la puerta compartida por tiempo y entorno. La suite completa es obligatoria en C01, C02, C05 y C07.
+- Recuento: la suite completa son 382 tests (376 passed, 6 skipped); la puerta ejecuta 335 (332 y 3). Los otros 47 necesitan servicios.
+- Trabajos largos: `start` y después `status` cada 60-110 s. La shell de OpenCode corta a los 120 s. El script de C06 se lanza con `nohup` y se sigue igual.
+- `quick`: estático, puerta sin servicios, 10.000 documentos de `ingest` y defectos conocidos. Nunca llama a `opencode`. `full`: todas las etapas y después el explicador.
 
 ## 6. Plan debate
 
-- Rounds: boceto ciego más dos rondas con `critica`. Parada: la ronda 2 no añadió hallazgos bloqueantes ni mayores.
-- Cambio adoptado: el tenant público dedicado es el control principal; fijar `owner_id` pasa a defensa en profundidad.
-- Cambio adoptado: proxy inverso simple con lista permitida de método y ruta, sin servicio Python BFF ni reescritura de JSON.
-- Cambio adoptado: tras el proxy, los limitadores de la app actúan como tope global; el límite por IP vive solo en nginx.
-- Cambio adoptado: nginx y el conector de túnel son dependencias nuevas (regla 9); F05a los justifica y fija versiones.
-- Cambio adoptado: dos perfiles de smoke, externo vía proxy e interno en `127.0.0.1:8000`.
-- Cambio adoptado: revisar `diagnostic`, declarar CORS cerrado y usar solo consultas del split dev en la carga.
-- Corrección a la crítica: la restauración de Skynet ya está verificada (F04, `6cd23b2`); el riesgo se retiró.
-- Decisiones del usuario (2026-11-16): aprobadas D1-D7 según la recomendación.
-  - D1: tenant público dedicado y proxy simple; sin alcance por clave ni migración.
-  - D2: nginx con versión fijada.
-  - D3: túnel saliente sin puerto entrante. F05a compara Cloudflare Tunnel y Tailscale Funnel; el proveedor se confirma al aprobar el diseño.
-  - D4: demo solo API con ejemplos `curl`.
-  - D5: `/docs`, `/redoc`, `/openapi.json` y `/ready` se bloquean solo en el proxy; sin cambios de código.
-  - D6: F05a propone un objetivo p95 de `/v1/search` con rerank en RTX 5080 a partir de `benchmarks/gpu-rtx5080-2026-11-10.md`; el valor se confirma al aprobar el diseño y se mide en F05d.
-  - D7: corregir `ROADMAP.md` 1.9 y `HANDOFF.md` en un commit `docs:` antes del commit de F05a.
-
-- Debate del refinamiento R (2026-11-19, base `e3bdba1`): 3 exploradores (código/docs/calidad) + 2 rondas con `critica`. Parada: ronda 2 VERDICT OK sin bloqueantes nuevos.
-  - B1 aceptado: `_tenant_filter` keyword-only pasa a cambio atómico 6 líneas + gate de aislamiento mañana.
-  - B2 aceptado: R01 excluye `TASKS.md` (solo el orquestador la edita).
-  - B3 aceptado: split R02a (solo comentarios) vs R02b (renames+`*`+const, gate completo mañana); esta noche cero commits.
-  - M1-M7 aceptados: DECISIONS append-only, REVIEW intacto, demo-design congelado, ROADMAP con sufijo, OWNER const aislada de F10-A8, sin reword de logs, cero diff en `.github/` esta noche.
-  - m1 aplicado: `SCROLL_PAGE_SIZE` y f-string de `embedder` van a R02b (código), R02a queda solo comentarios.
-  - A2 (validación de `owner_id` duplicada) se descarta: los mensajes 422 difieren por ruta y forman parte del contrato.
-  - B4 (`store.py`) limita los helpers a `document_ids` y parámetros dispersos; `corpus_filter` y `result_filter` quedan intactos.
-  - A9 (candado global de modelos) extiende F05c y F05d con carga mixta y `INFERENCE_MAX_REQUESTS` como profundidad de cola.
-  - A6 exige bytes y cabeceras idénticos por middleware; C1 actualiza el docstring que lo cita; D5 revisa todas las referencias a `HANDOFF.md`.
-- Decisiones del usuario (2026-11-17): solo cambios que preservan comportamiento; retirar `HANDOFF.md` y marcar `REVIEW.md` como histórico; mover los scripts huérfanos a `eval/_archive_ai/`; orden F05a, F08, F09, F05b.
-- Hallazgos descartados con motivo: B3 (DECISIONS 3.21); B7 falso (`budget - stride >= 1`); A7 (límites `gt=0`); B11 y B13 (DECISIONS 3.19, contenedor Linux); D1 (`Dockerfile:26` copia `eval`); B1 y B2 (identidad de chunks sin datos de evaluación); B6, B8 y B12 (rendimiento sin medir); A3, A4 y B14 (bajo valor, versiones fijadas); D6 (`LEARNING.md` lo usa la skill); `eval/_archive_ai` (lo usan `check_nli_leak` y tests); A5, A8 y A10 cambian el contrato (F10).
-
-- Debate fase G (2026-11-21, base `b5847fd`): explorador (LiteLLM 1.108.2, XQuAD/MLQA/NoMIRACL, reutilización de `eval/run.py`) + crítica ronda 1 `BLOCKED` (5 bloqueantes, 4 mayores, 3 menores).
-  - Aceptados B1 (tope de llamadas, sin fallback, parada en 401/402), B2 (`provider.py` obligatorio y test de imports), B3 (delta y faithful-EM; contrafactual emparejado sobre la misma caché en vez de tenant aparte, porque el IDF va por tenant), B4 (LLM solo lector; prompt, semilla y muestra congelados; partición `reserve`), M1-M4, m1-m3.
-  - Ronda 2 `VERDICT: OK`: B1-B4, M1, M3 y m1-m3 resueltos; B5 rechazo justificado de forma condicional (tope duro, fail-closed, sin G05). Nuevos aceptados: N1 URL de XQuAD fijada a commit, N2 congelar temperatura y clave de caché, m1 `per_query/` fuera de Git, m2 guardia de unicidad del contrafactual, m3 G01 commitea el trío de documentos.
-  - B5 aceptado en parte: G03 se parte en G03a y G03b y G05 en una subfase por dataset. Rechazado no ejecutar G04 esta noche: el usuario pidió resultados para mañana, y el piloto está limitado a 260 llamadas, es solo dev, no se publica y queda pendiente de revisión humana.
+- Boceto ciego de la crítica adoptado: arnés desatendido, sellado que falla cerrado, `xfail` estricto solo para defectos reproducidos y ningún LLM con nota.
+- Ronda 1 `BLOCKED` (2 bloqueantes, 5 mayores, 4 menores):
+  - B1 (C05 sin método): aceptado. Receta en §3, probada en Skynet: migrar, subir, buscar, verificar, aislar y borrar; ids del despliegue iguales y 0 restos.
+  - B2 (C07 podía aprobar con fallo duro): aceptado y endurecido. Cualquier salida 1 bloquea C07. C02-C05 solo exigen que el instrumento mida y detecte.
+  - M1, M3, M4, M5: aceptados (selección congelada, generador de PDF, latido y reanudación, obligaciones heredadas).
+  - M2 (órdenes de OpenCode sin verificar): rechazado con evidencia. El 2026-11-22 `opencode run --agent jefe` cargó Taskflow, usó SSH, escribió su log y lanzó `explora` y `revision` sin intervención; `--agent critica` leyó un paquete ignorado por Git; las dos con salida 0 en OpenCode 2.3.2.
+  - m1-m4: aceptados.
+- Ronda 2 `BLOCKED` (todo lo anterior resuelto; 2 bloqueantes, 1 mayor, 2 menores), todo aceptado:
+  - B1: algoritmo de distractores, vector de test y matrices de 1, 3 y 5 textos.
+  - B2: sitio de cálculo fijado; al contenedor solo viajan los casos de práctica preparados.
+  - M1: `quick` nunca llama al explicador. Menores: `run_id` y reglas de `.gitignore`.
+- Ronda 3, la última (todo lo anterior resuelto; 1 mayor, 0 bloqueantes): "VERDICT: BLOCKED — C03 must pin the download allowlist and sealed-absence test before an unattended `run all`."
+  - Aceptado y aplicado tal cual en C03: lista cerrada y test de ausencia. Sin cuarta ronda por el límite de Taskflow: esta última corrección la comprobó solo el orquestador.
+- Desacuerdos abiertos: ninguno. Decisiones del usuario: U01-U03.
 
 ## 7. Phase plan
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| F01 | Protocolo NLI y congelación de dataset | Completed |
-| F02 | Calibración de umbrales solo en dev | Completed 2026-11-18 |
-| F03 | Evaluación ciega única en reserva (cierra 1.8) | Completed 2026-11-18 |
-| F04 | Corpus real y runbook copia/restore/reindex | Completed |
-| F05a | Diseño de exposición pública | Completed (diseño aprobado 2026-11-17) |
-| F08 | Limpieza de código sin cambio de comportamiento | Completed |
-| F09 | Limpieza de documentación y eval | Completed |
-| F05b | Endurecimiento local del despliegue | Completed |
-| F05c | Arnés de carga y abuso en CPU local | Completed |
-| F05d | Despliegue privado en Skynet y medición GPU | Completed 2026-11-19 |
-| F05e | Exposición pública de la demo | Discarded (sin demo pública, decisión usuario 2026-11-19) |
-| F06 | Cierre fase 1: suite, README y marcas | Completed 2026-11-19 |
-| F07 | Diagnóstico sintético EN+ES solo dev local | Completed |
-| F10 | Cambios de contrato de errores (A5, A8) | Optional, sin programar |
-| R01 | Refinamiento docs: contradicciones F05e | Completed |
-| R02a | Refinamiento código: solo comentarios | Completed |
-| R02b | Refinamiento código: renames+const (con gate) | Completed 2026-11-21 |
-| R03 | Higiene: verificación estática + CI tags | Completed (solo lectura) |
-| G01 | Abrir fase 2: regla 2, DECISIONS y ROADMAP (sin código) | Completed 2026-11-21 |
-| G02 | 2.1a Proveedor LLM mínimo (`llm/provider.py` sobre LiteLLM) | Completed 2026-11-21 |
-| G03a | 2.1b Datos, ingesta y caché de recuperación | Completed 2026-11-21 |
-| G03b | 2.1b Lector, puntuación y controles | Completed 2026-11-21 |
-| G04 | 2.1b Piloto: 100 preguntas XQuAD-es con controles de memoria | Completed 2026-11-21 (revisión humana pendiente) |
-| G05 | 2.1b Escalado masivo, una subfase por dataset | Pending (tras revisión humana del piloto) |
+| C01 | Runner desatendido y suite completa en Skynet | Pending |
+| C02 | Documentos raros y defectos conocidos | Pending |
+| C03 | Verificador con miles de frases | Pending |
+| C04 | Búsqueda y aislamiento con 16.000 preguntas | Pending |
+| C05 | Servicio real de principio a fin y bajo carga | Pending |
+| C06 | Una orden y un agente que explica | Pending |
+| C07 | Ejecución completa e informe base | Pending |
+| U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
+| G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
+| F10 | Cambios de contrato de errores | Not scheduled (usuario) |
 
-### R01: Refinamiento docs (contradicciones F05e, sin comportamiento)
+### C01: Runner desatendido y suite completa en Skynet
 
-- Outcome: `README:8` privado verificado + descarte 3.33; `ARCHITECTURE:5` + banner 623-631; `ROADMAP:62,66,72` sufijo sin borrado; `DECISIONS 3.26/3.30` append-only. Historia intacta (`REVIEW:62`, `demo-design` interior, `TASKS.md` del diff intactos).
-- Test evidence (orquestador, árbol integrado, solo estático esta noche): `ruff check` exit 0; `format --check` exit 0 (162 ficheros); `mypy` exit 0 (128 ficheros). Sin `pytest`/Docker/Skynet por petición (mañana). Logs en `/tmp/opencode/taskflow/ragmur/R01-gate/`.
-- Review verdict: VERDICT: OK (revisión R01; 1 baja + 3 informativas, ninguna bloqueante; `README:49` como mejora futura).
-- Files changed: `README.md`, `ARCHITECTURE.md`, `ROADMAP.md`, `DECISIONS.md`.
-- Risks: ninguno abierto. Gate completo + `grep pendiente/demo` + enlaces 24/24 quedan para mañana.
-- Status: Completed.
-
-### R02a: Refinamiento código solo comentarios (cero diff ejecutable)
-
-- Outcome: docstrings anti-regresión en 6 ficheros (`error_response` bytes F10, `storage` lock, `config` bm25, `extractors` Raises, `config` lazy torch, `deps` lifespan, `store` relectura). Prohibidos intactos (sin SCROLL, renames, `*`, const, logs, handlers, TASKS/.github).
-- Test evidence (orquestador, solo estático): `ruff check` exit 0; `format --check` exit 0 (162); `mypy` exit 0 (128). Sin pytest/Docker esta noche. Logs en `/tmp/opencode/taskflow/ragmur/R02a-gate/`.
-- Review verdict: VERDICT: OK (0 bloqueantes; 2 informativos sin cambio).
-- Files changed: `src/ragmur/api/deps.py`, `src/ragmur/api/error_response.py`, `src/ragmur/core/config.py`, `src/ragmur/ingestion/extractors/core.py`, `src/ragmur/ingestion/storage.py`, `src/ragmur/retrieval/store.py`.
-- Risks: ninguno. Gate completo mañana.
-- Status: Completed.
-
-### R02b: Renames + keyword-only + const
-
-- Outcome: `_tenant_filter(tenant_id, *, ...)` con 4 llamadas nombradas; `first→batch_document`, `_find_label→_find_label_index`, `choose→choose_separator_end`; `OWNER_ID_MAX_LENGTH=256` (una definición en `db/models.py`, usada en API y CHECK con el mismo SQL) y `SCROLL_PAGE_SIZE=256`. Tarea del embedder no aplica (no hay cadena descriptiva). `documents.py:118-133` intacto.
-- Test evidence (orquestador, 2026-11-21, PostgreSQL 17 y Qdrant 1.19 locales): `alembic` 0; `ruff` 0; `format` 162; `mypy` 128 OK; `pytest` 242 passed 4 skipped; aislamiento 13 passed 1 skipped; `check_nli_leak` verde. Logs en `/tmp/opencode/taskflow/ragmur/R02b-gate/`.
-- Review verdict: auto-verificación del orquestador sobre el diff completo (41+/26-), sin cambio de comportamiento ni contrato (regla roles §review).
-- Status: Completed.
-
-### G01: Abrir fase 2 (documentación, sin código)
-
-- Outcome: regla 2 de `AGENTS.md` reescrita (LLM solo como lector bajo prueba en `eval/`; `/search` y `/verify` sin LLM); `DECISIONS.md` 3.34 con justificación de `litellm==1.108.2` y alternativas descartadas; `ROADMAP.md` 2.1 partida en 2.1a/2.1b/2.1c sin borrar casillas y nota 2.4 actualizada.
-- Test evidence (orquestador): `ruff` 0, `format` 162, `mypy` 128 OK, `check_nli_leak` verde, grep de secretos 0; diff limitado a los 3 ficheros. Logs en `/tmp/opencode/taskflow/ragmur/G01-gate/`.
-- Review verdict: auto-verificación del orquestador (solo documentación, sin comportamiento).
-- Status: Completed 2026-11-21.
-
-### G02: 2.1a Proveedor LLM mínimo
-
-- Outcome: `litellm==1.108.2` fijada; `Settings` con `llm_model`, `llm_api_key`, `llm_api_base`, `llm_timeout_seconds`, `llm_max_tokens`, `llm_max_retries` (≤5) y `llm_extra_headers` (oculto en `repr`); `llm/provider.py` con `complete()`, `Completion(attempts, latency_ms del intento con éxito)`, errores propios y red final que envuelve toda excepción de LiteLLM; reintentos solo ante timeout, 429, conexión y 5xx con backoff acotado a 10 s; mapa de costes local (`LITELLM_LOCAL_MODEL_COST_MAP`). Test estático de imports (también `importlib`/`__import__`).
-- Hallazgo: LiteLLM 1.108.2 no trae `opencode_go/`. OpenCode Go va por `openai/<modelo>` + `https://opencode.ai/zen/go/v1` + cabecera `x-opencode-session`. Su política limita el uso a tráfico de agentes de código y comparte cupo de 5 h y semanal: el banco masivo usa modelo local (DECISIONS 3.34).
-- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 167; `mypy` 133 OK; `pytest` 268 passed 5 skipped; aislamiento 13+1; `check_nli_leak` verde; secretos 0; `uv sync --locked` 0. Smoke real `pytest -m llm_live`: Ollama local `ollama_chat/gemma3:4b` 1 passed (8 s, CPU); OpenCode Go `openai/glm-5.3-flash` 1 passed. Logs en `/tmp/opencode/taskflow/ragmur/G02r2-gate/`.
-- Review verdict: ronda 1 "VERDICT: BLOCKED — copying `.env.example` with the empty `LLM_EXTRA_HEADERS=` stops `Settings()` from loading, and LiteLLM errors outside `litellm.APIError` (for example `NotFoundError`) reach callers unwrapped." Reparación acotada (2 rondas de escritor). Ronda 2: "VERDICT: OK — all earlier findings are fixed; the two new findings are minor test-hygiene issues and do not block the commit."
-- Later work (menor): aislar de variables `LLM_*` del entorno `test_env_example_loads` y `test_no_extra_headers_by_default`; test que proteja `LITELLM_LOCAL_MODEL_COST_MAP`.
-- Entorno añadido: contenedor `ragmur-ollama-eval` (`ollama/ollama:0.40.14`, `sha256:ebaef4f4…`, solo `127.0.0.1:11434`, volumen `ragmur_ollama_eval`) con `gemma3:4b` (`68ceab7e468a`).
-- Status: Completed 2026-11-21.
-
-### G03a: 2.1b Datos, ingesta y caché de recuperación
-
-- Outcome: `eval/reader/` (`xquad`, `index`, `retrieve`, `cache`, `prepare`). XQuAD-es fijado al commit `7d30520c` con SHA-256 `dcbae93e…` y descarga atómica; partición por artículo (semilla 20261121): 36 `dev` (908 preguntas) y 12 `reserve` sellada (`allow_reserve`). Se indexan los 240 párrafos (los de reserva solo como ruido) en el tenant `ragmur.eval.reader.xquad-es` y la colección `*_eval_reader`, con 800/120 y `chunk_id` determinista. Recuperación `hybrid_rerank` con el mismo camino que `eval/run.py`. Clave de caché con dataset, commit, árbol sucio (`src`, `eval`, `pyproject.toml`, `uv.lock`), configuración, `candidates`, `top_k`, `rrf_k`, hash completo de BM25, troceado, modelos, semilla, muestra y split; `prepare` se niega con árbol sucio salvo `--allow-dirty`. Meta con hardware y latencias.
-- Plan adjustment: la caché de 100 casos del piloto se genera tras este commit, como primer paso de G04 (la clave incluye el commit).
-- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 181; `mypy` 147 OK; `pytest` 314 passed 5 skipped; aislamiento 14+1 (incluye tenant señuelo en ambos sentidos y owners A↔B con Qdrant real); `tests/eval/reader` 46 passed; `check_nli_leak` verde; secretos limpio (incluye ficheros sin seguimiento). Smoke real: 240 párrafos indexados y caché de 5 casos en 4 min 40 s en CPU. Logs en `/tmp/opencode/taskflow/ragmur/G03a-final-gate/`.
-- Review verdict: ronda 1 "VERDICT: OK — no blocking findings; fix majors 1-2 before generating the 100-case cache, because G04 freezes its key." Reparación acotada de M1-M3 y m1-m7. Ronda 2 "VERDICT: OK — all requested majors and minors are fixed; the new findings are minor and do not block the commit." El orquestador aplicó 3 arreglos de una línea pedidos por la ronda 2 (hash BM25 completo, rutas `:/` y ficheros de dependencias en el control de árbol sucio, mensaje de descarga).
-- Later work (menor): conftest de Qdrant duplicado entre `tests/retrieval` y `tests/eval/reader`; fijar la lista de 12 artículos de reserva como regresión; el test de reutilización de `Indexer` solo busca texto.
-- Status: Completed 2026-11-21.
-
-### G03b: 2.1b Lector, puntuación y controles
-
-- Outcome: `eval/reader/{reader,scoring,run,gitstate}.py` y prompts congelados `reader_v1.md` (`c949c3e371a7…`) y `reader_v1_nocontext.md` (`18f6a3962b0b…`), con ejemplos emparejados y contexto delimitado y escapado. Toda llamada va por `provider.complete`. `run_id` incluye caché, semilla, hash de prompts y modelo; la reanudación rechaza registros incompatibles y reintenta errores de proveedor. `--max-calls` obligatorio (cuenta intentos), parada limpia ante 401/402, rechazo de árbol sucio salvo `--allow-dirty` (resumen `-smoke`). Normalización ES `[^\w\s]|_` y coincidencia por palabra completa. EM principal; F1, `faithful_EM`, `contains_match` con tope, abstención, `parse_error` en denominadores, reparto recuperación/lector; control sin fragmentos con delta y contaminados; contrafactual emparejado con sustituto del mismo tipo y guardas; Wilson 95 %. Muestra de revisión con fragmento principal.
-- Test evidence (orquestador): `alembic` 0; `ruff` 0; `format` 190; `mypy` 154 OK; `pytest` 377 passed 5 skipped; `tests/eval/reader` 109 passed; aislamiento 14+1; `check_nli_leak` verde; secretos limpio. Smoke final real (gemma3:4b, CPU, 5 casos, prompt definitivo): sin errores de parseo ni de proveedor; resúmenes en `/tmp/opencode/taskflow/ragmur/G03b-smoke/` (fuera de Git). Seco del piloto: 230 trabajos (100+100+30), 43 descartes por sustituto ya presente, sin déficit.
-- Review verdict: ronda 1 "VERDICT: BLOCKED. Resume ignores prompt and model changes, so the planned smoke rerun after the prompt edit would silently reuse old answers under the new prompt SHA (B1)." Reparación acotada de B1, M1-M6, m1-m9 y decisiones P1-P3. Ronda 2 "VERDICT: OK. B1 and every earlier major are fixed, and nothing here invalidates the 230-call G04 pilot; fix N1 before freezing the prompt SHA." N1 aplicado por el orquestador (ejemplo sin contexto pasa a un hecho común; SHA fijado en test).
-- Límites declarados para G04: las clases de sustituto (numérico, propio, común) son gruesas y el contrafactual será sobre todo exploratorio; `gemma3:4b` responde con frases largas pese a los ejemplos.
-- Later work (menor): partir el contrafactual por `gold_kind`; clase `parse_error` en el contrafactual; registrar `substitute_source` o quitar el repliegue a otros artículos (0/30 en el piloto); registrar `timeout`, `max_tokens` y `max_retries` en el resumen.
-- Status: Completed 2026-11-21.
-
-### G04: 2.1b Piloto XQuAD-es (solo dev, sin publicar)
-
-- Objective: primera medición real, pequeña, para revisión humana antes de escalar.
-- Frozen protocol:
-  - [x] Generar con árbol limpio la caché de las 100 preguntas: `retrieval-f32e8ee3980ba2ac` (commit `e998d2c`, `dirty: false`, `hybrid_rerank`, `candidates` 30, `top_k` 5, `rrf_k` 2, 800/120; recuperación CPU p50 9,8 s, p95 11,0 s, Intel Core Ultra 9 285H).
-  - Métricas fijadas antes del piloto (no se ajustan con sus resultados): EM principal; `contains_match` secundaria con tope `min(oro+3, 2×oro)` tokens; contrafactual `reads_context` (sustituto contenido, original no, con tope), `uses_memory` (original contenido), `both`, `other`; sustituto del mismo tipo (numérico, nombre propio, común).
-  - [x] Congelado el 2026-11-21 antes de ejecutar (commit `6ed6abd`): caché `retrieval-f32e8ee3980ba2ac` (100 casos `dev`, semilla 20261121); prompts `reader_v1.md` `c949c3e371a7c3d5dc80fdd55dea6441dd22f940cbf69a1ac3c0a28eea41dfd5` y `reader_v1_nocontext.md` `18f6a3962b0b3a475d24e7c52a3a846a9376e8b173a5827615477f2f0b625a7a`; modelo `ollama_chat/gemma3:4b` (`68ceab7e468a`) en `ollama/ollama:0.40.14` local en CPU; temperatura 0; semilla 20261121; `LLM_TIMEOUT_SECONDS=180`; `--max-calls 260`; `--counterfactual-size 30`.
-- Outcome (`eval/results/reader-2026-11-21T081302625577Z-dev.json`, commit `6ed6abd`, árbol limpio, 230 llamadas reales de 260, 0 errores de proveedor, 90 min de pared; LLM `gemma3:4b` en Ollama 0.40.14 Docker y recuperación en CPU Intel Core Ultra 9 285H, 16 hilos, sin GPU):
-  - Recuperación (`hybrid_rerank`, top 5): la respuesta del dataset aparece por palabra completa en los fragmentos en 99/100 [0,95-1,00].
-  - Lector con fragmentos: EM 25/100 [0,18-0,34]; faithful-EM 22/100 [0,15-0,31]; `contains_match` 30/100 [0,22-0,40]; F1 media 0,41; abstención 11/100; `parse_error` 1/100. Reparto de fallos: 0 de recuperación, 75 del lector.
-  - Sin fragmentos: EM 1/100 [0,00-0,05]; 1 caso contaminado. Delta EM +0,24 (n=100).
-  - Contrafactual (exploratorio, 30 construidos, 43 descartados por sustituto ya presente): `reads_context` 4/30, `uses_memory` 0/30, `both` 0/30, `other` 26/30.
-  - Lectura: con este modelo el cuello de botella es el lector, no la recuperación. No hay señal de que responda de memoria. Las cifras miden `gemma3:4b` en CPU; no describen a Ragmur con un lector fuerte.
-- Human review: pendiente. Muestra de 30 casos en `eval/results/reader/per_query/reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9/review_sample.md` (fuera de Git).
-- Test evidence (orquestador): gate compartido verde (`pytest` 377 passed 5 skipped, aislamiento 14+1, `check_nli_leak`, secretos). `reserve` sin abrir; ninguna cifra en README. Logs en `/tmp/opencode/taskflow/ragmur/G04-gate/` y `/tmp/opencode/taskflow/ragmur/G04-pilot.log`.
-- Review verdict: auto-verificación del orquestador (fase sin cambio de código: ejecución congelada y resumen generado).
-- Later work (menor): el campo `calls.new_calls` cuenta también los descartes del contrafactual (273); las llamadas reales son `new_tries` (230).
-- Status: Completed 2026-11-21 (revisión humana pendiente).
-
-### G05: 2.1b Escalado masivo (una fase por dataset)
-
-- G05a XQuAD-es `dev` completo; G05b NoMIRACL-es (mide abstención, no EM); G05c SciFact como lector NLI (va contra etiquetas humanas, no EM); G05d modelo local fijado (LM Studio u Ollama en la 5080).
-- Status: Pending; empieza solo después de que el usuario revise el piloto. Prohibido de noche sin humano: G05, presupuestos, fallback, `PUT /v1/config/llm`, Skynet, README, abrir `reserve`.
-
-### R03: Higiene estática + CI tags (lectura)
-
-- Outcome: `qdrant_client` import solo en `store.py:20` (`deps.py:16` solo comentario); sin `TODO`/`print(` en `src/tests/eval/run.py`; `.gitignore` cubre `models/`, `storage/`, `.env`; nada de `models/ storage/` rastreado. CI tags (`checkout@v7`) y `gc` de `eval/.pdf_cache` quedan para mañana con red (cero diff en `.github/` esta noche).
-- Test evidence (orquestador, solo lectura): `git grep qdrant_client`, `git grep TODO/print`, `git check-ignore models storage .env`. Logs en `/tmp/opencode/taskflow/ragmur/R03-gate/`. Sin `pytest`/Docker.
-- Review verdict: auto-verificación sin revisor (sin cambios de comportamiento ni diff; regla roles §review).
-- Files changed: ninguno (solo este registro en `TASKS.md`).
-- Risks: ninguno. `actions/checkout@v7` por verificar con red mañana.
-- Status: Completed.
-
-### F02: Calibración de umbrales solo en dev
-
-- Objective: fijar `supported/weak/contradiction` solo con dev.
+- Objective: lanzar pruebas largas que sobreviven a la shell y no tocan el Docker local.
 - Tasks:
-  - [x] Ejecutar `nli_run` solo en dev con chunks reales e inferencia real (233 pares, CPU, 2026-11-18).
-  - [x] Explorar umbrales con `nli_thresholds.py`; publicar matriz dev y tasa de respaldo falso con Wilson (recall 41/74, falso apoyo 12/159).
-  - [x] Congelar umbrales 0.75/0.5/0.75; no modificar la configuración sin decisión registrada.
-- Dependencies: F01 y 303 pares humanos revisados (99/100/104 + 5 descartadas sustituidas) con doble anotación y adjudicación.
-- Acceptance criteria: umbrales congelados con informe dev versionado (matriz 3x3, `recall_supported>=0.5`, hardware, revisión `b5113eb`, commit, hash del corpus).
-- Required tests: `uv run python -m eval.nli_run --dataset eval/eu_nli_dev.yaml --split dev`, `uv run python -m eval.nli_thresholds ...`, unitarios NLI.
-- Test evidence: `eval/results/nli-eu-dev-2026-11-18.json` (dev 233: apoyo 41/74, falso apoyo 12/159).
-- Review verdict: 0.75 único elegible (0.85/0.90/0.95 con recall <0.5). Sin cambios de configuración.
-- Files changed: `eval/eu_nli_dev.yaml`, `eval/eu_nli_test.yaml`, `eval/results/nli-eu-dev-2026-11-18.json`, `eval/results/nli-eu-test-2026-11-18.json`, `ROADMAP.md`, `README.md`, `eval/NLI.md`, `eval/EU_CORPUS.md`.
-- Risks: n pequeña da Wilson ancho. La anotación humana queda fuera del alcance de los agentes.
-- Status: Completed 2026-11-18.
+  - [ ] `eval/phase1/`: `start [--only <etapas>]`, `status <run_id>`, `report <run_id>`, `cancel <run_id>`. `start` desacopla el proceso y vuelve en menos de 5 s.
+  - [ ] Estado en `eval/results/phase1/per_query/<run_id>/`: `status.json` con latido, log y JSON por etapa, commit, árbol sucio, hardware y configuración.
+  - [ ] Cerrojo de una ejecución con PID y latido cada 15 s. Muerta = PID inexistente y latido de más de 120 s. Solo entonces se toma el cerrojo y se retiran los restos con su etiqueta.
+  - [ ] `start --resume <run_id>`: solo con la ejecución muerta y el mismo commit y configuración. Conserva etapas completas y casos puntuados; recrea contenedores e índice.
+  - [ ] Plazo por etapa y limpieza en éxito, fallo y cancelación.
+  - [ ] Los dos `conftest` de Qdrant comparten un ayudante. Con `RAGMUR_TEST_SSH_HOST` usa Skynet y un túnel. Sin ella conserva el comportamiento de CI.
+  - [ ] Etapas `static` y `suite`, con PostgreSQL y Qdrant desechables y migraciones.
+- Dependencies: none.
+- Owned files: `eval/phase1/`, `tests/eval/phase1/`, los dos `conftest` y su ayudante, `.gitignore` (solo si `eval/results/**/per_query/` y `eval/.datasets/` no bastan).
+- Acceptance criteria:
+  - Códigos de salida: 0 todo bien; 1 fallo duro; 2 infraestructura o ejecución incompleta; 3 solo falla la calidad o hay fallos conocidos. Precedencia 2, 1, 3, 0. Nunca 0 con una etapa ausente.
+  - La suite completa da 0 failed, al menos 376 passed y ningún skip nuevo respecto a los 6 registrados.
+  - Un `docker` falso al principio de `PATH` demuestra 0 llamadas locales.
+  - El proceso sigue tras morir quien lo lanzó. `cancel` deja 0 contenedores, redes y túneles de ese `run_id`.
+- Required tests: puerta compartida; tests de los cuatro códigos, cerrojo y limpieza; suite real en Skynet; cancelación real.
+- Status: Pending
 
-### F03: Evaluación ciega única en reserva (cierra 1.8)
+### C02: Documentos raros y defectos conocidos
 
-- Objective: medir una vez con parámetros congelados y cerrar la verificación.
+- Objective: romper la ingesta a gran escala y convertir cada defecto conocido en un test.
 - Tasks:
-  - [x] Una sola ejecución de `nli_run` sobre test (70 pares, 2026-11-18); reserva abierta una vez.
-  - [x] Publicar matriz test, respaldo falso con Wilson, `recall_supported`, hardware, revisión y commit.
-  - [x] Versionar solo resúmenes; `--details` con texto va a `/tmp`.
-- Dependencies: F02.
-- Acceptance criteria: informe test versionado; casillas 1.8 marcadas.
-- Required tests: `nli_run` sobre test una vez; gate compartido.
-- Test evidence: `eval/results/nli-eu-test-2026-11-18.json` (apoyo 19/25, contradichas 19/21, falso apoyo 2/45, Wilson [1,2%, 14,8%]).
-- Review verdict: Wilson superior 14,8% no permite afirmar tasa <10% en producción; limitación publicada.
-- Files changed: `eval/results/nli-eu-test-2026-11-18.json`, `eval/NLI.md`.
-- Risks: reabrir test para otro umbral quema la reserva.
-- Status: Completed 2026-11-18
+  - [ ] Etapa `ingest`: 100.000 documentos con semilla fija por el troceador; 1.000 válidos y 1.000 vacíos, truncados o corruptos de cada formato (TXT, MD, DOCX, PDF) por los extractores. DOCX con `python-docx`; PDF mínimo con stdlib, como `tests/ingestion/test_extractors.py`.
+  - [ ] Un test por D1-D7 que describe el comportamiento correcto, en `xfail` estricto. Un test normal que fija D8.
+- Dependencies: C01.
+- Owned files: `eval/phase1/`, `tests/eval/phase1/`, `tests/known_defects/`.
+- Acceptance criteria:
+  - Detecta con un fallo inyectado: pérdida de texto, span o dueño erróneo, cuelgue y excepción no controlada. Un fallo real se publica como fallo duro con su semilla; no impide completar C02.
+  - Cada `xfail` falla por su aserción, no por preparación. El informe lo muestra como «fallo conocido», nunca como aprobado.
+  - La etapa, con sus ficheros generados, tarda menos de 30 min en el portátil.
+- Required tests: puerta compartida; tests de los detectores con un fallo inyectado; suite completa.
+- Status: Pending
 
-### F05a: Diseño de exposición pública
+### C03: Verificador con miles de frases
 
-- Objective: fijar qué se expone, cómo y con qué límites antes de tocar código o Skynet. El usuario aprueba el diseño.
+- Objective: medir el verificador con etiquetas humanas y la misma lógica del servicio.
 - Tasks:
-  - [ ] Escribir `docs/demo-design.md`: modelo de amenazas, matriz de rutas y autenticación, topología y plan de vuelta atrás con interruptor de corte.
-  - [ ] Rutas públicas: `GET /health`, `POST /v1/search`, `POST /v1/verify`. El proxy devuelve 404 para el resto, incluidos `/ready`, `/docs`, `/redoc`, `/openapi.json` y `/v1/documents*`.
-  - [ ] Invariante: la clave de demo pertenece a un tenant que solo contiene documentos del manifiesto. Definir su comprobación SQL.
-  - [ ] Clave: secreto en fichero del servidor fuera de Git; el proxy elimina `X-API-Key` del cliente e inyecta la suya. Rotación y revocación con la CLI.
-  - [ ] Límites: por IP en nginx (`limit_req`, `limit_conn`, `client_max_body_size`); límite por clave e `INFERENCE_MAX_REQUESTS` como tope global. Sin `X-Forwarded-For` ni `ProxyHeaders`. Valores provisionales hasta F05d.
-  - [ ] Logs: sin cuerpos, consultas ni claves; política de retención de IP. Revisar productores de `diagnostic`.
-  - [ ] CORS: API sin middleware CORS; una página estática, si se elige, se sirve en el mismo origen.
-  - [ ] Justificar nginx y el conector de túnel frente a alternativas (regla 9) con versiones fijadas.
-  - [ ] Comparar Cloudflare Tunnel y Tailscale Funnel (D3) y proponer el objetivo p95 (D6).
-  - [ ] Añadir `DECISIONS.md` 3.32 y una sección de despliegue público en `ARCHITECTURE.md`.
-- Dependencies: F04. Independiente de F02 y F03.
-- Acceptance criteria: diseño coherente con D1-D6; proveedor de túnel (D3) y objetivo p95 (D6) propuestos con su compromiso; el commit no cambia código. La aprobación del usuario se registra aquí con fecha antes de F05b.
-- Required tests: revisión del documento contra `ARCHITECTURE.md` y `DECISIONS.md`; `uv run ruff check .` sin cambios de código.
-- Test evidence: lead 2026-11-16 sobre el diff de F05a (solo documentación): `ruff check` exit 0; `format --check` 155 ficheros; `mypy` 124 OK; `check_nli_leak` exit 0; sin diff en `src`, `tests`, `eval`, `pyproject.toml`, `uv.lock`, `Dockerfile` ni compose desde `6cd23b2`; secret grep 0. `pytest` no ejecutado: sin cambios de código.
-- Review verdict: ronda 1: "VERDICT: BLOCKED. Behind the tunnel, nginx sees only the connector's address, so the per-IP limit that D1 and TASKS §6 rely on becomes one global bucket. M1-M5 must also be fixed before F05b." Reparación acotada aplicada; ronda 2 confirma B1, M1, M2, M4, M5 y m1-m7 resueltos y M3 parcial. Ronda 2: "VERDICT: BLOCKED. 8 of the 10 manifest hashes in the invariant SQL (`docs/demo-design.md:183-190`) are corrupted, so the main tenant control fires on every correct tenant and cannot detect an extra document." Lead lo reprodujo: 8 hashes sin coincidencia en `eval/eu_manifest.yaml`, 6 con longitud distinta de 64. Pendientes N2 (conector frente a `host.docker.internal:8000` sin verificar), N3-N6 menores. Reintento acotado (2026-11-17, escritor nuevo, base `1801915`): hashes literales sustituidos por un contrato de generación en F05b con `:expected_hashes`, autocomprobación de 10 hashes de 64 hex y conteo exacto; fuente de los 10 documentos `eval/skynet_public_corpus_2026-11-13.md:58-71`; N2-N6 resueltos. Ronda 3: "VERDICT: OK". El revisor comprobó los 10 `document_id` contra `eval/eu_manifest.yaml`, las columnas de `api_keys` y que D1-D6, DECISIONS 3.32 y ARCHITECTURE concuerdan. Sus 9 hallazgos menores pasan a F05b.
-- Test evidence (reintento): lead 2026-11-17 sobre el árbol integrado: `ruff check` exit 0; `format --check` exit 0, 155 ficheros; `mypy` exit 0, 124 ficheros; `check_nli_leak` exit 0; sin diff en código, tests, eval, dependencias, `Dockerfile` ni compose desde `6cd23b2`; `grep -nE '[0-9a-f]{40,}' docs/demo-design.md` sin resultados; secret grep 0. `pytest` no ejecutado: sin cambios de código.
-- Files changed: `docs/demo-design.md`, `DECISIONS.md`, `ARCHITECTURE.md`, `TASKS.md`.
-- Risks: ocultar botones no es un control. Si la clave llega al navegador, el modelo `owner_id` deja de proteger.
-- Status: Completed. Diseño aprobado por el usuario el 2026-11-17. Commit `1abaf61` (`F05a: design public demo exposure`). F05b desbloqueada.
-- Recomendaciones para el reintento (guardadas 2026-11-16, aplicadas el 2026-11-17):
-  - Quitar los hashes literales del documento. La SQL del invariante se genera desde `eval/eu_manifest.yaml` con un script de F05b; la copia manual los corrompió.
-  - N2: marcar "por verificar" que el conector no alcanza la API; smoke dentro del contenedor del conector: `api:8000`, `qdrant:6333`, `postgres:5432` y `host.docker.internal:8000` deben fallar.
-  - N3: IP fija del conector (`ipv4_address`) como único `set_real_ip_from`, o prohibir el enlace de nginx al host mientras corre el túnel.
-  - N4: Skynet es Windows: secreto como Docker secret o volumen con modo fijado dentro del contenedor; rotación de logs dentro de un contenedor o con el driver `local`.
-  - N5: topología de Funnel (host, `proxy_protocol`) o declarar que la sección 4 solo aplica a Cloudflare.
-  - N6: redacción (CLI, "fuera de Git" repetido, línea 58, origen del 404 en `POST /v1/search`); `include` de la clave dentro de cada una de las tres `location` exactas.
-  - Revisión nueva tras el reintento; si sale limpia, presentar el diseño al usuario para aprobarlo.
+  - [ ] Descarga atómica y con huella en `eval/.datasets/`, solo de esta lista cerrada, fichero a fichero:
+    - `https://huggingface.co/datasets/PlanTL-GOB-ES/SQAC/resolve/f9928e8819596a601b8887cc5f8598b15d589a82/train.json`
+    - `https://huggingface.co/datasets/venelin/inferes/resolve/c371a1915e6902b40182b2ae83c5ec7fe5e6cbd2/train.csv`
+    - XQuAD-es con `eval.reader.xquad.download_dataset`. Ese fichero único trae la reserva: filtrar siempre con `list_cases(data, "dev")`.
+  - [ ] Prohibido `git clone`, `snapshot_download`, `load_dataset` de Hugging Face y cualquier descarga de un repositorio de datos entero.
+  - [ ] Etapa `nli` en la RTX 5080: matrices por tipo y con 1, 3 y 5 textos (distractores de otro tema, semilla fija), con intervalos de Wilson.
+  - [ ] Selección congelada: filas de `train.csv` con `Topic` 1-5 y premisa e hipótesis no vacías, en orden del fichero, sin deduplicar. Etiquetas con `eval.inferes.LABELS`. Cifra principal: `Anno_Type != "Automated"`.
+  - [ ] Distractores con este algoritmo exacto. `P` es la lista seleccionada en su orden (incluye `Automated`), `n = len(P) = 4602`, `id` es la columna `ID` y `t` es `Topic`:
 
-### F08: Limpieza de código sin cambio de comportamiento
+    ```python
+    j = int(hashlib.sha256(p.id.encode()).hexdigest(), 16) % n
+    chosen = []
+    while len(chosen) < 4:
+        q = P[j % n]
+        j += 37
+        while q.t == p.t or q.premise in [c.premise for c in chosen]:
+            q = P[j % n]
+            j += 1
+        chosen.append(q)
+    # k textos: [p] + chosen[:k - 1]
+    ```
 
-- Outcome: A1 (`session_scope`), B9 (`verifier_type`) y su import eliminados; helper `send_error` compartido por los tres middlewares de límite (bytes y cabeceras idénticos); helpers `_require_document_ids`, `_sparse_vector` y `_idf_search_params` en `store.py` con `corpus_filter` y `result_filter` intactos; nuevo `tests/retrieval/test_store_scope.py` blinda `_checked_payload`/`retrieve_points`.
-- Test evidence (orquestador, árbol integrado, PostgreSQL 17 y Qdrant propios en `127.0.0.1:5433/6333-6334`; `alembic` con `API_KEY_HMAC_SECRET=test-only-hmac-secret` solo en entorno): `ruff check` exit 0; `format --check` exit 0; `mypy` exit 0 (126 ficheros); `alembic upgrade head` exit 0; `pytest` 237 passed, 4 skipped; subset límites+hybrid 9 passed; `-k "isolation or tenant or owner"` 13 passed, 1 skipped; `check_nli_leak` verde; `git grep session_scope|verifier_type` en `src tests eval` vacío. Logs en `/tmp/opencode/taskflow/ragmur/F08-gate/`.
-- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F08 sin cambios de comportamiento ni de contrato." (revisión 2026-11-17; 5 observaciones menores no bloqueantes).
-- Files changed: `src/ragmur/db/session.py`, `src/ragmur/verification/nli.py`, `src/ragmur/api/error_response.py` (nuevo), `src/ragmur/api/{json_limit,upload_limit,inference_limit}.py`, `src/ragmur/retrieval/store.py`, `tests/api/test_{json,upload,inference}_limit.py`, `tests/retrieval/test_store_scope.py` (nuevo).
-- Risks: ninguno abierto. `error_response.py` conserva a propósito dos serializaciones históricas; unificarlas cambiaría el contrato (F10).
-- Status: Completed.
+  - [ ] Línea base trivial solo con la forma de la frase, para detectar fugas de etiqueta.
+- Dependencies: C01.
+- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
+- Acceptance criteria:
+  - 4.602 pares, 3.124 en la cifra principal. Vector de test: `1968` elige `2428, 5511, 4367, 2559`; `2148` elige `4488, 793, 632, 93`.
+  - Cada celda queda a ±5 casos (columnas supported, weak, unsupported, contradicted):
 
-### F09: Limpieza de documentación y eval
+    | Etiqueta humana | 1 texto | 3 textos | 5 textos |
+    |---|---|---|---|
+    | supported | 774, 92, 409, 68 | 746, 88, 360, 149 | 728, 92, 334, 189 |
+    | unsupported | 29, 14, 133, 50 | 32, 17, 108, 69 | 32, 17, 99, 78 |
+    | contradicted | 96, 44, 495, 920 | 98, 55, 421, 981 | 98, 54, 393, 1010 |
 
-- Outcome: C1/C2 archivados en `eval/_archive_ai/` (con nota en su `README` y docstring C1); C3/C4 notas y docstrings cruzados; D2/D8 marcas fase 2 y `EMBEDDING_DEVICE` en `README.md`; D3/D12 árbol fase 1 vs fase 2 en `ARCHITECTURE.md`; D4 encabezado histórico en `REVIEW.md` (base `58cd7ee`); D5 `HANDOFF.md` borrado con datos Skynet vigentes relocalizados (`ragmur_deploy`, nota de credenciales SSH, overlay CUDA) en `README.md` y `docs/runbook-backup-restore.md`; D11 borrador listado en `eval/EU_CORPUS.md`. Sin cambios en `src/`, `tests/`, dependencias ni `TODO`s. Menciones restantes de `HANDOFF` en `TASKS.md` solo históricas (§2 D7, §6 D7, esta entrada).
-- Test evidence (orquestador, árbol integrado, PostgreSQL 17 y Qdrant propios en `127.0.0.1:5433/6333-6334`): `ruff check` exit 0; `format --check` exit 0 (156); `mypy` exit 0 (126); `alembic upgrade head` exit 0; `pytest` 237 passed, 4 skipped; `check_nli_leak` verde; `git grep` rutas movidas solo en `_archive_ai`/resultados/docstring C1; `git grep -i handoff` fuera de `TASKS.md` vacío; enlaces relativos 24/24 OK. Logs en `/tmp/opencode/taskflow/ragmur/F09-gate/`.
-- Review verdict: "VERDICT: OK — F09 meets all acceptance criteria with zero behavior/contract change; D5 Skynet data preserved; gate outputs consistent." (revisión 2026-11-17; 2 hallazgos bajos + 1 informativo, todos en artefactos archivados).
-- Files changed: `ARCHITECTURE.md`, `README.md`, `REVIEW.md`, `HANDOFF.md` (borrado), `docs/runbook-backup-restore.md`, `eval/NLI.md`, `eval/EU_CORPUS.md`, `eval/metrics.py`, `eval/scifact_metrics.py`, `eval/numeric_signal_stress_eval.py`, `eval/_archive_ai/` (2 scripts movidos + `README.md`).
-- Risks: ninguno abierto. Pregunta del writer resuelta por el revisor: 12 entradas del borrador vs 11 IDs `euh2-*` ejecutados no es contradicción (`EU_CORPUS.md:28-30` lo declara borrador).
-- Status: Completed.
+  - Un test demuestra que el cargador rechaza los sellados y cualquier URL fuera de la lista sin hacer ninguna petición de red.
+  - Un test y la comprobación previa de cada ejecución fallan si hay `dev.json`, `test.json` o `test.csv` de esos conjuntos bajo `eval/.datasets/`, o una pregunta de la reserva en `prepared/`.
+  - La regla de veredicto coincide con `/verify` en un test de paridad que llama a la ruta.
+  - Referencias existentes, solo diagnósticas: respaldo falso ≤5 %, Wilson superior ≤10 %, recall de apoyo ≥50 %. Si no se cumplen, calidad en rojo y salida 3.
+- Required tests: puerta compartida; tests del cargador, métricas y paridad; etapa real en Skynet.
+- Status: Pending
 
-### F05b: Endurecimiento local del despliegue
+### C04: Búsqueda y aislamiento con 16.000 preguntas
 
-- Outcome: `Dockerfile` con usuario `ragmur` UID 10000 e imagen `uv` fijada+digest (`HEALTHCHECK` intacto); `docker-compose.yml` con PG y Qdrant solo en `127.0.0.1`; `docker-compose.demo.yml` (redes `edge`/`internal`, conector con `ipv4_address` fija y perfil `tunnel`, nginx sin puertos, clave por `include` de secreto Compose, logs con rotación); `deploy/nginx/nginx.conf` (3 ubicaciones exactas + 404 resto, borrado de cabeceras de IP, `real_ip` acotada, 429 con `Retry-After`, `client_max_body_size 64k`, logs sin cuerpos/consultas/claves); `deploy/smoke_demo.sh` (28 comprobaciones); `eval/check_demo_invariant.py` (genera 3 consultas desde los 10 ids + hashes, exige 10 hashes 64hex y `status='indexed'`); test `diagnostic` (4 tests, sin fugas de texto); redacción 1/2/4/7 de F05a aplicada en `docs/demo-design.md`. Sin cambios en `src/`, sin dependencias nuevas, sin secretos en Git.
-- Test evidence (orquestador, árbol integrado): `ruff check`/`format` 0; `mypy` 0 (128); `config` deploy+demo 0 puertos y 0 `0.0.0.0`; `alembic` 0; `pytest` 241 passed, 4 skipped (diagnostic 4/4; aislamiento 13+1); `check_nli_leak` verde; secret scan sin secretos nuevos; invariante generación OK + `--check` verde (`0/10/1`) y rojo tras revocar en BD desechable; `nginx -t` OK; smoke re-ejecutado 28/28 con revocación 401 final; sonda edge (DNS irresoluble + L3 con timeout 4s y controles); 0 fugas en cuerpos/cabeceras/logs; pila demolida con `down -v`. Incidencias resueltas sin tocar el repo: `model_data` precalentado necesitó `chown 10000`; la clave inyectada debe ser clave real emitida. Logs en `/tmp/opencode/taskflow/ragmur/F05b-gate/`.
-- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F05b con evidencia verde completa y sin defectos bloqueantes." (revisión 2026-11-17; 1 hallazgo bajo + 2 informativos). Hallazgo bajo aplicado por el orquestador: ejemplo de §5 actualizado (el prefijo `127.0.0.1:` ya vive en `docker-compose.yml`).
-- Files changed: `Dockerfile`, `docker-compose.yml`, `docker-compose.demo.yml` (nuevo), `deploy/nginx/nginx.conf` (nuevo), `deploy/smoke_demo.sh` (nuevo), `eval/check_demo_invariant.py` (nuevo), `tests/ingestion/test_diagnostic_no_text.py` (nuevo), `docs/demo-design.md`, `TASKS.md`.
-- Risks: F05d debe precalentar `model_data` + `chown` al UID 10000 antes del primer arranque; D3 (ráfaga por IP de visitante) exige túnel real; `Retry-After: 60 always` también en 200 (ruido inofensivo, diseño §7).
-- Status: Completed.
-
-### F05c: Arnés de carga y abuso en CPU local
-
-- Outcome: `benchmarks/load.py` (asyncio+httpx+stdlib; perfiles search/mixed; calentamiento, barrido, recuperación, sonda de aislamiento; rechaza reservas; resumen JSON+Markdown) + `benchmarks/test_load.py` (12 tests) + `benchmarks/load-cpu-2026-11-17.md` (CPU Intel Ultra 9 285H, commit `cfbb73b`). Solo 3 ficheros nuevos; sin cambios en `src/`, configuración, límites ni dependencias (httpx/pyyaml ya existían).
-- Test evidence (orquestador, árbol integrado): `ruff check`/`format` 0; `mypy` 0 (128; más `mypy benchmarks/load.py` 0 tras reparar 6 avisos fuera del gate); harness 12/12; `pytest` 241 passed, 4 skipped; `check_nli_leak` verde; ejecución viva reducida en pila efímera demolida: 19×200 + 1 error de conexión en calentamiento, `saw_500` False, `capacity_wait` y aislamiento OK. Escritor: tramos search/mixto/interno, 0×500 en 300+ peticiones, 429 nginx y app separados de 503 app, recuperación 200, alien owner 0 resultados. Logs en `/tmp/opencode/taskflow/ragmur/F05c-gate/`.
-- Review verdict: "VERDICT: OK — el diff cumple todos los criterios de F05c con evidencia verde completa y sin defectos bloqueantes" (revisión 2026-11-17; 3 hallazgos bajos + 2 informativos, ninguno cambia el servicio). Ronda de reparación aplicada: tipos de `load.py` (mypy limpio), sin cambio de comportamiento.
-- Files changed: `benchmarks/load.py`, `benchmarks/test_load.py`, `benchmarks/load-cpu-2026-11-17.md` (nuevos), `TASKS.md`.
-- Risks: CPU sin valor público (F05d mide en RTX 5080); verify no expone `timings_ms` (capacity_wait de verify no observable; requiere cambio en `src/` si F05d lo necesita); 503 solo visible en tramo interno (F05d decide tasas con ese dato).
-- Status: Completed.
-
-### F05d: Despliegue privado en Skynet y medición GPU
-
-- Objective: llevar el endurecimiento a `ragmur_deploy` y fijar límites con datos de RTX 5080, sin exposición pública.
+- Objective: medir si encuentra el texto correcto y demostrar que no mezcla clientes a escala.
 - Tasks:
-  - [x] Copia previa según `docs/runbook-backup-restore.md` y punto de restauración registrado.
-  - [x] Actualizar `ragmur_deploy` con la imagen endurecida; `chown` de volúmenes al UID nuevo; API en `127.0.0.1` sin proxy (demo pública descartada; proxy validado 28/28 en F05b).
-  - [x] Smoke interno desde Skynet; `pytest -k "isolation or tenant or owner"`; invariante del tenant de demo.
-  - [x] Barrido GPU con el arnés de F05c, incluido el perfil mixto; `INFERENCE_MAX_REQUESTS` como profundidad de cola, límite por clave y tasas de nginx por ruta según los datos. Los valores por defecto del código no cambian.
-- Dependencies: F05c y autorización escrita A (acceso a Skynet y actualización de `ragmur_deploy`, concedida 2026-11-19).
-- Acceptance criteria: smoke verde en Skynet; p50 y p95 por concurrencia en RTX 5080 con hardware; límites justificados por la tabla; restauración posible desde la copia previa.
-- Required tests: `ssh -o BatchMode=yes skynet-ts docker ps`; smoke interno; barrido de carga.
-- Test evidence (2026-11-19): copia `ragmur-backup-skynet-2026-11-19` en Skynet (dump 17.277 B/32 entradas, originales 73,7 MB con hash idéntico al 2026-11-13); imagen endurecida construida en ThinkPad y cargada por LAN (build por SSH imposible por el gestor de credenciales de Docker Desktop, ver runbook); `whoami=ragmur`, `/health`+`/ready` 200 (`dense-1024+nli`), 88 `indexed`; invariante `0/10/1` con clave temporal dedicada (revocada tras medir); search GPU conc=1 p50 251/p95 293, conc=4 771/859, conc=16/32 saturación con cola ~2,5 s sin 500; verify 143 ms `supported` 0,999; mixto limitado por cuota 60/min (429 con `Retry-After`, 0×500); `pytest -k "isolation or tenant or owner"` 13 passed 1 skipped en pila local; informe `benchmarks/load-gpu-2026-11-19.md`.
-- Review verdict: none (pendiente de revisión).
-- Files changed: `benchmarks/load-gpu-2026-11-19.md` (nuevo), `docs/demo-design.md` (valores finales), `DECISIONS.md` (3.33), `TASKS.md`, `ROADMAP.md`, `docs/runbook-backup-restore.md` (lección SSH).
-- Risks: imagen vieja sin etiqueta (8,5 GB) conservada en Skynet como repliegue hasta F06; secretos de despliegue vistos en logs de la sesión (rotar `POSTGRES_PASSWORD` y `API_KEY_HMAC_SECRET` con reemisión de claves).
-- Status: Completed 2026-11-19.
+  - [ ] Etapa `search`: 5.226 documentos, 15.944 preguntas, 800/120, 30 candidatos, RRF y reranker configurados.
+  - [ ] Cifras por etapa (densa, BM25, híbrida, reranker) y por conjunto: documento y fragmento con la respuesta a 1, 5 y 10, MRR y latencia con hardware.
+  - [ ] Tenant señuelo con los mismos textos y dos dueños. En cada pregunta: búsqueda propia, búsqueda del otro dueño y lecturas cruzadas por id. Control positivo y fuga inyectada.
+  - [ ] Progreso cada 500 preguntas y reanudación con el mismo `run_id`.
+- Dependencies: C01, C03 (cargador).
+- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
+- Acceptance criteria:
+  - 15.944 casos puntuados, sin descartes silenciosos. 11.788 fragmentos con la configuración actual.
+  - El detector caza la fuga inyectada. Una fuga real es salida 1, se registra con su caso y no impide completar C04.
+  - La calidad de búsqueda se publica sin umbral inventado. U01 fija el umbral.
+- Required tests: puerta compartida; tests de métricas y del detector de fugas; etapa completa en Skynet.
+- Status: Pending
 
-### F05e: Exposición pública de la demo
+### C05: Servicio real de principio a fin y bajo carga
 
-- Objective: abrir la demo por la vía aprobada y comprobarla desde fuera.
+- Objective: probar por HTTP lo que los bancos llaman por dentro.
 - Tasks:
-  - [ ] Aplicar la vía de exposición de D3 (túnel saliente o reenvío de puerto con TLS).
-  - [ ] Smoke externo desde fuera de la red; probar el interruptor de corte.
-  - [ ] Vigilar 429, 503 y errores durante 24 h.
-- Dependencies: F05d y autorización escrita B (DNS, TLS, túnel o firewall).
-- Acceptance criteria: la URL pública solo responde las rutas permitidas; un escaneo externo solo muestra 443; corte comprobado; casillas de demo de 1.9 listas para F06.
-- Required tests: smoke externo; escaneo de puertos externo; prueba de corte.
-- Test evidence: no run (fase descartada).
-- Review verdict: none.
-- Files changed: `TASKS.md`, `ROADMAP.md`, `DECISIONS.md` (3.33).
-- Risks: ninguno (no se expone nada).
-- Status: Discarded 2026-11-19 (decisión del usuario: sin demo pública).
+  - [ ] Etapa `service`: API aislada en Skynet con el código del commit, modelos reales, migraciones y claves de prueba generadas.
+  - [ ] Subir TXT, MD, DOCX y PDF; esperar indexado; buscar; verificar; deduplicar; borrar; reiniciar; repetir con otro tenant y otro dueño; borrar el tenant.
+  - [ ] Carga mixta con `benchmarks/load.py` a concurrencia 1, 4, 16 y 32, y recuperación posterior, por el túnel, con `--base-url`, claves de prueba y solo consultas dev.
+- Dependencies: C01.
+- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
+- Acceptance criteria:
+  - Todos los pasos se ejecutan y se puntúan. Paso incorrecto, fuga, 500 o dato borrado que reaparece: salida 1, registrado, sin impedir completar C05. Los 429 y 503 se cuentan aparte.
+  - `ragmur_deploy` sigue sano y con el mismo id de contenedor antes y después.
+- Required tests: puerta compartida; etapa real en Skynet; suite completa.
+- Status: Pending
 
-### F10: Cambios de contrato de errores (opcional)
+### C06: Una orden y un agente que explica
 
-- Objective: decidir si se corrigen dos respuestas que hoy confunden al cliente. No se programa sin decisión expresa del usuario.
+- Objective: que el usuario o cualquier agente lo lance todo con una orden.
 - Tasks:
-  - [ ] A5: `search.py:41-66` y `verify.py:49-99` convierten cualquier excepción en 503; un error de programación debería dar 500.
-  - [ ] A8: `documents.py:118-133` devuelve 200 duplicado si el original está en `pending` o `processing`; podría dar 409 con `Retry-After`.
-- Dependencies: decisión del usuario; actualizar `ARCHITECTURE.md` en el mismo commit.
-- Status: Optional, sin programar.
+  - [ ] `scripts/phase1-agent.sh [quick|full]`: impide la suspensión, lanza, espera, genera el informe y llama al explicador. `quick` no usa Skynet ni LLM.
+  - [ ] `report`: `informe.md` en español sencillo con verde, rojo, «no probado», fallos conocidos y siguiente decisión. Paquete de hasta 50 fallos públicos elegidos con semilla.
+  - [ ] Explicador: `opencode run --agent critica`, solo lectura, con plazo. Su salida va a `explicacion.md`, rotulada «no cambia la nota».
+  - [ ] `docs/pruebas-fase-1.md`: cómo lanzar, mirar, parar y entender el resultado. Ampliar `LEARNING.md` sin duplicados.
+- Dependencies: C01-C05.
+- Owned files: `scripts/phase1-agent.sh`, `eval/phase1/`, `tests/eval/phase1/`, `docs/pruebas-fase-1.md`, `LEARNING.md`.
+- Acceptance criteria:
+  - Con el agente caído o con una respuesta que dice «todo aprobado», el JSON, el informe y el código de salida no cambian.
+  - El paquete no contiene sellados, secretos ni datos privados.
+  - El script propaga el código del runner.
+- Required tests: puerta compartida; `quick` real; agente falso adversario; por separado de `quick`, una prueba real del explicador con un paquete pequeño.
+- Status: Pending
 
-### F06: Cierre fase 1: suite, README y marcas
+### C07: Ejecución completa e informe base
 
-- Objective: declarar la fase 1 cerrada solo si todo lo anterior está verde.
+- Objective: una ejecución íntegra, reproducible y comprensible.
 - Tasks:
-  - [x] Gate compartido completo en el árbol integrado más `alembic upgrade head`.
-  - [x] `eval/run.py` con 4 configuraciones (densa, BM25, híbrida, híbrida con rerank) sobre dev y reserva, con resúmenes versionados.
-  - [x] Tabla final en README: recall@10 x4, MRR/nDCG híbrida con y sin rerank, latencias p50/p95 con hardware, matriz NLI y respaldo falso con N y Wilson, fecha, commit, corpus y split.
-  - [x] Marcar las casillas de 1.8 y 1.9 en `ROADMAP.md` en el commit de cierre.
-- Dependencies: F03, F04 y F05d en privado (F05e descartada 2026-11-19).
-- Acceptance criteria: criterios 1.1-1.8 cumplidos; suite con aislamiento por tenant y `owner_id` verde; corpus real desplegado y medido en privado; README con cifras fechadas.
-- Required tests: gate compartido y gate de entrega.
-- Test evidence (2026-11-19, commit `beab7b1`): `ruff check`/`format`/`mypy` (128) limpios; `alembic upgrade head` OK; `pytest` 242 passed 4 skipped; `check_nli_leak` verde; `eval/run.py` dev (10+4, recall 1.0 x4, rerank MRR/nDCG 1.0, p95 CPU 19 s) y test (10+3, rerank 1.0/1.0, p95 CPU 18,7 s) en `eval/results/summary-2026-11-19T*-{dev,test}.json`; tabla README verificada 8/8 contra los JSON por script.
-- Review verdict: auto-verificación con comprobación programática (sin revisor independiente; cambio limitado a resúmenes generados + tabla + marcas).
-- Files changed: `README.md`, `ROADMAP.md`, `TASKS.md`, `eval/results/summary-2026-11-19T*-dev.json`, `eval/results/summary-2026-11-19T*-test.json`.
-- Risks: la muestra de 1.7 es poco discriminativa (recall 1.0); declararlo y no afirmar significación sin incertidumbre.
-- Status: Completed 2026-11-19
+  - [ ] Con el árbol limpio, `scripts/phase1-agent.sh full` sobre el commit de C06.
+  - [ ] Versionar solo el resumen en `eval/results/` y la lista de decisiones para U01.
+- Dependencies: C06.
+- Owned files: `eval/results/phase1-*.json`, `eval/results/phase1-*.md`.
+- Acceptance criteria:
+  - Todas las etapas completas. Solo 0 o 3 completan la fase. 2 bloquea: un reintento con `--resume` y, si se repite, parar.
+  - 1 bloquea siempre, sin reintento para ocultarlo: registrar el fallo aquí, dejar el informe en el directorio de la ejecución y parar para U01. No añadir `xfail` ni reparar.
+  - El informe dice claramente si la calidad falla y no declara cerrada la fase 1.
+  - 0 recursos temporales en Skynet, `ragmur_deploy` sano, 0 llamadas al Docker local.
+- Required tests: delivery gate.
+- Status: Pending
+
+### Not scheduled: requiere al usuario
+
+- U01 Decidir con el informe, o antes si C07 se bloquea: reabrir formalmente la fase 1, notas mínimas antes del examen final (XQuAD-es y SQAC por separado, sin usar SQAC en bruto), arreglos y contrato de D7 y D8.
+- U02 Arreglos, una fase por defecto, cada uno con su `xfail` convertido en test normal y medido antes y después. Se planifica tras U01.
+- U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
+- G05 Escalado del lector: tras la revisión humana de G04. Datos para reanudar en `git show f35ee93:TASKS.md`, §9.
+- F10 A5 (toda excepción da 503) y A8 (duplicado en proceso da 200): solo con decisión expresa.
 
 ## 8. Completed phases
 
 | Phase | Outcome | Verification | Commit |
 |-------|---------|--------------|--------|
-| — | ROADMAP 1.1-1.6 y línea base de 1.7 | Ver `ROADMAP.md` y `DECISIONS.md` | — |
-| F01 | Protocolo NLI congelado; reservas quemadas declaradas; dev y test vacíos | `ruff` pass, `mypy` 123 OK, 20 tests NLI passed, `check_nli_leak` verde | F01: freeze NLI dataset protocol and anti-leak checks |
-| F07 | Diagnóstico automático 300 ES + 300 EN solo dev; no calibra | `ruff` pass, `mypy` 124 OK, `pytest tests/eval/` verde; ES recall 0.18, EN 0.26, respaldo falso 0.03 Wilson [0.0138, 0.0639] | F07: add local EN-ES diagnostic NLI datasets |
-| F04 | Manifiesto del corpus, triage de `eval/`, runbook y copia/restore/reindex de Skynet en entorno aislado | Skynet: `indexed\|88`, `sha256sum -c` OK, `Reindexed 88`, 1712 puntos, `hybrid_search` top-5 idéntico, isolation 13 passed 1 skipped. Lead: `ruff` pass, `mypy` 124 OK, `pytest` 235 passed 4 skipped, secret scan 0 | F04: verify corpus backup restore reindex against Skynet |
-| F08 | Limpieza de código muerto y duplicación sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, aislamiento 13+1, `check_nli_leak` verde, `VERDICT: OK` | F08: remove dead code and share error/store helpers |
-| F09 | Limpieza de documentación y eval, sin cambio de comportamiento | `ruff`/`mypy` pass, `pytest` 237 passed 4 skipped, `check_nli_leak` verde, enlaces 24/24, `HANDOFF` fuera de `TASKS.md` vacío, `VERDICT: OK` | F09: archive orphan eval scripts and update docs |
-| F05b | Endurecimiento local del despliegue (proxy, invariante, smoke 28/28) | gate verde, `config` 0 puertos, invariante `0/10/1` + rojo tras revocar, smoke 28/28, sonda edge DNS+L3, 0 fugas, `VERDICT: OK` | F05b: harden local deploy with proxy and invariant |
-| F05c | Arnés de carga (asyncio+httpx, perfiles search/mixed, resumen CPU) | harness 12/12, `pytest` 241+4, ejecución viva 19×200 + 0×500, `mypy` benchmarks limpio, `VERDICT: OK` | F05c: add CPU load and abuse harness |
+| F01-F03 | Protocolo NLI, umbrales 0,75/0,5/0,75 y reserva de 70 pares abierta una vez | Resúmenes `nli-eu-*-2026-11-18.json`; reserva quemada | `F01: freeze NLI dataset protocol and anti-leak checks` y cierre del 2026-11-18 |
+| F04 | Corpus real de 88 PDF, copia, restauración y reindexado | 88 indexed; aislamiento 13 passed | `F04: verify corpus backup restore reindex against Skynet` |
+| F05a-F05d | Diseño, endurecimiento, carga y despliegue privado en Skynet | smoke 28/28; `benchmarks/load-gpu-2026-11-19.md` | `1abaf61`, `cfbb73b`, `dbc1e39` y cierre del 2026-11-19 |
+| F05e | Demo pública descartada | Decisión del usuario, DECISIONS 3.33 | not created |
+| F06 | Cierre documental de fase 1 | 242 passed, 4 skipped | `e3bdba1`, `beab7b1` |
+| F07-F09 | Diagnóstico NLI, limpieza de código y documentos | 237 passed, revisiones OK | `F07`, `F08`, `F09` en Git |
+| R01-R03 | Refinamiento sin cambio de comportamiento | 242 passed | `55ab54b` y anteriores |
+| G01 | Apertura de fase 2 | puerta estática | `f3b0aa7` |
+| G02 | Proveedor LLM mínimo | 268 passed, 5 skipped | `fddc583` |
+| G03a | Datos, índice y caché del lector | 314 passed, 5 skipped | `e998d2c` |
+| G03b | Lector, puntuación y controles; prompts congelados | 377 passed, 5 skipped | `6ed6abd` |
+| G04 | Piloto de 100 preguntas; revisión humana pendiente | EM 25/100; respuesta en top 5 99/100 | `4d6f2e6` |
 
 ## 9. Recommended next action
 
-- Estado (2026-11-21 mañana): fase 2 abierta. Completadas R02b (`55ab54b`), G01 (`f3b0aa7`), G02 (`fddc583`), G03a (`e998d2c`), G03b (`6ed6abd`) y G04 (`4d6f2e6`). Sin push.
-- Next action (usuario): revisar a mano la muestra de 30 casos del piloto (`eval/results/reader/per_query/reader-f32e8ee3980ba2ac-s20261121-pffa0e547-m6ea293b9/review_sample.md`) y decidir:
-  - lector para el escalado: `gemma3:4b` en CPU (lento y verboso), un modelo mayor en Ollama con la 5080 de Skynet (requiere autorización escrita), u OpenCode Go (su política limita el uso a tráfico de agentes de código; DECISIONS 3.34);
-  - si se rota la clave de OpenCode Go (pasó por el chat). Está en `.env` como `LLM_API_KEY`, fuera de Git.
-- Next phase: G05a (XQuAD-es `dev` completo, 908 preguntas) solo tras la revisión humana. Con el lector actual en CPU: unas 9 h de lector y 2,5 h de recuperación.
-- Lector en Skynet preparado (2026-11-22, autorización escrita del usuario: "hazlo ya"): contenedor `ragmur-ollama-eval` con `ollama/ollama:0.40.14` (mismo digest `ebaef4f4…` que el local), `--gpus all`, `restart unless-stopped`, puerto solo en `127.0.0.1:11434` de Skynet, volumen `ragmur_ollama_eval`, `OLLAMA_KEEP_ALIVE=30m`.
-  - Modelo `gemma3:12b` (digest `b92b218582c5`, 8,16 GB): `ollama ps` 100 % GPU, contexto 4096. RTX 5080 compartida con `ragmur_deploy` (6,5 GiB ocupados antes).
-  - Medido en caliente: ~107 tok/s, 0,1-0,2 s por respuesta corta. `tests/llm/test_provider_live.py` 1 passed por el túnel.
-  - Acceso sin abrir puertos: `ssh -f -N -o ExitOnForwardFailure=yes -L 127.0.0.1:11435:127.0.0.1:11434 skynet-ts` y `LLM_API_BASE=http://127.0.0.1:11435`, `LLM_MODEL=ollama_chat/gemma3:12b`.
-  - Para G05a: `--model-digest b92b218582c5 --llm-server-label ollama-0.40.14-docker-rtx5080-skynet`. Sigue pendiente la revisión humana del piloto.
-- Resume command: `/taskflow run G05a` (tras decidir el lector).
-- Recommended effort: medium.
-- Entorno local: contenedores `ragmur-postgres-1`, `ragmur-qdrant-1` y `ragmur-ollama-eval` parados al terminar; volúmenes conservados (`ragmur_qdrant_data` incluye la colección `ragmur_chunks_eval_reader`). Arrancar con `docker compose up -d` y `docker start ragmur-ollama-eval`.
-- Autorizaciones: sin push. Skynet autorizado solo para el lector Ollama de G05 (2026-11-22). El `.env` local no tiene `API_KEY_HMAC_SECRET`; los gates usan `API_KEY_HMAC_SECRET=test-only-hmac-secret` en la orden.
+- Next phase: C01.
+- Primer paso al ejecutar: que `TASKS.md` sea el único cambio local es lo esperado, no un bloqueo. Hacer commit solo de ese fichero con `docs: record approved phase 1 test plan`. Después, un `HEAD` distinto de `f35ee93` es normal.
+- Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
+- Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.
+- Sin estar delante, desde una terminal del usuario:
+
+```sh
+cd ~/Projects/ragmur
+mkdir -p ~/.local/share/ragmur
+nohup systemd-inhibit --what=idle:sleep:handle-lid-switch --who=ragmur --why="taskflow fase 1" \
+  opencode run --agent jefe --title "Ragmur: tests de fase 1" \
+  "Carga la skill taskflow y ejecuta run all según TASKS.md: solo C01-C07. Apruebo ese plan y sus commits locales. Sin push." \
+  > ~/.local/share/ragmur/taskflow-fase1.log 2>&1 &
+tail -f ~/.local/share/ragmur/taskflow-fase1.log
+```
+
+- Recommended effort: high.
