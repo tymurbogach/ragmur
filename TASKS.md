@@ -152,7 +152,6 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C01 | Runner desatendido y suite completa en Skynet | Pending |
 | C02 | Documentos raros y defectos conocidos | Pending |
 | C03 | Verificador con miles de frases | Pending |
 | C04 | Búsqueda y aislamiento con 16.000 preguntas | Pending |
@@ -162,27 +161,6 @@ scripts/phase1-agent.sh full
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
 | F10 | Cambios de contrato de errores | Not scheduled (usuario) |
-
-### C01: Runner desatendido y suite completa en Skynet
-
-- Objective: lanzar pruebas largas que sobreviven a la shell y no tocan el Docker local.
-- Tasks:
-  - [ ] `eval/phase1/`: `start [--only <etapas>]`, `status <run_id>`, `report <run_id>`, `cancel <run_id>`. `start` desacopla el proceso y vuelve en menos de 5 s.
-  - [ ] Estado en `eval/results/phase1/per_query/<run_id>/`: `status.json` con latido, log y JSON por etapa, commit, árbol sucio, hardware y configuración.
-  - [ ] Cerrojo de una ejecución con PID y latido cada 15 s. Muerta = PID inexistente y latido de más de 120 s. Solo entonces se toma el cerrojo y se retiran los restos con su etiqueta.
-  - [ ] `start --resume <run_id>`: solo con la ejecución muerta y el mismo commit y configuración. Conserva etapas completas y casos puntuados; recrea contenedores e índice.
-  - [ ] Plazo por etapa y limpieza en éxito, fallo y cancelación.
-  - [ ] Los dos `conftest` de Qdrant comparten un ayudante. Con `RAGMUR_TEST_SSH_HOST` usa Skynet y un túnel. Sin ella conserva el comportamiento de CI.
-  - [ ] Etapas `static` y `suite`, con PostgreSQL y Qdrant desechables y migraciones.
-- Dependencies: none.
-- Owned files: `eval/phase1/`, `tests/eval/phase1/`, los dos `conftest` y su ayudante, `.gitignore` (solo si `eval/results/**/per_query/` y `eval/.datasets/` no bastan).
-- Acceptance criteria:
-  - Códigos de salida: 0 todo bien; 1 fallo duro; 2 infraestructura o ejecución incompleta; 3 solo falla la calidad o hay fallos conocidos. Precedencia 2, 1, 3, 0. Nunca 0 con una etapa ausente.
-  - La suite completa da 0 failed, al menos 376 passed y ningún skip nuevo respecto a los 6 registrados.
-  - Un `docker` falso al principio de `PATH` demuestra 0 llamadas locales.
-  - El proceso sigue tras morir quien lo lanzó. `cancel` deja 0 contenedores, redes y túneles de ese `run_id`.
-- Required tests: puerta compartida; tests de los cuatro códigos, cerrojo y limpieza; suite real en Skynet; cancelación real.
-- Status: Pending
 
 ### C02: Documentos raros y defectos conocidos
 
@@ -334,11 +312,12 @@ scripts/phase1-agent.sh full
 | G03a | Datos, índice y caché del lector | 314 passed, 5 skipped | `e998d2c` |
 | G03b | Lector, puntuación y controles; prompts congelados | 377 passed, 5 skipped | `6ed6abd` |
 | G04 | Piloto de 100 preguntas; revisión humana pendiente | EM 25/100; respuesta en top 5 99/100 | `4d6f2e6` |
+| C01 | Runner desatendido `eval/phase1` (start/status/report/cancel, cerrojo PID+latido, resume) y suite real en Skynet | Puerta: ruff+mypy+leak OK; pytest 353 passed, 3 skipped. Skynet `20261122T214759-e6adfcbf` salida 0 (static + suite 398 passed, 0 failed, 5 skipped conocidos), 0 llamadas Docker local, cancel+resume con 0 restos, deploy ids intactos. `revision` VERDICT: OK | `test: C01 add unattended phase 1 runner` |
 
 ## 9. Recommended next action
 
-- Next phase: C01.
-- Primer paso al ejecutar: que `TASKS.md` sea el único cambio local es lo esperado, no un bloqueo. Hacer commit solo de ese fichero con `docs: record approved phase 1 test plan`. Después, un `HEAD` distinto de `f35ee93` es normal.
+- Next phase: C02.
+- C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.
 - Sin estar delante, desde una terminal del usuario:
