@@ -35,8 +35,8 @@ RESULTS_DIR = REPO_ROOT / "eval" / "results" / "phase1"
 RUNS_DIR = RESULTS_DIR / "per_query"
 LOCK_FILE = RUNS_DIR / ".lock"
 
-STAGES = ("static", "suite")
-STAGE_TIMEOUTS = {"static": 600.0, "suite": 2700.0}
+STAGES = ("static", "ingest", "suite")
+STAGE_TIMEOUTS = {"static": 600.0, "ingest": 1800.0, "suite": 2700.0}
 HEARTBEAT_EVERY = 15.0
 DEAD_AFTER = 120.0
 
@@ -411,6 +411,8 @@ def run_worker(run_id: str) -> int:
             try:
                 if name == "static":
                     result = stages.run_static(run_dir(run_id))
+                elif name == "ingest":
+                    result = stages.run_ingest(run_dir(run_id))
                 elif name == "suite":
                     config = status.get("config")
                     host: str | None = None

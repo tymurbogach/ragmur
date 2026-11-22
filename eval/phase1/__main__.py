@@ -158,9 +158,13 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
     suite_counts: dict[str, Any] = {}
     if isinstance(suite, dict) and isinstance(suite.get("counts"), dict):
         suite_counts = suite["counts"]
+    ingest = stages.get("ingest")
     return {
         "static_passed": (static or {}).get("state") == "passed"
         if "static" in expected
+        else "not_applicable",
+        "ingest_passed": (ingest or {}).get("state") == "passed"
+        if "ingest" in expected
         else "not_applicable",
         "suite_zero_failed": suite_counts.get("failed") == 0 if suite_counts else "unverified",
         "suite_passed_min": suite_counts.get("passed", -1) >= 376 if suite_counts else "unverified",

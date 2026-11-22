@@ -8,6 +8,7 @@ y cancelación.
 
 from __future__ import annotations
 
+import json
 import os
 import secrets
 import subprocess
@@ -24,6 +25,20 @@ from eval.phase1.runner import REPO_ROOT, STAGE_TIMEOUTS, write_json
 EXPECTED_PASSED_MIN = 376
 EXPECTED_SKIPPED = 6
 
+# Los 7 xfail estrictos de C02 (defectos conocidos D1-D7): aparecen como
+# saltos en el XML de junit. Un xfail que pase de verdad falla por
+# definición (estricto), así que estar en esta lista nunca oculta un arreglo.
+KNOWN_XFAIL = frozenset(
+    {
+        "tests.known_defects.test_d1::test_d1_qdrant_request_filters_by_tenant",
+        "tests.known_defects.test_d2::test_d2_docx_table_text_does_not_reject_body",
+        "tests.known_defects.test_d3::test_d3_spanish_heading_style_detected",
+        "tests.known_defects.test_d4::test_d4_hash_in_code_block_is_not_a_title",
+        "tests.known_defects.test_d5::test_d5_chunks_start_at_word_boundaries",
+        "tests.known_defects.test_d6::test_d6_sentence_splitter_abbreviations_citations_lists",
+        "tests.known_defects.test_d7::test_d7_support_beats_single_contradiction",
+    }
+)
 # Los 6 saltos registrados el 2026-11-22: dependen del entorno (modelos reales
 # o proveedor vivo ausentes, caché de tokenizer opcional). Un salto fuera de
 # esta lista es un cambio de comportamiento y falla; que falte uno porque el
@@ -104,6 +119,126 @@ def run_static(directory: Path, timeout: float = STAGE_TIMEOUTS["static"]) -> di
     return result
 
 
+def ingest_command(out: Path) -> list[str]:
+    """Orden de la etapa ingest: 100.000 documentos con semilla fija."""
+    return [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "eval.phase1.ingest",
+        "--out",
+        str(out),
+    ]
+
+
+def ingest_env() -> dict[str, str]:
+    """Entorno de la etapa ingest: solo cómputo local, sin Docker."""
+    env = dict(os.environ)
+    env["DOCKER_HOST"] = "unix:///nonexistent"
+    env["HF_HUB_OFFLINE"] = "1"
+    return env
+
+
+def map_ingest_summary(summary: dict[str, Any]) -> tuple[str, str]:
+    """Traduce el resumen de ingest a estado: fallos reales son duros.
+
+    Un fallo real (pérdida de texto, span o dueño erróneo, cuelgue o
+    excepción no controlada) sale como ``hard_failed`` con su semilla.
+    Medir el fallo no bloquea la etapa: el resumen queda escrito.
+    """
+    issues = summary.get("issues")
+    if not isinstance(issues, list):
+        return "infra_error", "resumen de ingest ilegible"
+    if issues:
+        seed = summary.get("seed")
+        return "hard_failed", f"{len(issues)} fallos reales con semilla {seed}"
+    return "passed", (
+        f"{summary.get('docs', 0)} documentos, {summary.get('chunks', 0)} chunks sin fallos"
+    )
+
+
+def run_ingest(
+    directory: Path,
+    timeout: float = STAGE_TIMEOUTS["ingest"],
+) -> dict[str, Any]:
+    """Ejecuta la etapa ingest en el portátil y publica sus fallos reales."""
+    log_path = directory / "ingest.log"
+    json_path = directory / "ingest.json"
+    out_dir = directory / "ingest"
+    started = time.time()
+    try:
+        with log_path.open("wb") as handle:
+            completed = subprocess.run(
+                ingest_command(out_dir),
+                cwd=REPO_ROOT,
+                env=ingest_env(),
+                stdin=subprocess.DEVNULL,
+                stdout=handle,
+                stderr=subprocess.STDOUT,
+                timeout=timeout,
+            )
+    except subprocess.TimeoutExpired:
+        result: dict[str, Any] = {
+            "state": "infra_error",
+            "reason": f"plazo de etapa agotado ({timeout:g} s)",
+            "log": str(log_path),
+            "json": str(json_path),
+        }
+        write_json(json_path, result)
+        return result
+    except OSError as exc:
+        result = {
+            "state": "infra_error",
+            "reason": f"no se pudo lanzar la etapa: {exc}",
+            "log": str(log_path),
+            "json": str(json_path),
+        }
+        write_json(json_path, result)
+        return result
+    summary_path = out_dir / "summary.json"
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        result = {
+            "state": "infra_error",
+            "reason": f"sin resumen de ingest: {exc}",
+            "exit": completed.returncode,
+            "log": str(log_path),
+            "json": str(json_path),
+        }
+        write_json(json_path, result)
+        return result
+    if not isinstance(summary, dict):
+        result = {
+            "state": "infra_error",
+            "reason": "resumen de ingest ilegible",
+            "exit": completed.returncode,
+            "log": str(log_path),
+            "json": str(json_path),
+        }
+        write_json(json_path, result)
+        return result
+    state, reason = map_ingest_summary(summary)
+    if completed.returncode not in (0, 1):
+        state, reason = "infra_error", f"la etapa salió con {completed.returncode}"
+    elif completed.returncode == 1 and state == "passed":
+        state, reason = "infra_error", "salida 1 sin fallos en el resumen"
+    elif completed.returncode == 0 and state != "passed":
+        state, reason = "infra_error", "salida 0 con fallos en el resumen"
+    result = {
+        "state": state,
+        "reason": reason,
+        "exit": completed.returncode,
+        "elapsed_s": round(time.time() - started, 1),
+        "summary": summary,
+        "log": str(log_path),
+        "json": str(json_path),
+    }
+    write_json(json_path, result)
+    return result
+
+
 def _qdrant_ready(url: str, deadline: float) -> bool:
     """Espera al /healthz de Qdrant a través del túnel."""
     while time.time() < deadline:
@@ -157,19 +292,20 @@ def parse_junit(path: Path) -> dict[str, Any]:
 
 
 def _unknown_skips(skipped_ids: object) -> list[str]:
-    """Saltos fuera de la lista registrada (formato con puntos o con barras)."""
+    """Saltos fuera de las listas registradas (formato con puntos o con barras)."""
     if not isinstance(skipped_ids, list):
         return ["<lista de saltos ilegible>"]
+    known = KNOWN_SKIPPABLE | KNOWN_XFAIL
     unknown: list[str] = []
     for raw in skipped_ids:
         if not isinstance(raw, str):
             unknown.append(str(raw))
             continue
-        if raw in KNOWN_SKIPPABLE:
+        if raw in known:
             continue
         normalized = raw.replace("/", ".")
-        if normalized not in KNOWN_SKIPPABLE and not any(
-            normalized.endswith(known) or known.endswith(normalized) for known in KNOWN_SKIPPABLE
+        if normalized not in known and not any(
+            normalized.endswith(item) or item.endswith(normalized) for item in known
         ):
             unknown.append(raw)
     return unknown
@@ -305,7 +441,13 @@ def run_suite(
 __all__ = [
     "EXPECTED_PASSED_MIN",
     "EXPECTED_SKIPPED",
+    "KNOWN_SKIPPABLE",
+    "KNOWN_XFAIL",
+    "ingest_command",
+    "ingest_env",
+    "map_ingest_summary",
     "parse_junit",
+    "run_ingest",
     "run_static",
     "run_suite",
     "static_command",
