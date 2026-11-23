@@ -200,10 +200,20 @@ scripts/phase1-agent.sh full
   - Limpieza: 0 `ragmur-p1-*` en Skynet; despliegue intacto; Docker local sin llamadas.
 - Status: Done (salida 3). Espera U01 para la calidad y los contratos.
 
-### Not scheduled: requiere al usuario
+### U01 Decisión del usuario (2026-11-24): quedarse en fase 1
 
-- U01 Decidir con el informe, o antes si C07 se bloquea: reabrir formalmente la fase 1, notas mínimas antes del examen final (XQuAD-es y SQAC por separado, sin usar SQAC en bruto), arreglos y contrato de D7 y D8.
-- U02 Arreglos, una fase por defecto, cada uno con su `xfail` convertido en test normal y medido antes y después. Se planifica tras U01.
+- Fase 1 reabierta para perfeccionar antes de fase 2. No se abre fase 2.
+- Alcance aprobado: D1, verificador y contrato D7. D8 queda como contrato actual.
+- U02 en curso, una pieza por vez con su `xfail` convertido en test normal.
+
+### U02-D1: filtro por tenant en la petición (hecho, pendiente suite en Skynet)
+
+- Cambio: `retrieve_points` usa `scroll` con filtro tenant+dueño+ids. Qdrant nunca devuelve puntos ajenos. Orden de entrada conservado.
+- Tests: `test_d1` pasa de `xfail` a normal con `scroll`; `test_d8` usa `scroll` con ids reales; `quick.run_defects` y `test_quick` esperan 6 saltos (D2-D7) y D1+D8 en verde; D1 sale de `KNOWN_XFAIL`.
+- Medida antes: C07-repetición 0 fugas en 478.320+478.320 resultados y 31.888 lecturas cruzadas. Medida después: pendiente suite completa en Skynet.
+- Status: código en verde local (puerta + mypy). Falta suite en Skynet para cerrar U02-D1.
+
+### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
 - G05 Escalado del lector: tras la revisión humana de G04. Datos para reanudar en `git show f35ee93:TASKS.md`, §9.
 - F10 A5 (toda excepción da 503) y A8 (duplicado en proceso da 200): solo con decisión expresa.

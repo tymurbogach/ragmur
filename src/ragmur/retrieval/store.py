@@ -543,24 +543,45 @@ async def retrieve_points(
 ) -> list[StoredPoint]:
     """Recupera puntos por identificador dentro del espacio autorizado.
 
+    El filtro de tenant (y de dueño si hay) viaja en la petición a Qdrant
+    mediante ``scroll``: el servidor nunca devuelve puntos ajenos.
     Los identificadores fuera del espacio del solicitante se ignoran en lugar de
     puntuarse: así `/verify` no se convierte en un oráculo para sondear
     fragmentos ajenos.
     """
     if not chunk_ids or not await client.collection_exists(collection):
         return []
-    records = await client.retrieve(collection_name=collection, ids=chunk_ids, with_payload=True)
-    output: list[StoredPoint] = []
+    unique_ids = list(dict.fromkeys(chunk_ids))
+    scoped = _tenant_filter(tenant_id, owner_id=owner_id)
+    assert isinstance(scoped.must, list)
+    scoped.must.append(models.HasIdCondition(has_id=unique_ids))
     seen: set[UUID] = set()
-    for record in records:
-        point_id = UUID(str(record.id))
-        if point_id in seen:
-            continue
-        seen.add(point_id)
-        payload = record.payload or {}
-        if payload.get("tenant_id") != str(tenant_id):
-            continue
-        if owner_id is not None and payload.get("owner_id") != owner_id:
-            continue
-        output.append(StoredPoint(id=point_id, payload=payload))
-    return output
+    found: dict[UUID, dict[str, Any]] = {}
+    offset: int | str | UUID | None = None
+    while True:
+        records, offset = await client.scroll(
+            collection_name=collection,
+            scroll_filter=scoped,
+            limit=len(unique_ids),
+            offset=offset,
+            with_payload=True,
+            with_vectors=False,
+        )
+        for record in records:
+            point_id = UUID(str(record.id))
+            if point_id in seen:
+                continue
+            seen.add(point_id)
+            payload = record.payload or {}
+            if payload.get("tenant_id") != str(tenant_id):
+                continue
+            if owner_id is not None and payload.get("owner_id") != owner_id:
+                continue
+            found[point_id] = payload
+        if offset is None or len(found) >= len(unique_ids):
+            break
+    return [
+        StoredPoint(id=point_id, payload=found[point_id])
+        for point_id in unique_ids
+        if point_id in found
+    ]

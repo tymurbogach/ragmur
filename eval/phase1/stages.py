@@ -29,12 +29,12 @@ SERVICE_TIMEOUT_FALLBACK = 10800.0
 EXPECTED_PASSED_MIN = 376
 EXPECTED_SKIPPED = 6
 
-# Los 7 xfail estrictos de C02 (defectos conocidos D1-D7): aparecen como
+# Los 6 xfail estrictos restantes de C02 (defectos conocidos D2-D7): aparecen como
 # saltos en el XML de junit. Un xfail que pase de verdad falla por
 # definición (estricto), así que estar en esta lista nunca oculta un arreglo.
+# D1 salió de la lista al filtrar en la petición (U02).
 KNOWN_XFAIL = frozenset(
     {
-        "tests.known_defects.test_d1::test_d1_qdrant_request_filters_by_tenant",
         "tests.known_defects.test_d2::test_d2_docx_table_text_does_not_reject_body",
         "tests.known_defects.test_d3::test_d3_spanish_heading_style_detected",
         "tests.known_defects.test_d4::test_d4_hash_in_code_block_is_not_a_title",
