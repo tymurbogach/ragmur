@@ -49,6 +49,7 @@ KNOWN_XFAIL = frozenset(
 # entorno lo permite (p. ej. la caché presente) no es un fallo.
 KNOWN_SKIPPABLE = frozenset(
     {
+        "tests.eval.phase1.test_explainer_live::test_explicador_real_con_paquete_pequeno",
         "tests.llm.test_provider_live::test_live_completion_returns_text_and_usage",
         "tests.verification.test_real_nli::test_real_nli_supports_contradicts_and_marks_unknown",
         "tests.verification.test_real_nli::test_real_nli_coreference_without_mitigation",
