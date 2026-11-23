@@ -24,6 +24,7 @@ from eval.phase1.runner import REPO_ROOT, STAGE_TIMEOUTS, write_json
 
 NLI_TIMEOUT_FALLBACK = 5400.0
 SEARCH_TIMEOUT_FALLBACK = 10800.0
+SERVICE_TIMEOUT_FALLBACK = 10800.0
 
 EXPECTED_PASSED_MIN = 376
 EXPECTED_SKIPPED = 6
@@ -454,6 +455,7 @@ __all__ = [
     "run_ingest",
     "run_nli",
     "run_search",
+    "run_service",
     "run_static",
     "run_suite",
     "static_command",
@@ -472,6 +474,17 @@ def run_search(
     from eval.phase1 import search as search_stage
 
     return search_stage.run(directory, ssh_host, timeout)
+
+
+def run_service(
+    directory: Path,
+    ssh_host: str | None,
+    timeout: float = SERVICE_TIMEOUT_FALLBACK,
+) -> dict[str, Any]:
+    """Ejecuta la etapa service C05: la API real de principio a fin y bajo carga."""
+    from eval.phase1 import service as service_stage
+
+    return service_stage.run(directory, ssh_host, timeout)
 
 
 def run_nli(

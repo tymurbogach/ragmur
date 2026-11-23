@@ -152,7 +152,6 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C05 | Servicio real de principio a fin y bajo carga | Pending |
 | C06 | Una orden y un agente que explica | Pending |
 | C07 | Ejecución completa e informe base | Pending |
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
@@ -161,18 +160,9 @@ scripts/phase1-agent.sh full
 
 ### C05: Servicio real de principio a fin y bajo carga
 
-- Objective: probar por HTTP lo que los bancos llaman por dentro.
-- Tasks:
-  - [ ] Etapa `service`: API aislada en Skynet con el código del commit, modelos reales, migraciones y claves de prueba generadas.
-  - [ ] Subir TXT, MD, DOCX y PDF; esperar indexado; buscar; verificar; deduplicar; borrar; reiniciar; repetir con otro tenant y otro dueño; borrar el tenant.
-  - [ ] Carga mixta con `benchmarks/load.py` a concurrencia 1, 4, 16 y 32, y recuperación posterior, por el túnel, con `--base-url`, claves de prueba y solo consultas dev.
-- Dependencies: C01.
-- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
-- Acceptance criteria:
-  - Todos los pasos se ejecutan y se puntúan. Paso incorrecto, fuga, 500 o dato borrado que reaparece: salida 1, registrado, sin impedir completar C05. Los 429 y 503 se cuentan aparte.
-  - `ragmur_deploy` sigue sano y con el mismo id de contenedor antes y después.
-- Required tests: puerta compartida; etapa real en Skynet; suite completa.
-- Status: Pending
+- Outcome: etapa `service` en verde contra API aislada en Skynet (código del commit, modelos reales en GPU, migraciones, claves efímeras): 10/10 pasos, salida 0, 234 s. Carga 1/4/16/32 sin 500 (48/48 con 200, recuperación 5/5, 0×429/503/500) y `deploy_equal: true`.
+- Verification: puerta del orquestador ruff+mypy+leak OK y pytest 429 passed, 3 skipped, 7 xfailed (+25 tests nuevos: 23 conductuales, 2 estáticos); Skynet `20261123T090237-b29e2e89` service passed y `20261123T090853-1d4f660e` suite 474 passed, 0 failed; ids `ragmur_deploy*` idénticos, 0 restos. `revision` VERDICT: OK (2 menores de texto, deuda de observabilidad del cubo `error`).
+- Status: Done
 
 ### C06: Una orden y un agente que explica
 
@@ -235,10 +225,11 @@ scripts/phase1-agent.sh full
 | C02 | Ingesta a gran escala (100k docs, 0 problemas, ~34 s) y D1-D7 en xfail estricto + D8 normal | Puerta: 370 passed, 3 skipped, 7 xfailed. Skynet `20261122T222105-e2182582` salida 0 (static+ingest+suite 415 passed, 0 failed, 12 skipped = 7 xfail + 5 entorno), 0 restos. `revision` VERDICT: OK | `test: C02 add large-scale ingest and known-defect tests` |
 | C03 | Verificador NLI (4602 pares, 3124 principal, celdas exactas) con calidad en rojo | Puerta: 380 passed, 3 skipped, 7 xfailed. Skynet `20261122T225810-d8096e78` salida 3 (medición válida: respaldo falso 0,070, Wilson 0,083, recall 0,576), 48,9 s cuda, 0 restos, deploy intacto. `revision` VERDICT: OK | `test: C03 add NLI verifier measurement stage` |
 | C04 | Búsqueda y aislamiento (15944 casos, 0 fugas, doc@5 rerank 90,9 %) con resume que conserva iso | Puerta: 404 passed, 3 skipped, 7 xfailed. Skynet `20261122T231916-ac7c2dc4` salida 0 (índice 167 s, búsqueda 5186 s, p50 217,9 ms). Revisión 1 BLOCKED por resume-iso, reparación con parcial {rows,iso} + re-sondeo legacy. Revisión 2 VERDICT: OK | `test: C04 add large-scale search and isolation stage` |
+| C05 | Servicio real 10/10 en verde (234 s) y carga 1/4/16/32 sin 500, deploy intacto | Puerta: 429 passed, 3 skipped, 7 xfailed. Skynet `20261123T090237-b29e2e89` service passed + `20261123T090853-1d4f660e` suite 474 passed, 0 failed, 0 restos. `revision` VERDICT: OK | `test: C05 add end-to-end live service and load stage` |
 
 ## 9. Recommended next action
 
-- Next phase: C05.
+- Next phase: C06.
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.

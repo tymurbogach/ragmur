@@ -167,6 +167,10 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
     search_summary: dict[str, Any] = {}
     if isinstance(search, dict) and isinstance(search.get("summary"), dict):
         search_summary = search["summary"]
+    service = stages.get("service")
+    service_summary: dict[str, Any] = {}
+    if isinstance(service, dict) and isinstance(service.get("summary"), dict):
+        service_summary = service["summary"]
     return {
         "static_passed": (static or {}).get("state") == "passed"
         if "static" in expected
@@ -187,6 +191,18 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
         else "not_applicable",
         "search_cases": search_summary.get("metrics", {}).get("n_cases", "unverified")
         if search_summary
+        else "unverified",
+        "service_passed": (service or {}).get("state") == "passed"
+        if "service" in expected
+        else "not_applicable",
+        "service_steps": service_summary.get("steps", "unverified")
+        if service_summary
+        else "unverified",
+        "service_limited": service_summary.get("limited_429_503", "unverified")
+        if service_summary
+        else "unverified",
+        "service_deploy_equal": service_summary.get("deploy_equal", "unverified")
+        if service_summary
         else "unverified",
         "no_missing_stage": all(
             isinstance(stages.get(n), dict) and stages[n].get("state") != "pending"

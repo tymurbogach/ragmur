@@ -35,13 +35,14 @@ RESULTS_DIR = REPO_ROOT / "eval" / "results" / "phase1"
 RUNS_DIR = RESULTS_DIR / "per_query"
 LOCK_FILE = RUNS_DIR / ".lock"
 
-STAGES = ("static", "ingest", "suite", "nli", "search")
+STAGES = ("static", "ingest", "suite", "nli", "search", "service")
 STAGE_TIMEOUTS = {
     "static": 600.0,
     "ingest": 1800.0,
     "suite": 2700.0,
     "nli": 5400.0,
     "search": 10800.0,
+    "service": 10800.0,
 }
 HEARTBEAT_EVERY = 15.0
 DEAD_AFTER = 120.0
@@ -437,6 +438,12 @@ def run_worker(run_id: str) -> int:
                     if isinstance(config, dict) and config.get("ssh_host"):
                         search_host = str(config["ssh_host"])
                     result = stages.run_search(run_dir(run_id), search_host)
+                elif name == "service":
+                    config = status.get("config")
+                    service_host: str | None = None
+                    if isinstance(config, dict) and config.get("ssh_host"):
+                        service_host = str(config["ssh_host"])
+                    result = stages.run_service(run_dir(run_id), service_host)
                 else:
                     result = {
                         "state": "infra_error",
@@ -476,6 +483,21 @@ def _note_tunnels(run_id: str) -> Any:
     return note
 
 
+def read_sidecar_tunnels(directory: Path) -> list[int]:
+    """Lee los PIDs de túnel que una etapa anotó fuera del estado.
+
+    El latido reescribe el estado cada 15 s y puede pisar una nota
+    concurrente; el lateral solo lo toca la etapa y sobrevive a esa carrera.
+    """
+    try:
+        raw = json.loads((directory / "service-tunnels.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    if not isinstance(raw, list):
+        return []
+    return [int(p) for p in raw if isinstance(p, int)]
+
+
 def cancel_run(run_id: str) -> dict[str, Any]:
     """Cancela una ejecución y verifica que no queden restos suyos."""
     check_run_id(run_id)
@@ -491,6 +513,7 @@ def cancel_run(run_id: str) -> dict[str, Any]:
     if isinstance(config, dict) and config.get("ssh_host"):
         host = str(config["ssh_host"])
     tunnel_pids = [int(p) for p in status.get("tunnels", []) if isinstance(p, int)]
+    tunnel_pids += read_sidecar_tunnels(run_dir(run_id))
     tunnels_left = _kill_pids(tunnel_pids)
     cleaned = skynet.cleanup_run(host, run_id)
     # Segunda pasada: con --rm los contenedores se van al pararlos.
