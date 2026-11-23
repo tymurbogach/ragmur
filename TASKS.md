@@ -152,7 +152,7 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C07 | Ejecución completa e informe base | Blocked (salida 1, espera U01) |
+| C07 | Ejecución completa e informe base | Done (salida 3, espera U01 para calidad) |
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
 | F10 | Cambios de contrato de errores | Not scheduled (usuario) |
@@ -193,7 +193,12 @@ scripts/phase1-agent.sh full
   - El explicador leyó el salto como test roto y llamó «bloqueante» al rojo de calidad. No cambia la nota.
   - `benchmarks/load.py`: la sonda de aislamiento de `/v1/verify` queda sin estado HTTP y cuenta como `error` (también en C05).
 - Cleanup: 0 recursos `ragmur-p1-*` en Skynet; ids `ragmur_deploy*` y `ragmur-ollama-eval` iguales, API y PostgreSQL `healthy`. El Docker local no recibió llamadas.
-- Status: Blocked (salida 1). Espera U01.
+- Rerun (2026-11-23): Skynet `20261123T170737-f7bb9404` sobre `6ef524f` (U01: test opcional en `KNOWN_SKIPPABLE`), salida 3. Resumen y decisiones en `eval/results/phase1-2026-11-23-full-2.{json,md}`.
+  - static, ingest (100 000 docs, 1 087 563 fragmentos, 0 problemas), suite (491 passed, 0 failed, 13/13 saltos conocidos), search (15 944 casos, rerank doc@5 90,9 %, 0 fugas) y service (10/10, carga sin 500, `deploy_equal: true`) en verde.
+  - nli en rojo de calidad: respaldo falso 0,070 > 0,05, recall de apoyo 0,576. Medición válida, igual que la ejecución bloqueada.
+  - Explicador no disponible (salió con 1, texto alternativo en `explicacion.md`). La nota no cambia: la pone el programa.
+  - Limpieza: 0 `ragmur-p1-*` en Skynet; despliegue intacto; Docker local sin llamadas.
+- Status: Done (salida 3). Espera U01 para la calidad y los contratos.
 
 ### Not scheduled: requiere al usuario
 
@@ -227,7 +232,7 @@ scripts/phase1-agent.sh full
 
 ## 9. Recommended next action
 
-- Next phase: U01, decisión del usuario. C07 está bloqueada con salida 1 por un salto no registrado. Lista de decisiones en `eval/results/phase1-2026-11-23-full.md`.
+- Next phase: U01, decisión del usuario. C07 queda hecha con salida 3 (repetición `20261123T170737-f7bb9404` sobre `6ef524f`). Lista de decisiones en `eval/results/phase1-2026-11-23-full-2.md`.
 - Para repetir `full`, exportar `RAGMUR_TEST_SSH_HOST=skynet-ts`. Sin ella usa el Docker local y sale con 2.
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
