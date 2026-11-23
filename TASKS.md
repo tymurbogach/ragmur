@@ -152,7 +152,7 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C07 | Ejecución completa e informe base | Pending |
+| C07 | Ejecución completa e informe base | Blocked (salida 1, espera U01) |
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
 | F10 | Cambios de contrato de errores | Not scheduled (usuario) |
@@ -173,8 +173,8 @@ scripts/phase1-agent.sh full
 
 - Objective: una ejecución íntegra, reproducible y comprensible.
 - Tasks:
-  - [ ] Con el árbol limpio, `scripts/phase1-agent.sh full` sobre el commit de C06.
-  - [ ] Versionar solo el resumen en `eval/results/` y la lista de decisiones para U01.
+  - [x] Con el árbol limpio, `scripts/phase1-agent.sh full` sobre el commit de C06.
+  - [x] Versionar solo el resumen en `eval/results/` y la lista de decisiones para U01.
 - Dependencies: C06.
 - Owned files: `eval/results/phase1-*.json`, `eval/results/phase1-*.md`.
 - Acceptance criteria:
@@ -183,7 +183,17 @@ scripts/phase1-agent.sh full
   - El informe dice claramente si la calidad falla y no declara cerrada la fase 1.
   - 0 recursos temporales en Skynet, `ragmur_deploy` sano, 0 llamadas al Docker local.
 - Required tests: delivery gate.
-- Status: Pending
+- Result (2026-11-23): Skynet `20261123T150054-698e2542` sobre `1e36bb9`, salida 1. Resumen y decisiones en `eval/results/phase1-2026-11-23-full.{json,md}`.
+  - static, ingest (100 000 docs, 1 087 563 fragmentos, 0 problemas), search (15 944 casos, rerank doc@5 90,9 %, 0 fugas) y service (10/10, carga sin 500) en verde.
+  - nli en rojo de calidad: respaldo falso 0,070 > 0,05, recall de apoyo 0,576. Medición válida.
+  - suite en fallo duro: 491 passed, 0 failed, 13 skipped. Salto nuevo `tests.eval.phase1.test_explainer_live::test_explicador_real_con_paquete_pequeno`.
+- Blocker: defecto del instrumento de C06. El test solo corre con `RAGMUR_LIVE_EXPLAINER=1` y falta en `KNOWN_SKIPPABLE` (`eval/phase1/stages.py`). La verificación de C06 no repitió `suite` en Skynet. Sin reparar, por regla de C07.
+- Instrument debt found:
+  - `full` sin `RAGMUR_TEST_SSH_HOST` cae al Docker local y sale con 2 y «orden remota fallida» (intento `20261123T141633-b4fcfc3b`). La guía no nombra la variable. Debe fallar cerrado.
+  - El explicador leyó el salto como test roto y llamó «bloqueante» al rojo de calidad. No cambia la nota.
+  - `benchmarks/load.py`: la sonda de aislamiento de `/v1/verify` queda sin estado HTTP y cuenta como `error` (también en C05).
+- Cleanup: 0 recursos `ragmur-p1-*` en Skynet; ids `ragmur_deploy*` y `ragmur-ollama-eval` iguales, API y PostgreSQL `healthy`. El Docker local no recibió llamadas.
+- Status: Blocked (salida 1). Espera U01.
 
 ### Not scheduled: requiere al usuario
 
@@ -217,7 +227,8 @@ scripts/phase1-agent.sh full
 
 ## 9. Recommended next action
 
-- Next phase: C07 (ejecución `full` real sobre el commit de C06; dura horas, lanzar con inhibición y seguir con `status`).
+- Next phase: U01, decisión del usuario. C07 está bloqueada con salida 1 por un salto no registrado. Lista de decisiones en `eval/results/phase1-2026-11-23-full.md`.
+- Para repetir `full`, exportar `RAGMUR_TEST_SSH_HOST=skynet-ts`. Sin ella usa el Docker local y sale con 2.
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.

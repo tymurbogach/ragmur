@@ -1,0 +1,224 @@
+{
+  "run_id": "20261123T150054-698e2542",
+  "date": "2026-11-23",
+  "phase": "C07",
+  "mode": "full",
+  "commit": "1e36bb95880550a947c740c938ecd7cddd4dcc8e",
+  "dirty": [],
+  "exit_code": 1,
+  "verdict": "blocked: hard failure in suite (instrument), NLI quality red; phase 1 not closed",
+  "hardware": {
+    "orchestrator": {
+      "platform": "Linux-7.2.15-1-omarchy-x86_64-with-glibc2.44",
+      "python": "3.12.13",
+      "cpu_count": 16
+    },
+    "test_host": "skynet-ts",
+    "gpu": "NVIDIA GeForce RTX 5080"
+  },
+  "stages": {
+    "static": {
+      "state": "passed",
+      "reason": null,
+      "elapsed_s": 4.5
+    },
+    "ingest": {
+      "state": "passed",
+      "reason": "100000 documentos, 1087563 chunks sin fallos",
+      "elapsed_s": 33.5
+    },
+    "suite": {
+      "state": "hard_failed",
+      "reason": "salto nuevo: tests.eval.phase1.test_explainer_live::test_explicador_real_con_paquete_pequeno",
+      "elapsed_s": 107.7
+    },
+    "nli": {
+      "state": "quality_failed",
+      "reason": "respaldo falso 0.070 supera 0.05",
+      "elapsed_s": 65.0
+    },
+    "search": {
+      "state": "passed",
+      "reason": "15944 casos, rerank doc@5 90.9%",
+      "elapsed_s": 5508.6
+    },
+    "service": {
+      "state": "passed",
+      "reason": "pasos solo con limitados: 0",
+      "elapsed_s": 232.8
+    }
+  },
+  "suite": {
+    "tests": 504,
+    "passed": 491,
+    "failed": 0,
+    "skipped": 13,
+    "skipped_ids": [
+      "tests.eval.phase1.test_explainer_live::test_explicador_real_con_paquete_pequeno",
+      "tests.known_defects.test_d1::test_d1_qdrant_request_filters_by_tenant",
+      "tests.known_defects.test_d2::test_d2_docx_table_text_does_not_reject_body",
+      "tests.known_defects.test_d3::test_d3_spanish_heading_style_detected",
+      "tests.known_defects.test_d4::test_d4_hash_in_code_block_is_not_a_title",
+      "tests.known_defects.test_d5::test_d5_chunks_start_at_word_boundaries",
+      "tests.known_defects.test_d6::test_d6_sentence_splitter_abbreviations_citations_lists",
+      "tests.known_defects.test_d7::test_d7_support_beats_single_contradiction",
+      "tests.llm.test_provider_live::test_live_completion_returns_text_and_usage",
+      "tests.retrieval.test_benchmark_cpu::test_search_p95_with_real_cpu_models",
+      "tests.retrieval.test_real_models::test_real_models_find_semantic_and_rare_terms_with_isolation",
+      "tests.verification.test_real_nli::test_real_nli_coreference_without_mitigation",
+      "tests.verification.test_real_nli::test_real_nli_supports_contradicts_and_marks_unknown"
+    ]
+  },
+  "ingest": {
+    "seed": 20261122,
+    "docs": 100000,
+    "chunks": 1087563,
+    "issues": [],
+    "issue_count": 0,
+    "elapsed_s": 33.4
+  },
+  "nli": {
+    "device": "cuda",
+    "thresholds": [
+      0.75,
+      0.5,
+      0.75
+    ],
+    "counts": {
+      "total": 4602,
+      "principal": 3124
+    },
+    "refs": {
+      "false_support": 0.07018528916339135,
+      "false_support_wilson_hi": 0.08299806478714765,
+      "recall_support": 0.5763216679076694
+    },
+    "false_support_limit": 0.05,
+    "baseline_shape_accuracy": 0.3415492957746479
+  },
+  "search": {
+    "device": "cuda",
+    "models": {
+      "dense": [
+        "BAAI/bge-m3",
+        "5617a9f61b028005a4858fdac845db406aefb181"
+      ],
+      "sparse": [
+        "Qdrant/bm25",
+        "22b8d2af71a76161e18dd432d2cee0eefa66e412"
+      ],
+      "reranker": [
+        "BAAI/bge-reranker-v2-m3",
+        "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      ]
+    },
+    "config": {
+      "chunk_size": 800,
+      "chunk_overlap": 120,
+      "candidates": 30,
+      "rrf_k": 2,
+      "top_k": 10
+    },
+    "corpus": {
+      "docs": 5226,
+      "chunks": 11788,
+      "index_s": 170.5,
+      "search_s": 5270.7,
+      "answers_missed": 0,
+      "cases_empty": 0
+    },
+    "cases": 15944,
+    "uncovered": 8,
+    "latency_ms_without_http": {
+      "p50": 221.2,
+      "p95": 249.9
+    },
+    "hybrid": {
+      "all": {
+        "n": 15944,
+        "doc@1": 0.7206,
+        "doc@5": 0.8695,
+        "doc@10": 0.902,
+        "doc_mrr10": 0.7849
+      },
+      "xquad": {
+        "n": 908,
+        "doc@1": 0.9405,
+        "doc@5": 0.9802,
+        "doc@10": 0.9857,
+        "doc_mrr10": 0.958
+      },
+      "sqac": {
+        "n": 15036,
+        "doc@1": 0.7073,
+        "doc@5": 0.8628,
+        "doc@10": 0.897,
+        "doc_mrr10": 0.7745
+      }
+    },
+    "rerank": {
+      "all": {
+        "n": 15944,
+        "doc@1": 0.8175,
+        "doc@5": 0.9093,
+        "doc@10": 0.9288,
+        "doc_mrr10": 0.8578
+      },
+      "xquad": {
+        "n": 908,
+        "doc@1": 0.9769,
+        "doc@5": 0.9901,
+        "doc@10": 0.9923,
+        "doc_mrr10": 0.9828
+      },
+      "sqac": {
+        "n": 15036,
+        "doc@1": 0.8079,
+        "doc@5": 0.9044,
+        "doc@10": 0.9249,
+        "doc_mrr10": 0.8503
+      }
+    },
+    "isolation": {
+      "tenant_results": 478320,
+      "tenant_leaks": 0,
+      "owner_results": 478320,
+      "owner_leaks": 0,
+      "cross_tenant_reads": 15944,
+      "cross_tenant_read_leaks": 0,
+      "cross_owner_reads": 15944,
+      "cross_owner_read_leaks": 0,
+      "control_read": 2
+    }
+  },
+  "service": {
+    "steps_passed": 10,
+    "steps_failed": 0,
+    "limited_429_503": 0,
+    "deploy_equal": true,
+    "load_levels": [
+      1,
+      4,
+      16,
+      32
+    ],
+    "load_codes": {
+      "200": 54,
+      "error": 1
+    },
+    "load_saw_500": false,
+    "load_isolation": {
+      "alien_owner_id": "intruso-f05c",
+      "alien_search_status": 200,
+      "alien_search_results": 0,
+      "alien_verify_status": null,
+      "ok": true
+    }
+  },
+  "notes": [
+    "Blocking skip: tests.eval.phase1.test_explainer_live::test_explicador_real_con_paquete_pequeno skips without RAGMUR_LIVE_EXPLAINER=1 and is missing from KNOWN_SKIPPABLE.",
+    "load_codes 'error' is the cross-owner /v1/verify probe with no HTTP status; the same value appears in C05 run 20261123T090237-b29e2e89.",
+    "Search latency is measured without HTTP on the RTX 5080 of skynet-ts.",
+    "Per-query outputs stay in eval/results/phase1/per_query/<run_id>/ and are not versioned."
+  ]
+}
