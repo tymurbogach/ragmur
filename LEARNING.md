@@ -37,3 +37,13 @@ conversación en que salió.
 - `response_model` — Declara la forma de la respuesta: FastAPI la valida al salir y la documenta sola — src/ragmur/api/routes/health.py
 - `asyncio.gather` — Lanza varias esperas a la vez en lugar de una detrás de otra; dos comprobaciones de 5s tardan 5s y no 10s — src/ragmur/api/routes/health.py
 - `asyncio.timeout` — Corta una espera que se alarga demasiado, para que una dependencia colgada no cuelgue también al que pregunta — src/ragmur/api/routes/health.py
+
+## Pruebas desatendidas
+
+- `systemd-inhibit` — Pide al sistema que no se suspenda ni apague la pantalla mientras dure una orden larga; el script lo usa para las pruebas — scripts/phase1-agent.sh
+- `opencode run --agent` — Lanza un agente con un mensaje y devuelve su respuesta; `--archived` evita ensuciar la lista de sesiones en usos automáticos — eval/phase1/delivery.py
+- Semilla fija — Número inicial del generador aleatorio que deja toda la prueba repetible: con la misma semilla salen los mismos fallos — eval/phase1/quick.py
+- Paquete público de fallos — Hasta 50 fallos elegidos con semilla que solo llevan motivos y detalles inventados; si aparece un sellado o un secreto, no se publica — eval/phase1/delivery.py
+- Plazo con `timeout` — Tiempo máximo para una orden externa; al agotarse se registra el fallo en vez de esperar para siempre — eval/phase1/delivery.py
+- `xfail` estricto — Marca un test que debe fallar por un defecto conocido; si un día pasa, falla para avisar de que el defecto cambió — tests/known_defects/
+- Cerrojo con latido — Un solo fichero dice qué ejecución trabaja; el latido periódico demuestra que sigue viva y otra puede tomar el relevo solo si muere — eval/phase1/runner.py

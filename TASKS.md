@@ -152,7 +152,6 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C06 | Una orden y un agente que explica | Pending |
 | C07 | Ejecución completa e informe base | Pending |
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
@@ -166,20 +165,9 @@ scripts/phase1-agent.sh full
 
 ### C06: Una orden y un agente que explica
 
-- Objective: que el usuario o cualquier agente lo lance todo con una orden.
-- Tasks:
-  - [ ] `scripts/phase1-agent.sh [quick|full]`: impide la suspensión, lanza, espera, genera el informe y llama al explicador. `quick` no usa Skynet ni LLM.
-  - [ ] `report`: `informe.md` en español sencillo con verde, rojo, «no probado», fallos conocidos y siguiente decisión. Paquete de hasta 50 fallos públicos elegidos con semilla.
-  - [ ] Explicador: `opencode run --agent critica`, solo lectura, con plazo. Su salida va a `explicacion.md`, rotulada «no cambia la nota».
-  - [ ] `docs/pruebas-fase-1.md`: cómo lanzar, mirar, parar y entender el resultado. Ampliar `LEARNING.md` sin duplicados.
-- Dependencies: C01-C05.
-- Owned files: `scripts/phase1-agent.sh`, `eval/phase1/`, `tests/eval/phase1/`, `docs/pruebas-fase-1.md`, `LEARNING.md`.
-- Acceptance criteria:
-  - Con el agente caído o con una respuesta que dice «todo aprobado», el JSON, el informe y el código de salida no cambian.
-  - El paquete no contiene sellados, secretos ni datos privados.
-  - El script propaga el código del runner.
-- Required tests: puerta compartida; `quick` real; agente falso adversario; por separado de `quick`, una prueba real del explicador con un paquete pequeño.
-- Status: Pending
+- Outcome: `scripts/phase1-agent.sh [quick|full]` con inhibición, propagación del código del informe y explicador de solo lectura rotulado «no cambia la nota». `quick` local sin Skynet ni LLM; `full` con stub (el real es C07). `docs/pruebas-fase-1.md` y sección «Pruebas desatendidas» en `LEARNING.md`.
+- Verification: puerta del orquestador ruff+mypy+leak OK y pytest 446 passed, 4 skipped, 7 xfailed (+17 tests: adversarios agente-caído y «todo aprobado», paquete fail-closed con semilla y tope 50); `quick` real exit 0 (10 000 docs, 0 fallos); explicador real con paquete pequeño `ok: explicó los fallos`. `revision` VERDICT: OK (inhibición del bucle `full`, `_claims_all_ok` estrecho y `run_id` cosmético como deuda futura).
+- Status: Done
 
 ### C07: Ejecución completa e informe base
 
@@ -225,11 +213,11 @@ scripts/phase1-agent.sh full
 | C02 | Ingesta a gran escala (100k docs, 0 problemas, ~34 s) y D1-D7 en xfail estricto + D8 normal | Puerta: 370 passed, 3 skipped, 7 xfailed. Skynet `20261122T222105-e2182582` salida 0 (static+ingest+suite 415 passed, 0 failed, 12 skipped = 7 xfail + 5 entorno), 0 restos. `revision` VERDICT: OK | `test: C02 add large-scale ingest and known-defect tests` |
 | C03 | Verificador NLI (4602 pares, 3124 principal, celdas exactas) con calidad en rojo | Puerta: 380 passed, 3 skipped, 7 xfailed. Skynet `20261122T225810-d8096e78` salida 3 (medición válida: respaldo falso 0,070, Wilson 0,083, recall 0,576), 48,9 s cuda, 0 restos, deploy intacto. `revision` VERDICT: OK | `test: C03 add NLI verifier measurement stage` |
 | C04 | Búsqueda y aislamiento (15944 casos, 0 fugas, doc@5 rerank 90,9 %) con resume que conserva iso | Puerta: 404 passed, 3 skipped, 7 xfailed. Skynet `20261122T231916-ac7c2dc4` salida 0 (índice 167 s, búsqueda 5186 s, p50 217,9 ms). Revisión 1 BLOCKED por resume-iso, reparación con parcial {rows,iso} + re-sondeo legacy. Revisión 2 VERDICT: OK | `test: C04 add large-scale search and isolation stage` |
-| C05 | Servicio real 10/10 en verde (234 s) y carga 1/4/16/32 sin 500, deploy intacto | Puerta: 429 passed, 3 skipped, 7 xfailed. Skynet `20261123T090237-b29e2e89` service passed + `20261123T090853-1d4f660e` suite 474 passed, 0 failed, 0 restos. `revision` VERDICT: OK | `test: C05 add end-to-end live service and load stage` |
+| C06 | Una orden y un agente que explica (script + informe + explicador de solo lectura) | Puerta: 446 passed, 4 skipped, 7 xfailed. `quick` real exit 0 (10 000 docs, 0 fallos); explicador real `ok`. `revision` VERDICT: OK | `test: C06 add one-command runner and read-only explainer` |
 
 ## 9. Recommended next action
 
-- Next phase: C06.
+- Next phase: C07 (ejecución `full` real sobre el commit de C06; dura horas, lanzar con inhibición y seguir con `status`).
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.
