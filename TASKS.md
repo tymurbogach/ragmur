@@ -152,30 +152,12 @@ scripts/phase1-agent.sh full
 
 | Phase | Title | Status |
 |-------|-------|--------|
-| C04 | Búsqueda y aislamiento con 16.000 preguntas | Pending |
 | C05 | Servicio real de principio a fin y bajo carga | Pending |
 | C06 | Una orden y un agente que explica | Pending |
 | C07 | Ejecución completa e informe base | Pending |
 | U01-U03 | Decisiones, arreglos y examen final | Not scheduled (usuario) |
 | G05 | Escalado del lector de fase 2 | Not scheduled (usuario) |
 | F10 | Cambios de contrato de errores | Not scheduled (usuario) |
-
-### C04: Búsqueda y aislamiento con 16.000 preguntas
-
-- Objective: medir si encuentra el texto correcto y demostrar que no mezcla clientes a escala.
-- Tasks:
-  - [ ] Etapa `search`: 5.226 documentos, 15.944 preguntas, 800/120, 30 candidatos, RRF y reranker configurados.
-  - [ ] Cifras por etapa (densa, BM25, híbrida, reranker) y por conjunto: documento y fragmento con la respuesta a 1, 5 y 10, MRR y latencia con hardware.
-  - [ ] Tenant señuelo con los mismos textos y dos dueños. En cada pregunta: búsqueda propia, búsqueda del otro dueño y lecturas cruzadas por id. Control positivo y fuga inyectada.
-  - [ ] Progreso cada 500 preguntas y reanudación con el mismo `run_id`.
-- Dependencies: C01, C03 (cargador).
-- Owned files: `eval/phase1/`, `tests/eval/phase1/`.
-- Acceptance criteria:
-  - 15.944 casos puntuados, sin descartes silenciosos. 11.788 fragmentos con la configuración actual.
-  - El detector caza la fuga inyectada. Una fuga real es salida 1, se registra con su caso y no impide completar C04.
-  - La calidad de búsqueda se publica sin umbral inventado. U01 fija el umbral.
-- Required tests: puerta compartida; tests de métricas y del detector de fugas; etapa completa en Skynet.
-- Status: Pending
 
 ### C05: Servicio real de principio a fin y bajo carga
 
@@ -252,10 +234,11 @@ scripts/phase1-agent.sh full
 | C01 | Runner desatendido `eval/phase1` (start/status/report/cancel, cerrojo PID+latido, resume) y suite real en Skynet | Puerta: ruff+mypy+leak OK; pytest 353 passed, 3 skipped. Skynet `20261122T214759-e6adfcbf` salida 0 (static + suite 398 passed, 0 failed, 5 skipped conocidos), 0 llamadas Docker local, cancel+resume con 0 restos, deploy ids intactos. `revision` VERDICT: OK | `test: C01 add unattended phase 1 runner` |
 | C02 | Ingesta a gran escala (100k docs, 0 problemas, ~34 s) y D1-D7 en xfail estricto + D8 normal | Puerta: 370 passed, 3 skipped, 7 xfailed. Skynet `20261122T222105-e2182582` salida 0 (static+ingest+suite 415 passed, 0 failed, 12 skipped = 7 xfail + 5 entorno), 0 restos. `revision` VERDICT: OK | `test: C02 add large-scale ingest and known-defect tests` |
 | C03 | Verificador NLI (4602 pares, 3124 principal, celdas exactas) con calidad en rojo | Puerta: 380 passed, 3 skipped, 7 xfailed. Skynet `20261122T225810-d8096e78` salida 3 (medición válida: respaldo falso 0,070, Wilson 0,083, recall 0,576), 48,9 s cuda, 0 restos, deploy intacto. `revision` VERDICT: OK | `test: C03 add NLI verifier measurement stage` |
+| C04 | Búsqueda y aislamiento (15944 casos, 0 fugas, doc@5 rerank 90,9 %) con resume que conserva iso | Puerta: 404 passed, 3 skipped, 7 xfailed. Skynet `20261122T231916-ac7c2dc4` salida 0 (índice 167 s, búsqueda 5186 s, p50 217,9 ms). Revisión 1 BLOCKED por resume-iso, reparación con parcial {rows,iso} + re-sondeo legacy. Revisión 2 VERDICT: OK | `test: C04 add large-scale search and isolation stage` |
 
 ## 9. Recommended next action
 
-- Next phase: C04.
+- Next phase: C05.
 - C01 cerrada el 2026-11-22: `skynet-ts` es host Windows con Docker en modo Linux (motor `linux/amd64`, runtime `nvidia`, VRAM libre ~9,9 GiB); el shell remoto es `cmd` (sin `head/grep`, sin `;`): usar llamadas SSH separadas o `powershell`. Red `ragmur-p1-*` y ciclo run/exec/stop/rm verificados con 0 restos. Hallazgos menores de revisión (sufijo de skips, contraseña en argv de ssh, sin espera tras SIGKILL) quedan como deuda no bloqueante fuera de este ciclo.
 - Ensayo en solo lectura del 2026-11-22 con `opencode run --agent jefe`: entendió fases, exclusiones, puerta y bloqueo de C07 sin ayuda.
 - Resume command: `/taskflow run all` (solo C01-C07). Una fase: `/taskflow run C01`.

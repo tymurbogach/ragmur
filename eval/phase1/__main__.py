@@ -163,6 +163,10 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
     nli_summary: dict[str, Any] = {}
     if isinstance(nli, dict) and isinstance(nli.get("summary"), dict):
         nli_summary = nli["summary"]
+    search = stages.get("search")
+    search_summary: dict[str, Any] = {}
+    if isinstance(search, dict) and isinstance(search.get("summary"), dict):
+        search_summary = search["summary"]
     return {
         "static_passed": (static or {}).get("state") == "passed"
         if "static" in expected
@@ -178,6 +182,12 @@ def _acceptance(status: dict[str, Any], expected: list[str], code: int) -> dict[
         else "not_applicable",
         "nli_counts": nli_summary.get("counts") if nli_summary else "unverified",
         "nli_refs": nli_summary.get("refs") if nli_summary else "unverified",
+        "search_passed": (search or {}).get("state") == "passed"
+        if "search" in expected
+        else "not_applicable",
+        "search_cases": search_summary.get("metrics", {}).get("n_cases", "unverified")
+        if search_summary
+        else "unverified",
         "no_missing_stage": all(
             isinstance(stages.get(n), dict) and stages[n].get("state") != "pending"
             for n in expected

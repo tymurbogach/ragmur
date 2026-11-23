@@ -23,6 +23,7 @@ from eval.phase1 import skynet
 from eval.phase1.runner import REPO_ROOT, STAGE_TIMEOUTS, write_json
 
 NLI_TIMEOUT_FALLBACK = 5400.0
+SEARCH_TIMEOUT_FALLBACK = 10800.0
 
 EXPECTED_PASSED_MIN = 376
 EXPECTED_SKIPPED = 6
@@ -452,6 +453,7 @@ __all__ = [
     "parse_junit",
     "run_ingest",
     "run_nli",
+    "run_search",
     "run_static",
     "run_suite",
     "static_command",
@@ -459,6 +461,17 @@ __all__ = [
     "suite_acceptance",
     "suite_env",
 ]
+
+
+def run_search(
+    directory: Path,
+    ssh_host: str | None,
+    timeout: float = SEARCH_TIMEOUT_FALLBACK,
+) -> dict[str, Any]:
+    """Ejecuta la etapa search C04: busqueda y aislamiento con miles de preguntas en GPU."""
+    from eval.phase1 import search as search_stage
+
+    return search_stage.run(directory, ssh_host, timeout)
 
 
 def run_nli(
