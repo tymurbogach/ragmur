@@ -111,7 +111,14 @@ async def verify(
     results: list[VerifyClaim] = []
     for idx, claim in enumerate(claims):
         ent, contra = max_ent[idx], max_contra[idx]
-        if contra >= settings.verify_contradiction_threshold:
+        # D7: el apoyo que supera su umbral y aventaja a la contradicción en el
+        # margen gana a una contradicción aislada (DECISIONS.md §3.36). El redondeo
+        # evita que el ruido de coma flotante decida el empate exacto.
+        support_wins = (
+            ent >= settings.verify_supported_threshold
+            and round(ent - contra, 9) >= settings.verify_conflict_margin
+        )
+        if contra >= settings.verify_contradiction_threshold and not support_wins:
             verdict: Verdict = "contradicted"
             score = contra
             best = best_contra[idx]

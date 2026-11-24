@@ -27,12 +27,12 @@ SEARCH_TIMEOUT_FALLBACK = 10800.0
 SERVICE_TIMEOUT_FALLBACK = 10800.0
 
 EXPECTED_PASSED_MIN = 376
-EXPECTED_SKIPPED = 6
+EXPECTED_SKIPPED = 5
 
-# Los 6 xfail estrictos restantes de C02 (defectos conocidos D2-D7): aparecen como
+# Los 5 xfail estrictos restantes (defectos conocidos D2-D6): aparecen como
 # saltos en el XML de junit. Un xfail que pase de verdad falla por
 # definición (estricto), así que estar en esta lista nunca oculta un arreglo.
-# D1 salió de la lista al filtrar en la petición (U02).
+# D1 salió al filtrar en la petición y D7 al aprobar el margen de conflicto (U02).
 KNOWN_XFAIL = frozenset(
     {
         "tests.known_defects.test_d2::test_d2_docx_table_text_does_not_reject_body",
@@ -40,7 +40,6 @@ KNOWN_XFAIL = frozenset(
         "tests.known_defects.test_d4::test_d4_hash_in_code_block_is_not_a_title",
         "tests.known_defects.test_d5::test_d5_chunks_start_at_word_boundaries",
         "tests.known_defects.test_d6::test_d6_sentence_splitter_abbreviations_citations_lists",
-        "tests.known_defects.test_d7::test_d7_support_beats_single_contradiction",
     }
 )
 # Los 6 saltos registrados el 2026-11-22: dependen del entorno (modelos reales

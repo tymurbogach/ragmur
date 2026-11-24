@@ -70,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
             settings.verify_supported_threshold,
             settings.verify_weak_threshold,
             settings.verify_contradiction_threshold,
+            settings.verify_conflict_margin,
         ],
     )
     base = score_all(
@@ -111,6 +112,7 @@ def main(argv: list[str] | None = None) -> int:
                 settings.verify_supported_threshold,
                 settings.verify_weak_threshold,
                 settings.verify_contradiction_threshold,
+                settings.verify_conflict_margin,
             ),
         }
         for key, count in (("v3", 3), ("v5", 5)):
@@ -121,6 +123,7 @@ def main(argv: list[str] | None = None) -> int:
                 settings.verify_supported_threshold,
                 settings.verify_weak_threshold,
                 settings.verify_contradiction_threshold,
+                settings.verify_conflict_margin,
             )
         rows.append(entry)
     args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -132,6 +135,7 @@ def main(argv: list[str] | None = None) -> int:
                     settings.verify_supported_threshold,
                     settings.verify_weak_threshold,
                     settings.verify_contradiction_threshold,
+                    settings.verify_conflict_margin,
                 ],
                 "elapsed_s": round(time.time() - started, 1),
                 "rows": rows,

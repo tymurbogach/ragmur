@@ -108,7 +108,7 @@ def run_gate(directory: Path, timeout: float = QUICK_TIMEOUTS["gate"]) -> dict[s
 
 
 def run_defects(directory: Path, timeout: float = QUICK_TIMEOUTS["defects"]) -> dict[str, Any]:
-    """Ejecuta D2-D7 (xfail estricto), D1 y D8 (contratos) y comprueba el reparto."""
+    """Ejecuta D2-D6 (xfail estricto) y D1, D7, D8 (contratos) y comprueba el reparto."""
     log_path = directory / "quick-defects.log"
     json_path = directory / "quick-defects.json"
     junit_path = directory / "quick-defects-junit.xml"
@@ -137,14 +137,14 @@ def run_defects(directory: Path, timeout: float = QUICK_TIMEOUTS["defects"]) -> 
     passed = int(counts.get("passed", -1))
     if completed.returncode != 0 or failed != 0:
         state, reason = "hard_failed", f"defectos con fallo real (salida {completed.returncode})"
-    elif skipped < 6 or passed < 2:
+    elif skipped < 5 or passed < 3:
         state = "hard_failed"
         reason = (
             f"reparto inesperado: {passed} pasados y {skipped} saltos "
-            "(se esperan 6 xfail y al menos D1+D8)"
+            "(se esperan 5 xfail y al menos D1+D7+D8)"
         )
     else:
-        state, reason = "passed", f"D2-D7 reproducidos ({skipped} saltos) y D1+D8 en verde"
+        state, reason = "passed", f"D2-D6 reproducidos ({skipped} saltos) y D1+D7+D8 en verde"
     result: dict[str, Any] = {
         "state": state,
         "reason": reason,

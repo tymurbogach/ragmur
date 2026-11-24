@@ -180,11 +180,14 @@ def test_seleccion_congelada() -> None:
 
 
 def test_veredicto_precedencia_y_wilson() -> None:
-    """La contradicción sobre umbral gana; Wilson acota la proporción."""
+    """La contradicción gana salvo apoyo fuerte con margen; Wilson acota."""
     assert nli_data.apply_verdict(0.9, 0.8) == "contradicted"
     assert nli_data.apply_verdict(0.9, 0.1) == "supported"
     assert nli_data.apply_verdict(0.6, 0.1) == "weak"
     assert nli_data.apply_verdict(0.1, 0.1) == "unsupported"
+    # D7: el apoyo fuerte con margen suficiente gana a la contradicción aislada.
+    assert nli_data.apply_verdict(0.95, 0.80) == "supported"
+    assert nli_data.apply_verdict(0.95, 0.80, conflict_margin=0.2) == "contradicted"
     low, high = nli_data.wilson(0, 0)
     assert (low, high) == (0.0, 1.0)
     low, high = nli_data.wilson(70, 1000)
@@ -293,7 +296,7 @@ def test_paridad_con_la_ruta_verify(monkeypatch: pytest.MonkeyPatch, tmp_path: P
         assert len(respuesta.claims) == 1
         return respuesta.claims[0].verdict
 
-    for ent, contra in [(0.9, 0.8), (0.9, 0.1), (0.6, 0.1), (0.1, 0.1)]:
+    for ent, contra in [(0.9, 0.8), (0.9, 0.1), (0.6, 0.1), (0.1, 0.1), (0.95, 0.80)]:
         esperado = nli_data.apply_verdict(ent, contra)
         assert asyncio.run(_llamar(ent, contra)) == esperado
     get_settings.cache_clear()

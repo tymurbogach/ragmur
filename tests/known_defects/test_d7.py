@@ -41,9 +41,6 @@ class _SessionFactory:
         """Cierra sin hacer nada."""
 
 
-@pytest.mark.xfail(
-    strict=True, raises=AssertionError, reason="D7: una contradicción gana a todo apoyo"
-)
 async def test_d7_support_beats_single_contradiction(monkeypatch: pytest.MonkeyPatch) -> None:
     """Dos apoyos fuertes (0,95) ganan a una contradicción aislada (0,80)."""
     support_id, contra_id = uuid4(), uuid4()

@@ -86,6 +86,8 @@ class Settings(BaseSettings):
     verify_supported_threshold: float = Field(default=0.9, ge=0, le=1)
     verify_weak_threshold: float = Field(default=0.5, ge=0, le=1)
     verify_contradiction_threshold: float = Field(default=0.75, ge=0, le=1)
+    # D7: apoyo que supera su umbral y aventaja a la contradicción en este margen.
+    verify_conflict_margin: float = Field(default=0.15, ge=0, le=1)
 
     # Puerta única al LLM (fase 2, regla 7): ningún valor de proveedor
     # hardcodeado; el modelo y la clave llegan por entorno.
@@ -145,6 +147,8 @@ class Settings(BaseSettings):
             0 <= self.verify_contradiction_threshold <= 1
         ):
             raise ValueError("Invalid verification thresholds")
+        if not 0 <= self.verify_conflict_margin <= 1:
+            raise ValueError("Invalid verification conflict margin")
         return self
 
 

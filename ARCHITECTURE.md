@@ -447,12 +447,13 @@ Cuatro veredictos, según umbrales configurables:
 La decisión se calcula por frase sobre todas las parejas válidas de chunk y ventana:
 
 1. Obtén máximos separados de entailment y contradiction, junto con la evidencia que produce cada máximo.
-2. Si contradiction supera su umbral, devuelve `contradicted`, incluso si otra fuente respalda la frase.
+2. Si contradiction supera su umbral, devuelve `contradicted`, salvo que entailment supere el umbral de respaldo y aventaje a la contradicción en el margen de conflicto.
 3. Si entailment supera su umbral de respaldo, devuelve `supported`.
 4. Si entailment supera el umbral inferior de respaldo, devuelve `weak`.
 5. En los demás casos, devuelve `unsupported`.
 
-Los umbrales cumplen `0 <= weak_threshold < supported_threshold <= 1`; el umbral de contradicción también pertenece a `[0, 1]`.
+Los umbrales cumplen `0 <= weak_threshold < supported_threshold <= 1`; el umbral de contradicción y el margen de conflicto también pertenecen a `[0, 1]`.
+El margen evita que una contradicción aislada de un fragmento ruidoso venza a un respaldo fuerte de otro: sin él, el 14,1 % de las verdades quedaba contradicho con cinco textos de evidencia (ver `DECISIONS.md` §3.36).
 `score` es el máximo de contradicción para `contradicted` y el máximo de entailment para los otros veredictos.
 `best_chunk_id` identifica su evidencia; es `null` para `unsupported`.
 Sin chunks autorizados y disponibles, todas las frases son `unsupported`, con `score=0` y `best_chunk_id=null`.

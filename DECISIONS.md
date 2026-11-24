@@ -254,7 +254,7 @@ Eliminar los rangos reduciría el coste y también la observabilidad prevista; n
 
 ### 3.22 Veredictos NLI definidos y acotados
 
-Los máximos de entailment y contradiction se conservan por separado; una contradicción sobre umbral tiene precedencia.
+Los máximos de entailment y contradiction se conservan por separado; una contradicción sobre umbral tiene precedencia (refinado en §3.36: el apoyo fuerte con margen gana a la contradicción aislada).
 Esta política evita declarar respaldo sin advertencia cuando dos fuentes discrepan, aunque puede aumentar falsos negativos.
 La evaluación mide ese compromiso y la tasa de respaldo falso.
 
@@ -479,6 +479,18 @@ Su [ficha](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingua
 
 **Decidido:** el umbral de respaldo (`verify_supported_threshold`) sube de 0.75 a 0.90.
 Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto, contradicción casi nula, margen mínimo 0,60), así que ningún margen ni rasgo barato los separa de los apoyos correctos; solo el umbral los recorta. Medido en práctica (Skynet, 3124 pares): respaldo falso 0,0702 → 0,0472, recall de apoyo 0,5763 → 0,5048 (suelo 0,50). Las celdas esperadas de `nli_data.py` se recalibran a la nueva conducta en el mismo cambio.
+
+### 3.36 El respaldo fuerte con margen gana a una contradicción aislada (D7)
+
+**Decidido (usuario, 2026-11-24):** en `/verify`, una contradicción sobre su umbral ya no vence siempre. Si el entailment supera el umbral de respaldo (0,90) y aventaja a la contradicción en el margen de conflicto (`verify_conflict_margin`, 0,15 por defecto), el veredicto es `supported`.
+
+**Motivo:** con la precedencia absoluta, una sola fuente ruidosa con contradicción sobre 0,75 envenenaba la frase aunque otra la respaldase con 0,95. Medido en práctica (InferES, matrices de distractores): verdades marcadas como contradichas 5,1 % con un texto, 11,1 % con tres y 14,1 % con cinco. En la fase 2, `/answer` cita varios fragmentos, así que el coste crecía con cada cita añadida.
+
+**Alcance exacto:** con un solo fragmento el margen nunca cambia nada: entailment y contradiction salen de la misma distribución y suman como mucho 1, así que entailment alto obliga a contradicción casi nula. La regla solo actúa con máximos de fragmentos distintos. La cifra principal del arnés (respaldo falso y recall de apoyo sobre la matriz de un texto) queda intacta por construcción; lo que se mide son las matrices de 3 y 5 textos.
+
+**Coste asumido:** un conflicto real donde el respaldo domina en margen se declara `supported` en lugar de `contradicted`. La contradicción conserva la precedencia cuando el margen no se alcanza.
+
+**Réplicas:** la ruta del servicio y `eval/phase1/nli_data.py` (réplica declarada de la ruta) aplican la misma regla y el test D7 pasa de `xfail` a normal. `eval/nli_run.py` conserva la cadena histórica: es el instrumento del protocolo F01, puntúa cada hipótesis contra una premisa única y allí el margen no puede dispararse.
 
 ## 8. Trabajo posterior contemplado
 

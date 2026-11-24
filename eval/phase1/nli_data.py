@@ -130,13 +130,18 @@ def apply_verdict(
     supported: float = 0.75,
     weak: float = 0.5,
     contradiction_threshold: float = 0.75,
+    conflict_margin: float = 0.15,
 ) -> Verdict:
     """Aplica la regla de veredicto de ``/verify`` sobre dos máximos.
 
-    La contradicción sobre su umbral gana al apoyo, aunque otra fuente respalde
-    la frase. Es la misma precedencia que la ruta del servicio.
+    La contradicción sobre su umbral gana, salvo que el apoyo supere su umbral
+    y aventaje a la contradicción en el margen de conflicto. Es la misma
+    precedencia que la ruta del servicio. El redondeo a nueve decimales evita
+    que el ruido de coma flotante decida el empate exacto.
     """
-    if contradiction >= contradiction_threshold:
+    gap = round(entailment - contradiction, 9)
+    support_wins = entailment >= supported and gap >= conflict_margin
+    if contradiction >= contradiction_threshold and not support_wins:
         return "contradicted"
     if entailment >= supported:
         return "supported"
