@@ -214,6 +214,15 @@ scripts/phase1-agent.sh full
 - Medida después (Skynet `20261123T233858-598d6603` sobre `78349c4`, static+suite+nli): static verde, suite verde 492 passed, 0 failed, 12/12 saltos conocidos (D2-D7 + entorno), nli rojo de calidad válido (respaldo falso 0,070 > 0,05, recall 0,576). Limpieza: 0 `ragmur-p1-*`, despliegue intacto.
 - Status: Done. D1 ya filtra en la petición. Sigue U02-D7/verificador.
 
+### U02-VER: bucle test-arreglar para minimizar respaldo falso (en curso, automático)
+
+- Objetivo del usuario (2026-11-24): olvidar el tope 5%, bajar el respaldo falso al mínimo. Suelo de recall de apoyo: 0,50 (regla vigente de selección de umbrales).
+- Base sobre `78349c4` (Skynet `20261123T233858-598d6603`): respaldo falso 0,0702 (125/1781: 96 contradicted→supported + 29 unsupported→supported), recall 0,5763. Umbrales [0,75/0,5/0,75].
+- Datos: solo práctica (`eval/.datasets/phase1/prepared/nli.json`, 4602 pares, 3124 principal). Sellados prohibidos: `test.csv`, `eu_nli_test.yaml`, reservas, XQuAD reserve. Ni descargar.
+- Protocolo por iteración (un cambio mínimo por vez): 1) conseguir filas por par (id, etiqueta, scores e/c, veredictos v/v3/v5) con `nli` en Skynet y guardarlas fuera de Git; 2) agrupar los falsos apoyos por margen e-c, tema y patrón; 3) implementar 1 arreglo en `src/` (sin cambiar umbrales salvo que los datos lo sostengan; D7 sigue en `xfail`: gana contradicción); 4) verificar puerta local + `mypy` + `nli` en Skynet y comparar; 5) conservar solo si el respaldo falso baja y el recall >= 0,50, si no revertir; 6) commit local por arreglo conservado, sin push.
+- Tope: 4 iteraciones. Parar si una iteración no mejora, si el siguiente arreglo pediría sellados, dependencia nueva o migración, o si la GPU falla dos veces. Al parar, avisar al usuario.
+- Limpieza por run: 0 `ragmur-p1-*`, despliegue `ragmur_deploy*` intacto, Docker local sin llamadas.
+
 ### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
 - G05 Escalado del lector: tras la revisión humana de G04. Datos para reanudar en `git show f35ee93:TASKS.md`, §9.
