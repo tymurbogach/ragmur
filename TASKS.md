@@ -298,8 +298,9 @@ scripts/phase1-agent.sh full
 
 ## 9. Recommended next action
 
-- Cierre del día 2026-11-24: U01 decidido (fase 1 reabierta), U02-D1 cerrado (filtro por tenant en la petición), U02-VER cerrado parcial (respaldo falso 0,0702→0,0472, umbral 0,9, recall 0,5048). D7 intacto en `xfail`. Todo commiteado en local, sin push. Nada corriendo: runs cancelados/limpios, túneles cerrados.
-- Sesión del 2026-11-24: U02-D7 cerrado con la regla de margen (commits `4642727` y `ac6b273`, verificación Skynet salida 0). Sigue D5; el diagnóstico de búsqueda cabalga sobre su re-medición.
+- Sesión nocturna del 2026-11-24: D2, D3, D4, D5 y D6 cerrados y U02-SEARCH medido (candidates se queda en 30). Ya no queda ningún defecto D1-D8 abierto. Ejecución `full` `20261124T065825-26e084ad` sobre `7bb7fdd`: salida 0, primera ejecución completa en verde. Resumen en `eval/results/phase1-2026-11-24-full.md`. Todo commiteado en local, sin push.
+- Siguiente paso: U03 (examen final con los sellados) solo con decisión del usuario. Alternativas: modelo mejor o segunda señal para el 4,7 % de respaldo falso (pide sellados o reserva nueva) y F10.
+- Reanudar una ejecución: mismo commit y mismo `--only`. Las etapas copian el árbol de trabajo, no el commit: no editar ficheros rastreados mientras queden etapas.
 - Estado del despliegue: `ragmur_deploy-api-1` PARADA a propósito (regla de stop de VRAM; Postgres y Qdrant siguen encendidos). Antes de cualquier tarea con GPU: `docker start ragmur_deploy-api-1` y esperar `/ready` en verde.
 - Opciones para mañana: 1) `full` de confirmación (~100 min, necesita 5080 libre); 2) U03 examen con sellados (código y umbrales congelados); 3) D5/D6/SIGLAS-CAF con medida antes/después; 4) modelo mejor o segunda señal para el 4,7% restante (pide sellados o reserva nueva).
 - Next phase: U01, decisión del usuario. C07 queda hecha con salida 3 (repetición `20261123T170737-f7bb9404` sobre `6ef524f`). Lista de decisiones en `eval/results/phase1-2026-11-23-full-2.md`.
