@@ -343,3 +343,25 @@ def test_markdown_inline_code_at_line_start_is_not_a_fence(tmp_path: Path) -> No
     fragments = extract_text(path, "text/markdown", 10_000).fragments
 
     assert [fragment.locator.get("value") for fragment in fragments] == ["Uno", "Dos"]
+
+
+def test_worker_returns_docx_warnings(tmp_path: Path) -> None:
+    from ragmur.ingestion.extractors.worker import process
+
+    path = tmp_path / "aviso.docx"
+    document = Document()
+    document.add_paragraph("Texto visible")
+    document.sections[0].header.paragraphs[0].text = "Texto de cabecera"
+    document.save(str(path))
+
+    response = process(
+        {
+            "path": str(path),
+            "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "max_chars": 1000,
+            "max_expanded_bytes": 1_000_000,
+        }
+    )
+
+    assert response["status"] == "ok"
+    assert len(response["result"]["warnings"]) == 1
