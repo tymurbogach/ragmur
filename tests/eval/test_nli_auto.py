@@ -5,7 +5,6 @@ import json
 import re
 from pathlib import Path
 from typing import Any
-from uuid import NAMESPACE_URL, uuid5
 
 import yaml  # type: ignore[import-untyped]
 from eval.check_nli_leak import (
@@ -18,8 +17,6 @@ from eval.check_nli_leak import (
 )
 from eval.nli_run import validate_cases
 
-from ragmur.ingestion.chunker import split_document
-from ragmur.ingestion.extractors.core import ExtractionResult, Fragment
 from ragmur.verification.splitter import split_claims
 
 AUTO_MANIFEST = Path("eval/eu_auto_manifest.yaml")
@@ -147,7 +144,14 @@ def test_auto_unsupported_guard_sample() -> None:
             assert not (set(re.findall(r"\d+", premise)) & set(re.findall(r"\d+", claim)))
 
 
-def test_auto_premises_are_real_chunks() -> None:
+def test_auto_premises_are_document_text() -> None:
+    """Las premisas del legado son texto real del documento, en su posición.
+
+    Se generaron como trozos exactos del troceador anterior a D5, que cortaba
+    continuaciones a mitad de palabra. Con las fronteras de palabra
+    (DECISIONS.md §3.37) esos cortes ya no se reproducen, así que la
+    procedencia se comprueba contra el texto fuente por desplazamientos.
+    """
     manifest = {str(e["document_id"]): e for e in _load_manifest() if isinstance(e, dict)}
     for path, lang in ((AUTO_ES, "es"), (AUTO_EN, "en")):
         cases = _load_cases(path)
@@ -156,19 +160,12 @@ def test_auto_premises_are_real_chunks() -> None:
             doc_id = str(case["document_id"])
             entry = manifest[doc_id]
             text = (Path("eval") / str(entry["path"])).read_text(encoding="utf-8")
-            fragment = Fragment(text, {"type": "offset", "start": 0, "end": len(text)})
-            extraction = ExtractionResult([fragment])
-            chunks = split_document(
-                extraction,
-                uuid5(NAMESPACE_URL, doc_id),
-                uuid5(NAMESPACE_URL, "ragmur-auto-tenant"),
-                None,
-                size=800,
-                overlap=120,
-            ).chunks
-            assert str(case["premise"]) in [chunk.text for chunk in chunks]
+            premise = str(case["premise"])
             locator = case.get("premise_locator")
             assert isinstance(locator, dict) and locator.get("type") == "offset"
+            start, end = int(locator["start"]), int(locator["end"])
+            assert 0 <= start < end <= len(text)
+            assert text[start:end] == premise
         assert lang in ("es", "en")
 
 

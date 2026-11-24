@@ -108,3 +108,15 @@ def test_prefers_paragraph_boundary_without_overlap() -> None:
     )
     assert result.chunks[0].text == "one\n\n"
     assert reconstruct(result.chunks) == text
+
+
+def test_word_longer_than_window_keeps_coverage() -> None:
+    """Sin frontera en el solape, la cobertura prevalece sobre la palabra (D5)."""
+    text = "x" * 300
+    result = split(
+        ExtractionResult([Fragment(text, {"type": "offset", "start": 0, "end": len(text)})]),
+        120,
+        30,
+    )
+    assert reconstruct(result.chunks) == result.text
+    assert all(chunk.text == result.text[chunk.start : chunk.end] for chunk in result.chunks)

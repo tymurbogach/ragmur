@@ -494,6 +494,14 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Réplicas:** la ruta del servicio y `eval/phase1/nli_data.py` (réplica declarada de la ruta) aplican la misma regla y el test D7 pasa de `xfail` a normal. `eval/nli_run.py` conserva la cadena histórica: es el instrumento del protocolo F01, puntúa cada hipótesis contra una premisa única y allí el margen no puede dispararse.
 
+### 3.37 Las continuaciones empiezan en frontera de palabra (D5)
+
+**Decidido (usuario, 2026-11-24):** el troceador adelanta el inicio de cada continuación hasta la frontera de palabra más cercana dentro del solape, en lugar de cortar en `fin - solape` sin más.
+
+**Motivo:** el 64 % de las continuaciones medidas (4.236 de 6.562, prototipo del 2026-11-22) empezaba a mitad de palabra. Ese prefijo truncado ensucia el embedding denso del fragmento y la premisa que recibe el verificador NLI.
+
+**Límite asumido:** si el solape no contiene ninguna frontera (palabra más larga que la ventana), el inicio queda al final del fragmento anterior. La cobertura del texto normalizado prevalece sobre la frontera de palabra, y la reconstrucción sin pérdida no cambia. El solape efectivo puede quedar por debajo del configurado; es un máximo, no una garantía.
+
 ## 8. Trabajo posterior contemplado
 
 Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental sin downtime, cache de embeddings de consultas frecuentes, panel de administración.

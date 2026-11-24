@@ -285,6 +285,7 @@ Los chunks de tipo `section` no cruzan secciones; el localizador incluye la ruta
 
 El troceador conserva spans del texto normalizado. La prueba de reconstrucción elimina el solape mediante esos spans.
 Concatenar chunks directamente duplica el solape y no es una prueba válida de conservación del texto.
+Las continuaciones empiezan en la frontera de palabra más cercana dentro del solape. Si el solape carece de ella, la cobertura del texto prevalece sobre la frontera (ver `DECISIONS.md` §3.37).
 
 ### Identidad de los chunks
 

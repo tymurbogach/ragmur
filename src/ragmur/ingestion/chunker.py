@@ -82,6 +82,20 @@ def _end_at_boundary(text: str, start: int, limit: int, overlap: int) -> int:
     return choose_separator_end(("\n\n", "\n", " "))
 
 
+def _snap_to_word_start(text: str, start: int, limit: int) -> int:
+    """Primera posición de ``[start, limit]`` fuera del interior de una palabra.
+
+    Si no existe, devuelve ``limit``: la cobertura del texto prevalece cuando
+    el solape no contiene ninguna frontera (palabra más larga que el solape).
+    """
+    cursor = max(start, 0)
+    while 0 < cursor < limit:
+        if text[cursor].isspace() or text[cursor - 1].isspace():
+            break
+        cursor += 1
+    return cursor
+
+
 def split_document(
     extraction: ExtractionResult,
     document_id: UUID,
@@ -144,5 +158,7 @@ def split_document(
             )
             if end == len(group_text):
                 break
-            cursor = end - overlap
+            # D5: la continuación empieza en frontera de palabra si el solape
+            # contiene una; la cobertura manda si no la hay.
+            cursor = _snap_to_word_start(group_text, end - overlap, end)
     return ChunkedDocument(text, chunks)
