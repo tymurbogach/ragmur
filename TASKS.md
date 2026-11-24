@@ -230,6 +230,7 @@ scripts/phase1-agent.sh full
 | 1 | Umbral de respaldo 0,75 → 0,9 (margen y rasgos baratos no separan: errores con margen ≥ 0,60) | `20261124T005251-e738c0f3` passed salida 0: FS 0,0702→0,0472 (125→84/1781), recall 0,5763→0,5048. Mide el árbol de `5b84f70` (5 ficheros en dirty del run). Celdas v1/v3/v5 calibradas iguales | Conservada (`5b84f70`) |
 | 2 | Sin cambio: 0,901 caza 1 par de ruido; 0,92 rompe el suelo (recall 0,48); ventanas: todo cabe en 1 | Sin run (análisis local de filas) | Parar: 84 restantes son errores seguros del modelo |
 
+- Prueba descartada (2026-11-24, solo análisis de filas, sin run): bajar a `unsupported` un apoyo cuya hipótesis tiene un número ausente en la premisa. Quita 8 de 137 falsos apoyos pero también 18 de 678 apoyos verdaderos: recall 0,5048 → 0,4915, bajo el suelo de 0,50. No se adopta.
 - Status: Done parcial. Respaldo falso mínimo con este modelo: 0,0472. Recall en 0,5048, a 0,0048 del suelo: otra muestra puede caer bajo 0,50. D7 intacto en `xfail` (gana contradicción). Queda: modelo mejor o segunda señal (pide sellados/U03 o reserva nueva).
 
 ### U02-D7: el apoyo fuerte con margen gana a la contradicción aislada (cerrado)
