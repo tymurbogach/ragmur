@@ -223,6 +223,13 @@ scripts/phase1-agent.sh full
 - Tope: 4 iteraciones. Parar si una iteración no mejora, si el siguiente arreglo pediría sellados, dependencia nueva o migración, o si la GPU falla dos veces. Al parar, avisar al usuario.
 - Limpieza por run: 0 `ragmur-p1-*`, despliegue `ragmur_deploy*` intacto, Docker local sin llamadas.
 
+| It | Cambio | Resultado Skynet | Decisión |
+|----|--------|------------------|----------|
+| 1 | Umbral de respaldo 0,75 → 0,9 (margen y rasgos baratos no separan: errores con margen ≥ 0,60) | `20261124T005251-e738c0f3` passed salida 0: FS 0,0702→0,0472 (125→84/1781), recall 0,5763→0,5048. Mide el árbol de `5b84f70` (5 ficheros en dirty del run). Celdas v1/v3/v5 calibradas iguales | Conservada (`5b84f70`) |
+| 2 | Sin cambio: 0,901 caza 1 par de ruido; 0,92 rompe el suelo (recall 0,48); ventanas: todo cabe en 1 | Sin run (análisis local de filas) | Parar: 84 restantes son errores seguros del modelo |
+
+- Status: Done parcial. Respaldo falso mínimo con este modelo: 0,0472. Recall en 0,5048, a 0,0048 del suelo: otra muestra puede caer bajo 0,50. D7 intacto en `xfail` (gana contradicción). Queda: modelo mejor o segunda señal (pide sellados/U03 o reserva nueva).
+
 ### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
 - G05 Escalado del lector: tras la revisión humana de G04. Datos para reanudar en `git show f35ee93:TASKS.md`, §9.
