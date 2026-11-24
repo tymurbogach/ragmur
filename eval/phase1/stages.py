@@ -27,18 +27,13 @@ SEARCH_TIMEOUT_FALLBACK = 10800.0
 SERVICE_TIMEOUT_FALLBACK = 10800.0
 
 EXPECTED_PASSED_MIN = 376
-EXPECTED_SKIPPED = 1
+EXPECTED_SKIPPED = 0
 
-# El xfail estricto restante (defecto conocido D6): aparece como salto en el
-# XML de junit. Un xfail que pase de verdad falla por definición (estricto),
-# así que estar en esta lista nunca oculta un arreglo. D1 salió al filtrar en
-# la petición, D7 al aprobar el margen, D5 al ajustar las continuaciones a
-# fronteras de palabra y D2, D3 y D4 al arreglar los extractores (U02).
-KNOWN_XFAIL = frozenset(
-    {
-        "tests.known_defects.test_d6::test_d6_sentence_splitter_abbreviations_citations_lists",
-    }
-)
+# Ningún defecto conocido queda en xfail estricto. D1 salió al filtrar en la
+# petición, D7 al aprobar el margen, D5 al ajustar las continuaciones a
+# fronteras de palabra, D2, D3 y D4 al arreglar los extractores y D6 al
+# arreglar el divisor de frases (U02). Un xfail nuevo debe registrarse aquí.
+KNOWN_XFAIL: frozenset[str] = frozenset()
 # Los 6 saltos registrados el 2026-11-22: dependen del entorno (modelos reales
 # o proveedor vivo ausentes, caché de tokenizer opcional). Un salto fuera de
 # esta lista es un cambio de comportamiento y falla; que falte uno porque el

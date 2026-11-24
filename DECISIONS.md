@@ -516,6 +516,16 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Coste asumido:** un DOCX con texto solo en cabecera o pie sigue rechazado. Un DOCX con texto en cabecera, pie o notas más cuerpo se indexa sin ese texto y lo avisa.
 
+### 3.39 El divisor de frases respeta abreviaturas, citas y listas (D6)
+
+**Decidido (autonomía delegada por el usuario, 2026-11-24, dentro de U02):** `split_claims` ya no corta en tres casos. Tras una abreviatura de una lista corta y fija en español (Dr., Sra., Prof., Art., etc.). Tras el número de una lista (`1.` o `1)`). Antes de una cita numérica (`[1]`, `[1, 2]`, `[1][2]`), que se queda con la frase que cita.
+
+**Motivo:** cada frase pasa al verificador NLI como una afirmación. Una frase cortada en «El Dr.» o un fragmento «[1]» suelto se puntúa como `unsupported` por falta de contexto.
+
+**Alternativa descartada:** una librería de segmentación o un modelo (regla 9 y principio de la fase 1: sin LLM ni dependencias nuevas). «etc.» no figura entre las abreviaturas porque suele cerrar frase.
+
+**Límite asumido:** las iniciales sueltas («J. R. Tolkien») y las abreviaturas fuera de la lista siguen cortando. La lista se amplía solo con casos medidos.
+
 ## 8. Trabajo posterior contemplado
 
 Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental sin downtime, cache de embeddings de consultas frecuentes, panel de administración.

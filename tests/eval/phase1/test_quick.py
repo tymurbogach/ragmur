@@ -57,12 +57,12 @@ def test_ingesta_rapida_real_con_pocos_documentos(tmp_path: Path) -> None:
     assert result["summary"]["issues"] == []
 
 
-def test_defectos_conocidos_reproducen_uno_y_contratos_en_verde(tmp_path: Path) -> None:
-    """D6 sigue en xfail estricto y los contratos en verde."""
+def test_defectos_conocidos_estan_todos_en_verde(tmp_path: Path) -> None:
+    """D1-D8 pasan sin saltos."""
     result = quick.run_defects(tmp_path)
     assert result["state"] == "passed", result.get("reason")
     assert result["counts"]["failed"] == 0
-    assert result["counts"]["skipped"] >= 1
+    assert result["counts"]["skipped"] == 0
 
 
 def test_run_combina_las_cuatro_comprobaciones(tmp_path: Path, monkeypatch: Any) -> None:

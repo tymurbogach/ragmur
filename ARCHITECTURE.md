@@ -567,7 +567,7 @@ Su rendimiento en Ragmur y la comparación con otras variantes requieren evaluac
 
 Limitaciones asumidas:
 
-1. La segmentación en frases aproxima la descomposición en afirmaciones atómicas, que un LLM realizaría mejor.
+1. La segmentación en frases aproxima la descomposición en afirmaciones atómicas, que un LLM realizaría mejor. El divisor no corta tras una abreviatura de una lista fija, tras el número de una lista ni antes de una cita `[n]` (ver `DECISIONS.md` §3.39).
 2. El contexto del modelo es limitado (~512 tokens); los fragmentos largos se recorren por ventanas conservando la puntuación máxima.
 3. Los chunks difieren de las premisas de los conjuntos NLI; los umbrales se calibran en desarrollo y se evalúan con datos reservados.
 4. Una frase con referencia anafórica puede producir falsos `unsupported`. Concatenar la frase anterior es una hipótesis que debe evaluarse.
