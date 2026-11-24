@@ -506,9 +506,9 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Decidido (autonomía delegada por el usuario, 2026-11-24, dentro de U02):** tres arreglos en `extractors/core.py`.
 
-- **D2.** El DOCX ya no se rechaza entero por texto en tablas, cabeceras o pies. El texto de las tablas de primer nivel se extrae en orden de documento (las celdas combinadas se leen una vez). Lo que el lector no extrae (cabeceras, pies, notas, contenido anidado y tablas dentro de tablas) deja un aviso en `warnings`, que acaba en `diagnostic` del documento. Si no queda ningún texto, el rechazo se mantiene.
+- **D2.** El DOCX ya no se rechaza entero por texto en tablas, cabeceras o pies. El texto de las tablas de primer nivel se extrae en orden de documento (las celdas combinadas, en horizontal o en vertical, se leen una vez: se recorren los elementos `<w:tc>` reales, porque `row.cells` repite la celda de origen). Lo que el lector no extrae (cabeceras, pies, notas, contenido anidado y tablas dentro de tablas) deja un aviso en `warnings`, que acaba en `diagnostic` del documento. Si no queda ningún texto, el rechazo se mantiene.
 - **D3.** El estilo `Ttulo1`, `Ttulo2`, etc. (Word en español pierde la tilde al crear el identificador) abre sección como `Heading1`.
-- **D4.** Una línea `#` dentro de un bloque cercado con tres o más `` ` `` o `~` no abre sección. Un bloque sin cierre llega hasta el final, como en CommonMark.
+- **D4.** Una línea `#` dentro de un bloque cercado con tres o más `` ` `` o `~` no abre sección. Un cierre exige el mismo carácter, al menos la misma longitud y nada detrás. Una línea con acentos graves en su texto de apertura es código en línea, no un bloque. Un bloque sin cierre llega hasta el final, como en CommonMark.
 
 **Motivo:** el rechazo total perdía documentos legibles por un pie de página. Un título mal detectado deja fragmentos sin su sección y un `#` de código inventa secciones falsas.
 
