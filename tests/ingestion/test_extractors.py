@@ -301,3 +301,45 @@ def test_markdown_unclosed_fence_runs_to_the_end(tmp_path: Path) -> None:
     fragments = extract_text(path, "text/markdown", 10_000).fragments
 
     assert [fragment.locator.get("value") for fragment in fragments] == ["Uno"]
+
+
+def test_docx_vertically_merged_cell_is_read_once(tmp_path: Path) -> None:
+    path = tmp_path / "vertical.docx"
+    document = Document()
+    table = document.add_table(rows=3, cols=2)
+    table.cell(0, 0).merge(table.cell(2, 0)).text = "Vertical"
+    for row, value in enumerate("ABC"):
+        table.cell(row, 1).text = value
+    document.save(str(path))
+
+    result = extract_docx(path, 1000, 1_000_000)
+
+    assert [fragment.text for fragment in result.fragments] == [
+        "Vertical\n",
+        "A\n",
+        "\n",
+        "B\n",
+        "\n",
+        "C\n",
+    ]
+
+
+def test_markdown_fence_closes_only_without_trailing_text(tmp_path: Path) -> None:
+    path = tmp_path / "cierre.md"
+    path.write_text(
+        "# Uno\n\n````\n```python\n# dentro\n```\n````\n\n## Dos\n\ntexto\n",
+        encoding="utf-8",
+    )
+
+    fragments = extract_text(path, "text/markdown", 10_000).fragments
+
+    assert [fragment.locator.get("value") for fragment in fragments] == ["Uno", "Dos"]
+
+
+def test_markdown_inline_code_at_line_start_is_not_a_fence(tmp_path: Path) -> None:
+    path = tmp_path / "inline.md"
+    path.write_text("# Uno\n\n```codigo``` en linea\n\n## Dos\n\ntexto\n", encoding="utf-8")
+
+    fragments = extract_text(path, "text/markdown", 10_000).fragments
+
+    assert [fragment.locator.get("value") for fragment in fragments] == ["Uno", "Dos"]

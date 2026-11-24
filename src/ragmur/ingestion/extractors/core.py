@@ -41,21 +41,23 @@ def _fenced_code_ranges(text: str) -> list[tuple[int, int]]:
     """Devuelve los rangos de texto que ocupan los bloques de código cercados.
 
     Un bloque abre con una línea de tres o más ``` o ~~~ y cierra con otra línea
-    del mismo carácter y al menos la misma longitud. Un bloque sin cierre llega
-    hasta el final del texto, como en CommonMark.
+    del mismo carácter, al menos la misma longitud y sin texto detrás. Un bloque
+    sin cierre llega hasta el final del texto, como en CommonMark.
     """
     ranges: list[tuple[int, int]] = []
     open_start = 0
     marker = ""
     position = 0
     for line in text.splitlines(keepends=True):
-        fence = re.match(r"[ ]{0,3}(`{3,}|~{3,})", line)
+        fence = re.match(r"[ ]{0,3}(`{3,}|~{3,})(.*)$", line.rstrip("\r\n"))
         if fence is not None:
-            found = fence.group(1)
+            found, rest = fence.group(1), fence.group(2)
             if not marker:
-                marker = found
-                open_start = position
-            elif found[0] == marker[0] and len(found) >= len(marker):
+                # Un cercado de acentos graves no admite acentos graves en su texto.
+                if not (found[0] == "`" and "`" in rest):
+                    marker = found
+                    open_start = position
+            elif found[0] == marker[0] and len(found) >= len(marker) and not rest.strip():
                 ranges.append((open_start, position + len(line)))
                 marker = ""
         position += len(line)
@@ -133,13 +135,11 @@ def _read_paragraphs(document: Any) -> list[Paragraph]:
         if isinstance(item, Paragraph):
             paragraphs.append(item)
             continue
+        # row.cells repite la celda de origen en las filas de una combinación
+        # vertical; los elementos <w:tc> reales no se repiten.
         for row in item.rows:
-            seen: set[int] = set()
-            for cell in row.cells:
-                if id(cell._tc) in seen:
-                    continue
-                seen.add(id(cell._tc))
-                paragraphs.extend(cell.paragraphs)
+            for cell in row._tr.tc_lst:
+                paragraphs.extend(Paragraph(para, item) for para in cell.p_lst)
     return paragraphs
 
 
