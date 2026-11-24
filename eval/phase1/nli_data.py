@@ -40,7 +40,7 @@ Verdict = Literal["supported", "weak", "unsupported", "contradicted"]
 VERDICTS: Final[tuple[str, ...]] = ("supported", "weak", "unsupported", "contradicted")
 
 # Celdas de 3 y 5 textos recalibradas el 2026-11-24 con el margen de conflicto
-# D7: 11 y 15 verdades dejan de quedar contradichas (Skynet 20261124T025240-5af7e162).
+# D7 y embebidas al valor medido (Skynet 20261124T025744-1508a4ad, salida 0).
 EXPECTED_CELLS: Final[dict[int, dict[str, tuple[int, int, int, int]]]] = {
     1: {
         "supported": (678, 188, 409, 68),
@@ -49,13 +49,13 @@ EXPECTED_CELLS: Final[dict[int, dict[str, tuple[int, int, int, int]]]] = {
     },
     3: {
         "supported": (660, 185, 360, 138),
-        "unsupported": (19, 30, 108, 69),
-        "contradicted": (63, 90, 421, 981),
+        "unsupported": (20, 30, 108, 68),
+        "contradicted": (66, 90, 421, 978),
     },
     5: {
         "supported": (642, 193, 334, 174),
-        "unsupported": (18, 31, 99, 78),
-        "contradicted": (64, 88, 393, 1010),
+        "unsupported": (19, 31, 99, 77),
+        "contradicted": (67, 88, 393, 1007),
     },
 }
 CELL_TOLERANCE: Final[int] = 5

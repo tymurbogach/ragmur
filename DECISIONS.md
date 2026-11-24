@@ -488,7 +488,7 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Alcance exacto:** con un solo fragmento el margen nunca cambia nada: entailment y contradiction salen de la misma distribución y suman como mucho 1, así que entailment alto obliga a contradicción casi nula. La regla solo actúa con máximos de fragmentos distintos. La cifra principal del arnés (respaldo falso y recall de apoyo sobre la matriz de un texto) queda intacta por construcción; lo que se mide son las matrices de 3 y 5 textos.
 
-**Medido (Skynet 20261124T025240-5af7e162, RTX 5080, sobre 4642727):** suite 493 pasados, 0 fallos, 11 saltos conocidos. Verdades contradichas con 3 textos: 149→138; con 5 textos: 189→174. Respaldo falso y recall de apoyo sin cambio. Celdas de 3 y 5 textos recalibradas a la conducta nueva; las de 1 texto quedan iguales.
+**Medido (Skynet, RTX 5080):** suite 493 pasados, 0 fallos y 11 saltos conocidos sobre `4642727` (20261124T025240-5af7e162). Verdades contradichas con 3 textos: 149→138; con 5 textos: 189→174. Respaldo falso y recall de apoyo sin cambio. Celdas de 3 y 5 textos recalibradas al valor medido y verificadas en verde sobre `ac6b273` (20261124T025744-1508a4ad, salida 0); las de 1 texto quedan iguales.
 
 **Coste asumido:** un conflicto real donde el respaldo domina en margen se declara `supported` en lugar de `contradicted`. La contradicción conserva la precedencia cuando el margen no se alcanza.
 
