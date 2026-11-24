@@ -91,7 +91,8 @@
 - Skynet (autorizado por el usuario el 2026-11-22 para estas pruebas):
   - Crear y borrar solo recursos `ragmur-p1-<run_id>-*`, con etiqueta `ragmur.p1.run=<run_id>`.
   - Puertos solo en `127.0.0.1`. Sin build, pull, prune, DNS, firewall ni cambios de configuración.
-  - Nunca parar, modificar ni usar como banco `ragmur_deploy*` o `ragmur-ollama-eval`. Nunca leer sus variables con secretos.
+  - Nunca parar, modificar ni usar como banco `ragmur_deploy*` o `ragmur-ollama-eval`. Nunca leer sus variables con secretos. Excepción: la regla de stop de VRAM de abajo.
+  - Regla de stop de VRAM: tras cada tarea que use GPU en Skynet (o cuando el usuario lo pida para jugar/liberen la gráfica), `docker stop ragmur_deploy-api-1` para descargar sus 3 modelos de la VRAM (~5-6 GB). Postgres y Qdrant se quedan encendidos (no gastan GPU y guardan los datos). Antes de la siguiente tarea con GPU: `docker start ragmur_deploy-api-1` y esperar `/ready` en verde. Nunca borrar ni recrear el despliegue.
   - Al terminar cada tarea: cancelar su run (`cancel`), comprobar 0 recursos `ragmur-p1-*`, despliegue intacto y túneles cerrados, y apuntar la limpieza en `TASKS.md`. Nada temporal sobrevive a su tarea: lo desechable se borra, lo permanente (`ragmur_deploy*`, `ragmur-ollama-eval`) se conserva a propósito.
 - No usar `eval.inferes.main` ni `make_cases`: exigen el `test.csv` sellado.
 - Sellados: no descargar, abrir, listar su contenido ni evaluar. El cargador solo conoce los ficheros de práctica y falla cerrado.
