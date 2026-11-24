@@ -74,7 +74,33 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--log", type=Path, default=None)
     parser.add_argument("--resume", type=Path, default=None)
     parser.add_argument("--collection", type=str, default="p1search")
+    parser.add_argument(
+        "--depths",
+        type=str,
+        default="",
+        help="profundidades extra de candidatos (p. ej. 50,100) para medir su cobertura",
+    )
+    parser.add_argument(
+        "--rerank-every",
+        type=int,
+        default=0,
+        help="con --depths, reordena cada n-esima pregunta con cada profundidad extra",
+    )
     return parser
+
+
+def parse_depths(raw: str, limit: int) -> list[int]:
+    """Convierte "50,100" en profundidades validas, distintas de 30 y sin pasar del limite."""
+    depths: list[int] = []
+    for piece in raw.split(","):
+        if not piece.strip():
+            continue
+        depth = int(piece)
+        if depth <= 30 or depth > limit:
+            raise ValueError(f"profundidad {depth} fuera de (30, {limit}]")
+        if depth not in depths:
+            depths.append(depth)
+    return depths
 
 
 def rank_of(ids: list[str], wanted: set[str]) -> int | None:
@@ -124,6 +150,10 @@ async def main(argv: list[str] | None = None) -> int:
     if settings.rrf_k != search_data.RRF_K:
         raise ValueError(f"rrf_k del contenedor es {settings.rrf_k}, se exige {search_data.RRF_K}")
     logger.warning("search_compute: rrf_k efectivo %s", settings.rrf_k)
+    depths = parse_depths(args.depths, settings.search_max_candidates)
+    if args.rerank_every < 0:
+        raise ValueError("--rerank-every no puede ser negativo")
+    index_of = {case.id: position for position, case in enumerate(cases)}
     models = await asyncio.to_thread(load_models, settings)
     if models.reranker is None:
         raise ValueError("el contenedor no trae reordenador")
@@ -350,12 +380,15 @@ async def main(argv: list[str] | None = None) -> int:
             ranked = [str(point.id) for point in fused]
             reranked: list[str] = []
             reranked_docs: list[str] = []
+            rerank_ms = 0.0
             if fused:
+                rerank_started = time.perf_counter()
                 scores = models.reranker.score(
                     case.question,
                     [str(point.payload["text"]) for point in fused],
                     settings.reranker_batch_size,
                 )
+                rerank_ms = round((time.perf_counter() - rerank_started) * 1000, 1)
                 ordered = sorted(
                     zip(fused, scores, strict=True), key=lambda pair: pair[1], reverse=True
                 )
@@ -381,6 +414,48 @@ async def main(argv: list[str] | None = None) -> int:
                 "r_ans": rank_of(reranked, good) if good and reranked else None,
                 "ms": round((time.perf_counter() - question_started) * 1000, 1),
             }
+            sampled = args.rerank_every > 0 and index_of[case.id] % args.rerank_every == 0
+            if sampled:
+                row["sample"] = True
+                row["r30_ms"] = rerank_ms
+            for depth in depths:
+                wide = await store.hybrid_search(
+                    tenant_main,
+                    client,
+                    args.collection,
+                    dense_query,
+                    sparse_query.indices,
+                    sparse_query.values,
+                    owner_id=own,
+                    document_ids=None,
+                    candidates=depth,
+                    rrf_k=settings.rrf_k,
+                )
+                row[f"h{depth}_doc"] = rank_of(
+                    [str(point.payload["document_id"]) for point in wide], {expected_doc}
+                )
+                if sampled and wide:
+                    wide_started = time.perf_counter()
+                    wide_scores = models.reranker.score(
+                        case.question,
+                        [str(point.payload["text"]) for point in wide],
+                        settings.reranker_batch_size,
+                    )
+                    row[f"r{depth}_ms"] = round((time.perf_counter() - wide_started) * 1000, 1)
+                    wide_top = [
+                        point
+                        for point, _ in sorted(
+                            zip(wide, wide_scores, strict=True),
+                            key=lambda pair: pair[1],
+                            reverse=True,
+                        )[: search_data.TOP_K]
+                    ]
+                    row[f"r{depth}_doc"] = rank_of(
+                        [str(point.payload["document_id"]) for point in wide_top], {expected_doc}
+                    )
+                    row[f"r{depth}_ans"] = (
+                        rank_of([str(point.id) for point in wide_top], good) if good else None
+                    )
             rows.append(row)
 
             other = await store.hybrid_search(

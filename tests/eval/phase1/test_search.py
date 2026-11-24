@@ -402,3 +402,66 @@ def test_avance_guarda_iso_en_el_portatil(tmp_path: Path, monkeypatch: pytest.Mo
     assert resultado == parcial
     guardado = json.loads((tmp_path / "search-partial.json").read_text(encoding="utf-8"))
     assert guardado == parcial
+
+
+def test_aggregate_sin_profundidades_no_añade_seccion() -> None:
+    filas = [{"id": "a", "src": "sqac", "covered": True, "ms": 1.0, "h_doc": 1, "r_doc": 1}]
+    assert search_data.aggregate_depth(filas) == {}
+    assert "depth" not in search_data.aggregate(filas)
+
+
+def test_aggregate_depth_mide_cobertura_y_muestra() -> None:
+    """La cobertura usa todas las filas; el reranker solo la muestra marcada."""
+    filas: list[dict[str, Any]] = [
+        {
+            "id": "a",
+            "src": "sqac",
+            "covered": True,
+            "ms": 1.0,
+            "h_doc": None,
+            "h50_doc": 40,
+            "r_doc": None,
+            "r_ans": None,
+            "sample": True,
+            "r30_ms": 200.0,
+            "r50_doc": 2,
+            "r50_ans": 3,
+            "r50_ms": 330.0,
+        },
+        {
+            "id": "b",
+            "src": "sqac",
+            "covered": True,
+            "ms": 1.0,
+            "h_doc": 3,
+            "h50_doc": 3,
+            "r_doc": 1,
+            "r_ans": 1,
+        },
+    ]
+    depth = search_data.aggregate_depth(filas)
+    assert depth["coverage_doc"] == {"30": 0.5, "50": 1.0}
+    assert depth["sample_n"] == 1
+    assert depth["sample"]["30"] == {"doc@5": 0.0, "ans@5": 0.0, "rerank_ms_p50": 200.0}
+    assert depth["sample"]["50"] == {"doc@5": 1.0, "ans@5": 1.0, "rerank_ms_p50": 330.0}
+
+
+def test_parse_depths_valida_los_limites() -> None:
+    from eval.phase1.search_compute import parse_depths
+
+    assert parse_depths("", 100) == []
+    assert parse_depths("50, 100,50", 100) == [50, 100]
+    for malo in ("30", "101", "10"):
+        with pytest.raises(ValueError):
+            parse_depths(malo, 100)
+
+
+def test_depth_arguments_desde_el_entorno(monkeypatch: pytest.MonkeyPatch) -> None:
+    from eval.phase1 import search
+
+    monkeypatch.delenv("RAGMUR_SEARCH_DEPTHS", raising=False)
+    assert search.depth_arguments() == []
+    monkeypatch.setenv("RAGMUR_SEARCH_DEPTHS", "50,100")
+    assert search.depth_arguments() == ["--depths", "50,100", "--rerank-every", "10"]
+    monkeypatch.setenv("RAGMUR_SEARCH_RERANK_EVERY", "5")
+    assert search.depth_arguments()[-1] == "5"

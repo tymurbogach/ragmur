@@ -15,6 +15,7 @@ from __future__ import annotations
 import base64
 import binascii
 import json
+import os
 import re
 import subprocess
 import time
@@ -287,6 +288,20 @@ def wait_compute(host: str, api: str, directory: Path, deadline: float, log: Any
     raise skynet.SkynetError("plazo del calculo agotado")
 
 
+def depth_arguments() -> list[str]:
+    """Traduce las variables de entorno de profundidad a opciones del calculo.
+
+    ``RAGMUR_SEARCH_DEPTHS`` (p. ej. ``50,100``) activa la medida de cobertura con
+    mas candidatos y ``RAGMUR_SEARCH_RERANK_EVERY`` fija cada cuantas preguntas se
+    reordena con cada profundidad. Sin ellas, la etapa mide solo los 30 de siempre.
+    """
+    depths = os.environ.get("RAGMUR_SEARCH_DEPTHS", "").strip()
+    if not depths:
+        return []
+    every = os.environ.get("RAGMUR_SEARCH_RERANK_EVERY", "10").strip()
+    return ["--depths", depths, "--rerank-every", every]
+
+
 def run_remote(
     host: str, run_id: str, directory: Path, log: Any, log_path: Path, deadline: float
 ) -> dict[str, Any]:
@@ -308,6 +323,9 @@ def run_remote(
             send_resume(host, api, rows, snapshot.get("iso"))
             resume_args = ["--resume", "/tmp/search-resume.json"]
             log(f"reanudacion: {len(rows)} preguntas ya puntuadas")
+        depth_args = depth_arguments()
+        if depth_args:
+            log(f"profundidad de candidatos: {' '.join(depth_args)}")
         skynet.remote(
             host,
             "docker",
@@ -324,6 +342,7 @@ def run_remote(
             "--log",
             "/tmp/search-run.log",
             *resume_args,
+            *depth_args,
         )
         wait_compute(host, api, directory, deadline, log)
         try:

@@ -279,7 +279,55 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     hybrid_cover = recall(rows, "h_doc", CANDIDATES)
     summary["coverage30_doc"] = round(hybrid_cover, 4)
     summary["never_in_candidates"] = sum(1 for row in rows if row.get("h_doc") is None)
+    depth = aggregate_depth(rows)
+    if depth:
+        summary["depth"] = depth
     return summary
+
+
+def depth_keys(rows: list[dict[str, Any]]) -> list[int]:
+    """Profundidades extra presentes en las filas (claves ``h<N>_doc``)."""
+    found: set[int] = set()
+    for row in rows:
+        for key in row:
+            if key.startswith("h") and key.endswith("_doc") and key[1:-4].isdigit():
+                found.add(int(key[1:-4]))
+    return sorted(found - {CANDIDATES})
+
+
+def aggregate_depth(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Cobertura por profundidad de candidatos y efecto del reranker sobre la muestra.
+
+    La cobertura cuenta, sobre todas las filas, cuantas tienen el documento en
+    los N primeros candidatos hibridos. La muestra (filas marcadas ``sample``)
+    reordena con cada profundidad y mide doc@5, ans@5 y la latencia del
+    reranker, incluida la profundidad base de 30.
+    """
+    depths = depth_keys(rows)
+    if not depths:
+        return {}
+    coverage = {str(CANDIDATES): round(recall(rows, "h_doc", CANDIDATES), 4)}
+    for depth in depths:
+        measured = [row for row in rows if f"h{depth}_doc" in row]
+        coverage[str(depth)] = round(recall(measured, f"h{depth}_doc", depth), 4)
+    sample = [row for row in rows if row.get("sample")]
+    covered = [row for row in sample if row.get("covered")]
+    base: dict[str, Any] = {
+        "doc@5": round(recall(sample, "r_doc", 5), 4),
+        "ans@5": round(recall(covered, "r_ans", 5), 4),
+        "rerank_ms_p50": round(
+            percentile(sorted(float(row["r30_ms"]) for row in sample if "r30_ms" in row), 0.5), 1
+        ),
+    }
+    by_depth: dict[str, Any] = {str(CANDIDATES): base}
+    for depth in depths:
+        times = sorted(float(row[f"r{depth}_ms"]) for row in sample if f"r{depth}_ms" in row)
+        by_depth[str(depth)] = {
+            "doc@5": round(recall(sample, f"r{depth}_doc", 5), 4),
+            "ans@5": round(recall(covered, f"r{depth}_ans", 5), 4),
+            "rerank_ms_p50": round(percentile(times, 0.5), 1),
+        }
+    return {"coverage_doc": coverage, "sample_n": len(sample), "sample": by_depth}
 
 
 def check_isolation(iso: dict[str, Any]) -> list[str]:
@@ -423,6 +471,7 @@ __all__ = [
     "Case",
     "Doc",
     "aggregate",
+    "aggregate_depth",
     "build_selection",
     "check_isolation",
     "check_selection",
