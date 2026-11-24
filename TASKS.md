@@ -206,12 +206,13 @@ scripts/phase1-agent.sh full
 - Alcance aprobado: D1, verificador y contrato D7. D8 queda como contrato actual.
 - U02 en curso, una pieza por vez con su `xfail` convertido en test normal.
 
-### U02-D1: filtro por tenant en la petición (hecho, pendiente suite en Skynet)
+### U02-D1: filtro por tenant en la petición (cerrado)
 
 - Cambio: `retrieve_points` usa `scroll` con filtro tenant+dueño+ids. Qdrant nunca devuelve puntos ajenos. Orden de entrada conservado.
 - Tests: `test_d1` pasa de `xfail` a normal con `scroll`; `test_d8` usa `scroll` con ids reales; `quick.run_defects` y `test_quick` esperan 6 saltos (D2-D7) y D1+D8 en verde; D1 sale de `KNOWN_XFAIL`.
-- Medida antes: C07-repetición 0 fugas en 478.320+478.320 resultados y 31.888 lecturas cruzadas. Medida después: pendiente suite completa en Skynet.
-- Status: código en verde local (puerta + mypy). Falta suite en Skynet para cerrar U02-D1.
+- Medida antes (C07-repetición sobre `6ef524f`): suite 491 passed, 13 saltos, 0 fugas en 478.320+478.320 resultados y 31.888 lecturas cruzadas.
+- Medida después (Skynet `20261123T233858-598d6603` sobre `78349c4`, static+suite+nli): static verde, suite verde 492 passed, 0 failed, 12/12 saltos conocidos (D2-D7 + entorno), nli rojo de calidad válido (respaldo falso 0,070 > 0,05, recall 0,576). Limpieza: 0 `ragmur-p1-*`, despliegue intacto.
+- Status: Done. D1 ya filtra en la petición. Sigue U02-D7/verificador.
 
 ### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
