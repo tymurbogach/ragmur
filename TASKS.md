@@ -242,6 +242,30 @@ scripts/phase1-agent.sh full
 - Coste medido: 4 falsos apoyos nuevos en las matrices de 3 y 5 textos (filas `unsupported` y `contradicted`), dentro de la tolerancia. Asumido con la decisión.
 - Status: Done. Sigue D5.
 
+### U02-D5: las continuaciones empiezan en frontera de palabra (cerrado)
+
+- Cambio: `chunker.py` adelanta el inicio de cada continuación hasta la frontera de palabra más cercana dentro del solape. Si no hay frontera, gana la cobertura. DECISIONS §3.37. Commit `c432497`.
+- Medida antes (línea base `6ef524f`, Skynet `20261123T170737-f7bb9404`): 11.788 fragmentos en el corpus de búsqueda; rerank doc@5 0,9094, ans@5 0,8958; cobertura de 30 candidatos 0,9411; 939 consultas sin el documento entre los candidatos; p50 225,6 ms.
+- Medida después (Skynet `20261124T033524-10d25882` sobre `b65b765`, reanudada una vez tras reinicio del servidor): 11.778 fragmentos; rerank doc@5 0,9097, ans@5 0,8956; cobertura 0,9412; 938 sin candidatos; p50 218,4 ms, p95 234,3 ms (RTX 5080); 0 fugas en 478.320+478.320 resultados y 31.888 lecturas cruzadas. Ingesta de 100.000 documentos: 1.054.330 fragmentos (antes 1.087.563), 0 problemas.
+- Lectura: D5 no mueve la recuperación (diferencias de 0,0003 y menos). Es higiene: la premisa del NLI y el embedding ya no empiezan a mitad de palabra. El NLI queda igual (respaldo falso 0,0472, recall 0,5048).
+- Hallazgo de paso: la constante `EXPECTED_CHUNKS` del instrumento pasó de 11.788 a 11.778 (`b65b765`). Sin ese cambio la etapa habría salido en rojo tras 90 minutos.
+- Status: Done.
+
+### U02-D2/D3/D4/D6: extractores y divisor de frases (cerrado)
+
+- D2: el DOCX lee el texto de las tablas de primer nivel y avisa (no rechaza) de cabeceras, pies, notas y contenido anidado. D3: el estilo `Ttulo N` abre sección. D4: un `#` dentro de un bloque de código cercado no abre sección. DECISIONS §3.38, commit `695c0cc`.
+- D6: el divisor no corta tras abreviaturas de una lista fija, tras el número de una lista ni antes de `[n]`. DECISIONS §3.39, commit `769c0ee`.
+- Tests: `test_d2`, `test_d3`, `test_d4` y `test_d6` pasan de `xfail` a normales; casos de borde nuevos en `tests/ingestion/test_extractors.py` y `tests/verification/test_splitter.py`. `KNOWN_XFAIL` queda vacío y `quick` exige 9 contratos en verde y 0 saltos.
+- Medida (Skynet `20261124T033524-10d25882`): suite 508 pasados, 0 fallos, 6 saltos conocidos (solo entorno); NLI sin cambio, lo que confirma que D6 no altera la cifra del verificador.
+- Status: Done. Ya no queda ningún defecto D1-D8 abierto.
+
+### U02-SEARCH: cuánto aportan más candidatos (en curso)
+
+- Diagnóstico sobre la línea base (filas por consulta de `20261123T170737-f7bb9404`): de 1.391 fallos de rerank doc@5, 899 no tenían el documento entre los 30 candidatos; el reranker pierde 492 (385 sin subirlo, 107 bajándolo).
+- Muestra a ojo de las consultas perdidas: casi todas no se entienden solas («¿Quién dirige la compañía?»). Mediana de 6 palabras frente a 8. El techo real queda por debajo del 100 %.
+- Herramienta: `RAGMUR_SEARCH_DEPTHS=50,100` y `RAGMUR_SEARCH_RERANK_EVERY=10` en la etapa `search` miden la cobertura con más candidatos sobre las 15.944 consultas y reordenan una de cada diez con cada profundidad (`b369f6b`). Sin las variables la etapa no cambia.
+- No se cambia `candidates` sin esta medida. Regla de decisión en el cierre de la etapa.
+
 ### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
 - G05 Escalado del lector: tras la revisión humana de G04. Datos para reanudar en `git show f35ee93:TASKS.md`, §9.
