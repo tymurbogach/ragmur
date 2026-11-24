@@ -475,6 +475,11 @@ La tarea 1.4 fija la combinación validada y una variante CPU para CI; no cambia
 **Modelo NLI.** Se mantiene `MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7` como candidato inicial.
 Su [ficha](https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7) no demuestra superioridad sobre otras variantes en el corpus de Ragmur.
 
+### 3.35 Umbral de respaldo 0.90 (U02-VER iteración 1)
+
+**Decidido:** el umbral de respaldo (`verify_supported_threshold`) sube de 0.75 a 0.90.
+Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto, contradicción casi nula, margen mínimo 0,60), así que ningún margen ni rasgo barato los separa de los apoyos correctos; solo el umbral los recorta. Medido en práctica (Skynet, 3124 pares): respaldo falso 0,0702 → 0,0472, recall de apoyo 0,5763 → 0,5048 (suelo 0,50). Las celdas esperadas de `nli_data.py` se recalibran a la nueva conducta en el mismo cambio.
+
 ## 8. Trabajo posterior contemplado
 
 Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental sin downtime, cache de embeddings de consultas frecuentes, panel de administración.

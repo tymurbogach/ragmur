@@ -41,19 +41,19 @@ VERDICTS: Final[tuple[str, ...]] = ("supported", "weak", "unsupported", "contrad
 
 EXPECTED_CELLS: Final[dict[int, dict[str, tuple[int, int, int, int]]]] = {
     1: {
-        "supported": (774, 92, 409, 68),
-        "unsupported": (29, 14, 133, 50),
-        "contradicted": (96, 44, 495, 920),
+        "supported": (678, 188, 409, 68),
+        "unsupported": (18, 25, 133, 50),
+        "contradicted": (66, 74, 495, 920),
     },
     3: {
-        "supported": (746, 88, 360, 149),
-        "unsupported": (32, 17, 108, 69),
-        "contradicted": (98, 55, 421, 981),
+        "supported": (649, 185, 360, 149),
+        "unsupported": (19, 30, 108, 69),
+        "contradicted": (63, 90, 421, 981),
     },
     5: {
-        "supported": (728, 92, 334, 189),
-        "unsupported": (32, 17, 99, 78),
-        "contradicted": (98, 54, 393, 1010),
+        "supported": (627, 193, 334, 189),
+        "unsupported": (18, 31, 99, 78),
+        "contradicted": (64, 88, 393, 1010),
     },
 }
 CELL_TOLERANCE: Final[int] = 5

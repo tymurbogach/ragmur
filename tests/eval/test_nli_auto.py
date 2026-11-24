@@ -273,7 +273,7 @@ def test_frozen_test_opened_once_with_reviewed_pairs() -> None:
 
 def test_thresholds_intact_in_config() -> None:
     text = Path("src/ragmur/core/config.py").read_text(encoding="utf-8")
-    assert "verify_supported_threshold: float = Field(default=0.75" in text
+    assert "verify_supported_threshold: float = Field(default=0.9" in text
     assert "verify_weak_threshold: float = Field(default=0.5" in text
     assert "verify_contradiction_threshold: float = Field(default=0.75" in text
 

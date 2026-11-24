@@ -198,13 +198,13 @@ def test_metricas_y_celdas() -> None:
         for verdict, count in zip(nli_data.VERDICTS, cells, strict=True):
             rows.extend([{"y": human, "v": verdict}] * count)
     matrix = nli_data.confusion(rows, "v")
-    assert matrix["supported"]["supported"] == 774
+    assert matrix["supported"]["supported"] == 678
     assert nli_data.cell_mismatches(matrix, 1) == []
     refs = nli_data.quality_refs(matrix)
-    assert refs["recall_support"] == pytest.approx(774 / 1343)
-    assert refs["false_support"] == pytest.approx(125 / 1781)
+    assert refs["recall_support"] == pytest.approx(678 / 1343)
+    assert refs["false_support"] == pytest.approx(84 / 1781)
     assert nli_data.quality_errors({**refs, "false_support": 0.0, "recall_support": 1.0}) == []
-    assert nli_data.quality_errors(refs), "el sintético también supera el respaldo falso"
+    assert nli_data.quality_errors({**refs, "false_support": 0.06}), "detecta el respaldo falso"
     desviada = dict(matrix)
     desviada["supported"] = matrix["supported"] + Counter({"supported": 100})
     fallo = nli_data.cell_mismatches(desviada, 1)
