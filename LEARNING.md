@@ -47,3 +47,12 @@ conversación en que salió.
 - Plazo con `timeout` — Tiempo máximo para una orden externa; al agotarse se registra el fallo en vez de esperar para siempre — eval/phase1/delivery.py
 - `xfail` estricto — Marca un test que debe fallar por un defecto conocido; si un día pasa, falla para avisar de que el defecto cambió — tests/known_defects/
 - Cerrojo con latido — Un solo fichero dice qué ejecución trabaja; el latido periódico demuestra que sigue viva y otra puede tomar el relevo solo si muere — eval/phase1/runner.py
+
+## Extractores y divisor de frases
+
+- Bloque de código cercado — En Markdown, el texto entre dos líneas de ``` (o ~~~) es código; un `#` dentro no es un título, así que el extractor primero calcula esos rangos y descarta los títulos que caen en ellos — src/ragmur/ingestion/extractors/core.py
+- Identificador de estilo de Word — Word guarda el estilo «Título 1» con el identificador `Ttulo1` (sin tilde) en español, distinto de `Heading1`; hay que reconocer ambos para detectar los títulos — src/ragmur/ingestion/extractors/core.py
+- `iter_inner_content()` — Recorre el cuerpo de un DOCX en orden de documento, mezclando párrafos y tablas, para no leer todas las tablas al final — src/ragmur/ingestion/extractors/core.py
+- Aviso en lugar de rechazo — Cuando parte del texto no se puede leer, el extractor devuelve lo legible con una advertencia en vez de descartar el documento entero; solo rechaza si no queda nada — src/ragmur/ingestion/extractors/core.py
+- Lookbehind (`(?<=...)`) — Parte de una expresión regular que mira el texto anterior sin consumirlo; el divisor lo usa para cortar solo tras `.`, `!` o `?` — src/ragmur/verification/splitter.py
+- Barrido de profundidad — Medir la misma búsqueda con 30, 50 y 100 candidatos para ver cuánto sube la cobertura antes de cambiar el ajuste, en vez de fiarse de la intuición — eval/phase1/search_compute.py
