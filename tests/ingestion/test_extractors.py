@@ -42,22 +42,53 @@ def test_docx_extraction_and_expansion_limit(tmp_path: Path) -> None:
         extract_docx(path, 100, 10)
 
 
-@pytest.mark.parametrize("with_body_text", [False, True])
-def test_docx_rejects_omitted_table_text(tmp_path: Path, with_body_text: bool) -> None:
+def test_docx_reads_table_text_in_document_order(tmp_path: Path) -> None:
     path = tmp_path / "table.docx"
     document = Document()
-    if with_body_text:
-        document.add_paragraph("Texto fuera de la tabla")
-    table = document.add_table(rows=1, cols=1)
-    table.cell(0, 0).text = "Texto de la tabla"
+    document.add_paragraph("Antes")
+    table = document.add_table(rows=1, cols=2)
+    table.cell(0, 0).text = "Celda A"
+    table.cell(0, 1).text = "Celda B"
+    document.add_paragraph("Después")
     document.save(str(path))
 
-    with pytest.raises(UnsupportedDocumentError, match="tablas"):
-        extract_docx(path, 100, 1_000_000)
+    result = extract_docx(path, 1000, 1_000_000)
+
+    assert [fragment.text for fragment in result.fragments] == [
+        "Antes\n",
+        "Celda A\n",
+        "Celda B\n",
+        "Después\n",
+    ]
+    assert result.warnings == []
+
+
+def test_docx_merged_cell_is_read_once(tmp_path: Path) -> None:
+    path = tmp_path / "merged.docx"
+    document = Document()
+    table = document.add_table(rows=1, cols=2)
+    merged = table.cell(0, 0).merge(table.cell(0, 1))
+    merged.text = "Combinada"
+    document.save(str(path))
+
+    result = extract_docx(path, 1000, 1_000_000)
+
+    assert [fragment.text for fragment in result.fragments] == ["Combinada\n"]
+
+
+def test_docx_table_only_text_is_extracted(tmp_path: Path) -> None:
+    path = tmp_path / "solo-tabla.docx"
+    document = Document()
+    document.add_table(rows=1, cols=1).cell(0, 0).text = "Solo en la tabla"
+    document.save(str(path))
+
+    result = extract_docx(path, 1000, 1_000_000)
+
+    assert "Solo en la tabla" in "".join(fragment.text for fragment in result.fragments)
 
 
 @pytest.mark.parametrize("location", ["header", "footer", "nested"])
-def test_docx_rejects_other_omitted_text(tmp_path: Path, location: str) -> None:
+def test_docx_warns_about_other_omitted_text(tmp_path: Path, location: str) -> None:
     path = tmp_path / "omitted.docx"
     document = Document()
     paragraph = document.add_paragraph("Texto visible")
@@ -73,6 +104,36 @@ def test_docx_rejects_other_omitted_text(tmp_path: Path, location: str) -> None:
         part = getattr(document.sections[0], location)
         part.paragraphs[0].text = "Texto omitido"
     document.save(str(path))
+
+    result = extract_docx(path, 1000, 1_000_000)
+
+    joined = "".join(fragment.text for fragment in result.fragments)
+    assert "Texto visible" in joined
+    assert "Texto omitido" not in joined
+    assert len(result.warnings) == 1
+    assert "no extraídos" in result.warnings[0]
+
+
+def test_docx_nested_table_text_warns(tmp_path: Path) -> None:
+    path = tmp_path / "anidada.docx"
+    document = Document()
+    document.add_paragraph("Texto visible")
+    outer = document.add_table(rows=1, cols=1)
+    outer.cell(0, 0).add_table(rows=1, cols=1).cell(0, 0).text = "Texto anidado"
+    document.save(str(path))
+
+    result = extract_docx(path, 1000, 1_000_000)
+
+    assert "Texto anidado" not in "".join(fragment.text for fragment in result.fragments)
+    assert len(result.warnings) == 1
+
+
+def test_docx_with_text_only_in_header_is_rejected(tmp_path: Path) -> None:
+    path = tmp_path / "solo-cabecera.docx"
+    document = Document()
+    document.sections[0].header.paragraphs[0].text = "Solo cabecera"
+    document.save(str(path))
+
     with pytest.raises(UnsupportedDocumentError, match="no extraídos"):
         extract_docx(path, 1000, 1_000_000)
 
@@ -217,3 +278,26 @@ def test_docx_headings_keep_section_paths_and_ordinals(tmp_path: Path) -> None:
     assert fragments[3].locator["path"] == ["Tema", "Detalle"]
     assert fragments[5].locator["path"] == ["Tema"]
     assert fragments[1].locator["ordinal"] != fragments[5].locator["ordinal"]
+
+
+def test_markdown_fenced_code_does_not_open_sections(tmp_path: Path) -> None:
+    path = tmp_path / "cercas.md"
+    path.write_text(
+        "# Uno\n\n~~~~\n# dentro tilde\n~~~\n# aun dentro\n~~~~\n\n"
+        "```python\n# dentro comillas\n```\n\n## Dos\n\ntexto\n",
+        encoding="utf-8",
+    )
+
+    fragments = extract_text(path, "text/markdown", 10_000).fragments
+
+    assert [fragment.locator.get("value") for fragment in fragments] == ["Uno", "Dos"]
+    assert "".join(fragment.text for fragment in fragments) == path.read_text(encoding="utf-8")
+
+
+def test_markdown_unclosed_fence_runs_to_the_end(tmp_path: Path) -> None:
+    path = tmp_path / "sin-cierre.md"
+    path.write_text("# Uno\n\n```\n# no es titulo\ntexto\n", encoding="utf-8")
+
+    fragments = extract_text(path, "text/markdown", 10_000).fragments
+
+    assert [fragment.locator.get("value") for fragment in fragments] == ["Uno"]

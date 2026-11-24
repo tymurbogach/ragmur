@@ -27,18 +27,15 @@ SEARCH_TIMEOUT_FALLBACK = 10800.0
 SERVICE_TIMEOUT_FALLBACK = 10800.0
 
 EXPECTED_PASSED_MIN = 376
-EXPECTED_SKIPPED = 4
+EXPECTED_SKIPPED = 1
 
-# Los 4 xfail estrictos restantes (defectos conocidos D2, D3, D4 y D6):
-# aparecen como saltos en el XML de junit. Un xfail que pase de verdad falla
-# por definición (estricto), así que estar en esta lista nunca oculta un
-# arreglo. D1 salió al filtrar en la petición, D7 al aprobar el margen y D5
-# al ajustar las continuaciones a fronteras de palabra (U02).
+# El xfail estricto restante (defecto conocido D6): aparece como salto en el
+# XML de junit. Un xfail que pase de verdad falla por definición (estricto),
+# así que estar en esta lista nunca oculta un arreglo. D1 salió al filtrar en
+# la petición, D7 al aprobar el margen, D5 al ajustar las continuaciones a
+# fronteras de palabra y D2, D3 y D4 al arreglar los extractores (U02).
 KNOWN_XFAIL = frozenset(
     {
-        "tests.known_defects.test_d2::test_d2_docx_table_text_does_not_reject_body",
-        "tests.known_defects.test_d3::test_d3_spanish_heading_style_detected",
-        "tests.known_defects.test_d4::test_d4_hash_in_code_block_is_not_a_title",
         "tests.known_defects.test_d6::test_d6_sentence_splitter_abbreviations_citations_lists",
     }
 )

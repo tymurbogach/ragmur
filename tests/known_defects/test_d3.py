@@ -3,7 +3,6 @@
 from pathlib import Path
 from zipfile import ZipFile
 
-import pytest
 from docx import Document
 
 from ragmur.ingestion.extractors.core import extract_docx
@@ -20,9 +19,6 @@ def _spanish_style(path: Path) -> None:
             archive.writestr(name, data)
 
 
-@pytest.mark.xfail(
-    strict=True, raises=AssertionError, reason="D3: estilo Ttulo1 del Word español no detectado"
-)
 def test_d3_spanish_heading_style_detected(tmp_path: Path) -> None:
     """Un encabezado con estilo Ttulo1 abre sección como Heading1."""
     path = tmp_path / "titulo.docx"
@@ -34,4 +30,6 @@ def test_d3_spanish_heading_style_detected(tmp_path: Path) -> None:
     _spanish_style(path)
     fragments = extract_docx(path, 100_000, 10_000_000).fragments
     sections = [fragment for fragment in fragments if fragment.locator.get("type") == "section"]
-    assert [fragment.locator.get("value") for fragment in sections] == ["Tema"]
+    assert {fragment.locator.get("value") for fragment in sections} == {"Tema"}
+    assert fragments[0].locator.get("type") == "offset"
+    assert fragments[-1].locator.get("path") == ["Tema"]

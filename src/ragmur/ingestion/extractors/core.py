@@ -3,11 +3,13 @@
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 from zipfile import BadZipFile, ZipFile
 
 import pypdfium2  # type: ignore[import-untyped]
 from docx import Document
 from docx.oxml import parse_xml
+from docx.text.paragraph import Paragraph
 
 
 class ExtractionError(Exception):
@@ -35,6 +37,33 @@ class ExtractionResult:
     warnings: list[str] = field(default_factory=list)
 
 
+def _fenced_code_ranges(text: str) -> list[tuple[int, int]]:
+    """Devuelve los rangos de texto que ocupan los bloques de código cercados.
+
+    Un bloque abre con una línea de tres o más ``` o ~~~ y cierra con otra línea
+    del mismo carácter y al menos la misma longitud. Un bloque sin cierre llega
+    hasta el final del texto, como en CommonMark.
+    """
+    ranges: list[tuple[int, int]] = []
+    open_start = 0
+    marker = ""
+    position = 0
+    for line in text.splitlines(keepends=True):
+        fence = re.match(r"[ ]{0,3}(`{3,}|~{3,})", line)
+        if fence is not None:
+            found = fence.group(1)
+            if not marker:
+                marker = found
+                open_start = position
+            elif found[0] == marker[0] and len(found) >= len(marker):
+                ranges.append((open_start, position + len(line)))
+                marker = ""
+        position += len(line)
+    if marker:
+        ranges.append((open_start, len(text)))
+    return ranges
+
+
 def extract_text(path: Path, mime_type: str, max_chars: int) -> ExtractionResult:
     """Decodifica texto UTF-8 y conserva sus posiciones."""
     try:
@@ -48,7 +77,12 @@ def extract_text(path: Path, mime_type: str, max_chars: int) -> ExtractionResult
     if not text.strip():
         raise UnsupportedDocumentError("El documento no contiene texto")
     if mime_type == "text/markdown":
-        headings = list(re.finditer(r"(?m)^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$", text))
+        code_ranges = _fenced_code_ranges(text)
+        headings = [
+            heading
+            for heading in re.finditer(r"(?m)^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$", text)
+            if not any(start <= heading.start() < end for start, end in code_ranges)
+        ]
         if headings:
             fragments = []
             if headings[0].start():
@@ -80,6 +114,35 @@ def extract_text(path: Path, mime_type: str, max_chars: int) -> ExtractionResult
     return ExtractionResult([Fragment(text, {"type": "offset", "start": 0, "end": len(text)})])
 
 
+def _is_read_paragraph(paragraph: Any, body: Any, namespace: str) -> bool:
+    """Indica si el lector lee este párrafo: del cuerpo o de una tabla de primer nivel."""
+    container = paragraph.getparent()
+    if container is body:
+        return True
+    if container is None or container.tag != f"{namespace}tc":
+        return False
+    row = container.getparent()
+    table = row.getparent() if row is not None else None
+    return table is not None and table.getparent() is body
+
+
+def _read_paragraphs(document: Any) -> list[Paragraph]:
+    """Devuelve los párrafos del cuerpo y de sus tablas, en orden de documento."""
+    paragraphs: list[Paragraph] = []
+    for item in document.iter_inner_content():
+        if isinstance(item, Paragraph):
+            paragraphs.append(item)
+            continue
+        for row in item.rows:
+            seen: set[int] = set()
+            for cell in row.cells:
+                if id(cell._tc) in seen:
+                    continue
+                seen.add(id(cell._tc))
+                paragraphs.extend(cell.paragraphs)
+    return paragraphs
+
+
 def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> ExtractionResult:
     """Comprueba el ZIP antes de abrir el documento DOCX.
 
@@ -109,7 +172,11 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
             parent = parent.getparent()
             if parent is not None and parent.tag == f"{namespace}hyperlink":
                 parent = parent.getparent()
-            if parent is None or parent.tag != f"{namespace}p" or parent.getparent() is not body:
+            if (
+                parent is None
+                or parent.tag != f"{namespace}p"
+                or not _is_read_paragraph(parent, body, namespace)
+            ):
                 omitted = True
                 break
         for part in document.part.package.parts:
@@ -119,22 +186,18 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
                 if any((node.text or "").strip() for node in element.iter(f"{namespace}t")):
                     omitted = True
                     break
-        if omitted:
-            raise UnsupportedDocumentError(
-                "El DOCX contiene texto en tablas u otros elementos no extraídos"
-            )
         fragments: list[Fragment] = []
         offset = 0
         section_path: list[str] = []
         current_section: dict[str, str | int | list[str]] | None = None
         section_number = 0
-        for paragraph in document.paragraphs:
+        for paragraph in _read_paragraphs(document):
             text = paragraph.text + "\n"
             end = offset + len(text)
             if end > max_chars:
                 raise ExtractionError("El texto extraído supera el límite")
             style_id = paragraph.style.style_id if paragraph.style else ""
-            heading = re.fullmatch(r"Heading([1-9])", style_id)
+            heading = re.fullmatch(r"(?:Heading|Ttulo|T[ií]tulo)([1-9])", style_id)
             if heading and paragraph.text.strip():
                 level = int(heading.group(1))
                 section_path = section_path[: level - 1]
@@ -152,8 +215,15 @@ def extract_docx(path: Path, max_chars: int, max_expanded_bytes: int) -> Extract
     except (BadZipFile, ValueError, KeyError, OSError) as exc:
         raise ExtractionError("El fichero DOCX no es válido") from exc
     if not any(fragment.text.strip() for fragment in fragments):
+        if omitted:
+            raise UnsupportedDocumentError("El DOCX solo tiene texto en elementos no extraídos")
         raise UnsupportedDocumentError("El documento no contiene texto")
-    return ExtractionResult(fragments)
+    warnings = (
+        ["El DOCX tiene texto en cabeceras, pies, notas u otros elementos no extraídos"]
+        if omitted
+        else []
+    )
+    return ExtractionResult(fragments, warnings=warnings)
 
 
 def extract_pdf(path: Path, max_chars: int, max_pages: int, min_chars: int) -> ExtractionResult:

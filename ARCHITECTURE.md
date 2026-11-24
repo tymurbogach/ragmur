@@ -281,6 +281,7 @@ Las páginas empiezan en 1 y su intervalo es inclusivo. Los offsets cuentan cara
 Los offsets se refieren al texto extraído normalizado, no a bytes del PDF o DOCX.
 La extracción fija saltos de línea y separadores de página antes del troceado y conserva un mapa hacia los localizadores.
 La normalización convierte CRLF y CR a LF e inserta un LF entre páginas de PDF.
+El DOCX extrae el cuerpo y las tablas de primer nivel. El texto de cabeceras, pies, notas y contenido anidado no se extrae y deja un aviso. Un estilo de título `Heading N` o `Ttulo N` abre sección. En Markdown, un `#` dentro de un bloque de código cercado no abre sección (ver `DECISIONS.md` §3.38).
 Los chunks de tipo `section` no cruzan secciones; el localizador incluye la ruta de encabezados y su ordinal para resolver títulos repetidos.
 
 El troceador conserva spans del texto normalizado. La prueba de reconstrucción elimina el solape mediante esos spans.

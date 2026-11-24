@@ -502,6 +502,20 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Límite asumido:** si el solape no contiene ninguna frontera (palabra más larga que la ventana), el inicio queda al final del fragmento anterior. La cobertura del texto normalizado prevalece sobre la frontera de palabra, y la reconstrucción sin pérdida no cambia. El solape efectivo puede quedar por debajo del configurado; es un máximo, no una garantía.
 
+### 3.38 Los extractores leen tablas, títulos en español y código cercado (D2, D3, D4)
+
+**Decidido (autonomía delegada por el usuario, 2026-11-24, dentro de U02):** tres arreglos en `extractors/core.py`.
+
+- **D2.** El DOCX ya no se rechaza entero por texto en tablas, cabeceras o pies. El texto de las tablas de primer nivel se extrae en orden de documento (las celdas combinadas se leen una vez). Lo que el lector no extrae (cabeceras, pies, notas, contenido anidado y tablas dentro de tablas) deja un aviso en `warnings`, que acaba en `diagnostic` del documento. Si no queda ningún texto, el rechazo se mantiene.
+- **D3.** El estilo `Ttulo1`, `Ttulo2`, etc. (Word en español pierde la tilde al crear el identificador) abre sección como `Heading1`.
+- **D4.** Una línea `#` dentro de un bloque cercado con tres o más `` ` `` o `~` no abre sección. Un bloque sin cierre llega hasta el final, como en CommonMark.
+
+**Motivo:** el rechazo total perdía documentos legibles por un pie de página. Un título mal detectado deja fragmentos sin su sección y un `#` de código inventa secciones falsas.
+
+**Alternativa descartada:** extraer solo el cuerpo y avisar también de las tablas. Una tabla es contenido, no decoración, y omitirla en silencio empeora la recuperación.
+
+**Coste asumido:** un DOCX con texto solo en cabecera o pie sigue rechazado. Un DOCX con texto en cabecera, pie o notas más cuerpo se indexa sin ese texto y lo avisa.
+
 ## 8. Trabajo posterior contemplado
 
 Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental sin downtime, cache de embeddings de consultas frecuentes, panel de administración.

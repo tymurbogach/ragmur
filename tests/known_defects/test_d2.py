@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-import pytest
 from docx import Document
 
 from ragmur.ingestion.extractors.core import (
@@ -11,9 +10,6 @@ from ragmur.ingestion.extractors.core import (
 )
 
 
-@pytest.mark.xfail(
-    strict=True, raises=AssertionError, reason="D2: DOCX rechazado entero por texto en tablas"
-)
 def test_d2_docx_table_text_does_not_reject_body(tmp_path: Path) -> None:
     """El cuerpo se extrae aunque una tabla tenga texto (con aviso, no rechazo)."""
     path = tmp_path / "tabla.docx"

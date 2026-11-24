@@ -6,7 +6,7 @@ Cuatro comprobaciones locales, todas sin Docker (``DOCKER_HOST`` prohibido):
 2. Puerta sin servicios: el subconjunto de pytest de la puerta compartida.
 3. Ingesta: 10.000 documentos sintéticos por el troceador y los
    extractores reales, con semilla fija.
-4. Defectos conocidos: D1-D7 en ``xfail`` estricto y D8 como contrato.
+4. Defectos conocidos: D6 en ``xfail`` estricto y el resto como contratos.
 
 Nunca llama a Skynet, a un LLM ni al explicador. La salida es un resumen
 JSON con su código (0 bien, 1 fallo duro, 2 infraestructura).
@@ -108,7 +108,7 @@ def run_gate(directory: Path, timeout: float = QUICK_TIMEOUTS["gate"]) -> dict[s
 
 
 def run_defects(directory: Path, timeout: float = QUICK_TIMEOUTS["defects"]) -> dict[str, Any]:
-    """Ejecuta los xfail estrictos (D2, D3, D4, D6) y los contratos en verde."""
+    """Ejecuta el xfail estricto (D6) y los contratos en verde."""
     log_path = directory / "quick-defects.log"
     json_path = directory / "quick-defects.json"
     junit_path = directory / "quick-defects-junit.xml"
@@ -137,15 +137,15 @@ def run_defects(directory: Path, timeout: float = QUICK_TIMEOUTS["defects"]) -> 
     passed = int(counts.get("passed", -1))
     if completed.returncode != 0 or failed != 0:
         state, reason = "hard_failed", f"defectos con fallo real (salida {completed.returncode})"
-    elif skipped < 4 or passed < 4:
+    elif skipped < 1 or passed < 7:
         state = "hard_failed"
         reason = (
             f"reparto inesperado: {passed} pasados y {skipped} saltos "
-            "(se esperan 4 xfail y al menos D1+D5+D7+D8)"
+            "(se espera 1 xfail y al menos D1-D5+D7+D8)"
         )
     else:
         state = "passed"
-        reason = f"D2/D3/D4/D6 reproducidos y contratos en verde ({skipped} saltos)"
+        reason = f"D6 reproducido y contratos en verde ({skipped} saltos)"
     result: dict[str, Any] = {
         "state": state,
         "reason": reason,
