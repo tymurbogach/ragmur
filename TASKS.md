@@ -92,6 +92,7 @@
   - Crear y borrar solo recursos `ragmur-p1-<run_id>-*`, con etiqueta `ragmur.p1.run=<run_id>`.
   - Puertos solo en `127.0.0.1`. Sin build, pull, prune, DNS, firewall ni cambios de configuración.
   - Nunca parar, modificar ni usar como banco `ragmur_deploy*` o `ragmur-ollama-eval`. Nunca leer sus variables con secretos.
+  - Al terminar cada tarea: cancelar su run (`cancel`), comprobar 0 recursos `ragmur-p1-*`, despliegue intacto y túneles cerrados, y apuntar la limpieza en `TASKS.md`. Nada temporal sobrevive a su tarea: lo desechable se borra, lo permanente (`ragmur_deploy*`, `ragmur-ollama-eval`) se conserva a propósito.
 - No usar `eval.inferes.main` ni `make_cases`: exigen el `test.csv` sellado.
 - Sellados: no descargar, abrir, listar su contenido ni evaluar. El cargador solo conoce los ficheros de práctica y falla cerrado.
 - LLM: ningún LLM crea etiquetas, puntúa, cambia un veredicto ni decide una aceptación. El explicador solo recibe el paquete de fallos públicos de práctica.
