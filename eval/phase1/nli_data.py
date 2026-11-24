@@ -39,6 +39,8 @@ EXPECTED_VECTORS: Final[dict[str, tuple[str, ...]]] = {
 Verdict = Literal["supported", "weak", "unsupported", "contradicted"]
 VERDICTS: Final[tuple[str, ...]] = ("supported", "weak", "unsupported", "contradicted")
 
+# Celdas de 3 y 5 textos recalibradas el 2026-11-24 con el margen de conflicto
+# D7: 11 y 15 verdades dejan de quedar contradichas (Skynet 20261124T025240-5af7e162).
 EXPECTED_CELLS: Final[dict[int, dict[str, tuple[int, int, int, int]]]] = {
     1: {
         "supported": (678, 188, 409, 68),
@@ -46,12 +48,12 @@ EXPECTED_CELLS: Final[dict[int, dict[str, tuple[int, int, int, int]]]] = {
         "contradicted": (66, 74, 495, 920),
     },
     3: {
-        "supported": (649, 185, 360, 149),
+        "supported": (660, 185, 360, 138),
         "unsupported": (19, 30, 108, 69),
         "contradicted": (63, 90, 421, 981),
     },
     5: {
-        "supported": (627, 193, 334, 189),
+        "supported": (642, 193, 334, 174),
         "unsupported": (18, 31, 99, 78),
         "contradicted": (64, 88, 393, 1010),
     },
