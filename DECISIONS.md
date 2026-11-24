@@ -526,6 +526,18 @@ Los 125 falsos apoyos de práctica son errores seguros del modelo (respaldo alto
 
 **Límite asumido:** las iniciales sueltas («J. R. Tolkien») y las abreviaturas fuera de la lista siguen cortando. La lista se amplía solo con casos medidos.
 
+### 3.40 El número de candidatos queda en 30 (U02-SEARCH)
+
+**Decidido (autonomía delegada por el usuario, 2026-11-24):** el valor por defecto de `candidates` no cambia. Más candidatos mejoran la recuperación, pero poco y a un coste de latencia alto.
+
+**Medido (Skynet, RTX 5080, 15.944 consultas de práctica, ejecución `20261124T051257-7b81029e`):** cobertura del documento entre los candidatos híbridos 94,12 % con 30, 95,56 % con 50 y 97,08 % con 100. Tras el reranker, sobre una de cada diez consultas (1.595): doc@5 90,91 %, 91,54 % y 91,85 %; ans@5 89,65 %, 90,09 % y 90,09 %. En pares, 50 candidatos arreglan 11 consultas y rompen 3; 100 arreglan 18 y rompen 4. La mediana del reranker sube de 154 ms a 251 ms y a 485 ms.
+
+**Lectura:** la cobertura sube 3 puntos con 100 candidatos, pero el reranker solo convierte uno de ellos en acierto en el top 5. Las consultas que faltan son sobre todo preguntas que no se entienden solas («¿Quién dirige la compañía?») o con varios documentos casi iguales. Más candidatos no las resuelve.
+
+**Alternativa disponible sin cambio de código:** la API admite `candidates` hasta `search_max_candidates` (100) por petición. Un cliente que valore más la cobertura que la latencia puede pedir 50 o 100.
+
+**Límite:** el barrido usa solo datos de práctica y el corpus de noticias de XQuAD y SQAC. No predice el comportamiento sobre otros corpus. La medida con los 88 PDF reales queda fuera de este ciclo.
+
 ## 8. Trabajo posterior contemplado
 
 Solo tras cerrar las tres fases: servidor MCP sobre Ragmur, ingesta incremental sin downtime, cache de embeddings de consultas frecuentes, panel de administración.

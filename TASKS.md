@@ -259,12 +259,14 @@ scripts/phase1-agent.sh full
 - Medida (Skynet `20261124T033524-10d25882`): suite 508 pasados, 0 fallos, 6 saltos conocidos (solo entorno); NLI sin cambio, lo que confirma que D6 no altera la cifra del verificador.
 - Status: Done. Ya no queda ningún defecto D1-D8 abierto.
 
-### U02-SEARCH: cuánto aportan más candidatos (en curso)
+### U02-SEARCH: cuánto aportan más candidatos (cerrado)
 
 - Diagnóstico sobre la línea base (filas por consulta de `20261123T170737-f7bb9404`): de 1.391 fallos de rerank doc@5, 899 no tenían el documento entre los 30 candidatos; el reranker pierde 492 (385 sin subirlo, 107 bajándolo).
 - Muestra a ojo de las consultas perdidas: casi todas no se entienden solas («¿Quién dirige la compañía?»). Mediana de 6 palabras frente a 8. El techo real queda por debajo del 100 %.
 - Herramienta: `RAGMUR_SEARCH_DEPTHS=50,100` y `RAGMUR_SEARCH_RERANK_EVERY=10` en la etapa `search` miden la cobertura con más candidatos sobre las 15.944 consultas y reordenan una de cada diez con cada profundidad (`b369f6b`). Sin las variables la etapa no cambia.
-- No se cambia `candidates` sin esta medida. Regla de decisión en el cierre de la etapa.
+- Medida (Skynet `20261124T051257-7b81029e` sobre `46c4940`, 15.944 consultas, muestra de 1.595 con reranker): cobertura 94,12 % (30), 95,56 % (50), 97,08 % (100). Rerank doc@5 90,91 % → 91,54 % → 91,85 %; mediana del reranker 154 → 251 → 485 ms. 0 fugas.
+- Decisión: `candidates` se queda en 30 (DECISIONS §3.40). El cliente puede pedir hasta 100 por petición.
+- Status: Done.
 
 ### U02 resto, U03, G05, F10: requieren plan tras D1
 - U03 Examen final único con los sellados, con código, umbrales y criterio congelados. Excluye los artículos de XQuAD que ya están en el golden set. Nunca dentro de `run all`.
